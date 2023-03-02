@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <style>
 /*서브메뉴*/
@@ -102,10 +103,7 @@ a{
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
-                <li> 
-                    <a>메일설정</a>
-                </li>
-
+               
             </ul>
 
             </div>
