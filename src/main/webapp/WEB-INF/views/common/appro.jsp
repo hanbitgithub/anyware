@@ -41,10 +41,6 @@
  
     </div>
 
-    <div class="content">
-        <b> 받은메일함</b>
-
-    </div>
 
 </body>
 </html>
