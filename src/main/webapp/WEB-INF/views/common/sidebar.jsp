@@ -72,6 +72,9 @@ ul {
 a {
     text-decoration: none;
 }
+a:hover{
+	text-decoration: none;
+}
 
 .btn{
     background-color:  #7291f6;
@@ -188,9 +191,9 @@ a {
 .menu{
     position: fixed;
     height: 100vh;
-    width: 150px;
+    width: 160px;
     font-size: 14px;
-    padding: 50px 20px;
+    padding: 40px 20px;
     border-right: 1px solid rgb(211, 210, 210);
     font-family: 'Nanum Gothic', sans-serif;
 }
@@ -260,15 +263,16 @@ a {
                         <span class="nav_name">예약</span>
                     </a>
 
-                    <div href="#" class="nav__link">
+                    <a href="#" class="nav__link">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">게시판</span>
 
-                    </div>
+                    </a>
 
-                    <div href="#" class="nav__link">
+                    <a href="#" class="nav__link">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">프로젝트</span>
+					</a>
 
                         
                     </div>
