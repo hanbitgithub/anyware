@@ -30,7 +30,7 @@
     --nav--width: 75px;
 
     /* Colores */
-    --first-color: #5d7de6d1;
+    --first-color: #ffffff34;
     --bg-color: #7291f6;
     --sub-color: #f3f2f8;
     --white-color: rgb(248, 248, 248);
@@ -238,7 +238,7 @@ a:hover{
                     </a>
 
 
-                    <a href="#" class="nav__link">
+                    <a href="list.em" class="nav__link">
                         <ion-icon name="mail-outline"  class="nav__icon"></ion-icon>
                         <span class="nav_name">메일</span>
                     </a>
