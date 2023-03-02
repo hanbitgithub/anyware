@@ -74,6 +74,7 @@ a {
 }
 a:hover{
 	text-decoration: none;
+	color:white;
 }
 
 .btn{
@@ -134,6 +135,7 @@ a:hover{
     margin-bottom: 1rem;
     transition: .3s;
     cursor: pointer;
+    font-weight: 600;
 }
 
 .nav__link:hover {
@@ -193,7 +195,7 @@ a:hover{
     height: 100vh;
     width: 160px;
     font-size: 14px;
-    padding: 40px 20px;
+    padding: 50px 20px;
     border-right: 1px solid rgb(211, 210, 210);
     font-family: 'Nanum Gothic', sans-serif;
 }
