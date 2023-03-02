@@ -8,8 +8,17 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	<a href="list.appro">GO</a>
+	
+	<!-- 사이드 바  -->
+	<jsp:include page="common/sidebar.jsp"></jsp:include>
+	
+	<!-- 세부 메뉴 -->
+	<jsp:include page="common/appro.jsp"></jsp:include>
+	
+	<!-- 세부 내용 -->
+	<div class="content">
+		content
+	</div>
 	
 </body>
 </html>
