@@ -342,7 +342,7 @@ a:hover{
 
     <div class="header">
         <div class="dropdown profile" style="display: inline-block;">
-            <img src="profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+            <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
           
             </img>
             <div class="dropdown-menu" style="font-size: 12px;">
@@ -355,7 +355,7 @@ a:hover{
 
         <div class="chat position-relative" style="display: inline-block">
             <button type="button" class="position-relative" style="border: none; background-color: white;">
-                <img src="chat-bubble.png" width="30px"  alt="">
+                <img src="resources/images/chat-bubble.png" width="30px"  alt="">
                 <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">
                   10
                   <span class="visually-hidden">unread messages</span>
