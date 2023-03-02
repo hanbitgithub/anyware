@@ -10,5 +10,11 @@ public class MailController {
 	public String mailList() {
 		return "mail/sendMailListView";
 	}
+	
+	@RequestMapping("sendForm.em")
+	public String sendMailForm() {
+		return "mail/sendMailForm";
+		
+	}
 
 }

@@ -21,9 +21,11 @@
     margin-top: 5px;
    
 }
-#mail-area li:hover{
+#mail-area li a:hover{
     color: gray;
     cursor: pointer;
+    text-decoration: none;
+    
 }
 #adbook-area>ul>li a:hover{
     color: gray;
@@ -78,13 +80,13 @@ a{
 <body>
 	 <div class="menu">
             <span style="font-weight: 600; font-size: 19px;">메일</span><br><br>
-            <button class="btn btn-primary" style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</button>
+            <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
                 
             <ul>
-                <li><a>받은메일함</a></li>
-                <li><a>보낸메일함</a></li>
+                <li><a href="list.em">받은메일함</a></li>
+                <li><a href="">보낸메일함</a></li>
                 <li><a>중요메일함</a></li>
                 <li><a>임시저장함</a></li>
                 <li>

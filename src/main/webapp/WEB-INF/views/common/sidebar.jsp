@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="assets/css/styles.css">
     <!--헤더-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -72,7 +72,7 @@ ul {
 a {
     text-decoration: none;
 }
-a:hover{
+.nav a:hover{
 	text-decoration: none;
 	color:white;
 }
