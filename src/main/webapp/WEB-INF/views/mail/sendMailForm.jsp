@@ -6,12 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
+
   <!--summernote-->
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
    <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 
+
    <!--메일쓰기-->
+   
    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
@@ -120,8 +124,18 @@
 	vertical-align: top
 }
 </style>
- 
-      <script type="text/javascript">
+
+
+</head>
+<body>
+	<!-- 사이드 바  -->
+	<jsp:include page="../common/sidebar.jsp"></jsp:include>
+	
+	<!-- 세부 메뉴 -->
+	<jsp:include page="../common/mailmenu.jsp"></jsp:include>
+	
+	
+	   <script type="text/javascript">
                     $(document).ready(function(){
                         var objDragAndDrop = $(".dragAndDropDiv");
                         
@@ -268,15 +282,7 @@
                    
                 </script>
                     
-
-
-</head>
-<body>
-	<!-- 사이드 바  -->
-	<jsp:include page="../common/sidebar.jsp"></jsp:include>
 	
-	<!-- 세부 메뉴 -->
-	<jsp:include page="../common/mailmenu.jsp"></jsp:include>
 	
 	<!-- 세부 내용 -->
 	<div class="content">
