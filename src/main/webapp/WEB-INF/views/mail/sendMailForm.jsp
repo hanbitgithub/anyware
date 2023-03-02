@@ -345,7 +345,7 @@ a {
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="#" class="nav__logo">ANYWARE</a>
+                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
                 </div>
                 <div class="nav__list">
                    
@@ -640,9 +640,9 @@ a {
             <br><br>
             <div id="write-area">
                 <div id="btn-area">
-                    <a href=""><img src="send-mail.png" width="25px"> 전송</a>
-                    <a href=""><img src="refresh.png" width="20px"> 취소</a>
-                    <a href=""><img src="packing.png" width="25px"> 임시저장</a>
+                    <a href=""><img src="resources/images/send-mail.png" width="25px"> 전송</a>
+                    <a href=""><img src="resources/images/refresh.png" width="20px"> 취소</a>
+                    <a href=""><img src="resources/images/packing.png" width="25px"> 임시저장</a>
                   
                 </div>
                 <br>
