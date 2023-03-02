@@ -30,6 +30,7 @@
 		    <tbody>
 		    </tbody>
 		    
+		</table>
 		    <script>
 		    	$(function(){
 		    		if(${empty list}){
@@ -39,31 +40,10 @@
 		    		}
 		    	})
 		    </script>
-		</table>
 		
 		<br><br>
 		
 		<ul class="page pagination">
-		    
-		    <% if(pi.getCurrentPage() != 1){%>
-		        <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.adPro?cpage=<%=pi.getCurrentPage()-1%>&&order=<%=order%>&&by=<%=by%>">&lt;</a></li>
-		    <% }else{ %>
-		        <li class="page-item disabled"><a class="page-link " href="">&lt;</a></li>
-		    <%} %>
-		    
-		    <% for(int p = pi.getStartPage(); p <= pi.getEndPage(); p++){ %>
-		    <% 	if(pi.getCurrentPage() == p){ %>
-		            <li class="page-item active"><a class="page-link" href="<%=contextPath%>/list.adPro?cpage=<%=p%>&&order=<%=order%>&&by=<%=by%>"><%=p%></a></li>
-		    <% 	}else { %>	
-		            <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.adPro?cpage=<%=p%>&&order=<%=order%>&&by=<%=by%>"><%=p%></a></li>
-		    <% 	} %>
-		    <% } %>
-		    
-		    <% if(pi.getCurrentPage() != pi.getMaxPage()){%>
-		        <li class="page-item"><a class="page-link" href="<%=contextPath%>/list.adPro?cpage=<%=pi.getCurrentPage()+1%>&&order=<%=order%>&&by=<%=by%>">&gt;</a></li>
-		    <% }else{ %>
-		        <li class="page-item disabled"><a class="page-link" href="">&gt;</a></li>
-		    <%} %>
 		</ul>
 	</div>
 	
