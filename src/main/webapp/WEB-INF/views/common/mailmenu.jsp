@@ -84,11 +84,11 @@ a{
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
-                
+                <a href="test.do">테스트</a>
             <ul>
-                <li><a href="list.em">받은메일함</a></li>
-                <li><a href="">보낸메일함</a></li>
-                <li><a>중요메일함</a></li>
+                <li><a href="receivebox.em">받은메일함</a></li>
+                <li><a href="sendbox.em">보낸메일함</a></li>
+                <li><a href="detail.em">중요메일함</a></li>
                 <li><a>임시저장함</a></li>
                 <li>
                     <a>스팸메일함 </a>&nbsp;
