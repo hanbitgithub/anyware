@@ -586,8 +586,12 @@ a {
                                 var sb = this.statusbar;
                                 this.abort.click(function()
                                 {
+                                	
+                                	sb.remove();
+                                	/*
                                     jqxhr.abort();
                                     sb.hide();
+                                    */
                                 });
                             }
                         }

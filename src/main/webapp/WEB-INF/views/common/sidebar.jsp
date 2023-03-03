@@ -239,7 +239,7 @@ a {
                     </a>
 
 
-                    <a href="list.em" class="nav__link">
+                    <a href="receivebox.em" class="nav__link">
                         <ion-icon name="mail-outline"  class="nav__icon"></ion-icon>
                         <span class="nav_name">메일</span>
                     </a>

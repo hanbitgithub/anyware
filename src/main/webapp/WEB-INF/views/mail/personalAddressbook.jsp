@@ -248,6 +248,8 @@
                 </tbody>
                 
             </table>
+       
+            
 
             <!--페이징 영역-->
             <div id="paging-area" align="center">
@@ -262,7 +264,7 @@
               
 
 
-        
+       </div> 
 
        
 
