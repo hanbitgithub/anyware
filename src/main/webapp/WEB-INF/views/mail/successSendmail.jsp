@@ -36,7 +36,9 @@
        <b style="font-size: 18px;">메일쓰기</b>
             <br><br><br><br>
             <div id="innerOuter">
-                <h6 style="font-weight: 600; color: #7291f6;">메일이 성공적으로 발송 되었습니다.</h6>
+                <h6 style="font-weight: 600; color: #7291f6;">
+                <img src="resources/images/paper-plane.png" width="25px"> &nbsp;
+                메일이 성공적으로 발송 되었습니다.</h6>
                 <br>
                 <table class="table">
                     <tr>

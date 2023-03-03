@@ -88,8 +88,8 @@ a{
             <ul>
                 <li><a href="receivebox.em">받은메일함</a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
-                <li><a href="detail.em">중요메일함</a></li>
-                <li><a>임시저장함</a></li>
+                <li><a href="important.em">중요메일함</a></li>
+                <li><a href="storage.em">임시보관함</a></li>
                 <li>
                     <a>스팸메일함 </a>&nbsp;
                     <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
@@ -98,8 +98,8 @@ a{
                 
                 </li>
                 <li>
-                    <a>휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                    <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
@@ -113,10 +113,10 @@ a{
 
                 <ul>
                     <li>
-                        <a ><ion-icon name="chevron-down-outline"></ion-icon> 사내주소록</a>
+                        <a><ion-icon name="chevron-down-outline"></ion-icon> 사내주소록</a>
                        
                         <ul class="group">
-                            <li><a href="#"> 전체</a></li>
+                            <li><a href="company.ad"> 전체</a></li>
                             <li><a href="#">인사팀</a></li>
                             <li><a href="#">개발팀</a></li>
                             <li><a href="#">총무팀</a></li>

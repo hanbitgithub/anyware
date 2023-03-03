@@ -15,6 +15,22 @@ public class MailController {
 		return "mail/sendMailBox";
 	}
 	
+	@RequestMapping("important.em")
+	public String importantMailList() {
+		return "mail/importantMailBox";
+	}
+	
+	@RequestMapping("storage.em")
+	public String temporaryMailList() {
+		return "mail/temporaryStorageMailBox";
+	}
+	
+	@RequestMapping("trash.em")
+	public String trashMailList() {
+		return "mail/trashMailBox";
+	}
+	
+	
 	
 	@RequestMapping("detail.em")
 	public String receiveMailDetail() {
@@ -30,6 +46,11 @@ public class MailController {
 	@RequestMapping("personal.ad")
 	public String personalAddBookList() {
 		return "mail/personalAddressbook";
+	}
+	
+	@RequestMapping("company.ad")
+	public String companyAddBookList() {
+		return "mail/companyAddressbook";
 	}
 	
 	
