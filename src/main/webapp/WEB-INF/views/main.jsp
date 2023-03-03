@@ -83,6 +83,10 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
+		HEAD
+		content
+		
+
 		 
     <div id="wrap">
         <div id="left" style="text-align:center;">
@@ -119,6 +123,7 @@
           <span><b>자유게시판</b></span>
         </div>
     </div>
+
 
 	</div>
 	
