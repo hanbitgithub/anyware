@@ -7,23 +7,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS 사이드바 -->
+   <!-- CSS 사이드바 -->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/styles.css">
+ 
     <!--헤더-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+   
 
     <style>
         /* GOOGLE FONTS */
         @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400');
-        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* VARIABLES CSS */
 :root {
@@ -77,7 +78,7 @@ a {
 	color:white;
 }
 
-.btn{
+.btn-primary{
     background-color:  #7291f6;
     border: none;
 }
@@ -228,7 +229,7 @@ a {
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="#" class="nav__logo">ANYWARE</a>
+                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
                 </div>
                 <div class="nav__list">
                    
@@ -296,7 +297,7 @@ a {
     <!-- IONICONS -->
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
     <!-- JS -->
-    <script src="assets/js/main.js"></script>
+
 
     <script>
         /* EXPANDER MENU */
@@ -366,7 +367,7 @@ a {
         </div>
        
     </div>
-</div>
+
     
 </body>
 </html>

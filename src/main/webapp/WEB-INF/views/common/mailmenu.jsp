@@ -5,6 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+
 <title>Insert title here</title>
 <style>
 /*서브메뉴*/
@@ -102,10 +103,7 @@ a{
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
-                <li> 
-                    <a>메일설정</a>
-                </li>
-
+               
             </ul>
 
             </div>
@@ -128,7 +126,7 @@ a{
                         <a><ion-icon name="chevron-down-outline" ></ion-icon> 개인주소록</a>
                         
                         <ul class="group">
-                            <li><a href="#">전체 </a>
+                            <li><a href="personal.ad">전체 </a>
                                &nbsp;&nbsp;&nbsp;
                                 <button style="border:none; border-radius: 5px; width:20px; height: 20px; line-height: 20px;  font-size: 13px;" 
                                 title="그룹추가" data-toggle="popover" data-trigger="hover" data-content="Some content">

@@ -16,5 +16,10 @@ public class MailController {
 		return "mail/sendMailForm";
 		
 	}
+	
+	@RequestMapping("personal.ad")
+	public String personalAddBookList() {
+		return "mail/personalAddressbook";
+	}
 
 }
