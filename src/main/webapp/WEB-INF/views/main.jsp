@@ -10,29 +10,29 @@
 <style>
 #wrap {
     position:relative;
-    width:1300px; /* wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값 */
-    height:700px;
+    /*width:1300px;  wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값
+    height:700px; */
     top:30%;
     left:30%;
     transform: translate(-30%, +5%); /* 중앙정렬 */
     margin:auto;
 }
 #wrap > #left {
-    width:500px;
+    width:35%;
     height:350px;
     border: 1px solid rgb(247, 247, 247);
     border-radius: 5px;
-    background-color: rgb(247, 247, 247);
+    /*background-color: rgb(247, 247, 247);*/
     float:left;
     margin: 5px;
     box-sizing:border-box; /* border 또한 위치값을 갖기에 div크기가 더 커짐을 방지하기 위한 */
 }
 #wrap > #right {
-    width:770px;
+    width:60%;
     height:350px;
     border: 1px solid rgb(247, 247, 247);
     border-radius: 5px;
-    background-color: rgb(247, 247, 247);
+    /*background-color: rgb(247, 247, 247);*/
     float:left;
     margin: 5px;
     box-sizing:border-box; /* border 또한 위치값을 갖기에 div크기가 더 커짐을 방지하기 위한 */
@@ -91,7 +91,7 @@
     <div id="wrap">
         <div id="left" style="text-align:center;">
           <br><br><br>
-          <img class="profile" src="C:\Users\GDJ57\Desktop\이배추대표이사.jpg">
+          <img class="profile" src="">
             <p><b>이배추 대표이사</b><br>CEO</p>
           <p> 
             출근시간 : 09:00 
