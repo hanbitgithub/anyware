@@ -11,6 +11,15 @@ import lombok.ToString;
 @ToString
 public class Approval {
 	
-	private int appor_no;
-
+	private int apporNo;
+	private int memberNo;
+	private int tlpNo;
+	private String approTitle;
+	private String approContent;
+	private int interNo;
+	private String interAppro;
+	private int finalNo;
+	private String finalAppro;
+	private String createDate;
+	
 }

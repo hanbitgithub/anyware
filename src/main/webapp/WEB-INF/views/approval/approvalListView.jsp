@@ -28,18 +28,23 @@
 		        </tr>
 		    </thead>
 		    <tbody>
+		    	<c:choose>
+		    		<c:when test="${empty list}">
+                        <tr>
+                            <td colspan="8"> 조회된 상품이 없습니다.</td>
+                        </tr>
+                    </c:when>
+                    <c:otherwise>
+                    	<c:forEach var="a" items="${list}">
+	                        <tr>
+	                        	<td>${a.approNo }</td>
+	                        </tr>
+                        </c:forEach>
+                   </c:otherwise>     
+                </c:choose>    	
 		    </tbody>
 		    
 		</table>
-		    <script>
-		    	$(function(){
-		    		if(${empty list}){
-		    			$(".table tbody").html("<tr><td colspan='8'> 조회된 상품이 없습니다.</td></tr>");
-		    		} else if{
-		    			$(".table tbody").html(
-		    		}
-		    	})
-		    </script>
 		
 		<br><br>
 		
