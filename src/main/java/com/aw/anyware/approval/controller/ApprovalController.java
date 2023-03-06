@@ -10,5 +10,10 @@ public class ApprovalController {
 	public String listApproval() {
 		return "approval/approvalListView";
 	}
+	
+	@RequestMapping("enroll.appro")
+	public String enrollAppro() {
+		return "approval/approvalEnrollForm";
+	}
 
 }
