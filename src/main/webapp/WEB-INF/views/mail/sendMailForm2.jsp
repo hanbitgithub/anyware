@@ -27,7 +27,9 @@
 
  
    <!--메일쓰기-->
- 
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+   
 	<!-- select2 -->
 	 <!-- Bootstrap CSS -->
  
@@ -229,8 +231,6 @@ a {
     cursor: pointer;
 }
 
-
-
 /*컨텐트 영역*/
 .content{
     width: 80%;
@@ -257,68 +257,14 @@ a {
 	width: 100%;
 	height: 35px;
 }
-.email{
-    border-radius: 5px;
-	border: 1px solid rgb(190, 190, 190);
-	width: 97%;
-	height: 35px;
-
-}
 
 #write-area {
 	margin-left: 30px;
 }
 
-/*모달*/
-.nav-pills> .nav-item>.active{
-	background-color: white;
-	color:#7291f6;
-
+#state1,#state2 {
+	width: 96%;
 }
-.nav-pills> .nav-item a{
-	color:black;
-
-}
-
-#pre-selected-options{
-	width:300px; important!
-}
-
-
-
-/*tagify*/
-.tags-look .tagify__dropdown__item{
-  display: inline-block;
-  vertical-align: middle;
-  border-radius: 3px;
-  padding: .3em .5em;
-  border: 1px solid #CCC;
-  background: #F3F3F3;
-  margin: .2em;
-  font-size: .85em;
-  color: black;
-  transition: 0s;
-}
-
-.tags-look .tagify__dropdown__item--active{
-  color: black;
-}
-
-.tags-look .tagify__dropdown__item:hover{
-  background: lightyellow;
-  border-color: gold;
-}
-
-.tags-look .tagify__dropdown__item--hidden {
-    max-width: 0;
-    max-height: initial;
-    padding: .3em 0;
-    margin: .2em 0;
-    white-space: nowrap;
-    text-indent: -20px;
-    border: 0;
-}
-
 
 /*드래그드롭*/
 .dragAndDropDiv {
@@ -719,30 +665,22 @@ a {
                         <tr>
                             <th width="120" height="40px">받는사람</th>
                             <td>
-                               
-                                <script src="https://unpkg.com/@yaireo/tagify"></script>
-                                <!--<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>-->
-                                <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+                                <select id="state1" class="multiple form-control" multiple>
+                                    <option value="al">김나라</option>
+                                    <option value="AK">이빛나</option>
+                                    <option value="HI">유한빛</option>
+                                    <option value="TN">김현지</option>
+                                    <option value="TX">이소민</option>
+                                    <option value="FL">성찬호</option>
+                                    <option value="UT">김진우</option>
+                                    <option value="WY">강똥개</option>
+                                </select>
                                 
-                               
-                                <input placeholder="" name="receiver" class="email">
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 <script>
-                                var input = document.querySelector('input[name=receiver]')
-                                tagify = new Tagify(input, {
-                                whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                maxTags: 10,
-                                dropdown: {
-                                    maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                    enabled: 0,             // <- show suggestions on focus
-                                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                }
-                            })  
-                                // 태그가 추가되면 이벤트 발생
-                                tagify.on('add', function() {
-                                  console.log(tagify.value); // 입력된 태그 정보 객체
-                                })
+                                $(document).ready(function() {
+                                    $('.multiple').select2();
+                                });
                                 </script>
 
                             </td>
@@ -750,26 +688,25 @@ a {
                         <tr>
                             <th  width="120" height="40px">참조</th>
                             <td>
-                             
-                                <input placeholder="" name="cc"  class="email">
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
+                              <select id="state2" class="multiple2 form-control" multiple>
+                                    <option value="al">김나라</option>
+                                    <option value="AK">이빛나</option>
+                                    <option value="HI">유한빛</option>
+                                    <option value="TN">김현지</option>
+                                    <option value="TX">이소민</option>
+                                    <option value="FL">성찬호</option>
+                                    <option value="UT">김진우</option>
+                                    <option value="WY">강똥개</option>
+                                </select>
+                                
+                                <button class="btn btn-primary btn-sm">+</button>
                                 <script>
-                                    var input = document.querySelector('input[name=cc]')
-                                    tagify = new Tagify(input, {
-                                    whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                    maxTags: 10,
-                                    dropdown: {
-                                        maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                        enabled: 0,             // <- show suggestions on focus
-                                        closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                    }
-                                })  
-                                    // 태그가 추가되면 이벤트 발생
-                                    tagify.on('add', function() {
-                                    console.log(tagify.value); // 입력된 태그 정보 객체
-                                    })
-                                    </script>
+                                $(document).ready(function() {
+                                    $('.multiple2').select2();
+                                });
+                                </script>
+                            
+                            
                             </td>
                         </tr>
                         <tr>
@@ -832,176 +769,60 @@ a {
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-
-                            <div class="container">
-                                <br>
-                                <!-- Nav tabs -->
-                                <ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
-                                  <li class="nav-item">
-                                    <a class="nav-link active" data-toggle="tab" href="#public">사내주소록</a>
-                                  </li>
-                                  <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="#personal">개인주소록</a>
-                                  </li>
-                                 
-                                </ul>
-                              
-                                <!-- Tab panes -->
-                                <div class="tab-content">
-                                  <div id="public" class="container tab-pane active"><br>
-                                  
-                                    <p align="center">
-                                        <select id='pre-selected-options' multiple='multiple'>   
-							  
-                                            <optgroup label='인사팀'>
-                                             <option value='1'>Yoda</option>
-                                             <option value='2'>Obiwan</option>
-                                           </optgroup>
-                                           <optgroup label='개발팀'>
-                                             <option value='3'>Palpatine</option>
-                                             <option value='4'>Darth Vader</option>
-                                           </optgroup>
-                                           <optgroup label='총무팀'>
-                                             <option value='5'>Palpatine</option>
-                                             <option value='6'>Darth Vader</option>
-                                           </optgroup>
-                                           <optgroup label='기획팀'>
-                                             <option value='7'>Palpatine</option>
-                                             <option value='8'>Darth Vader</option>
-                                           </optgroup>
-             
-                                             <option value='elem_1'>elem 1</option>
-                                             <option value='elem_2'>elem 2</option>
-                                             <option value='elem_3'>elem 3</option>
-                                             <option value='elem_4'>elem 4</option>
-                                             <option value='elem_100'>elem 100</option>
-                                           </select>
-                                          
-                                          
-                                           <!-- ends -->
-                                           
-                                         
-                                     
-                                           <!-- Bootstrap JavaScript -->
-                                           <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-                                           <script src="resources/js/jquery.multi-select.js"></script>
-                                           <script type="text/javascript" src="resources/js/jquery.quicksearch.js"></script>
-                                           <script type="text/javascript">
-                                           // run pre selected options
-                                           $('#pre-selected-options').multiSelect();
-                                        
-             
-                                         </script>
-
-
-                                    </p>
-                                  </div>
-                                  <div id="personal" class="container tab-pane fade"><br>          
-                                    <select id='pre-selected-options2' multiple='multiple'>   
-							  
-                                        <optgroup label='인사팀'>
-                                         <option value='1'>Yoda</option>
-                                         <option value='2'>Obiwan</option>
-                                       </optgroup>
-                                       <optgroup label='개발팀'>
-                                         <option value='3'>Palpatine</option>
-                                         <option value='4'>Darth Vader</option>
-                                       </optgroup>
-                                       <optgroup label='총무팀'>
-                                         <option value='5'>Palpatine</option>
-                                         <option value='6'>Darth Vader</option>
-                                       </optgroup>
-                                       <optgroup label='기획팀'>
-                                         <option value='7'>Palpatine</option>
-                                         <option value='8'>Darth Vader</option>
-                                       </optgroup>
-         
-                                         <option value='elem_1'>elem 1</option>
-                                         <option value='elem_2'>elem 2</option>
-                                         <option value='elem_3'>elem 3</option>
-                                         <option value='elem_4'>elem 4</option>
-                                         <option value='elem_100'>elem 100</option>
-                                       </select>
-                                      
-                                      
-                                       <!-- ends -->
-                                       
-                                     
-                                 
-                                      
-                                       <script type="text/javascript">
-                                       // run pre selected options
-                                       
-                                       $('#pre-selected-options2').multiSelect();
-         
-                                     </script>
-                                  </div>
-                                 
-                                </div>
-                              </div>
-                              
-
-
-
-
-
-
-
                              <!-- start -->
-                             <!--
-                             <form action="#">
-                                <fieldset>
-                                    <input type="text" name="search" value="" id="id_search" placeholder="Search" class="searchable" autofocus />
-                                </fieldset>
-                            </form>
-                            -->
+							
+							  <select id='pre-selected-options' multiple='multiple'>   
+							  
+							   <optgroup label='Friends'>
+							    <option value='1'>Yoda</option>
+							    <option value='2'>Obiwan</option>
+							  </optgroup>
+							  <optgroup label='Enemies'>
+							    <option value='3'>Palpatine</option>
+							    <option value='4'>Darth Vader</option>
+							  </optgroup>
+							    <option value='elem_1'>elem 1</option>
+							    <option value='elem_2'>elem 2</option>
+							    <option value='elem_3'>elem 3</option>
+							    <option value='elem_4'>elem 4</option>
+							    <option value='elem_100'>elem 100</option>
+							  </select>
 							 
-                            <!--
-                            <script>
-
-                            $(function () {
-
-                                $('input#id_search').quicksearch('select#pre-selected-options option');
-
-                              $('.searchable').multiSelect({
-                            selectableHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"12\"'>",
-                            selectionHeader: "<input type='text' class='search-input' autocomplete='off' placeholder='try \"4\"'>",
-                            afterInit: function(ms){
-                                var that = this,
-                                    $selectableSearch = that.$selectableUl.prev(),
-                                    $selectionSearch = that.$selectionUl.prev(),
-                                    selectableSearchString = '#'+that.$container.attr('id')+' .ms-elem-selectable:not(.ms-selected)',
-                                    selectionSearchString = '#'+that.$container.attr('id')+' .ms-elem-selection.ms-selected';
-
-                                that.qs1 = $selectableSearch.quicksearch(selectableSearchString)
-                                .on('keydown', function(e){
-                                if (e.which === 40){
-                                    that.$selectableUl.focus();
-                                    return false;
-                                }
-                                });
-
-                                that.qs2 = $selectionSearch.quicksearch(selectionSearchString)
-                                .on('keydown', function(e){
-                                if (e.which == 40){
-                                    that.$selectionUl.focus();
-                                    return false;
-                                }
-                                });
-                            },
-                            afterSelect: function(){
-                                this.qs1.cache();
-                                this.qs2.cache();
-                            },
-                            afterDeselect: function(){
-                                this.qs1.cache();
-                                this.qs2.cache();
-                            }
-                            });
-                        })
-
+							 
+							  <!-- ends -->
+							  
+							    <!-- start -->
+							
+							  <select id='pre-selected-options2' multiple='multiple'>   
+							  
+							   <optgroup label='Friends'>
+							    <option value='1'>Yoda</option>
+							    <option value='2'>Obiwan</option>
+							  </optgroup>
+							  <optgroup label='Enemies'>
+							    <option value='3'>Palpatine</option>
+							    <option value='4'>Darth Vader</option>
+							  </optgroup>
+							    <option value='elem_1'>elem 1</option>
+							    <option value='elem_2'>elem 2</option>
+							    <option value='elem_3'>elem 3</option>
+							    <option value='elem_4' selected>elem 4</option>
+							    <option value='elem_100'>elem 100</option>
+							  </select>
+							 
+							 
+							  <!-- ends -->
+						
+							  <!-- Bootstrap JavaScript -->
+							  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+							  <script src="resources/js/jquery.multi-select.js"></script>
+							  <script type="text/javascript">
+							  // run pre selected options
+							  $('#pre-selected-options').multiSelect();
+							  $('#pre-selected-options2').multiSelect();
 							  </script>
-							  -->
+							  
+ 
                         
   
 							 
