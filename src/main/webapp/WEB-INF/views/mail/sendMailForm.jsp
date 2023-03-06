@@ -29,11 +29,9 @@
    <!--메일쓰기-->
  
 	<!-- select2 -->
-	 <!-- Bootstrap CSS -->
- 
+	  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="resources/css/multi-select.css">
-
-   <link rel="stylesheet" type="text/css" href="resources/css/icon_font.css" />
 
 	
   
@@ -850,7 +848,7 @@ a {
                                 <div class="tab-content">
                                   <div id="public" class="container tab-pane active"><br>
                                   
-                                    <p align="center">
+                                    <p>
                                         <select id='pre-selected-options' multiple='multiple'>   
 							  
                                             <optgroup label='인사팀'>
@@ -880,12 +878,12 @@ a {
                                           
                                            <!-- ends -->
                                            
+                                           
                                          
-                                     
-                                           <!-- Bootstrap JavaScript -->
-                                           <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-                                           <script src="resources/js/jquery.multi-select.js"></script>
-                                           <script type="text/javascript" src="resources/js/jquery.quicksearch.js"></script>
+                                  
+									  <!-- Bootstrap JavaScript -->
+									  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+									  <script src="resources/js/jquery.multi-select.js"></script>
                                            <script type="text/javascript">
                                            // run pre selected options
                                            $('#pre-selected-options').multiSelect();

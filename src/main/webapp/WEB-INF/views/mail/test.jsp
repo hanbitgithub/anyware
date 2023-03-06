@@ -50,6 +50,7 @@
   <!-- Bootstrap JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
   <script src="resources/js/jquery.multi-select.js"></script>
+  
   <script type="text/javascript">
   // run pre selected options
   $('#pre-selected-options').multiSelect();
