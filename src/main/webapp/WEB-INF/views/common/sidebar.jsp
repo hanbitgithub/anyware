@@ -185,8 +185,8 @@ a {
     margin-right: 20px;
     margin-top: 20px;
 }
-.profile{
-    margin-right: 50px ;
+#profile{
+    margin-right: 50px;
     margin-top: 10px;
 }
 
@@ -266,7 +266,7 @@ a {
                         <span class="nav_name">예약</span>
                     </a>
 
-                    <a href="#" class="nav__link">
+                    <a href="list.no" class="nav__link">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">게시판</span>
 
@@ -344,7 +344,7 @@ a {
     </script>
 
     <div class="header">
-        <div class="dropdown profile" style="display: inline-block;">
+        <div class="dropdown" id="profile" style="display: inline-block;">
             <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
           
             </img>
@@ -357,7 +357,7 @@ a {
           </div>
 
         <div class="chat position-relative" style="display: inline-block">
-            <button type="button" class="position-relative" style="border: none; background-color: white;">
+            <button type="button" class="position-relative" style="border: none; background-color: #ffffff34;">
                 <img src="resources/images/chat-bubble.png" width="30px"  alt="">
                 <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">
                   10

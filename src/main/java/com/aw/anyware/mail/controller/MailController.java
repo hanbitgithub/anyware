@@ -43,6 +43,12 @@ public class MailController {
 		
 	}
 	
+	@RequestMapping("sendToMe.em")
+	public String sendMailToMe() {
+		return "mail/sendMailToMe";
+	}
+	
+	
 	@RequestMapping("personal.ad")
 	public String personalAddBookList() {
 		return "mail/personalAddressbook";
@@ -56,7 +62,7 @@ public class MailController {
 	
 	@RequestMapping("test.do")
 	public String test() {
-		return "mail/successSendmail";
+		return "mail/test";
 	}
 
 
