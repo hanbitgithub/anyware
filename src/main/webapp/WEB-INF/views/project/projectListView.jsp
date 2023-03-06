@@ -81,7 +81,7 @@
 
 		<div class="project-area">
 
-			<div class="project">
+			<div class="project" onclick="location.href='detail.pj';">
 				<div class="project-name">[개발]프로젝트1ㅇㅇㅇㅇd</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
@@ -152,6 +152,8 @@
 				<li class="page-item"><a class="page-link" href="#">1</a></li>
 				<li class="page-item"><a class="page-link" href="#">2</a></li>
 				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<li class="page-item"><a class="page-link" href="#">5</a></li>
 				<li class="page-item"><a class="page-link" href="#">다음</a></li>
 			</ul>
 		</div>
