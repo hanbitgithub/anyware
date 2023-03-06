@@ -272,7 +272,7 @@ a {
 
                     </a>
 
-                    <a href="#" class="nav__link">
+                    <a href="list.pj" class="nav__link">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">프로젝트</span>
 					</a>
