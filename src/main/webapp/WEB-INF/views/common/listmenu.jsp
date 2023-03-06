@@ -36,11 +36,11 @@
 </head>
 <body>
 	 <div class="menu">
-        <span style="font-weight: 600; font-size: 19px;">[개발]프로젝트1</span><br><br>
+        <span style="font-weight: 600; font-size: 19px;">프로젝트</span><br><br>
         
         <div id="list-area">
 	        <ul>
-	            <li><a href="">LIST</a></li> <br>
+	            <li><a href="detail.pj">LIST</a></li> <br>
 	            <li><a href="">인원 관리</a></li> <br>
 	            <li><a href="">일정 관리</a></li> <br>
 	        </ul>

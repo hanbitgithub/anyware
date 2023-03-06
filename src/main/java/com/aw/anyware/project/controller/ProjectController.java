@@ -10,5 +10,10 @@ public class ProjectController {
 	public String projectListView() {
 		return "project/projectListView";
 	}
+	
+	@RequestMapping("detail.pj")
+	public String projectDetailView() {
+		return "project/projectDetailView";
+	}
 
 }
