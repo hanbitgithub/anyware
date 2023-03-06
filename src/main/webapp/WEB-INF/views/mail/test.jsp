@@ -26,13 +26,23 @@
 <body>
  <!-- start -->
   <h1>Pre-selected-options</h1>
-  <select id='pre-selected-options' multiple='multiple'>
+  <select id='pre-selected-options' multiple='multiple'>   
+  
+   <optgroup label='Friends'>
+    <option value='1'>Yoda</option>
+    <option value='2'>Obiwan</option>
+  </optgroup>
+  <optgroup label='Enemies'>
+    <option value='3'>Palpatine</option>
+    <option value='4' disabled>Darth Vader</option>
+  </optgroup>
     <option value='elem_1' selected>elem 1</option>
     <option value='elem_2'>elem 2</option>
     <option value='elem_3'>elem 3</option>
     <option value='elem_4' selected>elem 4</option>
     <option value='elem_100'>elem 100</option>
   </select>
+ 
  
   <!-- ends -->
   <!-- jQuery -->

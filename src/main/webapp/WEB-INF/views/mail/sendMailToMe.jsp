@@ -28,17 +28,8 @@
  
    <!--메일쓰기-->
    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-   
-	<!-- select2 -->
-	 <!-- Bootstrap CSS -->
- 
-  <link rel="stylesheet" type="text/css" href="resources/css/multi-select.css">
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
-   <link rel="stylesheet" type="text/css" href="resources/css/icon_font.css" />
-
-	
-  
     <style>
         /* GOOGLE FONTS */
         @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400');
@@ -262,14 +253,14 @@ a {
 	margin-left: 30px;
 }
 
-#state1,#state2 {
-	width: 96%;
+#state1 {
+	width: 1200px;
 }
 
 /*드래그드롭*/
 .dragAndDropDiv {
 	border: 1px dashed #b1b3b4;
-	width: 1230px;
+	width: 1200px;
 	height: 50px;
 	color: #7c7c7c;
 	text-align: center;
@@ -656,59 +647,13 @@ a {
                     <a href=""><img src="resources/images/send-mail.png" width="25px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="20px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="25px"> 임시저장</a>
-                    <a href="sendToMe.em"><img src="resources/images/exchange.png" width="25px"> 내게쓰기</a>
+                    <a href=""><img src="resources/images/exchange.png" width="25px"> 내게쓰기</a>
                   
                 </div>
                 <br>
                 <div>
                     <table id="write"style="font-size: 15px;">
-                        <tr>
-                            <th width="120" height="40px">받는사람</th>
-                            <td>
-                                <select id="state1" class="multiple form-control" multiple>
-                                    <option value="al">김나라</option>
-                                    <option value="AK">이빛나</option>
-                                    <option value="HI">유한빛</option>
-                                    <option value="TN">김현지</option>
-                                    <option value="TX">이소민</option>
-                                    <option value="FL">성찬호</option>
-                                    <option value="UT">김진우</option>
-                                    <option value="WY">강똥개</option>
-                                </select>
-                                
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
-                                <script>
-                                $(document).ready(function() {
-                                    $('.multiple').select2();
-                                });
-                                </script>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <th  width="120" height="40px">참조</th>
-                            <td>
-                              <select id="state2" class="multiple2 form-control" multiple>
-                                    <option value="al">김나라</option>
-                                    <option value="AK">이빛나</option>
-                                    <option value="HI">유한빛</option>
-                                    <option value="TN">김현지</option>
-                                    <option value="TX">이소민</option>
-                                    <option value="FL">성찬호</option>
-                                    <option value="UT">김진우</option>
-                                    <option value="WY">강똥개</option>
-                                </select>
-                                
-                                <button class="btn btn-primary btn-sm">+</button>
-                                <script>
-                                $(document).ready(function() {
-                                    $('.multiple2').select2();
-                                });
-                                </script>
-                            
-                            
-                            </td>
-                        </tr>
+                      
                         <tr>
                             <th  width="120" height="40px">제목</th>
                             <td><input type="text" name="" value="" class="form-control"></td>
@@ -752,90 +697,14 @@ a {
 
                 </div>
 
+            
+
             </div>
 
             
         </div>
 
         
-               
-                
-                <!-- Modal -->
-                <div class="modal fade" id="addressbook" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">주소록</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                             <!-- start -->
-							
-							  <select id='pre-selected-options' multiple='multiple'>   
-							  
-							   <optgroup label='Friends'>
-							    <option value='1'>Yoda</option>
-							    <option value='2'>Obiwan</option>
-							  </optgroup>
-							  <optgroup label='Enemies'>
-							    <option value='3'>Palpatine</option>
-							    <option value='4'>Darth Vader</option>
-							  </optgroup>
-							    <option value='elem_1'>elem 1</option>
-							    <option value='elem_2'>elem 2</option>
-							    <option value='elem_3'>elem 3</option>
-							    <option value='elem_4'>elem 4</option>
-							    <option value='elem_100'>elem 100</option>
-							  </select>
-							 
-							 
-							  <!-- ends -->
-							  
-							    <!-- start -->
-							
-							  <select id='pre-selected-options2' multiple='multiple'>   
-							  
-							   <optgroup label='Friends'>
-							    <option value='1'>Yoda</option>
-							    <option value='2'>Obiwan</option>
-							  </optgroup>
-							  <optgroup label='Enemies'>
-							    <option value='3'>Palpatine</option>
-							    <option value='4'>Darth Vader</option>
-							  </optgroup>
-							    <option value='elem_1'>elem 1</option>
-							    <option value='elem_2'>elem 2</option>
-							    <option value='elem_3'>elem 3</option>
-							    <option value='elem_4' selected>elem 4</option>
-							    <option value='elem_100'>elem 100</option>
-							  </select>
-							 
-							 
-							  <!-- ends -->
-						
-							  <!-- Bootstrap JavaScript -->
-							  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-							  <script src="resources/js/jquery.multi-select.js"></script>
-							  <script type="text/javascript">
-							  // run pre selected options
-							  $('#pre-selected-options').multiSelect();
-							  $('#pre-selected-options2').multiSelect();
-							  </script>
-							  
- 
-                        
-  
-							 
-							 
-                        </div>
-                        <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            
 
 
 
