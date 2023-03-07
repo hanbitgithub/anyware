@@ -131,7 +131,7 @@ a{
                         </ul>
                     </li>
                      <li>
-                        <a><ion-icon name="chevron-down-outline"></ion-icon> 사내주소록</a>
+                        <a><ion-icon name="chevron-down-outline" class="icon"></ion-icon> 사내주소록</a>
                        
                         <ul class="group">
                             <li><a href="company.ad"> 전체</a></li>
@@ -148,7 +148,11 @@ a{
                     
                     $(".toggle_menu > ul > li").click(function(){
                         $(this).toggleClass("active");
+                        
+                       $(".icon").addClass("rotate");
                     });
+                    
+                 
                 });
 
                </script>

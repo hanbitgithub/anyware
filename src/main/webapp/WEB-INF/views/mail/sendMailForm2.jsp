@@ -7,114 +7,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- CSS 사이드바 -->
-    <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400" rel="stylesheet">
- 
-    <!--헤더-->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-   <!--summernote-->
-   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
-   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-   <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
-
- 
    <!--메일쓰기-->
    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
    
 	<!-- select2 -->
 	 <!-- Bootstrap CSS -->
- 
+  <link rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
   <link rel="stylesheet" type="text/css" href="resources/css/multi-select.css">
 
-   <link rel="stylesheet" type="text/css" href="resources/css/icon_font.css" />
-
-	
-  
     <style>
-        /* GOOGLE FONTS */
-        @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
-
-/* VARIABLES CSS */
-:root {
-    --nav--width: 75px;
-
-    /* Colores */
-    --first-color: #ffffff34;
-    --bg-color: #7291f6;
-    --sub-color: #f3f2f8;
-    --white-color: rgb(248, 248, 248);
-
-    /* Fuente y tipografia */
-    --body-font: 'Nanum Gothic', sans-serif;
-    --normal-font-size: 1rem;
-    --small-font-size: .875rem;
-
-    /* z index */
-    --z-fixed: 100;
+/* Active links menu */
+.active {
+    background-color: var(--first-color);
 }
-
-/* BASE */
-*, ::before, ::after {
-    box-sizing: border-box;
-  
-}
-
-body {
-    position: relative;
-    margin: 0;
-    padding: 0 0 0 80px;
-    font-family: var(--body-font);
-    font-size: var(--normal-font-size);
-    transition: .5s;
-}
-
-h1 {
-    margin: 0;
-}
-
-ul {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-a {
-    text-decoration: none;
-}
-.nav a:hover{
-	text-decoration: none;
-	color:white;
-}
-
-.btn-primary{
-    background-color:  #7291f6;
-    border: none;
-}
-
-/* l NAV */
-.l-navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: var(--nav--width);
-    height: 100vh;
-    background-color: var(--bg-color);
-    color: var(--white-color);
-    padding: 1.5rem 1.1rem 2rem;
-    transition: .5s;
-    z-index: var(--z-fixed);
-}
-
 /* NAV */
 .nav {
     height: 100%;
@@ -123,121 +30,6 @@ a {
     justify-content: space-between;
     overflow: hidden;
 }
-
-.nav__brand {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-}
-
-.nav__toggle {
-    font-size: 1.25rem;
-    padding: .75rem;
-    cursor: pointer;
-}
-
-.nav__logo {
-    color: var(--white-color);
-    font-weight: 600;
-}
-
-.nav__link {
-    display: grid;
-    grid-template-columns: max-content max-content;
-    align-items: center;
-    column-gap: .75rem;
-    padding: .75rem;
-    color: var(--white-color);
-    border-radius: .5rem;
-    margin-bottom: 1rem;
-    transition: .3s;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.nav__link:hover {
-    background-color: var(--first-color);
-}
-
-.nav__icon {
-    font-size: 1.25rem;
-}
-
-.nav_name {
-    font-size: var(--small-font-size);
-}
-
-/* Expander menu */
-.expander {
-    width: calc(var(--nav--width) + 8.25rem);
-}
-
-/* Add padding body*/
-.body-pd {
-    padding:0 0 0 13.2rem;
-}
-
-/* Active links menu */
-.active {
-    background-color: var(--first-color);
-}
-
-
-
-/* Rotate icon */
-.rotate {
-    transform: rotate(180deg);
-    transition: .5s;
-}
-
-/*헤더*/
-.header{
-    height: 20px;
-}
-.header *{
-   float: right;
-}
-.chat{
-    margin-right: 20px;
-    margin-top: 20px;
-}
-.profile{
-    margin-right: 50px ;
-    margin-top: 10px;
-}
-
-/*서브메뉴*/
-.menu{
-    position: fixed;
-    height: 100vh;
-    width: 160px;
-    font-size: 14px;
-    padding: 50px 20px;
-    border-right: 1px solid rgb(211, 210, 210);
-    font-family: 'Nanum Gothic', sans-serif;
-}
-.menu li{
-    margin-top: 5px;
-   
-}
-#mail-area li:hover{
-    color: gray;
-    cursor: pointer;
-}
-#adbook-area>ul>li li:hover{
-    color: gray;
-    cursor: pointer;
-}
-
-/*컨텐트 영역*/
-.content{
-    width: 80%;
-    margin-left: 200px;
-    margin-top: 50px;
-}
-
 
 /*메일*/
 #btn-area a {
@@ -257,6 +49,13 @@ a {
 	width: 100%;
 	height: 35px;
 }
+.email{
+    border-radius: 5px;
+	border: 1px solid rgb(190, 190, 190);
+	width: 97%;
+	height: 35px;
+
+}
 
 #write-area {
 	margin-left: 30px;
@@ -264,6 +63,17 @@ a {
 
 #state1,#state2 {
 	width: 96%;
+}
+
+/*모달*/
+.nav-pills> .nav-item>.active{
+	background-color: white;
+	color:#7291f6;
+
+}
+.nav-pills> .nav-item a{
+	color:black;
+
 }
 
 /*드래그드롭*/
@@ -348,155 +158,21 @@ a {
 
 </head>
 <body id="body-pd">
-        <div id="side">
-        <div class="l-navbar" id="navbar">
-         <nav class="nav">
-            <div>
-                <div class="nav__brand">
-                    <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
-                </div>
-                <div class="nav__list">
-                   
-                    <a href="#" class="nav__link">
-                        <ion-icon name="person-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">인사</span>
-                    </a>
+	<!-- 사이드 바  -->
+	<jsp:include page="../common/sidebar.jsp"></jsp:include>
 
-
-                    <a href="list.em" class="nav__link">
-                        <ion-icon name="mail-outline"  class="nav__icon"></ion-icon>
-                        <span class="nav_name">메일</span>
-                    </a>
-
-                    <a href="#" class="nav__link">
-                        <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">메신저</span>
-                    </a>
-                    
-                    <a href="#" class="nav__link">
-                        <ion-icon name="document-text-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">전자결재</span>
-                    </a>
-
-
-                    <a href="#" class="nav__link">
-                        <ion-icon name="calendar-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">일정관리</span>
-                    </a>
-
-                    
-                    <a href="#" class="nav__link">
-                        <ion-icon name="time-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">예약</span>
-                    </a>
-
-                    <a href="#" class="nav__link">
-                        <ion-icon name="people-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">게시판</span>
-
-                    </a>
-
-                    <a href="#" class="nav__link">
-                        <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">프로젝트</span>
-					</a>
-
-                        
-                    </div>
-                    <a href="#" class="nav__link">
-                        <ion-icon name="git-network-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">조직도</span>
-                    </a>
-
-                   
-                </div>
-                <a href="#" class="nav__link">
-                    <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
-                    <span class="nav_name">Logout</span>
-                </a>
-            </div>
-        </nav>
-    </div>
-
-    <!-- IONICONS -->
-    <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-    <!-- JS -->
-
-
-    <script>
-        /* EXPANDER MENU */
-    const showMenu = (toggleId, navbarId, bodyId) => {
-    const toggle = document.getElementById(toggleId),
-    navbar = document.getElementById(navbarId),
-    bodypadding = document.getElementById(bodyId)
-
-    if( toggle && navbar ) {
-        toggle.addEventListener('click', ()=>{
-            navbar.classList.toggle('expander');
-
-            bodypadding.classList.toggle('body-pd')
-        })
-    }
-
-  
-    }
-
-    showMenu('nav-toggle', 'navbar', 'body-pd')
-
-    /* LINK ACTIVE */
-    const linkColor = document.querySelectorAll('.nav__link')
-    function colorLink() {
-        linkColor.forEach(l=> l.classList.remove('active'))
-        this.classList.add('active')
-    }
-    linkColor.forEach(l=> l.addEventListener('click', colorLink))
-
-    /* COLLAPSE MENU */
-    const linkCollapse = document.getElementsByClassName('collapse__link')
-    var i
-
-    for(i=0;i<linkCollapse.length;i++) {
-        linkCollapse[i].addEventListener('click', function(){
-            const collapseMenu = this.nextElementSibling
-            collapseMenu.classList.toggle('showCollapse')
-
-            const rotate = collapseMenu.previousElementSibling
-            rotate.classList.toggle('rotate')
-        });
-    }
-
-    </script>
-
-    <div class="header">
-        <div class="dropdown profile" style="display: inline-block;">
-            <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
-          
-            </img>
-            <div class="dropdown-menu" style="font-size: 12px;">
-              <a class="dropdown-item" href="#">정보수정</a>
-              <a class="dropdown-item" href="#">근태관리</a>
-              <a class="dropdown-item" href="#">일정관리</a>
-              <a class="dropdown-item" href="#">로그아웃</a>
-            </div>
-          </div>
-
-        <div class="chat position-relative" style="display: inline-block">
-            <button type="button" class="position-relative" style="border: none; background-color: white;">
-                <img src="resources/images/chat-bubble.png" width="30px"  alt="">
-                <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">
-                  10
-                  <span class="visually-hidden">unread messages</span>
-                </span>
-              </button>
-        </div>
-       
-    </div>
-  <!-- 세부 메뉴 -->
+	<!-- 세부 메뉴 -->
 	<jsp:include page="../common/mailmenu.jsp"></jsp:include>
 	
+	<!--summernote-->
+   <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet"> 
+   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+   <script src=" https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.18/lang/summernote-ko-KR.min.js"></script>
 
-    <script type="text/javascript">
+ 
+
+
+	<script type="text/javascript">
                     $(document).ready(function(){
                         var objDragAndDrop = $(".dragAndDropDiv");
                         
@@ -661,26 +337,36 @@ a {
                 </div>
                 <br>
                 <div>
-                    <table id="write"style="font-size: 15px;">
+                      <table id="write"style="font-size: 15px;">
                         <tr>
                             <th width="120" height="40px">받는사람</th>
                             <td>
-                                <select id="state1" class="multiple form-control" multiple>
-                                    <option value="al">김나라</option>
-                                    <option value="AK">이빛나</option>
-                                    <option value="HI">유한빛</option>
-                                    <option value="TN">김현지</option>
-                                    <option value="TX">이소민</option>
-                                    <option value="FL">성찬호</option>
-                                    <option value="UT">김진우</option>
-                                    <option value="WY">강똥개</option>
-                                </select>
+                               
+                                <script src="https://unpkg.com/@yaireo/tagify"></script>
+                                <!--<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>-->
+                                <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
+                               
+                                <input placeholder="" name="receiver" class="email">
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 <script>
-                                $(document).ready(function() {
-                                    $('.multiple').select2();
-                                });
+                                
+                                
+                                var input = document.querySelector('input[name=receiver]')
+                                tagify = new Tagify(input, {
+                                whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+                                maxTags: 10,
+                                dropdown: {
+                                    maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                    enabled: 0,             // <- show suggestions on focus
+                                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                }
+                            })  
+                                // 태그가 추가되면 이벤트 발생
+                                tagify.on('add', function() {
+                                  console.log(tagify.value); // 입력된 태그 정보 객체
+                                })
                                 </script>
 
                             </td>
@@ -688,25 +374,26 @@ a {
                         <tr>
                             <th  width="120" height="40px">참조</th>
                             <td>
-                              <select id="state2" class="multiple2 form-control" multiple>
-                                    <option value="al">김나라</option>
-                                    <option value="AK">이빛나</option>
-                                    <option value="HI">유한빛</option>
-                                    <option value="TN">김현지</option>
-                                    <option value="TX">이소민</option>
-                                    <option value="FL">성찬호</option>
-                                    <option value="UT">김진우</option>
-                                    <option value="WY">강똥개</option>
-                                </select>
-                                
-                                <button class="btn btn-primary btn-sm">+</button>
+                             
+                                <input placeholder="" name="cc"  class="email">
+                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 <script>
-                                $(document).ready(function() {
-                                    $('.multiple2').select2();
-                                });
-                                </script>
-                            
-                            
+                                    var input = document.querySelector('input[name=cc]')
+                                    tagify = new Tagify(input, {
+                                    whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
+                                    maxTags: 10,
+                                    dropdown: {
+                                        maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                        enabled: 0,             // <- show suggestions on focus
+                                        closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                    }
+                                })  
+                                    // 태그가 추가되면 이벤트 발생
+                                    tagify.on('add', function() {
+                                    console.log(tagify.value); // 입력된 태그 정보 객체
+                                    })
+                                    </script>
                             </td>
                         </tr>
                         <tr>
@@ -765,68 +452,116 @@ a {
                     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
                     <div class="modal-content">
                         <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="exampleModalLabel">주소록</h1>
+                        <h5 class="modal-title fs-5" id="exampleModalLabel">주소록</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                             <!-- start -->
-							
-							  <select id='pre-selected-options' multiple='multiple'>   
-							  
-							   <optgroup label='Friends'>
-							    <option value='1'>Yoda</option>
-							    <option value='2'>Obiwan</option>
-							  </optgroup>
-							  <optgroup label='Enemies'>
-							    <option value='3'>Palpatine</option>
-							    <option value='4'>Darth Vader</option>
-							  </optgroup>
-							    <option value='elem_1'>elem 1</option>
-							    <option value='elem_2'>elem 2</option>
-							    <option value='elem_3'>elem 3</option>
-							    <option value='elem_4'>elem 4</option>
-							    <option value='elem_100'>elem 100</option>
-							  </select>
-							 
-							 
-							  <!-- ends -->
-							  
-							    <!-- start -->
-							
-							  <select id='pre-selected-options2' multiple='multiple'>   
-							  
-							   <optgroup label='Friends'>
-							    <option value='1'>Yoda</option>
-							    <option value='2'>Obiwan</option>
-							  </optgroup>
-							  <optgroup label='Enemies'>
-							    <option value='3'>Palpatine</option>
-							    <option value='4'>Darth Vader</option>
-							  </optgroup>
-							    <option value='elem_1'>elem 1</option>
-							    <option value='elem_2'>elem 2</option>
-							    <option value='elem_3'>elem 3</option>
-							    <option value='elem_4' selected>elem 4</option>
-							    <option value='elem_100'>elem 100</option>
-							  </select>
-							 
-							 
-							  <!-- ends -->
-						
-							  <!-- Bootstrap JavaScript -->
-							  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-							  <script src="resources/js/jquery.multi-select.js"></script>
-							  <script type="text/javascript">
-							  // run pre selected options
-							  $('#pre-selected-options').multiSelect();
-							  $('#pre-selected-options2').multiSelect();
-							  </script>
-							  
- 
-                        
-  
-							 
-							 
+                        <div class="container2">
+						<br>
+						<!-- Nav tabs -->
+						<ul class="nav nav-pills flex-column flex-sm-row nav-justified"
+							role="tablist">
+							<li class="nav-item"><a class="nav-link active"
+								data-toggle="tab" href="#public">사내주소록</a></li>
+							<li class="nav-item"><a class="nav-link" data-toggle="tab"
+								href="#personal">개인주소록</a></li>
+
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div id="public" class="container tab-pane active">
+								<br>
+
+								<p>
+									<select id='pre-selected-options' multiple='multiple'>
+
+										<optgroup label='인사팀'>
+											<option value='1'>Yoda</option>
+											<option value='2'>Obiwan</option>
+										</optgroup>
+										<optgroup label='개발팀'>
+											<option value='3'>Palpatine</option>
+											<option value='4'>Darth Vader</option>
+										</optgroup>
+										<optgroup label='총무팀'>
+											<option value='5'>Palpatine</option>
+											<option value='6'>Darth Vader</option>
+										</optgroup>
+										<optgroup label='기획팀'>
+											<option value='7'>Palpatine</option>
+											<option value='8'>Darth Vader</option>
+										</optgroup>
+
+										<option value='elem_1'>elem 1</option>
+										<option value='elem_2'>elem 2</option>
+										<option value='elem_3'>elem 3</option>
+										<option value='elem_4'>elem 4</option>
+										<option value='elem_100'>elem 100</option>
+									</select>
+
+
+									<!-- ends -->
+
+
+
+
+						<!-- Bootstrap JavaScript -->
+						<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+						<script src="resources/js/jquery.multi-select.js"></script>
+						<script type="text/javascript">
+                          // run pre selected options
+                          $('#pre-selected-options').multiSelect();
+                       
+
+                        </script>
+
+
+								</p>
+							</div>
+							<div id="personal" class="container tab-pane fade">
+								<br> <select id='pre-selected-options2' multiple='multiple'>
+
+									<optgroup label='인사팀'>
+										<option value='1'>Yoda</option>
+										<option value='2'>Obiwan</option>
+									</optgroup>
+									<optgroup label='개발팀'>
+										<option value='3'>Palpatine</option>
+										<option value='4'>Darth Vader</option>
+									</optgroup>
+									<optgroup label='총무팀'>
+										<option value='5'>Palpatine</option>
+										<option value='6'>Darth Vader</option>
+									</optgroup>
+									<optgroup label='기획팀'>
+										<option value='7'>Palpatine</option>
+										<option value='8'>Darth Vader</option>
+									</optgroup>
+
+									<option value='elem_1'>elem 1</option>
+									<option value='elem_2'>elem 2</option>
+									<option value='elem_3'>elem 3</option>
+									<option value='elem_4'>elem 4</option>
+									<option value='elem_100'>elem 100</option>
+								</select>
+
+
+								<!-- ends -->
+
+
+
+
+								<script type="text/javascript">
+                                       // run pre selected options
+                                       
+                                       $('#pre-selected-options2').multiSelect();
+         
+                                     </script>
+							</div>
+
+						</div>
+					</div>
                         </div>
                         <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
