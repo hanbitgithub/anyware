@@ -278,12 +278,6 @@ a {
 
 }
 
-#pre-selected-options{
-	width:300px; important!
-}
-
-
-
 /*tagify*/
 .tags-look .tagify__dropdown__item{
   display: inline-block;

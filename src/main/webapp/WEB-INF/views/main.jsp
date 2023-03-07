@@ -71,6 +71,15 @@
   float: left;
   margin-left: 10px;
   }
+
+/*메일*/
+.nav-pills{
+  width: 300px;
+  font-size: 13px;
+
+}  
+
+
 </style>
 </head>
 <body>
@@ -78,8 +87,7 @@
 	<!-- 사이드 바  -->
 	<jsp:include page="common/sidebar.jsp"></jsp:include>
 	
-	<!-- 세부 메뉴 -->
-	<jsp:include page="common/appro.jsp"></jsp:include>
+	
 	
 	<!-- 세부 내용 -->
 	<div class="content">
@@ -112,9 +120,93 @@
 
         <div id="left">
         <br>
-        <i class="fa-regular fa-envelope"></i> &nbsp;
-          <span><b>메일</b></span>
-        </div>
+       <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
+          <span><b>&nbsp; ✉️ &nbsp; 메일함</b></span>
+          <div class="container">
+               <br>
+               <!-- Nav tabs -->
+               <ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
+                 <li class="nav-item">
+                   <a class="nav-link active" data-toggle="tab" href="#receive" style="background-color:white;color:black;">받은메일</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" data-toggle="tab" href="#send" style="background-color:white; color:black">보낸메일</a>
+                 </li>
+                
+               </ul>
+
+             
+               <!-- Tab panes -->
+               <div class="tab-content">
+                 <div id="receive" class="container tab-pane active"><br>
+                  <table class="table table-hover" style="font-size:12px">
+	                  <tr>
+	                  	<td width="20">김강쥐</td>
+	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                  <tr>
+	                  	<td width="20">김강쥐</td>
+	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr>    
+	                  <tr>
+	                  	<td width="20">김강쥐</td>
+	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr>    
+	                  <tr>
+	                  	<td width="20">김강쥐</td>
+	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr>    
+	                  <tr>
+	                  	<td width="20">김강쥐</td>
+	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr>    
+	                             
+	                   
+                  </table>
+                  
+                 </div>
+                 <div id="send" class="container tab-pane fade"><br>          
+                   <table class="table table-hover" style="font-size:12px">
+	                  <tr>
+	                  	<td width="20">이배추</td>
+	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                 <tr>
+	                  	<td width="20">이배추</td>
+	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr>   
+	                  <tr>
+	                  	<td width="20">이배추</td>
+	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                  <tr>
+	                  	<td width="20">이배추</td>
+	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                  <tr>
+	                  	<td width="20">이배추</td>
+	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                             
+	                   
+                  </table>
+                 </div>
+                
+               </div>
+          </div>
+                              
+				
+		</div>
 
 
         <div id="right">

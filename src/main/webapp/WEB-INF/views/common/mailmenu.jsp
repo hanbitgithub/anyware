@@ -76,6 +76,7 @@ a{
 }
 
 
+
 </style>
 </head>
 <body>
@@ -112,16 +113,7 @@ a{
                 <span style="font-weight: 600; font-size: 15px;" >주소록</span><br>
 
                 <ul>
-                    <li>
-                        <a><ion-icon name="chevron-down-outline"></ion-icon> 사내주소록</a>
-                       
-                        <ul class="group">
-                            <li><a href="company.ad"> 전체</a></li>
-                            <li><a href="#">인사팀</a></li>
-                            <li><a href="#">개발팀</a></li>
-                            <li><a href="#">총무팀</a></li>
-                        </ul>
-                    </li>
+                   
                     <li>
                         <a><ion-icon name="chevron-down-outline" ></ion-icon> 개인주소록</a>
                         
@@ -129,13 +121,23 @@ a{
                             <li><a href="personal.ad">전체 </a>
                                &nbsp;&nbsp;&nbsp;
                                 <button style="border:none; border-radius: 5px; width:20px; height: 20px; line-height: 20px;  font-size: 13px;" 
-                                title="그룹추가" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                                title="그룹추가" data-toggle="popover" data-trigger="hover" data-content="Some content" data-bs-toggle="modal" data-bs-target="#groupAdd">
                                 <b>+</b></button>
                             </li>
                             <li><a href="#">거래처1</a></li>
                             <li><a href="#">개미</a></li>
                             
                           
+                        </ul>
+                    </li>
+                     <li>
+                        <a><ion-icon name="chevron-down-outline"></ion-icon> 사내주소록</a>
+                       
+                        <ul class="group">
+                            <li><a href="company.ad"> 전체</a></li>
+                            <li><a href="#">인사팀</a></li>
+                            <li><a href="#">개발팀</a></li>
+                            <li><a href="#">총무팀</a></li>
                         </ul>
                     </li>
 
@@ -151,7 +153,9 @@ a{
 
                </script>
             </div>
- 
+            
+			
+			 
     </div>
 	
 </body>

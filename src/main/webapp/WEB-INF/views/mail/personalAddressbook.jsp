@@ -49,7 +49,7 @@
     border: none;
     border-radius: 5px;
     font-size: 13px;
-    font-weight: 600;
+ 
     color: white;
     padding: 5px 10px;
 }
@@ -122,15 +122,15 @@
                                                         <option>거래처1</option>
                                                         <option>거래처2</option>
                                                     </select>
-                                                    <button class="btn btn-secondary">+</button>
+                                                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
                                                 </td>
                                             </tr>
-
-
+                                            
+                                 
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary">저장</button>
+                                    <button type="button" class="btn btn-primary btn-sm">저장</button>
                                     <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
                                     </div>
                                 </div>
@@ -176,7 +176,7 @@
                                                 <option>거래처1</option>
                                                 <option>거래처2</option>
                                             </select>
-                                            <button class="btn btn-secondary">+</button>
+                                            <button class="btn btn-secondary btn-sm btn2" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
                                          </td>
                                     </tr>
                                     <tr>
@@ -188,9 +188,9 @@
                                 </div>
                                 <div class="modal-footer">
                                 
-                                <button type="button" class="btn btn-primary">그룹이름변경</button>
+                                <button type="button" class="btn btn-primary btn-sm">그룹이름변경</button>
                                 <button type="button" class="btn2">그룹삭제</button>
-                                <button type="button" class="btn2" data-bs-dismiss="modal">취소</button>
+                              
                                 </div>
                             </div>
                             </div>
@@ -265,6 +265,34 @@
 
 
        </div> 
+       
+       		 <!-- Modal -->
+                        <div class="modal fade" id="groupAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <b>그룹관리</b>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                <table>
+                                  
+                                    <tr>
+                                        <th width="100">그룹명</th>
+                                        <td><input type="text"></td>
+                                    </tr>
+                                </table>
+                    
+                                </div>
+                                <div class="modal-footer">
+                                
+                                <button type="button" class="btn btn-primary btn-sm">그룹추가</button>
+                                <button type="button" class="btn2">취소</button>
+                              
+                                </div>
+                            </div>
+                            </div>
+                        </div>
 
        
 
