@@ -31,25 +31,59 @@
 		    	<c:choose>
 		    		<c:when test="${empty list}">
                         <tr>
-                            <td colspan="8"> 조회된 상품이 없습니다.</td>
+                            <td colspan="6"> 조회된 상품이 없습니다.</td>
                         </tr>
                     </c:when>
                     <c:otherwise>
                     	<c:forEach var="a" items="${list}">
 	                        <tr>
-	                        	<td>${a.approNo }</td>
+	                        	<td>${a.approNo}</td>
+	                        	<td>${a.approTitle}</td>
+	                        	<td>${a.approWriter}</td>
+	                        	<td>${a.writerJob}</td>
+	                        	<td>${a.createDate}</td>
+	                        	<td>${a.tplNo}</td>
 	                        </tr>
                         </c:forEach>
                    </c:otherwise>     
                 </c:choose>    	
 		    </tbody>
-		    
 		</table>
+		
+		<ul class="page pagination">
+                    
+                    <c:choose>
+	                    <c:when test="${pi.currentPage != 1}">
+	                        <li class="page-item"><a class="page-link" href="list.appro?cpage=${pi.currentPage - 1}">&lt;</a></li>
+	                    </c:when>    
+	                    <c:otherwise>
+                        	<li class="page-item disabled"><a class="page-link " href="">&lt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                    
+                    <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
+                    	<c:choose>
+                    		<c:when test="${pi.currentPage eq p}">
+                            	<li class="page-item active"><a class="page-link" href="list.appro?cpage=${p}">"${p}"</a></li>
+                            </c:when>
+                            <c:otherwise>
+                          		<li class="page-item"><a class="page-link" href="list.appro?cpage=${p}">"${p}"</a></li>
+                            </c:otherwise>
+                    	</c:choose>
+                    </c:forEach>
+                    
+                    <c:choose>
+                    	<c:when test="${pi.currentPage != pi.maxPage }">
+                        	<li class="page-item"><a class="page-link" href="list.appro?cpage=${pi.currentPage + 1}">&gt;</a></li>
+                       	</c:when>
+                       	<c:otherwise>
+                        	<li class="page-item disabled"><a class="page-link" href="">&gt;</a></li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
 		
 		<br><br>
 		
-		<ul class="page pagination">
-		</ul>
 	</div>
 	
 </body>
