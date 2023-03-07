@@ -9,7 +9,7 @@
 <style>
     /* div{border: 1px solid black;} */
     .list-area{
-        width: 1400px;
+        width: 1200px;
         height: 660px;
         overflow: auto;
     }
@@ -31,8 +31,30 @@
         font-size: 17px;
         font-weight: bold;
     }
-    span{
+    .list span{
         font-size: 17px;
+    }
+
+    .essential{
+		color: red;
+	}
+	#name{
+		width: 350px;
+		margin-left: 10px;
+	}
+	.btn-area{
+		width: 466px;
+	}
+    input[type=color]{
+        margin-left: 55px;
+        width: 352px;
+        height: 30px;
+    }
+    .date{
+        margin-top: 10px;
+    }
+    input[name=color]{
+        
     }
 </style>
 </head>
@@ -47,11 +69,11 @@
         <br>
         <div>이 프로젝트는 무슨 프로젝트일까용?</div>
         <br>
-        <button type="button" class="btn btn-primary">리스트 추가</button>
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">리스트 추가</button>
         <br><br>
 
         <div class="list-area">
-			<div class="list">
+			<div class="list" onclick="location.href='detail.li'">
 				<div class="list-name">프로젝트 기획보고서</div>
                 <br>
                 <div class="period">기간</div>
@@ -84,6 +106,55 @@
 		</div>
         
     </div>
+
+    <!-- The Modal -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+		
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title">리스트 생성</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+		
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="">
+						<div>
+							<b>리스트 이름<span class="essential"> *</span></b>
+							<input type="text" id="name" name="">
+						</div>
+						<br>
+						<div>
+                            <b>기간<span class="essential"> *</span></b><br>
+                            <input type="date" required class="date"> - <input type="date" required class="date">
+                        </div>
+                        <br>
+                        <div>
+                            <b>색상<span class="essential"> *</span></b><br>
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                            <input type="radio" name="color" value="">
+                        </div>
+						<br><br>
+
+						<div class="btn-area" align="center">
+							<button type="submit" class="btn btn-primary">생성</button>&nbsp;
+							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+						</div>
+
+					</form>
+				</div>
+		
+			</div>
+		</div>
+	</div>
+      
 
 </body>
 </html>
