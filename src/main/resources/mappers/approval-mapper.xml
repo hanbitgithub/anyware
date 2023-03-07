@@ -1,12 +1,46 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
-<mapper namespace="approMapper">
+<mapper namespace="approvalMapper">
   
-  <!-- 
-  <resultMap id="" type="">
-  	<id column="" property=""/>
-  	<result column="" property=""/>
+  <resultMap id="approvalResult" type="Approval">
+  	<id column="appro_no" property=""/>
+  	<result column="member_no" property=""/>
+  	<result column="tlp_no" property=""/>
+  	<result column="appro_title" property=""/>
+  	<result column="appro_content" property=""/>
+  	<result column="inter_no" property=""/>
+  	<result column="inter_appro" property=""/>
+  	<result column="final_no" property=""/>
+  	<result column="final_appro" property=""/>
+  	<result column="create_date" property=""/>
+  	
+	<collection property="refNo" ofType="Integer">
+	    <result column=""/>
+	</collection>
+	
+	<collection property="openNo" ofType="Integer">
+	    <result column=""/>
+	</collection>
+  	
   </resultMap>
-   -->
+  
+  <insert id="insertTpl">
+ 	insert 
+	  into tb_app_tpl
+	        (
+	            tpl_no
+	          , tpl_title
+	          , tpl_content
+	          , status
+	        )       
+	values   
+	        (
+	            10
+	          , 'test'
+	          , 'testContent'
+	          , 'Y'
+	        )
+  </insert>
+   
    
 </mapper>

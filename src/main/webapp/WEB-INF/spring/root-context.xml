@@ -27,7 +27,11 @@
 	
 	<bean class="org.apache.commons.dbcp.BasicDataSource" id="dataSource" destroy-method="close">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+<<<<<<< Updated upstream
 		<property name="url" value="jdbc:oracle:thin:@localhost:8877:xe"/>
+=======
+		<property name="url" value="jdbc:oracle:thin:@gd1class.iptime.org:8877:xe"/>
+>>>>>>> Stashed changes
 		<property name="username" value="gdj57_workanyware"/>
 		<property name="password" value="gdj57_workanyware"/>
 	</bean>
