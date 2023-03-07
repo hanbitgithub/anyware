@@ -247,6 +247,7 @@ a {
 
 #btn-area a:hover {
 	color: #7c7c7c;
+	text-decoration: none;
 }
 
 #write input[type="text"] {

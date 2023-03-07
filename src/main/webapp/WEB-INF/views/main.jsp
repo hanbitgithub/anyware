@@ -73,10 +73,8 @@
   }
 
 /*메일*/
-.nav-pills{
-  width: 300px;
+.nav-tabs{
   font-size: 13px;
-
 }  
 
 
@@ -121,16 +119,16 @@
         <div id="left">
         <br>
        <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
-          <span><b>&nbsp; ✉️ &nbsp; 메일함</b></span>
+          <span><b>&nbsp;&nbsp; ✉️ &nbsp; 메일함</b></span>
           <div class="container">
                <br>
                <!-- Nav tabs -->
-               <ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
+               <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" role="tablist">
                  <li class="nav-item">
-                   <a class="nav-link active" data-toggle="tab" href="#receive" style="background-color:white;color:black;">받은메일</a>
+                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:black;">받은메일</a>
                  </li>
                  <li class="nav-item">
-                   <a class="nav-link" data-toggle="tab" href="#send" style="background-color:white; color:black">보낸메일</a>
+                   <a class="nav-link" data-toggle="tab" href="#send" style="color:black;">보낸메일</a>
                  </li>
                 
                </ul>
@@ -138,7 +136,7 @@
              
                <!-- Tab panes -->
                <div class="tab-content">
-                 <div id="receive" class="container tab-pane active"><br>
+                 <div id="receive" class="container tab-pane active">
                   <table class="table table-hover" style="font-size:12px">
 	                  <tr>
 	                  	<td width="20">김강쥐</td>
@@ -170,7 +168,7 @@
                   </table>
                   
                  </div>
-                 <div id="send" class="container tab-pane fade"><br>          
+                 <div id="send" class="container tab-pane fade">       
                    <table class="table table-hover" style="font-size:12px">
 	                  <tr>
 	                  	<td width="20">이배추</td>
