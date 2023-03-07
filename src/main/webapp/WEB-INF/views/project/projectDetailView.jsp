@@ -52,10 +52,28 @@
     }
     .date{
         margin-top: 10px;
+        width: 150px;
+        text-align: center;
     }
-    input[name=color]{
-        
+
+    input[type=checkbox] + label{
+        cursor: pointer;
     }
+    input[type=checkbox]{
+        display: none;
+    }
+    label{
+        width: 25px;
+        height: 25px;
+        margin-top: 10px;
+        margin-right: 10px;
+        border-radius: 0.3em;
+        vertical-align:middle;
+        color: white;
+        font-size: 17px;
+        text-align: center;
+    }
+
 </style>
 </head>
 <body>
@@ -133,14 +151,50 @@
                         <br>
                         <div>
                             <b>색상<span class="essential"> *</span></b><br>
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
-                            <input type="radio" name="color" value="">
+                            <input type="checkbox" name="color" value="red" id="red" onclick="checkOnlyOne(this);">
+                            <label for="red" class="check-label"></label>
+                            <input type="checkbox" name="color" value="orange" id="orange" onclick="checkOnlyOne(this);">
+                            <label for="orange" class="check-label"></label>
+                            <input type="checkbox" name="color" value="gold" id="gold" onclick="checkOnlyOne(this);">
+                            <label for="gold" class="check-label"></label>
+                            <input type="checkbox" name="color" value="green" id="green" onclick="checkOnlyOne(this);">
+                            <label for="green" class="check-label"></label>
+                            <input type="checkbox" name="color" value="blue" id="blue" onclick="checkOnlyOne(this);">
+                            <label for="blue" class="check-label"></label>
+                            <input type="checkbox" name="color" value="indigo" id="indigo" onclick="checkOnlyOne(this);">
+                            <label for="indigo" class="check-label"></label>
+                            <input type="checkbox" name="color" value="purple" id="purple" onclick="checkOnlyOne(this);">
+                            <label for="purple" class="check-label"></label>
                         </div>
+
+                        <script>
+                            $(function(){
+                                const label = document.querySelectorAll("label");
+
+                                label.forEach(function(lb){
+                                    lb.style.background = lb.getAttribute("for");
+                                })
+                            })
+
+                            function checkOnlyOne(element) {
+                                const checkbox = document.getElementsByName("color");
+                                const label = document.querySelectorAll("label");
+                                
+                                checkbox.forEach(function(cb){
+                                    cb.checked = false;
+                                    
+                                })
+
+                                label.forEach(function(lb){
+                                    lb.innerText = "";
+                                })
+                                
+                                element.checked = true;
+                                element.nextElementSibling.innerText = "✔";
+                            }
+ 
+                        </script>
+
 						<br><br>
 
 						<div class="btn-area" align="center">

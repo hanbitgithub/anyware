@@ -30,11 +30,14 @@
 	}
 	.project-name{
 		width: 190px;
-		height: 30px;
+		/* height: 30px; */
 		font-size: 18px;
 		text-overflow:ellipsis;
 		overflow:hidden;
-    	white-space:nowrap;
+		word-break: break-word;
+		display:-webkit-box;
+		-webkit-line-clamp:2;
+    	-webkit-box-orient: vertical;
 		box-sizing: border-box;
 		font-weight: bold;
 	}
@@ -82,7 +85,7 @@
 		<div class="project-area">
 
 			<div class="project" onclick="location.href='detail.pj';">
-				<div class="project-name">[개발]프로젝트1ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트1ㅇㅇㅇㅇdddddddddd ddddddddd dddddddddddddd ddddddddd</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
