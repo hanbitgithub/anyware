@@ -16,7 +16,9 @@
     margin-left: 5px;
 
 }
-
+.table tr:hover{
+	background-color: rgb(250, 249, 249);
+}
 
 /*페이징*/
 #paging-area button{
@@ -207,7 +209,7 @@
                 </div>
               </nav>
 
-            <table class="table table-hover" style="text-align: center;">
+            <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
                         <td width="10"><input type="checkbox"></td>

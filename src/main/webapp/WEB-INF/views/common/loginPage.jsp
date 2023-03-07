@@ -61,6 +61,7 @@ a{
     font-family: 'Roboto', sans-serif;
 }
 
+
     </style>
 </head>
 <body>
@@ -70,12 +71,16 @@ a{
     
         </div>
         
-        <form method="post" action="서버의url" id="login-form">
-            <input type="text" name="userName" placeholder="Id">
-            <input type="password" name="userPassword" placeholder="Password">
+        <form method="post" action="" id="login-form">
+            <input type="text" name="userName" placeholder="Id" required>
+            <input type="password" name="userPassword" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
         <a>아이디 | 비밀번호 찾기 </a>
+
+
     </div> 
+
+
 </body>
 </html>

@@ -15,7 +15,9 @@
     margin-left: 5px;
 
 }
-
+.table tr:hover{
+	background-color: rgb(250, 249, 249);
+}
 
 /*페이징*/
 #paging-area button{
@@ -88,7 +90,7 @@
                 </div>
               </nav>
 
-            <table class="table table-hover" style="text-align: center;">
+            <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
                         <td width="10"><input type="checkbox"></td>
@@ -97,33 +99,30 @@
                         <td width="150">이메일</td>
                         <td width="100">연락처</td>
                         <td width="120">회사명</td>
-                        <td width="50">부서</td>
+              
                         <td width="50">직급</td>
-                        <td width="100">그룹</td>
+                        <td width="100">부서</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="font-size: 14px;">
                         <td width="10"><input type="checkbox"></td>
-                      
-                        <td width="50">곽두팔</td>
+                        <td width="50">김강쥐</td>
                         <td width="150">doopal@naver.com</td>
                         <td width="100">010-2142-4121</td>
-                        <td width="120">감자팩토리</td>
-                        <td width="50">영업부</td>
+                        <td width="120">감자팩토리</td>  
                         <td width="50">대리</td>
-                        <td width="100">거래처1</td>
+                        <td width="100">영업부</td>
                     </tr>
                     <tr style="font-size: 14px;">
                         <td width="10"><input type="checkbox"></td>
                        
-                        <td width="50">곽두팔</td>
+                        <td width="50">김</td>
                         <td width="150">doopal@naver.com</td>
                         <td width="100">010-2142-4121</td>
                         <td width="120">감자팩토리</td>
-                        <td width="50">영업부</td>
                         <td width="50">대리</td>
-                        <td width="100">거래처1</td>
+                        <td width="100">인사부</td>
                     </tr>
 
                 </tbody>

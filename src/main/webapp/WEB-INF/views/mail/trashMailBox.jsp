@@ -19,6 +19,9 @@
 .dropdown-menu>li a{
     font-size: 13px;
 }
+.table tr:hover{
+	background-color: rgb(250, 249, 249);
+}
 
 
 /*페이징*/
@@ -89,7 +92,7 @@
                 </div>
               </nav>
 
-            <table class="table table-hover">
+            <table class="table">
                 <tr style="font-size: 14px; font-weight: bold;">
                     <td width="20"><input type="checkbox"></td>
                     <td width="25">⭐</td>

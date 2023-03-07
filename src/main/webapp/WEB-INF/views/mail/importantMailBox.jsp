@@ -19,6 +19,9 @@
 .dropdown-menu>li a{
     font-size: 13px;
 }
+.table tr:hover{
+	background-color: rgb(250, 249, 249);
+}
 
 
 /*페이징*/
@@ -120,88 +123,45 @@
                 </div>
               </nav>
 
-            <table class="table table-hover">
-                <tr style="font-size: 14px; font-weight: bold;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="25">⭐</td>
-                    <td width="50">✉️</td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
+            <table class="table">
+                 
                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
+                    <td width="20"><img src="resources/images/star.png" width="18"></td>
+                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"></td>
+                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-                <tr style="font-size: 14px;">
+                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
+                    <td width="20"><img src="resources/images/star.png" width="18"></td>
+                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
+                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-                <tr style="font-size: 14px;">
+                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
+                    <td width="20"><img src="resources/images/star.png" width="18"></td>
+                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
+                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-                <tr style="font-size: 14px;">
+                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
+                    <td width="20"><img src="resources/images/star.png" width="18"></td>
+                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
+                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-                <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20">⭐</td>
-                    <td width="50">✉️</td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50">📎</td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
+                
             </table>
 
 

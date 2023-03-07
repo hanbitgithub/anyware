@@ -11,6 +11,7 @@
             height: 400px;
             margin: 0 auto;
         }
+
     </style>
 
     
@@ -124,8 +125,10 @@
     // get selected items
     var items = transfer.getSelectedItems()
     console.log("Manually get selected items: %o", items);
+    
+    
 </script>
-  
+
 
 </body>
 </html>
