@@ -9,19 +9,7 @@
 
 
 <style>
-/* Active links menu */
-.active {
-    background-color: var(--first-color);
-}
-/* NAV */
-.nav {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    overflow: hidden;
-}
-        
+
 /*메일*/
 #btn-area a {
 	color: black;
@@ -57,11 +45,15 @@
 .nav-pills> .nav-item>.active{
 	background-color: white;
 	color:#7291f6;
-
 }
+
+
 .nav-pills> .nav-item a{
 	color:black;
 
+}
+.nav-item a:active{
+    background-color: #7291f6;
 }
 
 /*tagify*/
@@ -479,20 +471,20 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">주소록</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
 
 					<div class="container2">
 						<br>
 						<!-- Nav tabs -->
-						<ul class="nav nav-pills flex-column flex-sm-row nav-justified"
-							role="tablist">
-							<li class="nav-item"><a class="nav-link active"
-								data-toggle="tab" href="#public">사내주소록</a></li>
-							<li class="nav-item"><a class="nav-link" data-toggle="tab"
-								href="#personal">개인주소록</a></li>
+						<ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#public">사내주소록</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#personal">개인주소록</a>
+							</li>
 
 						</ul>
 

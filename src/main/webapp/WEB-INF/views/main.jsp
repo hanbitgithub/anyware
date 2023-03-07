@@ -139,31 +139,27 @@
                  <div id="receive" class="container tab-pane active">
                   <table class="table table-hover" style="font-size:12px">
 	                  <tr>
-	                  	<td width="20">김강쥐</td>
-	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="20">2023-03-08</td>
+	                  	<td width="15">김강쥐</td>
+	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="10">2023-03-08</td>
 	                  </tr> 
 	                  <tr>
-	                  	<td width="20">김강쥐</td>
-	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr>    
+	                  	<td width="15">김강쥐</td>
+	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="10">2023-03-08</td>
+	                  </tr> 
 	                  <tr>
-	                  	<td width="20">김강쥐</td>
-	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr>    
+	                  	<td width="15">김강쥐</td>
+	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="10">2023-03-08</td>
+	                  </tr> 
 	                  <tr>
-	                  	<td width="20">김강쥐</td>
-	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr>    
-	                  <tr>
-	                  	<td width="20">김강쥐</td>
-	                  	<td width="60">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr>    
-	                             
+	                  	<td width="15">김강쥐</td>
+	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
+	                  	<td width="10">2023-03-08</td>
+	                  </tr> 
+	                     
+	                  
 	                   
                   </table>
                   
@@ -171,31 +167,35 @@
                  <div id="send" class="container tab-pane fade">       
                    <table class="table table-hover" style="font-size:12px">
 	                  <tr>
-	                  	<td width="20">이배추</td>
-	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="15">이배추</td>
+	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
 	                  	<td width="20">2023-03-08</td>
 	                  </tr> 
+	                  <tr>
+	                  	<td width="15">이배추</td>
+	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="20">2023-03-08</td>
+	                  </tr> 
+	                 
 	                 <tr>
-	                  	<td width="20">이배추</td>
-	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr>   
-	                  <tr>
-	                  	<td width="20">이배추</td>
-	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                  	<td width="15">이배추</td>
+	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
 	                  	<td width="20">2023-03-08</td>
 	                  </tr> 
-	                  <tr>
-	                  	<td width="20">이배추</td>
-	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                 
+	                 <tr>
+	                  	<td width="15">이배추</td>
+	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
 	                  	<td width="20">2023-03-08</td>
 	                  </tr> 
-	                  <tr>
-	                  	<td width="20">이배추</td>
-	                  	<td width="60">견적서 요청 어쩌고어쩌고 어쩌고....</td>
+	                 
+	                 <tr>
+	                  	<td width="15">이배추</td>
+	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
 	                  	<td width="20">2023-03-08</td>
 	                  </tr> 
-	                             
+	                 
+	                 
 	                   
                   </table>
                  </div>
