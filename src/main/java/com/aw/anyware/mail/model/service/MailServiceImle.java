@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.dao.MailDao;
 import com.aw.anyware.mail.model.vo.AddressBook;
+import com.aw.anyware.mail.model.vo.AddressGroup;
 
 @Service
 public class MailServiceImle implements MailService {
@@ -26,7 +27,6 @@ public class MailServiceImle implements MailService {
 
 	
 	//주소록
-	
 	@Override
 	public int selectAddressListCount() {
 		return mDao.selectAddressListCount(sqlSession);
@@ -36,11 +36,24 @@ public class MailServiceImle implements MailService {
 	public ArrayList<AddressBook> selectAddbookList(PageInfo pi) {
 		return mDao.selectAddbookList(sqlSession, pi);
 	}
-
-
+	
+	@Override
+	public ArrayList<AddressGroup> selectGropList(int memNo) {
+		return mDao.selectGroupList(sqlSession,memNo);
+	}
+	
+	@Override
+	public int insertAddressGroup(AddressGroup ag) {
+		return mDao.insertAddressGroup(sqlSession,ag);
+	}
+	
 	@Override
 	public int insertAddressBook(AddressBook ab) {
 		return 0;
 	}
 
+
+	
+
+	
 }

@@ -7,6 +7,8 @@
 <meta charset="UTF-8">
 
 <title>Insert title here</title>
+
+<script src="https://kit.fontawesome.com/6f4b87b4ed.js" crossorigin="anonymous"></script>
 <style>
 /*서브메뉴*/
 .menu{
@@ -40,40 +42,59 @@ a{
   color: inherit;
   text-decoration:none;
 }
-/* 라이브러리 */
-/* 스타일 */
 
-.toggle_menu > ul.active{
-  transition: 1s ;
-  left: 0;
-}
 
-.toggle_menu > ul > li > a {
-  display: block;
-  height: 30px;
-  line-height: 30px;
- 
-}
-
-.toggle_menu > ul > li > ul{
-  height: 0px;
-  overflow: hidden;
-  transition: 0.3s;
-}
-
-.toggle_menu > ul > li > ul > li{
-  height: 25%;
-}
-
-.toggle_menu > ul > li.active > ul{
-  height:100%;
-  transition: 0.3s;
-} 
+/*주소록 그룹*/
 
 .group{
-    padding: 0px 20px;
+   /*  padding: 0px 10px; */
     font-size: 13px;
 }
+
+#check-btn { display: none;}
+#check-btn:checked ~ .menubars { display: block; } 
+.menubars { display: none; }
+
+#check-btn2 { display: none;}
+#check-btn2:checked ~ .menubars2 { display: block; } 
+.menubars2 { display: none; }
+
+.label{margin-top:10px}
+
+
+#adbook-area input[type=text]{
+    width:120px;
+    border: 1px solid rgb(206, 206, 206);
+    border-radius : 5px;
+}
+.insertAddBook, .updateAddBook{
+    margin-bottom: 10px;
+    display:none;
+}
+
+.insertAddress, .updateAddress{
+ 	/*  display:flex; */
+ 	text-align:right;
+} 
+
+.insertAddress span, .updateAddress span{
+    width: 70%;
+}
+
+.insertAddress input[type=text], .updateAddress input[type=text], #select-addressBook{
+    width:100%;
+    height: 25px;
+}
+
+.update-addBtn span, .update-addBtn a, .update-addBtn a:hover{
+    cursor: pointer;
+    margin-right:5px;
+     
+}
+
+.fa-check{color:green;}
+.fa-times{color:red;}
+
 
 
 
@@ -109,53 +130,131 @@ a{
 
             </div>
             <br><br>
-            <div id="adbook-area" class="toggle_menu">
+            <div id="adbook-area">
                 <span style="font-weight: 600; font-size: 15px;" >주소록</span><br>
 
-                <ul>
-                   
-                    <li>
-                        <a><ion-icon name="chevron-down-outline" ></ion-icon> 개인주소록</a>
-                        
-                        <ul class="group">
-                            <li><a href="personal.ad">전체 </a>
-                               &nbsp;&nbsp;&nbsp;
-                                <button style="border:none; border-radius: 5px; width:20px; height: 20px; line-height: 20px;  font-size: 13px;" 
-                                title="그룹추가" data-toggle="popover" data-trigger="hover" data-content="Some content" data-bs-toggle="modal" data-bs-target="#groupAdd">
-                                <b>+</b></button>
-                            </li>
-                            <li><a href="#">거래처1</a></li>
-                            <li><a href="#">개미</a></li>
-                            
-                          
-                        </ul>
-                    </li>
-                     <li>
-                        <a><ion-icon name="chevron-down-outline" class="icon"></ion-icon> 사내주소록</a>
+   					<input id="check-btn" type="checkbox" /> 
+   					<label for="check-btn" class="label">
+   					<ion-icon name="chevron-down-outline" ></ion-icon> 개인주소록</label>
+
+                     <ul class="group menubars" id="personal">
+                        <li id="all"><a href="personal.ad">전체 </a></li>
                        
-                        <ul class="group">
-                            <li><a href="company.ad"> 전체</a></li>
-                            <li><a href="#">인사팀</a></li>
-                            <li><a href="#">개발팀</a></li>
-                            <li><a href="#">총무팀</a></li>
-                        </ul>
-                    </li>
+                   
+		             <!--========== 주소록 그룹 추가하는 함수 ==========-->
+					<div class="insider insertAddBook">
+						<div class="insertAddress">
+							<span> <input type="text" name="addName" id="addName"></span>
+	
+							<div class="update-addBtn">
+								<a id="insertAddIndiv" onclick="insertAddIndiv();"><i class="fas fa-check"></i></a> 
+								<a onclick="dismissInsertAdd();"><i class="fas fa-times"></i></a>
+							</div>
+						</div>
+					</div>
+	
+					<div id="plus-tag" onclick="return insertAddBook();" style="color:rgb(139, 139, 139)">+ 주소록 추가</div>
+	                   
+                   </ul>
+                  
+                    
+                    <script>
+                    
+                    
+                 // 주소록 추가 클릭시 처리하는 함수
+    				function insertAddBook() {
+    					$(".insertAddBook").show();
+    					
+    				}
+                 // 주소록 그룹 '추가'시 실행하는 ajax함수
+    				function insertAddIndiv(){
 
-                </ul>
-              
+    					if ($("#addName").val().trim() != 0) {
+
+    						$.ajax({
+    							url : "insertAddGroup.ad",
+    							data : {
+    								memNo : '${loginUser.memNo }',
+    								groupName : $("#addName").val()
+    							},
+    							success : function(result) {
+    								console.log($("#addName").val());
+    								if (result == "success") {
+    									location.reload(); // 서버 새로고침
+    								}
+    							},
+    							error : function() {
+    								alert("주소록을 추가하는데 실패했습니다. 다시 시도해주세요.");
+    							}
+
+    						})
+    					} else {
+    						alert("주소록명을 입력해주세요.");
+    						return false;
+    					}
+
+    				}
+
+    				// 주소록 추가 '취소'시 처리하는 함수
+    				function dismissInsertAdd() {
+    					$(".insertAddBook").hide();
+    					$("#addName").val("");
+    				}
+    				
+                    
+                    
+                    </script>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                <br>
+               
+                    <input id="check-btn2" type="checkbox" /> 
+    					<label for="check-btn2">
+    					<a><ion-icon name="chevron-down-outline" ></ion-icon> 사내주소록</a>
+                   		</label>
+                    <ul class="group menubars2">
+                        <li><a href="company.ad"> 전체</a></li>
+                        <li><a href="#">인사팀</a></li>
+                        <li><a href="#">개발팀</a></li>
+                        <li><a href="#">총무팀</a></li>
+                    </ul>
+             
                <script>
-                $(document).ready(function(){
-                    
-                    $(".toggle_menu > ul > li").click(function(){
-                        $(this).toggleClass("active");
-                        
-                       $(".icon").addClass("rotate");
-                    });
-                    
-                 
-                });
-
+               	 $(function(){
+               		selectGroupList();
+               	 })
+               
+               	  function selectGroupList(){
+               		  $.ajax({
+               			  url:"glist.ad",
+               			  data: {no: 1},
+               			  success:function(list){
+               				  //console.log(list);
+               			  
+               				  let value="";
+               				  for(let i=0; i<list.length; i++){
+               					  value += "<li>" + list[i].groupName + "</li>";
+               				  }
+               				  
+               				  $("#all").append(value);
+               				  
+               			  },error:function(){
+               				  console.log("그룹조회용 ajax 통신실패");
+               			  }
+               		  })
+               	  }
+               
+               
                </script>
+               
+               
+               
+               
             </div>
             
 			

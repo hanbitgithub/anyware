@@ -194,7 +194,7 @@ a {
 .menu{
     position: fixed;
     height: 100vh;
-    width: 160px;
+    width: 180px;
     font-size: 14px;
     padding: 50px 20px;
     border-right: 1px solid rgb(211, 210, 210);

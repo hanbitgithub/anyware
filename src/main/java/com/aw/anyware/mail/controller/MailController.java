@@ -7,11 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.mail.model.service.MailService;
 import com.aw.anyware.mail.model.vo.AddressBook;
+import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.google.gson.Gson;
 
 @Controller
 public class MailController {
@@ -78,6 +81,22 @@ public class MailController {
 	
 		
 		return "mail/personalAddressbook";
+	}
+	
+	// 주소록 그룹리스트 조회 
+	@ResponseBody
+	@RequestMapping(value="glist.ad", produces="application/json; charset=utf-8")
+	public String ajaxSelectGroupList(int no) {
+		ArrayList<AddressGroup> list = mService.selectGropList(no);
+		
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertAddGroup.ad", produces="application/json; charset=UTF-8")
+	public String insertAddressGroup(AddressGroup ag) {
+		int result = mService.insertAddressGroup(ag);
+		return result>0 ? "success" : "fail";
 	}
 	
 	

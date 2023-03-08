@@ -17,6 +17,16 @@
 
 </resultMap>
 
+<resultMap id="groupResult" type="AddressGroup">
+	<id column="group_no" property="groupNo" />
+	<result column="group_name" property="groupName" />
+	<result column="member_no" property="memNo" />
+	
+</resultMap>
+
+
+
+
 <!-- 개인주소록 조회 -->
 <!-- 주소록 갯수 -->
 <select id="selectAddressListCount" resultType="_int">
@@ -45,6 +55,70 @@
 	 order by add_no desc
 
 </select>
+
+<!--로그인한 회원의 주소록 그룹리스트 -->
+<select id="selectGroupList" resultMap="groupResult">
+	select
+		   group_no
+		  ,group_name
+      from tb_addressgroup
+      where member_no = 2 <!--로그인한 사원번호로 변경하기 -->
+      and status= 'Y' 
+</select>
+
+<!-- 그룹추가 -->
+<insert id="insertAddressGroup">
+	insert 
+	  into tb_addressgroup
+	  (
+	    group_no
+	  , group_name
+	  , member_no
+	  )
+	  values
+	  (
+	  seq_gno.nextval
+	  ,#{groupName}
+	  ,#{memNo}
+	  )
+
+</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

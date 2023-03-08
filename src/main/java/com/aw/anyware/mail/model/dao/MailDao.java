@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
+import com.aw.anyware.mail.model.vo.AddressGroup;
 
 @Repository
 public class MailDao {
@@ -25,6 +26,16 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectAddbookList",null,rowBounds);
 		
+	}
+	
+	//주소록메뉴바 그룹 조회
+	public ArrayList<AddressGroup> selectGroupList(SqlSessionTemplate sqlSession, int memNo){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectGroupList", memNo);
+	}
+	
+	//주소록 그룹 추가
+	public int insertAddressGroup(SqlSessionTemplate sqlSession, AddressGroup ag) {
+		return sqlSession.insert("mailMapper.insertAddressGroup",ag);
 	}
 
 }
