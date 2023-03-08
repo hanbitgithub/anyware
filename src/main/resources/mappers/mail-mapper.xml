@@ -2,10 +2,56 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="mailMapper">
 
-<resultMap id="mailResult" type="Mail">
+<resultMap id="addressResult" type="AddressBook">
+	<id column="add_no" property="addNo" />
+	<result column="name" property="name" />
+	<result column="dept_name" property="deptName" />
+	<result column="job_name" property="jobName" />
+	<result column="email" property="email" />
+	<result column="phone" property="phone" />
+	<result column="biz_name" property="bizName" />
+	<result column="group_no" property="groupNo" />
+	<result column="mem_no" property="memNo" />
+	<result column="group_name" property="groupName" />
 
 
 </resultMap>
+
+<!-- 개인주소록 조회 -->
+<!-- 주소록 갯수 -->
+<select id="selectAddressListCount" resultType="_int">
+	select count(*)
+	  from tb_addressbook
+	 where status = 'Y' 
+</select>
+
+<!--주소록 리스트 -->
+<select id="selectAddbookList" resultMap="addressResult">
+	select 
+	        add_no
+	       , name
+	       , dept_name
+	       , job_name
+	       , email
+	       , phone
+	       , biz_name
+	       , b.group_no
+	       , group_name
+	       , mem_no
+	from tb_addressbook b
+	join tb_addressgroup g on (b.group_no = g.group_no)
+	where b.status = 'Y' 
+	  and mem_no = 1 <!--로그인한 사원번호로 변경하기 -->
+	 order by add_no desc
+
+</select>
+
+
+
+
+
+
+
 
 
 </mapper>

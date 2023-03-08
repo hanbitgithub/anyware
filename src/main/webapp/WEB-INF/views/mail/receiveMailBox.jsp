@@ -23,9 +23,9 @@
 .table tr:hover{
 	background-color: rgb(250, 249, 249);
  
-
-
 }
+
+
 /*페이징*/
 #paging-area button{
     border: none;
@@ -55,19 +55,21 @@
 
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
+                 
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                             <img src="resources/images/email2.png" width='15px' alt=""> 읽음
-                            </a>
-                            <ul class="dropdown-menu" style="font-size: 12px;">
-                              <li><a class="dropdown-item" href="#">읽음으로 표시</a></li>
-                              <li><a class="dropdown-item" href="#">안읽음으 로표시</a></li>
-                              
-                            </ul>
-                          </li>
-                          
+            
+                      <li class="nav-item dropdown">
+                          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           <img src="resources/images/email2.png" width='15px' alt=""> 읽음
+                          </a>
+                          <ul class="dropdown-menu" style="font-size: 12px;">
+                            <li><a class="dropdown-item" href="#">읽음으로 표시</a></li>
+                            <li><a class="dropdown-item" href="#">안읽음으 로표시</a></li>
+                            
+                          </ul>
+                        </li>
+                        
                       <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/bin.png" width='15px' alt="">
