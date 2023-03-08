@@ -21,8 +21,10 @@ public class AddressBook {
 	private String phone;
 	private String bizName;
 	private String status;
-	private int groupNo;
+	private String groupNo;
 	private String memNo;
+	
+	private String groupName;
 	
 
 }

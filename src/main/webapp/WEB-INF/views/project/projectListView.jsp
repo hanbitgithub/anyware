@@ -85,61 +85,61 @@
 		<div class="project-area">
 
 			<div class="project" onclick="location.href='detail.pj';">
-				<div class="project-name">[개발]프로젝트1ㅇㅇㅇㅇdddddddddd ddddddddd dddddddddddddd ddddddddd</div>
+				<div class="project-name">[개발]프로젝트1</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트2ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트2</div>
 				<div class="public">🔒</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">🤍</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트3ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트3</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트4ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트4</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트5ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트5</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트6ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트6</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트7ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트7</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트8ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트8</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트9ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트9</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>
 			</div>
 			<div class="project">
-				<div class="project-name">[개발]프로젝트10ㅇㅇㅇㅇd</div>
+				<div class="project-name">[개발]프로젝트10</div>
 				<div class="public">🔓</div>
 				<div class="project-people">김현지 외 5명</div>
 				<div class="favorite">💙</div>

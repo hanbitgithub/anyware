@@ -93,20 +93,18 @@
             <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
-                        <td width="10"><input type="checkbox"></td>
-                    
+                        <td width="10"><input type="checkbox" id="chkAll"></td>
                         <td width="50">이름</td>
                         <td width="150">이메일</td>
                         <td width="100">연락처</td>
                         <td width="120">회사명</td>
-              
                         <td width="50">직급</td>
                         <td width="100">부서</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox"></td>
+                        <td width="10"><input type="checkbox" name="check"></td>
                         <td width="50">김강쥐</td>
                         <td width="150">doopal@naver.com</td>
                         <td width="100">010-2142-4121</td>
@@ -115,9 +113,9 @@
                         <td width="100">영업부</td>
                     </tr>
                     <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox"></td>
+                        <td width="10"><input type="checkbox" name="check"></td>
                        
-                        <td width="50">김</td>
+                        <td width="50">김말동</td>
                         <td width="150">doopal@naver.com</td>
                         <td width="100">010-2142-4121</td>
                         <td width="120">감자팩토리</td>
@@ -128,6 +126,18 @@
                 </tbody>
                 
             </table>
+            
+            <script>
+                    $(function(){
+                        $("#chkAll").click(function(){
+                            if($(this).is(":checked")){
+                                $("input[name=check]").attr("checked",true);
+                            }else{
+                                $("input[name=check]").attr("checked",false);
+                            }
+                        })
+                    })
+                </script>
        
             
 

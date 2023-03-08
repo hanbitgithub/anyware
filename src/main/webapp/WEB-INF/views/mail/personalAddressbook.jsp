@@ -212,8 +212,7 @@
             <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
-                        <td width="10"><input type="checkbox"></td>
-                    
+                        <td width="10"><input type="checkbox" id="chkAll"></td>    
                         <td width="50">이름</td>
                         <td width="150">이메일</td>
                         <td width="100">연락처</td>
@@ -224,45 +223,70 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox"></td>
-                      
-                        <td width="50">곽두팔</td>
-                        <td width="150">doopal@naver.com</td>
-                        <td width="100">010-2142-4121</td>
-                        <td width="120">감자팩토리</td>
-                        <td width="50">영업부</td>
-                        <td width="50">대리</td>
-                        <td width="100">거래처1</td>
-                    </tr>
-                    <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox"></td>
-                       
-                        <td width="50">곽두팔</td>
-                        <td width="150">doopal@naver.com</td>
-                        <td width="100">010-2142-4121</td>
-                        <td width="120">감자팩토리</td>
-                        <td width="50">영업부</td>
-                        <td width="50">대리</td>
-                        <td width="100">거래처1</td>
-                    </tr>
-
+                	<c:choose>
+                		<c:when test="${empty list}">
+                			<tr style="font-size: 14px;">
+                				<td colspan="8">등록된 주소록이 없습니다.</td>		
+                			</tr>
+                		</c:when>
+                	</c:choose>
+                
+                	<c:forEach var="ad" items="${list}">
+                	
+	                    <tr style="font-size: 14px;">
+	                        <td width="10"><input type="checkbox" name="check"></td>
+	                        <td width="50">${ad.name }</td>
+	                        <td width="150">${ad.email }</td>
+	                        <td width="100">${ad.phone }</td>
+	                        <td width="120">${ad.bizName}</td>
+	                        <td width="50">${ad.deptName}</td>
+	                        <td width="50">${ad.jobName }</td>
+	                        <td width="100">${ad.groupName}</td>
+	                    </tr>
+              	 </c:forEach> 
                 </tbody>
                 
             </table>
+            
+            <script>
+                    $(function(){
+                        $("#chkAll").click(function(){
+                            if($(this).is(":checked")){
+                                $("input[name=check]").attr("checked",true);
+                            }else{
+                                $("input[name=check]").attr("checked",false);
+                            }
+                        })
+                    })
+                </script>
        
             
 
             <!--페이징 영역-->
             <div id="paging-area" align="center">
-                <button>이전</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>다음</button>
-            </div>  
+            
+            <c:choose>
+            	<c:when test="${pi.currentPage eq 1}">
+                	<button disabled>이전</button>
+                </c:when>
+                <c:otherwise>
+                	<button onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
+                </c:otherwise>
+            </c:choose> 
+           	<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+           		<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
+           	</c:forEach>
+             
+            <c:choose>
+            	<c:when test="${pi.currentPage eq pi.maxPage }">
+            		<button disabled>다음</button>
+            	</c:when>  
+            	<c:otherwise>
+            		<button onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
+            	</c:otherwise> 
+            </c:choose>    
+           
+           </div>  
               
 
 

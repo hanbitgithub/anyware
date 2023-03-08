@@ -91,31 +91,31 @@
         <br><br>
 
         <div class="list-area">
-			<div class="list" onclick="location.href='detail.li'">
+			<div class="list" onclick="location.href='detail.li'" style="border: 2px solid red;">
 				<div class="list-name">프로젝트 기획보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/19</span> - <span>23/02/20</span>
 			</div>
-			<div class="list">
+			<div class="list" onclick="location.href=''" style="border: 2px solid orange;">
 				<div class="list-name">UI 설계보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/20</span> - <span>23/02/27</span>
 			</div>
-            <div class="list">
+            <div class="list" onclick="location.href=''" style="border: 2px solid gold;">
 				<div class="list-name">DB 설계보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/27</span> - <span>23/03/05</span>
 			</div>
-            <div class="list">
+            <div class="list" onclick="location.href=''" style="border: 2px solid green;">
 				<div class="list-name">XXXXXX</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/19</span> - <span>23/02/20</span>
 			</div>
-            <div class="list">
+            <div class="list" onclick="location.href=''" style="border: 2px solid blue;">
 				<div class="list-name">XXXXXXXX</div>
                 <br>
                 <div class="period">기간</div>
