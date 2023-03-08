@@ -28,7 +28,7 @@
 		   where status = 'Y'
 	</select>
 
-  <select id="selectAllMember" resultMap="Member">
+  <select id="selectAllMember" resultMap="memberResult">
     select
     		member_no,
     		dept_name,

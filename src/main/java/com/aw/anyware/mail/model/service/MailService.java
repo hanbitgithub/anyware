@@ -19,7 +19,6 @@ public interface MailService {
 	//주소록 추가
 	int insertAddressBook(AddressBook ab);
 	
-	
-	
+
 	
 }
