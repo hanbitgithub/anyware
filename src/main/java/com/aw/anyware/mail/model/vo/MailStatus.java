@@ -1,4 +1,4 @@
-package com.aw.anyware.mail.vo;
+package com.aw.anyware.mail.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

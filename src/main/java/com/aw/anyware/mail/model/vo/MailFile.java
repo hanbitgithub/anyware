@@ -11,18 +11,15 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AddressBook {
+public class MailFile {
 	
-	private int addNo;
-	private String name;
-	private String deptName;
-	private String jobName;
-	private String email;
-	private String phone;
-	private String bizName;
+	private int emfNo;
+	private int emNo;
+	private String originName;
+	private String changeName;
+	private String filePath;
 	private String status;
-	private int groupNo;
-	private String memNo;
+	private String fileSize;
 	
 
 }
