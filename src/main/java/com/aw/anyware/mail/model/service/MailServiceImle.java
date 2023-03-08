@@ -37,4 +37,10 @@ public class MailServiceImle implements MailService {
 		return mDao.selectAddbookList(sqlSession, pi);
 	}
 
+
+	@Override
+	public int insertAddressBook(AddressBook ab) {
+		return 0;
+	}
+
 }

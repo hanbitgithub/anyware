@@ -16,5 +16,10 @@ public interface MailService {
 	int selectAddressListCount();
 	ArrayList<AddressBook> selectAddbookList(PageInfo pi);
 	
+	//주소록 추가
+	int insertAddressBook(AddressBook ab);
+	
+	
+	
 	
 }

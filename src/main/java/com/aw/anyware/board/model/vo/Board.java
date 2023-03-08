@@ -1,12 +1,9 @@
 package com.aw.anyware.board.model.vo;
 
-import java.sql.Date;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
 
 @NoArgsConstructor
 @Setter
@@ -15,12 +12,12 @@ import lombok.ToString;
 public class Board {
 	
 	private int boardNo;
-	private String boardWriter;
 	private String boardTitle;
 	private String boardContent;
+	private String boardWriter;
 	private String originName;
 	private String changeName;
-	private Date createDate;
+	private String createDate;
 	private int count;
 	private String status;
 	private int category;
