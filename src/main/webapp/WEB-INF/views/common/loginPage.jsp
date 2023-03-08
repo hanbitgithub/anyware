@@ -71,9 +71,9 @@ a{
     
         </div>
         
-        <form method="post" action="" id="login-form">
-            <input type="text" name="userName" placeholder="Id" required>
-            <input type="password" name="userPassword" placeholder="Password" required>
+        <form method="post" action="login.me" id="login-form">
+            <input type="text" name="memberId" placeholder="Id" required>
+            <input type="password" name="memberPwd" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
         <a>아이디 | 비밀번호 찾기 </a>

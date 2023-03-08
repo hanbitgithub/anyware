@@ -27,6 +27,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.selectListCount(sqlSession);
 	}
+
+	@Override
+	public Member loginMember(Member m) {
+		
+		return mDao.loginMember(sqlSession, m);
+	}
 	
 	
 
