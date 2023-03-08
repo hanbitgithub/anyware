@@ -96,76 +96,15 @@ table{
                 </tr>
               </thead>
               <tbody style="border: white">
+                <c:forEach var="b" items="${list}">
                 <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
+                  <td>${ b.boardNo }</td>
+                  <td>${ b.boardTitle }</td>
+                  <td>${ b.boardWriter }</td>
+                  <td>${ b.createDate }</td>
+                  <td>${ b.count }</td>
                 </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>●▅▇█▇▆▅▄▇ </td>
-                  <td>이소민 사원</td>
-                  <td>2023-11-06</td>
-                  <td>27</td>
-                </tr>
+                </c:forEach>
               </tbody>
             </table>
             <br><br><br>

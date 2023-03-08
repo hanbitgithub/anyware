@@ -15,5 +15,10 @@ public class ProjectController {
 	public String projectDetailView() {
 		return "project/projectDetailView";
 	}
+	
+	@RequestMapping("detail.li")
+	public String listDetailView() {
+		return "project/listDetailView";
+	}
 
 }
