@@ -233,7 +233,7 @@ a {
                 </div>
                 <div class="nav__list">
                    
-                    <a href="selectAll.me" class="nav__link">
+                    <a href="selectAll.me?deptName=" + ${ deptName } class="nav__link">
                         <ion-icon name="person-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">인사</span>
                     </a>
