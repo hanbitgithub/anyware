@@ -212,8 +212,7 @@
             <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
-                        <td width="10"><input type="checkbox" id="chkAll"></td>
-                  
+                        <td width="10"><input type="checkbox" id="chkAll"></td>    
                         <td width="50">이름</td>
                         <td width="150">이메일</td>
                         <td width="100">연락처</td>
@@ -224,18 +223,26 @@
                     </tr>
                 </thead>
                 <tbody>
+                	<c:choose>
+                		<c:when test="${empty list}">
+                			<tr style="font-size: 14px;">
+                				<td colspan="8">등록된 주소록이 없습니다.</td>		
+                			</tr>
+                		</c:when>
+                	</c:choose>
+                
                 	<c:forEach var="ad" items="${list}">
                 	
-                    <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox" name="check"></td>
-                        <td width="50">${ad.name }</td>
-                        <td width="150">${ad.email }</td>
-                        <td width="100">${ad.phone }</td>
-                        <td width="120">${ad.bizName}</td>
-                        <td width="50">${ad.deptName}</td>
-                        <td width="50">${ad.jobName }</td>
-                        <td width="100">${ad.groupName}</td>
-                    </tr>
+	                    <tr style="font-size: 14px;">
+	                        <td width="10"><input type="checkbox" name="check"></td>
+	                        <td width="50">${ad.name }</td>
+	                        <td width="150">${ad.email }</td>
+	                        <td width="100">${ad.phone }</td>
+	                        <td width="120">${ad.bizName}</td>
+	                        <td width="50">${ad.deptName}</td>
+	                        <td width="50">${ad.jobName }</td>
+	                        <td width="100">${ad.groupName}</td>
+	                    </tr>
               	 </c:forEach> 
                 </tbody>
                 

@@ -14,7 +14,7 @@
 		<typeAlias type="com.aw.anyware.mail.model.vo.Mail" alias="Mail"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressBook" alias="AddressBook"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
-		<typeAlias type="com.aw.anyware.board.model.vo.board" alias="Board"/>
+		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		
 		
 	</typeAliases>
