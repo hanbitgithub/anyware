@@ -18,12 +18,12 @@ public class BoardDao {
 
 	public ArrayList<Board> selectList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
-		int offset = (pi.getCurrentPage() -1) * pi.getBoardLimit(); 
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectList", pi);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectList", null, rowBounds);
 	}
 
-	
+
 }

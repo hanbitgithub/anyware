@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.aw.anyware.board.model.service.BoardService;
 import com.aw.anyware.board.model.vo.Board;
@@ -20,17 +20,18 @@ public class BoardController {
 	private BoardService bService;
 	
 	@RequestMapping("list.bo")
-	public String selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public ModelAndView selectList(@RequestParam(value="cpage", defaultValue="1") int currentPage, ModelAndView mv) {
 		
 		int listCount = bService.selectListCount();
 		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		ArrayList<Board> list = bService.selectList(pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
+		mv.addObject("pi", pi)
+		  .addObject("list", list)
+		  .setViewName("board/boardListView");
 		
-		return "board/boardListView";
-		
+		return mv;
 	}
+	
 }
