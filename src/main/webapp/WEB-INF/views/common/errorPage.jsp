@@ -1,37 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <!-- CSS 사이드바 -->
+    <!-- CSS 사이드바 -->
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400" rel="stylesheet">
- 
+    <link rel="stylesheet" href="assets/css/styles.css">
     <!--헤더-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-   
 
     <style>
         /* GOOGLE FONTS */
         @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400');
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 /* VARIABLES CSS */
 :root {
     --nav--width: 75px;
 
     /* Colores */
-    --first-color: #ffffff34;
+    --first-color: #5d7de6d1;
     --bg-color: #7291f6;
     --sub-color: #f3f2f8;
     --white-color: rgb(248, 248, 248);
@@ -73,12 +72,8 @@ ul {
 a {
     text-decoration: none;
 }
-.nav a:hover{
-	text-decoration: none;
-	color:white;
-}
 
-.btn-primary{
+.btn{
     background-color:  #7291f6;
     border: none;
 }
@@ -136,7 +131,6 @@ a {
     margin-bottom: 1rem;
     transition: .3s;
     cursor: pointer;
-    font-weight: 600;
 }
 
 .nav__link:hover {
@@ -185,8 +179,8 @@ a {
     margin-right: 20px;
     margin-top: 20px;
 }
-#profile{
-    margin-right: 50px;
+.profile{
+    margin-right: 50px ;
     margin-top: 10px;
 }
 
@@ -194,7 +188,7 @@ a {
 .menu{
     position: fixed;
     height: 100vh;
-    width: 160px;
+    width: 150px;
     font-size: 14px;
     padding: 50px 20px;
     border-right: 1px solid rgb(211, 210, 210);
@@ -219,7 +213,13 @@ a {
     margin-left: 200px;
     margin-top: 50px;
 }
-
+.partLine{border: 1px solid gray;}
+.thead-th{border: 1px solid gray; background-color: gray; color: blanchedalmond; font-weight: bold;}
+.tbody-td{border: 1px solid gray;}
+.thead-th,.tbody-td{text-align: center;}
+#search-area{margin-left: 75%;}
+#paging-area{ border: 1px solid red;}
+#paging-area2{width: 60%;}
     </style>
 </head>
 <body id="body-pd">
@@ -229,22 +229,22 @@ a {
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
+                    <a href="#" class="nav__logo">ANYWARE</a>
                 </div>
                 <div class="nav__list">
                    
-                    <a href="selectAll.me" class="nav__link">
+                    <a href="#" class="nav__link">
                         <ion-icon name="person-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">인사</span>
                     </a>
 
 
-                    <a href="receivebox.em" class="nav__link">
+                    <a href="#" class="nav__link">
                         <ion-icon name="mail-outline"  class="nav__icon"></ion-icon>
                         <span class="nav_name">메일</span>
                     </a>
 
-                    <a href="personal.ch" class="nav__link">
+                    <a href="#" class="nav__link">
                         <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">메신저</span>
                     </a>
@@ -266,16 +266,15 @@ a {
                         <span class="nav_name">예약</span>
                     </a>
 
-                    <a href="list.bo" class="nav__link">
+                    <div href="#" class="nav__link">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">게시판</span>
 
-                    </a>
+                    </div>
 
-                    <a href="list.pj" class="nav__link">
+                    <div href="#" class="nav__link">
                         <ion-icon name="folder-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">프로젝트</span>
-					</a>
 
                         
                     </div>
@@ -297,7 +296,7 @@ a {
     <!-- IONICONS -->
     <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
     <!-- JS -->
-
+    <script src="assets/js/main.js"></script>
 
     <script>
         /* EXPANDER MENU */
@@ -344,8 +343,8 @@ a {
     </script>
 
     <div class="header">
-        <div class="dropdown" id="profile" style="display: inline-block;">
-            <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+        <div class="dropdown profile" style="display: inline-block;">
+            <img src="profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
           
             </img>
             <div class="dropdown-menu" style="font-size: 12px;">
@@ -357,17 +356,111 @@ a {
           </div>
 
         <div class="chat position-relative" style="display: inline-block">
-            <button type="button" class="position-relative" style="border: none; background-color: #ffffff34;">
-                <img src="resources/images/chat-bubble.png" width="30px"  alt="">
+            <button type="button" class="position-relative" style="border: none; background-color: white;">
+                <img src="chat-bubble.png" width="30px"  alt="">
                 <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">
                   10
                   <span class="visually-hidden">unread messages</span>
                 </span>
               </button>
         </div>
+
+        
        
     </div>
+</div>
+    <div class="menu">
+            <span style="font-weight: 600; font-size: 15px;">메일</span><br><br>
+            <button class="btn btn-primary" style="font-size: 13px; width: 100px;">메일쓰기</button>
+            <br><br>
+            <div id="mail-area">
+                
+            <ul>
+                <li><a>받은메일함</a></li>
+                <li><a>보낸메일함</a></li>
+                <li><a>중요메일함</a></li>
+                <li><a>임시저장함</a></li>
+                <li>
+                    <a>스팸메일함 </a>&nbsp;
+                    <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                        <img src="bin.png"  width="14px"alt="">
+                    </a>
+                
+                </li>
+                <li>
+                    <a>휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                        <img src="bin.png"  width="14px"alt="">
+                    </a>
+                </li>
+                <li> 
+                    <a>메일설정</a>
+                </li>
 
+            </ul>
+
+            </div>
+            <br><br><br>
+            <div id="adbook-area">
+                <span style="font-weight: 600;">주소록</span><br><br>
+                <ul>
+                    <li>
+
+                        <a data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+                              <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+                              사내주소록
+                            </a>
+                          
+                          <div class="collapse" id="collapseExample">
+                            <div class="card card-body">
+                                <ul style="font-size: 13px;">
+                                    <li>- 전체</li>
+                                    <li>- 인사팀</li>
+                                    <li>- 개발팀</li>
+                                    <li>- 총무팀</li>
+                                </ul>
+                            </div>
+                          </div>
+                
+                    </li>
+                  
+                    <li>
+                        <a>
+                            <ion-icon name="chevron-down-outline" class="collapse__link"></ion-icon>
+                            개인주소록 </a>&nbsp;
+                        <ul style="font-size: 13px;">
+                            <li>- 전체 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <button style="border:none; border-radius: 5px; width:19px; font-size: 10px;" 
+                                 title="그룹추가" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                                <b>+</b></button>
+                            </li> 
+                            <li>- 거래처1 </li>
+                            <li>- 거래처2</li>
+                            <li></li>
+                        </ul>
+               
+                    </li>
+                 
     
+                </ul>
+    
+            </div>
+ 
+    </div>
+
+
+        <div class="content">
+         
+         <br>
+    <div align="center">	
+        <img src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_balloon-bubble-chat-conversation-sorry-speech-512.png" width="300">
+        <br><br>
+        <h1 style="font-weight:bold">${ errorMsg }</h1>
+    </div>
+    	<br>
+            
+        
+
+      
 </body>
 </html>

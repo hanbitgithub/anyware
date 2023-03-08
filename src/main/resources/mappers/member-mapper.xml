@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="memberMapper">
+
+<resultMap id="memberResult" type="Member">
+	<id column="member_no" property="memberNo"/>
+	<result column="dept_name" property="deptName"/>
+	<result column="job_name" property="jobName"/>
+	<result column="position" property="position"/>
+	<result column="duty" property="duty"/>
+	<result column="name" property="name"/>
+	<result column="rrn" property="rrn"/>
+	<result column="member_id" property="memberId"/>
+	<result column="member_pwd" property="memberPwd"/>
+	<result column="email" property="email"/>
+	<result column="phone" property="phone"/>
+	<result column="address" property="address"/>
+	<result column="enroll_date" property="enrollDate"/>
+	<result column="leave_off" property="leaveOff"/>
+	<result column="profile_url" property="profileUrl"/>
+	
+</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		select
+				count(*)
+			from member
+		   where status = 'Y'
+	</select>
+
+  <select id="selectAllMember" resultMap="Member">
+    select
+    		member_no,
+    		dept_name,
+    		job_name,
+    		position,
+    		duty,
+    		name,
+    		member_id,
+    		member_pwd,
+    		rrn,
+    		email,
+    		phone,
+    		address,
+    		enroll_date,
+    		leave_off,
+    		profile_url
+    	from member
+       where status = 'Y'
+    		
+  </select>
+</mapper>
