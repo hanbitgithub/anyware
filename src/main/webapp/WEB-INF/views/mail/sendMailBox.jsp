@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
- <script src="https://kit.fontawesome.com/6f4b87b4ed.js" crossorigin="anonymous"></script>
+
 </head>
 <style>
 /*메일*/
@@ -24,16 +24,6 @@
 .table tr:hover{
 	background-color: rgb(250, 249, 249);
 }
-
-.fa {
-   font-weight: 900;
-   color: yellow;
-   font-size: 18px;
-   
-   }
-.fa-star-o{
-   color: rgb(205, 205, 205);
-}  
 
 
 /*페이징*/
@@ -135,53 +125,56 @@
                 </div>
               </nav>
 
-            <table class="table">
-                 <tr style="font-size: 14px; font-weight: bold;">
-                    <td width="20"><input type="checkbox" value="${emNo}"></td>
-                    <td width="25"><i class="star fa fa-star-o"></i></td>
+              <table class="table">
+                <tr style="font-size: 14px; font-weight: bold;">
+                    <td width="20"><input type="checkbox"></td>
+                    <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
                     <td width="25"><img src="resources/images/envelope2.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
                     <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-                 <tr style="font-size: 14px; font-weight: bold;">
-                    <td width="20"><input type="checkbox" value="${emNo}"></td>
-                    <td width="25"><i class="star fa fa-star-o"></i></td>
-                    <td width="25"><img src="resources/images/envelope2.png" width="17"></td>
+                <tr style="font-size: 14px;">
+                    <td width="20"><input type="checkbox"></td>
+                    <td width="20"><img src="resources/images/award.png" width="18" class="star"></td>
+                    <td width="25"><img src="resources/images/envelope.png" width="17"></td>
+                    <td width="100">곽두팔</td>
+                    <td width="700">2월 3주차 주간 매출 보고</td>
+                    <td width="50"></td>
+                    <td width="200">2023-02-22 16:20:04</td>
+                </tr>
+                <tr style="font-size: 14px;">
+                    <td width="20"><input type="checkbox"></td>
+                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
+                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
                     <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
                 </tr>
-               
-               
+                
                 
             </table>
-            
-            
-            
             <script>
-            $(document).ready(function() {
-                // 별 모양 아이콘 클릭 이벤트
-                $('.star').click(function() {
-                    // 클릭한 아이콘의 클래스가 'fa-star-o'인 경우
-                    if ($(this).hasClass('fa-star-o')) {
-                    // 클래스를 'fa-star'로 변경하고, 중요메일함에 해당 이메일을 추가
-                    $(this).removeClass('fa-star-o').addClass('fa-star');
-                    $(this).closest('.email').addClass('important'); // 중요메일함 클래스 추가
-                    }
-                    // 클릭한 아이콘의 클래스가 'fa-star'인 경우
-                    else {
-                    // 클래스를 'fa-star-o'로 변경하고, 중요메일함에서 해당 이메일을 제거
-                    $(this).removeClass('fa-star').addClass('fa-star-o');
-                    $(this).closest('.email').removeClass('important'); // 중요메일함 클래스 제거
-                    }
-                });
-                });
+             $(function(){
+                var star = "resources/images/star.png"
+                var award = "resources/images/award.png"
+                  $(".star").click(function(){
+                    if($(".star").attr("src") != star){  
+                     $(this).attr("src",star);
 
 
-          </script>
+
+                    }else{
+                      $(this).attr("src",award);
+                    }
+
+
+                 })
+
+             })
+            </script>
 	   				
 			
 

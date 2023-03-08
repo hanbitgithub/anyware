@@ -126,7 +126,7 @@
             <table class="table">
                 <tr style="font-size: 14px; font-weight: bold;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="25"><img src="resources/images/award.png" width="18"></td>
+                    <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
                     <td width="25"><img src="resources/images/envelope2.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
@@ -135,7 +135,7 @@
                 </tr>
                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/award.png" width="18"></td>
+                    <td width="20"><img src="resources/images/award.png" width="18" class="star"></td>
                     <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
@@ -144,7 +144,7 @@
                 </tr>
                 <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/star.png" width="18"></td>
+                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
                      <td width="25"><img src="resources/images/envelope.png" width="17"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
@@ -154,6 +154,26 @@
                 
                 
             </table>
+            <script>
+             $(function(){
+                var star = "resources/images/star.png"
+                var award = "resources/images/award.png"
+                  $(".star").click(function(){
+                    if($(".star").attr("src") != star){  
+                     $(this).attr("src",star);
+
+
+
+                    }else{
+                      $(this).attr("src",award);
+                    }
+
+
+                 })
+
+             })
+            </script>
+               
 
 
 
