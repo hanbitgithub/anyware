@@ -12,7 +12,7 @@
 	.menu{
 	    position: fixed;
 	    height: 100vh;
-	    width: 200px;
+	    width: 160px;
 	    font-size: 14px;
 	    padding: 40px 20px;
 	    border-right: 1px solid rgb(211, 210, 210);
@@ -24,7 +24,7 @@
 	}
 
 	.name{
-		width: 170px;
+		width: 130px;
 		font-weight: 600;
 		font-size: 19px;
 		overflow:hidden;
@@ -35,7 +35,9 @@
 		font-weight: 600;
 	}
 	#todo-input{
-		width: 160px;
+		width: 130px;
+		height: 25px;
+		font-size: 13px;
 		margin-top: 5px;
 		margin-bottom: 5px;
 	}
@@ -44,7 +46,7 @@
 	}
 	.list-td{
 		width: 120px;
-		height: 25px;
+		height: 30px;
 	}
 	.done{
 		margin-right: 10px;
@@ -61,12 +63,51 @@
 	.done:hover, .delete:hover{
 		cursor: pointer;
 	}
-	
+
+	#name{
+		width: 350px;
+		margin-left: 10px;
+	}
+	.btn-area{
+		width: 466px;
+	}
+    input[type=color]{
+        margin-left: 55px;
+        width: 352px;
+        height: 30px;
+    }
+    .date{
+        margin-top: 10px;
+        width: 150px;
+        text-align: center;
+    }
+
+    input[type=checkbox] + label{
+        cursor: pointer;
+    }
+    input[type=checkbox]{
+        display: none;
+    }
+    label{
+        width: 25px;
+        height: 25px;
+        margin-top: 10px;
+        margin-right: 10px;
+        border-radius: 0.3em;
+        vertical-align:middle;
+        color: white;
+        font-size: 17px;
+        text-align: center;
+    }
+	.name span:hover{
+		cursor: pointer;
+	}
 </style>
 </head>
 <body>
-	 <div class="menu">
-        <div class="name">기획보고서<span>⚙️</span></div>
+
+	<div class="menu">
+        <div class="name">프로젝트 기획보고서<span data-toggle="modal" data-target="#myModal">⚙️</span></div>
 		<br>
 
 		<div class="period">- 기간</div>
@@ -74,7 +115,7 @@
 		<br><br>
         
 		<div class="todo">- To do list</div>
-		<input type="text" id="todo-input" name="" placeholder="할 일을 추가해주세요" onkeydown="addlist();">
+		<input type="text" id="todo-input" name="" placeholder="할 일 추가" onkeydown="addlist();">
 		
 		<table id="todo-table">
 			<tr>
@@ -82,24 +123,27 @@
 				<td class="list-td">
 					기획 의도
 				</td>
-				<td class="done" onclick="done();">✔</td>
-				<td class="delete" onclick="deletelist();">✕</td>
+				<td class="done" onclick="done(this);">✔</td>
+				<td class="delete" onclick="deletelist(this);">✕</td>
+				<td><input type="hidden" value="dd"></td>
 			</tr>
 			<tr>
 				<td class="dot">•</td>
 				<td class="list-td">
 					유사사이트 분석
 				</td>
-				<td class="done">✔</td>
-				<td class="delete">✕</td>
+				<td class="done" onclick="done(this);">✔</td>
+				<td class="delete" onclick="deletelist(this);">✕</td>
+				<td><input type="hidden" value="dd"></td>
 			</tr>
 			<tr>
 				<td class="dot">•</td>
 				<td class="list-td">
 					가나다라마바사아자차카타파
 				</td>
-				<td class="done">✔</td>
-				<td class="delete">✕</td>
+				<td class="done" onclick="done(this);">✔</td>
+				<td class="delete" onclick="deletelist(this);">✕</td>
+				<td><input type="hidden" value="dd"></td>
 			</tr>
 		</table>
 
@@ -119,8 +163,9 @@
 									+ "<td class='list-td'>"
 										+ input.value
 									+ "</td>"
-									+ "<td class='done'>✔</td>"
-									+ "<td class='delete'>✕</td>"
+									+ "<td class='done' onclick='done(this);'>✔</td>"
+									+ "<td class='delete' onclick='deletelist(this);'>✕</td>"
+									+ "<td><input type='hidden' value='todoNo'></td>"
 								+ "</tr>";
 					
 					$("#todo-table").append(value);
@@ -128,16 +173,102 @@
 				};
 			}
 
-			function done(){
-
+			function done(e){
+				// ajax로 update하기
+				console.log($(e).next().next().children("input").val());
 			}
 
-			function deletelist(){
-
+			function deletelist(e){
+				// ajax로 delete하기
+				console.log($(e).next().children("input").val());
 			}
+
 		</script>
 
-    </div>
-	
+	</div>
+
+	<!-- The Modal -->
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+		
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h3 class="modal-title">리스트 수정</h3>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+		
+				<!-- Modal body -->
+				<div class="modal-body">
+					<form action="">
+						<div>
+							<b>리스트 이름<span class="essential"> *</span></b>
+							<input type="text" id="name" name="">
+						</div>
+						<br>
+						<div>
+							<b>기간<span class="essential"> *</span></b><br>
+							<input type="date" required class="date"> - <input type="date" required class="date">
+						</div>
+						<br>
+						<div>
+							<b>색상<span class="essential"> *</span></b><br>
+							<input type="checkbox" name="color" value="red" id="red" onclick="checkOnlyOne(this);">
+							<label for="red" class="check-label"></label>
+							<input type="checkbox" name="color" value="orange" id="orange" onclick="checkOnlyOne(this);">
+							<label for="orange" class="check-label"></label>
+							<input type="checkbox" name="color" value="gold" id="gold" onclick="checkOnlyOne(this);">
+							<label for="gold" class="check-label"></label>
+							<input type="checkbox" name="color" value="green" id="green" onclick="checkOnlyOne(this);">
+							<label for="green" class="check-label"></label>
+							<input type="checkbox" name="color" value="blue" id="blue" onclick="checkOnlyOne(this);">
+							<label for="blue" class="check-label"></label>
+							<input type="checkbox" name="color" value="indigo" id="indigo" onclick="checkOnlyOne(this);">
+							<label for="indigo" class="check-label"></label>
+							<input type="checkbox" name="color" value="purple" id="purple" onclick="checkOnlyOne(this);">
+							<label for="purple" class="check-label"></label>
+						</div>
+
+						<script>
+							$(function(){
+								const label = document.querySelectorAll("label");
+
+								label.forEach(function(lb){
+									lb.style.background = lb.getAttribute("for");
+								})
+							})
+
+							function checkOnlyOne(element) {
+								const checkbox = document.getElementsByName("color");
+								const label = document.querySelectorAll("label");
+								
+								checkbox.forEach(function(cb){
+									cb.checked = false;
+									
+								})
+
+								label.forEach(function(lb){
+									lb.innerText = "";
+								})
+								
+								element.checked = true;
+								element.nextElementSibling.innerText = "✔";
+							}
+ 
+						</script>
+
+						<br><br>
+
+						<div class="btn-area" align="center">
+							<button type="submit" class="btn btn-primary">생성</button>&nbsp;
+							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+						</div>
+
+					</form>
+				</div>
+		
+			</div>
+		</div>
+	</div>
 </body>
 </html>
