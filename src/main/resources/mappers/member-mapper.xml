@@ -49,4 +49,27 @@
        where status = 'Y'
     		
   </select>
+  
+  <select id="loginMember" resultMap="Member">
+    select
+    		member_no,
+    		dept_name,
+    		job_name,
+    		position,
+    		duty,
+    		name,
+    		member_id,
+    		member_pwd,
+    		rrn,
+    		email,
+    		phone,
+    		address,
+    		enroll_date,
+    		leave_off,
+    		profile_url
+    	from member
+       where status = 'Y'
+       and member_id = #{memberId}
+    		
+  </select>
 </mapper>
