@@ -108,7 +108,8 @@ table{
               </tbody>
             </table>
             <br><br><br>
-            
+
+
             <div class="page_wrap">
               <div class="page_nation">
                  <a class="arrow pprev" href="#"></a>
@@ -126,8 +127,35 @@ table{
                  <a class="arrow next" href="#"></a>
                  <a class="arrow nnext" href="#"></a>
               </div>
+              
+            <!--
+            <div class="page_wrap">
+              <ul class="page_nation">
+              <c:choose>
+	              	<c:when test="${pi.currentPage eq 1 }">
+	                 <li class="arrow prev disabled"><a class="arrow prev" href="#" disabled>이전</a></li>
+	                 </c:when>
+	                 <c:otherwise>
+	                 <li><a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a></li>
+	                 </c:otherwise>
+              </c:choose>   
+
+              <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
+                <li><a class="" href="list.bo?cpage=${ p }">${ p }</a></li>
+              </c:forEach>
+
+                 
+                <c:choose>
+	              	<c:when test="${pi.currentPage eq pi.maxPage }"> 
+                 <li class="arrow next disabled"><a class="arrow next" href="#">다음</a></li>
+                 	</c:when>
+	                 <c:otherwise>
+                 <li><a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
+                 	 </c:otherwise>
+              </c:choose>   
+              </ul>
            </div>
-        
+        -->
           </div>
           
 	
