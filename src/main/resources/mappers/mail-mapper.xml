@@ -32,7 +32,8 @@
 <select id="selectAddressListCount" resultType="_int">
 	select count(*)
 	  from tb_addressbook
-	 where status = 'Y' 
+	 where status = 'Y'
+	 and mem_no = #{memNo} 
 </select>
 
 <!--주소록 리스트 -->
@@ -51,7 +52,7 @@
 	from tb_addressbook b
 	join tb_addressgroup g on (b.group_no = g.group_no)
 	where b.status = 'Y' 
-	  and mem_no = 1 <!--로그인한 사원번호로 변경하기 -->
+	  and mem_no = #{memNo}  <!--로그인한 사원번호로 변경하기 -->
 	 order by add_no desc
 
 </select>
@@ -62,7 +63,7 @@
 		   group_no
 		  ,group_name
       from tb_addressgroup
-      where member_no = 2 <!--로그인한 사원번호로 변경하기 -->
+      where member_no = #{memNo}  <!--로그인한 사원번호로 변경하기 -->
       and status= 'Y' 
 </select>
 
@@ -84,6 +85,37 @@
 
 </insert>
 
+<!-- 주소록추가 -->
+<insert id="insertAddressBook">
+	insert 
+	  into tb_addressbook
+	  (
+	   add_no
+	  , name
+	  , dept_name
+	  , job_name
+	  , email
+	  , phone
+	  , biz_name
+	  , group_no
+	  , mem_no
+	  )
+	values
+	(  
+	  seq_abno.nextval
+	 ,#{name}
+	 ,#{deptName}
+	 ,#{jobName}
+	 ,#{email}
+	 ,#{phone}
+	 ,#{bizName}
+	 ,#{groupNo}
+	 ,#{memNo} 
+
+	  )
+	  
+
+</insert>
 
 
 

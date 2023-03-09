@@ -75,72 +75,79 @@
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link"  data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <a class="nav-link"  data-bs-toggle="modal" data-bs-target="#addAddress">
                             <img src="resources/images/add-friend.png" width="20px">
                               추가
                             </a>
 
-                
-                        
-                        <!-- Modal -->
-                       <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <b>주소록 추가</b>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body addAddress">
-                                        <table style="text-align: center;">
-                                            <tr>
-                                                <th width="100">이름</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>이메일</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>연락처</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>회사명</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>부서</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>직급</th>
-                                                <td><input type="text"></td>
-                                            </tr>
-                                            <tr>
-                                                <th>그룹 </th> 
-                                                <td>
-                                                    <select>
-                                                        <option>전체</option>
-                                                        <option>거래처1</option>
-                                                        <option>거래처2</option>
-                                                    </select>
-                                                    <button class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
-                                                </td>
-                                            </tr>
-                                            
-                                 
-                                        </table>
-                                    </div>
-                                    <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary btn-sm">저장</button>
-                                    <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                      </li>
-                          
-                      <li class="nav-item">
+               			</li>
+                       
+	               <!-- Modal -->
+	              <div class="modal fade" id="addAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	                       <div class="modal-content">
+	                           <div class="modal-header">
+	                           <b>주소록 추가</b>
+	                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                           </div>
+	                           <div class="modal-body addAddress">
+	                           
+	                           <form action="insert.ad" method="post">
+	                               <table style="text-align: center;">
+	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
+	                                   <tr>
+	                                       <th width="100">이름</th>
+	                                       <td><input type="text" name="name"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>이메일</th>
+	                                       <td><input type="text" name="email"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>연락처</th>
+	                                       <td><input type="text" name="phone"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>회사명</th>
+	                                       <td><input type="text" name="bizName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>부서</th>
+	                                       <td><input type="text" name="deptName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>직급</th>
+	                                       <td><input type="text" name="jobName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>그룹 </th> 
+	                                       <td>
+	                                           <select name="groupNo">
+	                                           	    <option>전체</option>
+	                                           <c:forEach var="gr" items="${glist}">
+	                                               <option value="${gr.groupNo }">${gr.groupName }</option>
+	                                            </c:forEach> 
+	                                           </select>
+	                                           
+	                                   
+	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
+	                                       </td>
+	                                   </tr>
+
+	                               </table>
+	                              
+	                           </div>
+	                           <div class="modal-footer">
+	                           <button type="submit" class="btn btn-primary btn-sm">저장</button>
+	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
+	                           </div>
+	                         </form>
+	                       </div>
+	                   </div>
+	               </div>
+                     
+                         
+                     <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/refresh2.png" width="18px">
                             수정</a>
@@ -259,38 +266,64 @@
                         })
                     })
                 </script>
-       
-            
-
-            <!--페이징 영역-->
-            <div id="paging-area" align="center">
-            
-            <c:choose>
-            	<c:when test="${pi.currentPage eq 1}">
-                	<button disabled>이전</button>
-                </c:when>
-                <c:otherwise>
-                	<button onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
-                </c:otherwise>
-            </c:choose> 
-           	<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
-           		<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
-           	</c:forEach>
-             
-            <c:choose>
-            	<c:when test="${pi.currentPage eq pi.maxPage }">
-            		<button disabled>다음</button>
-            	</c:when>  
-            	<c:otherwise>
-            		<button onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
-            	</c:otherwise> 
-            </c:choose>    
-           
-           </div>  
-              
 
 
-       </div> 
+
+		<!--페이징 영역-->
+		<div id="paging-area" align="center">
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq 1}">
+					<button disabled>이전</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+				<c:choose>
+					<c:when test="${empty keyword }">
+						<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
+					</c:when>
+					<c:otherwise>
+						<button
+							onclick="location.href='personal.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage }">
+					<button disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+
+		</div>
+
+
+
+	</div> 
        
        		 <!-- Modal -->
                         <div class="modal fade" id="groupAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -28,17 +28,17 @@ public class MailServiceImle implements MailService {
 	
 	//주소록
 	@Override
-	public int selectAddressListCount() {
-		return mDao.selectAddressListCount(sqlSession);
+	public int selectAddressListCount(int memNo) {
+		return mDao.selectAddressListCount(sqlSession,memNo);
 	}
 
 	@Override
-	public ArrayList<AddressBook> selectAddbookList(PageInfo pi) {
-		return mDao.selectAddbookList(sqlSession, pi);
+	public ArrayList<AddressBook> selectAddbookList(PageInfo pi, int memNo) {
+		return mDao.selectAddbookList(sqlSession, pi,memNo);
 	}
 	
 	@Override
-	public ArrayList<AddressGroup> selectGropList(int memNo) {
+	public ArrayList<AddressGroup> selectGroupList(int memNo) {
 		return mDao.selectGroupList(sqlSession,memNo);
 	}
 	
@@ -49,7 +49,7 @@ public class MailServiceImle implements MailService {
 	
 	@Override
 	public int insertAddressBook(AddressBook ab) {
-		return 0;
+		return mDao.insertAddressBook(sqlSession, ab);
 	}
 
 
