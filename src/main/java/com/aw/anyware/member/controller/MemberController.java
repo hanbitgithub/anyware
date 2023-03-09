@@ -49,7 +49,7 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
-		System.out.println("Member : " + m);
+		
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser == null) {
