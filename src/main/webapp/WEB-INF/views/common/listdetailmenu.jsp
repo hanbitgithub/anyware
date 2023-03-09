@@ -17,6 +17,7 @@
 	    padding: 40px 20px;
 	    border-right: 1px solid rgb(211, 210, 210);
 	    font-family: 'Nanum Gothic', sans-serif;
+		position: relative;
 	}
 	.menu li{
 	    margin-top: 5px;
@@ -64,6 +65,9 @@
 		cursor: pointer;
 	}
 
+	.essential{
+		color: red;
+	}
 	#name{
 		width: 350px;
 		margin-left: 10px;
@@ -101,6 +105,10 @@
     }
 	.name span:hover{
 		cursor: pointer;
+	}
+
+	.back{
+		margin: 100px;
 	}
 </style>
 </head>
@@ -146,6 +154,10 @@
 				<td><input type="hidden" value="dd"></td>
 			</tr>
 		</table>
+
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+		<button class="btn btn-primary">List 목록</button>
 
 		<script>
 			function addlist(){
@@ -213,20 +225,20 @@
 						<br>
 						<div>
 							<b>색상<span class="essential"> *</span></b><br>
-							<input type="checkbox" name="color" value="red" id="red" onclick="checkOnlyOne(this);">
-							<label for="red" class="check-label"></label>
-							<input type="checkbox" name="color" value="orange" id="orange" onclick="checkOnlyOne(this);">
-							<label for="orange" class="check-label"></label>
-							<input type="checkbox" name="color" value="gold" id="gold" onclick="checkOnlyOne(this);">
-							<label for="gold" class="check-label"></label>
-							<input type="checkbox" name="color" value="green" id="green" onclick="checkOnlyOne(this);">
-							<label for="green" class="check-label"></label>
-							<input type="checkbox" name="color" value="blue" id="blue" onclick="checkOnlyOne(this);">
-							<label for="blue" class="check-label"></label>
-							<input type="checkbox" name="color" value="indigo" id="indigo" onclick="checkOnlyOne(this);">
-							<label for="indigo" class="check-label"></label>
-							<input type="checkbox" name="color" value="purple" id="purple" onclick="checkOnlyOne(this);">
-							<label for="purple" class="check-label"></label>
+							<input type="checkbox" name="color" value="rgb(255, 153, 153)" id="red" onclick="checkOnlyOne(this);">
+                            <label for="red" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(255, 204, 153)" id="orange" onclick="checkOnlyOne(this);">
+                            <label for="orange" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(255, 255, 156)" id="gold" onclick="checkOnlyOne(this);">
+                            <label for="gold" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(176, 247, 162)" id="green" onclick="checkOnlyOne(this);">
+                            <label for="green" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(153, 204, 255)" id="blue" onclick="checkOnlyOne(this);">
+                            <label for="blue" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(204, 153, 255)" id="purple" onclick="checkOnlyOne(this);">
+                            <label for="purple" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(224, 224, 224)" id="gray" onclick="checkOnlyOne(this);">
+                            <label for="gray" class="check-label"></label>
 						</div>
 
 						<script>
@@ -234,7 +246,8 @@
 								const label = document.querySelectorAll("label");
 
 								label.forEach(function(lb){
-									lb.style.background = lb.getAttribute("for");
+									// lb.style.background = lb.getAttribute("for");
+									lb.style.background = document.getElementById(lb.getAttribute("for")).value;
 								})
 							})
 
