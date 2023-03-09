@@ -98,7 +98,7 @@
         <div id="left" style="text-align:center;">
           <br><br><br>
           <img class="profile" src="">
-            <p><b>이배추 대표이사</b><br>CEO</p>
+            <p><b>${ loginUser.name }</b><b> ${ loginUser.position }</b></p>
           <p> 
             출근시간 : 09:00 
             <br>
