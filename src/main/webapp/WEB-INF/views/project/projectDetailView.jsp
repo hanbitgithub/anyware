@@ -14,14 +14,15 @@
         overflow: auto;
     }
     .list{
-        border: 1px solid black;
-        border-radius: 0.3em;
+        border: 2px solid rgb(211, 210, 210);
+        border-radius: 0.5em;
         width: 350px;
         height: 130px;
         padding: 10px;
         float: left;
         margin-right: 20px;
         margin-bottom: 20px;
+        color: gray;
     }
     .list-name{
         font-size: 25px;
@@ -46,8 +47,8 @@
 		width: 466px;
 	}
     input[type=color]{
-        margin-left: 55px;
-        width: 352px;
+        margin-top: 10px;
+        width: 460px;
         height: 30px;
     }
     .date{
@@ -91,31 +92,31 @@
         <br><br>
 
         <div class="list-area">
-			<div class="list" onclick="location.href='detail.li'" style="border: 2px solid red;">
+			<div class="list" onclick="location.href='detail.li'" style="border-left: 15px solid rgb(255, 153, 153);">
 				<div class="list-name">프로젝트 기획보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/19</span> - <span>23/02/20</span>
 			</div>
-			<div class="list" onclick="location.href=''" style="border: 2px solid orange;">
+			<div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(255, 204, 153);">
 				<div class="list-name">UI 설계보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/20</span> - <span>23/02/27</span>
 			</div>
-            <div class="list" onclick="location.href=''" style="border: 2px solid gold;">
+            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(255, 255, 156);">
 				<div class="list-name">DB 설계보고서</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/27</span> - <span>23/03/05</span>
 			</div>
-            <div class="list" onclick="location.href=''" style="border: 2px solid green;">
+            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(176, 247, 162);">
 				<div class="list-name">XXXXXX</div>
                 <br>
                 <div class="period">기간</div>
                 <span>23/02/19</span> - <span>23/02/20</span>
 			</div>
-            <div class="list" onclick="location.href=''" style="border: 2px solid blue;">
+            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(153, 204, 255);">
 				<div class="list-name">XXXXXXXX</div>
                 <br>
                 <div class="period">기간</div>
@@ -151,28 +152,29 @@
                         <br>
                         <div>
                             <b>색상<span class="essential"> *</span></b><br>
-                            <input type="checkbox" name="color" value="red" id="red" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(255, 153, 153)" id="red" onclick="checkOnlyOne(this);">
                             <label for="red" class="check-label"></label>
-                            <input type="checkbox" name="color" value="orange" id="orange" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(255, 204, 153)" id="orange" onclick="checkOnlyOne(this);">
                             <label for="orange" class="check-label"></label>
-                            <input type="checkbox" name="color" value="gold" id="gold" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(255, 255, 156)" id="gold" onclick="checkOnlyOne(this);">
                             <label for="gold" class="check-label"></label>
-                            <input type="checkbox" name="color" value="green" id="green" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(176, 247, 162)" id="green" onclick="checkOnlyOne(this);">
                             <label for="green" class="check-label"></label>
-                            <input type="checkbox" name="color" value="blue" id="blue" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(153, 204, 255)" id="blue" onclick="checkOnlyOne(this);">
                             <label for="blue" class="check-label"></label>
-                            <input type="checkbox" name="color" value="indigo" id="indigo" onclick="checkOnlyOne(this);">
-                            <label for="indigo" class="check-label"></label>
-                            <input type="checkbox" name="color" value="purple" id="purple" onclick="checkOnlyOne(this);">
+                            <input type="checkbox" name="color" value="rgb(204, 153, 255)" id="purple" onclick="checkOnlyOne(this);">
                             <label for="purple" class="check-label"></label>
+                            <input type="checkbox" name="color" value="rgb(224, 224, 224)" id="gray" onclick="checkOnlyOne(this);">
+                            <label for="gray" class="check-label"></label>
                         </div>
 
                         <script>
                             $(function(){
                                 const label = document.querySelectorAll("label");
-
+                                
                                 label.forEach(function(lb){
-                                    lb.style.background = lb.getAttribute("for");
+                                    // lb.style.background = lb.getAttribute("for");
+                                    lb.style.background = document.getElementById(lb.getAttribute("for")).value;
                                 })
                             })
 
