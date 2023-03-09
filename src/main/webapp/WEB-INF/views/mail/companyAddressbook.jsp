@@ -103,25 +103,25 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox" name="check"></td>
-                        <td width="50">김강쥐</td>
-                        <td width="150">doopal@naver.com</td>
-                        <td width="100">010-2142-4121</td>
-                        <td width="120">감자팩토리</td>  
-                        <td width="50">대리</td>
-                        <td width="100">영업부</td>
-                    </tr>
-                    <tr style="font-size: 14px;">
-                        <td width="10"><input type="checkbox" name="check"></td>
-                       
-                        <td width="50">김말동</td>
-                        <td width="150">doopal@naver.com</td>
-                        <td width="100">010-2142-4121</td>
-                        <td width="120">감자팩토리</td>
-                        <td width="50">대리</td>
-                        <td width="100">인사부</td>
-                    </tr>
+                
+                <c:choose>
+                	<c:when test="${not empty mlist}">
+                		<c:forEach var="m" items="${mlist}">
+		                    <tr style="font-size: 14px;">
+		                        <td width="10"><input type="checkbox" name="check"></td>
+		                        <td width="50">${m.name }</td>
+		                        <td width="150">${m.email }</td>
+		                        <td width="100">${m.phone }</td>
+		                        <td width="120"></td>  
+		                        <td width="50">${m.deptName }</td>
+		                        <td width="100">${m.jobName }</td>
+		                    </tr>
+	                    </c:forEach>
+                    </c:when>
+                    <c:otherwise>
+                    	<tr><td colspan="7">등록된 연락처가 없습니다.</td></tr>
+                    </c:otherwise>
+				</c:choose>                  
 
                 </tbody>
                 
@@ -153,11 +153,11 @@
 					<c:choose>
 						<c:when test="${empty keyword }">
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
+								onclick="location.href='company.ad?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+								onclick="location.href='company.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -165,11 +165,11 @@
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
 					<c:when test="${empty keyword }">
-						<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
+						<button onclick="location.href='company.ad?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='personal.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
+							onclick="location.href='company.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -182,11 +182,11 @@
 					<c:choose>
 						<c:when test="${empty keyword }">
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
+								onclick="location.href='company.ad?cpage=${pi.currentPage + 1}'">다음</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+								onclick="location.href='company.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

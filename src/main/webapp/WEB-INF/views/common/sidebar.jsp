@@ -236,7 +236,7 @@ a {
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
+                    <a href="main.do" class="nav__logo">ANYWARE</a>
                 </div>
                 <div class="nav__list">
                    
