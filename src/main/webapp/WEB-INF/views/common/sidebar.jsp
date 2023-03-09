@@ -273,7 +273,7 @@ a {
                         <span class="nav_name">예약</span>
                     </a>
 
-                    <a href="list.bo" class="nav__link">
+                    <a href="main.bo" class="nav__link">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">게시판</span>
 

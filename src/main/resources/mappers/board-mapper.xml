@@ -34,5 +34,54 @@
 		 order
 		    by board_no desc
 	</select>
+	
+	<insert id="insertBoard">
+		insert
+			into tb_board
+			(
+			    board_no
+			  , category
+			  , board_title
+			  , board_writer
+			  , board_content
+			  , origin_name
+			  , change_name
+			)
+			values
+			(
+				SEQ_BONO.nextval
+			  , #{category}	
+			  , #{boardTitle}	
+			  , #{boardWriter}	
+			  , #{boardContent}
+			  , #{originName}	
+			  , #{changeName}		
+			)
+	</insert>
+	
+	<update id="increaseCount">
+		update
+			tb_board
+		set count = count + 1
+	  where board_no = #{boardNo}
+	  	and status = 'Y'			
+	</update>
+	
+	<select id="selectBoard" resultMap="boardResult">
+		select
+			   board_no
+			 , board_title
+			 , board_writer
+			 , board_content
+			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			 , origin_name
+			 , change_name
+			 , category
+		from tb_board
+		where board_no = #{boardNo}	 
+
+			   	
+	</select>
+	
 
 </mapper>

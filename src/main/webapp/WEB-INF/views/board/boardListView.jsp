@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -49,19 +50,15 @@ table{
 	border:1px solid #ccc;
 }
 .page_nation .pprev {
-	background:#f8f8f8 url('arrow\page_pprev.png') no-repeat center center;
 	margin-left:0;
 }
 .page_nation .prev {
-	background:#f8f8f8 url('arrow\page_prev.png') no-repeat center center;
 	margin-right:7px;
 }
 .page_nation .next {
-	background:#f8f8f8 url('arrow\page_next.png') no-repeat center center;
 	margin-left:7px;
 }
 .page_nation .nnext {
-	background:#f8f8f8 url('arrow\page_nnext.png') no-repeat center center;
 	margin-right:0;
 }
 .page_nation a.active {
@@ -86,7 +83,7 @@ table{
             <button type="submit" class="button">검색</button>
             <br>
 
-            <table class="table table-hover">
+            <table id="boardList" class="table table-hover" align="center">
               <thead>
                   <th>번호</th>
                   <th>제목</th>
@@ -96,9 +93,9 @@ table{
                 </tr>
               </thead>
               <tbody style="border: white">
-                <c:forEach var="b" items="${list}">
+                <c:forEach var="b" items="${ list }">
                 <tr>
-                  <td>${ b.boardNo }</td>
+                  <td class="bno">${ b.boardNo }</td>
                   <td>${ b.boardTitle }</td>
                   <td>${ b.boardWriter }</td>
                   <td>${ b.createDate }</td>
@@ -107,57 +104,43 @@ table{
                 </c:forEach>
               </tbody>
             </table>
+            
+            <script>
+            	$(function(){
+            		$("#boardList>tbody>tr").click(function(){
+            			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
+            		})
+            	})
+            </script>
             <br><br><br>
 
-
+			
             <div class="page_wrap">
               <div class="page_nation">
-                 <a class="arrow pprev" href="#"></a>
-                 <a class="arrow prev" href="#"></a>
-                 <a href="#" class="active">1</a>
-                 <a href="#">2</a>
-                 <a href="#">3</a>
-                 <a href="#">4</a>
-                 <a href="#">5</a>
-                 <a href="#">6</a>
-                 <a href="#">7</a>
-                 <a href="#">8</a>
-                 <a href="#">9</a>
-                 <a href="#">10</a>
-                 <a class="arrow next" href="#"></a>
-                 <a class="arrow nnext" href="#"></a>
-              </div>
-              
-            <!--
-            <div class="page_wrap">
-              <ul class="page_nation">
-              <c:choose>
-	              	<c:when test="${pi.currentPage eq 1 }">
-	                 <li class="arrow prev disabled"><a class="arrow prev" href="#" disabled>이전</a></li>
-	                 </c:when>
-	                 <c:otherwise>
-	                 <li><a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a></li>
-	                 </c:otherwise>
-              </c:choose>   
-
-              <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-                <li><a class="" href="list.bo?cpage=${ p }">${ p }</a></li>
-              </c:forEach>
-
-                 
                 <c:choose>
-	              	<c:when test="${pi.currentPage eq pi.maxPage }"> 
-                 <li class="arrow next disabled"><a class="arrow next" href="#">다음</a></li>
-                 	</c:when>
-	                 <c:otherwise>
-                 <li><a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a></li>
-                 	 </c:otherwise>
-              </c:choose>   
-              </ul>
-           </div>
-        -->
-          </div>
-          
+	              	<c:when test="${pi.currentPage eq 1 }">
+                    <a class="arrow prev" href="#" disabled>이전</a>
+                  </c:when>
+                  <c:otherwise>  
+                    <a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a>
+                  </c:otherwise>
+                  </c:choose>
+                  
+                  <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
+                    <a class="" href="list.bo?cpage=${ p }">${ p }</a>
+                  </c:forEach>
+                  
+                  <c:choose>
+                    <c:when test="${pi.currentPage eq pi.maxPage }"> 
+                   <a class="arrow next" href="#">다음</a>
+                     </c:when>
+                     <c:otherwise>
+                   <a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a>
+                      </c:otherwise>
+                </c:choose>   
+                </div>
+              </div>
+               
 	
 	</div>
 </body>
