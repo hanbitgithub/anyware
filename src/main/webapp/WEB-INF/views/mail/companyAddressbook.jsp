@@ -141,17 +141,59 @@
        
             
 
-            <!--페이징 영역-->
-            <div id="paging-area" align="center">
-                <button>이전</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>다음</button>
-            </div>  
-              
+            
+        <!--페이징 영역-->
+		<div id="paging-area" align="center">
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq 1}">
+					<button disabled>이전</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+				<c:choose>
+					<c:when test="${empty keyword }">
+						<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
+					</c:when>
+					<c:otherwise>
+						<button
+							onclick="location.href='personal.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage }">
+					<button disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='personal.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+
+		</div>
+
 
 
        </div> 

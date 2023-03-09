@@ -106,7 +106,7 @@ a{
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
-                <a href="test.do">테스트</a>
+                
             <ul>
                 <li><a href="receivebox.em">받은메일함</a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
@@ -133,9 +133,9 @@ a{
             <div id="adbook-area">
                 <span style="font-weight: 600; font-size: 15px;" >주소록</span><br>
 
-   					<input id="check-btn" type="checkbox" /> 
+   					<input id="check-btn" type="checkbox"/> 
    					<label for="check-btn" class="label">
-   					<ion-icon name="chevron-down-outline" ></ion-icon> 개인주소록</label>
+   					<ion-icon name="chevron-down-outline"></ion-icon>개인주소록</label>
 
                      <ul class="group menubars" id="personal">
                         <li id="all"><a href="personal.ad">전체 </a></li>
@@ -159,7 +159,9 @@ a{
                   
                     
                     <script>
-                    
+                    $(".label").click(function(){
+                    	$('#all a').trigger('click');
+                    })
                     
                  // 주소록 추가 클릭시 처리하는 함수
     				function insertAddBook() {
@@ -174,22 +176,24 @@ a{
     						$.ajax({
     							url : "insertAddGroup.ad",
     							data : {
-    								memNo : '${loginUser.memNo }',
+    								memNo : '${loginUser.memberNo}',
     								groupName : $("#addName").val()
     							},
     							success : function(result) {
     								console.log($("#addName").val());
     								if (result == "success") {
-    									location.reload(); // 서버 새로고침
+    									selectGroupList();
+    									$(".insertAddBook").hide();
+    									
     								}
     							},
-    							error : function() {
-    								alert("주소록을 추가하는데 실패했습니다. 다시 시도해주세요.");
+    							error : function(){
+    								console.log("주소록 추가 ajax 통신실패");
     							}
 
     						})
     					} else {
-    						alert("주소록명을 입력해주세요.");
+    						alert("그룹명을 입력해주세요.");
     						return false;
     					}
 
@@ -205,10 +209,7 @@ a{
                     
                     </script>
                     
-                    
-                    
-                    
-                    
+        
                     
                     
                 <br>

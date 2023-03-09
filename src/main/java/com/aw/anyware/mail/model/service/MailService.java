@@ -14,11 +14,11 @@ public interface MailService {
 	
 	/*주소록*/
 	//주소록 조회
-	int selectAddressListCount();
-	ArrayList<AddressBook> selectAddbookList(PageInfo pi);
+	int selectAddressListCount(int memNo);
+	ArrayList<AddressBook> selectAddbookList(PageInfo pi,int memNo);
 	
 	//그룹리스트 조회
-	ArrayList<AddressGroup> selectGropList(int memNo);
+	ArrayList<AddressGroup> selectGroupList(int memNo);
 	//그룹추가 
 	int insertAddressGroup(AddressGroup ag);
 	

@@ -50,7 +50,7 @@
     		
   </select>
   
-  <select id="loginMember" resultMap="Member">
+  <select id="loginMember" resultMap="memberResult">
     select
     		member_no,
     		dept_name,
@@ -67,9 +67,10 @@
     		enroll_date,
     		leave_off,
     		profile_url
-    	from member
+    	from tb_member
        where status = 'Y'
        and member_id = #{memberId}
+       and member_pwd = #{memberPwd}
     		
   </select>
 </mapper>
