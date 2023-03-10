@@ -25,8 +25,15 @@ public class MailController {
 	@Autowired
 	private MailService mService;
 	
+	//메일 메인페이지 
 	@RequestMapping("receivebox.em")
-	public String receiveMailList() {
+	public String receiveMailList(HttpSession session) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		//그룹리스트 
+		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
+		session.setAttribute("glist", glist);
+	
 		return "mail/receiveMailBox";
 	}
 	@RequestMapping("sendbox.em")
@@ -82,6 +89,7 @@ public class MailController {
 		ArrayList<AddressBook> list = mService.selectAddbookList(pi,memNo);
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
 		
+		//System.out.println(glist);
 		model.addAttribute("list",list);
 		model.addAttribute("pi",pi);
 		model.addAttribute("glist",glist);
@@ -98,13 +106,24 @@ public class MailController {
 		return new Gson().toJson(list);
 	}
 	
+	//주소록 그룹 추가 
 	@ResponseBody
-	@RequestMapping(value="insertAddGroup.ad", produces="application/json; charset=UTF-8")
+	@RequestMapping(value="insertAddGroup.ad", produces="application/json; charset=utf-8")
 	public String ajaxInsertAddressGroup(AddressGroup ag) {
 		int result = mService.insertAddressGroup(ag);
-		return result>0 ? "success": "fail";
+		
+		if(result>0) {
+			
+			AddressGroup adg = mService.selectInsertGroup(ag);
+			//System.out.println(adg);
+			return new Gson().toJson(adg);
+		}else {
+			return "fail";
+		}
+		
 	}
 	
+	//주소록 추가 
 	@RequestMapping("insert.ad")
 	public String InsertAddressBook(AddressBook ab,HttpSession session) {
 		//System.out.println(ab);
@@ -121,16 +140,39 @@ public class MailController {
 		
 	}
 	
+	// 그룹별 주소록 조회 
+	@RequestMapping("group.ad")
+	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,AddressGroup ag,HttpSession session, Model model){
+		//그룹별 등록된 연락처 수 
+		int listCount = mService.selectGroupAddListCount(ag);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<AddressBook> list = mService.selectGroupAddList(pi,ag);
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		
+		return "mail/personalAddressbook";
+	}
+	
 	
 	@RequestMapping("company.ad")
-	public String companyAddBookList() {
+	public String companyAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
+		//전 사원수 조회
+		int count = mService.selectCompanyListCount();
+		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectCompanyList(pi);
+		
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+		
 		return "mail/companyAddressbook";
 	}
 	
 	
 	@RequestMapping("test.do")
 	public String test() {
-		return "mail/test";
+		return "mail/test2";
 	}
 
 

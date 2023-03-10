@@ -25,6 +25,25 @@
 </resultMap>
 
 
+<resultMap id="memberResult" type="Member">
+	<id column="member_no" property="memberNo"/>
+	<result column="dept_name" property="deptName"/>
+	<result column="job_name" property="jobName"/>
+	<result column="position" property="position"/>
+	<result column="duty" property="duty"/>
+	<result column="name" property="name"/>
+	<result column="rrn" property="rrn"/>
+	<result column="member_id" property="memberId"/>
+	<result column="member_pwd" property="memberPwd"/>
+	<result column="email" property="email"/>
+	<result column="phone" property="phone"/>
+	<result column="address" property="address"/>
+	<result column="enroll_date" property="enrollDate"/>
+	<result column="leave_off" property="leaveOff"/>
+	<result column="profile_url" property="profileUrl"/>
+	
+</resultMap>
+
 
 
 <!-- 개인주소록 조회 -->
@@ -62,6 +81,7 @@
 	select
 		   group_no
 		  ,group_name
+		  ,member_no
       from tb_addressgroup
       where member_no = #{memNo}  <!--로그인한 사원번호로 변경하기 -->
       and status= 'Y' 
@@ -84,6 +104,19 @@
 	  )
 
 </insert>
+<select id="selectInsertGroup" resultMap="groupResult">
+
+	    select
+			   group_no
+			  ,group_name
+			  ,member_no
+	      from tb_addressgroup
+	      where member_no = #{memNo} 
+	      and status= 'Y'
+	      and group_name= #{groupName}
+
+</select>
+
 
 <!-- 주소록추가 -->
 <insert id="insertAddressBook">
@@ -117,9 +150,63 @@
 
 </insert>
 
+<!-- 그룹별 리스트개수 -->
+<select id="selectGroupAddListCount" resultType="_int">
+select count(*)
+	 from tb_addressbook
+	 where status = 'Y'
+	 and mem_no = #{memNo}
+	 and group_no = #{groupNo} 
 
+</select>
 
+<!--그룹별 주소록 리스트 -->
+<select id="selectGroupAddList" resultMap="addressResult">
+	select 
+	        add_no
+	       , name
+	       , dept_name
+	       , job_name
+	       , email
+	       , phone
+	       , biz_name
+	       , b.group_no
+	       , group_name
+	       , mem_no
+	from tb_addressbook b
+	join tb_addressgroup g on (b.group_no = g.group_no)
+	where b.status = 'Y' 
+	
+	  and b.group_no = #{groupNo}
+	 order by add_no desc
+	 
 
+</select>
+
+<!--사내 주소록 조회 -->
+<select id="selectCompanyListCount" resultType="_int">
+  select count(*)  		
+   from tb_member
+   where status = 'Y'
+
+</select>
+<select id="selectCompanyList" resultMap="memberResult">
+ select 
+  		 member_no
+  		,dept_name
+  		,job_name
+  		,name
+  		,member_id
+  		,email
+  		,phone
+  		,email
+  		,address
+  		,enroll_date
+  		,profile_url
+   from tb_member
+   where status = 'Y'
+  order by name asc
+</select>
 
 
 

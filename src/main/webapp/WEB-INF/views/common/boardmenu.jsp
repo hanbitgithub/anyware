@@ -37,7 +37,7 @@
 <body>
 	 <div class="menu">
         <span style="font-weight: 600; font-size: 19px;">게시판</span><br><br>
-		<a class="btn btn-primary" href=""style="font-size: 13px; font-weight:600; width: 100px;">게시글 작성</a>
+		<a class="btn btn-primary" href="enrollForm.bo"style="font-size: 13px; font-weight:600; width: 100px;">게시글 작성</a>
 		<br><br>
         <div id="chat-area">
 			<span style="font-weight: 600; font-size: 15px;" >전사게시판</span><br>

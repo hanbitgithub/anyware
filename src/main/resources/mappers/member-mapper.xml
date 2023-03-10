@@ -45,7 +45,7 @@
     		enroll_date,
     		leave_off,
     		profile_url
-    	from member
+    	from tb_member
        where status = 'Y'
     		
   </select>
@@ -64,13 +64,27 @@
     		email,
     		phone,
     		address,
-    		enroll_date,
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
     		profile_url
     	from tb_member
        where status = 'Y'
        and member_id = #{memberId}
-       and member_pwd = #{memberPwd}
+      
     		
   </select>
+  
+  <select id="selectPwd" resultMap="memberResult">
+  	select 
+  			member_pwd
+  		from tb_member
+  	   where member_pwd = #{memberPwd}
+  </select>
+  
+  <update id="changePwd">
+  	update
+  			tb_member
+  		set member_pwd = #{encPwd}
+  	   where member_no = #{memberNo}
+  </update>
 </mapper>
