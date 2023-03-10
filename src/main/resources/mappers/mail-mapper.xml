@@ -168,14 +168,48 @@
 
 <!-- 주소록 삭제 -->
 <delete id="deleteAddressBook">
-		delete
-			from tb_addressbook
-		  where add_no in 
-				<foreach item="addPerNo" index="i" collection="array"
-					open="(" separator="," close=")">
-					#{addPerNo}
-				</foreach>
+	delete
+		from tb_addressbook
+	  where add_no in 
+			<foreach item="addPerNo" index="i" collection="array"
+				open="(" separator="," close=")">
+				#{addPerNo}
+			</foreach>
 </delete>
+
+<!-- 선택한 주소록 정보 -->
+<select id="selectAddressInfo" resultMap="addressResult">
+ 	select 
+ 	    	add_no
+		  , name
+		  , dept_name
+		  , job_name
+		  , email
+		  , phone
+		  , biz_name
+		  , group_no
+		  , mem_no
+	 from tb_addressbook
+	 where add_no = #{addNo}
+
+</select>
+
+<!-- 주소록 수정 -->
+<update id="updateAddressBook">
+	update
+			tb_addressbook
+	   set   
+	         name = #{name}
+	       , dept_name = #{deptName}
+	       , job_name = #{jobName}
+	       , email = #{email}
+	       , phone = #{phone}
+	       , biz_name = #{bizName}
+	       , group_no = #{groupNo}
+	 where add_no = #{addNo}      
+	       	
+</update>	
+
 
 <!-- 그룹별 리스트개수 -->
 <select id="selectGroupAddListCount" resultType="_int">

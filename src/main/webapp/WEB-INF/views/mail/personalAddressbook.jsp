@@ -192,19 +192,164 @@
 		                     
                          
                      <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" href="#" onclick="updateAddress();">
                             <img src="resources/images/refresh2.png" width="18px">
                             수정</a>
                       </li>
+                      
+                      
+                      <script>
+                      function updateAddress(){
+                          // 선택한 요소가 있는지 확인
+                          let $checked = $(".addNo:checked");
+
+                          // 선택하지 않은 경우
+                          if( $checked.length < 1){
+                              alert("수정할 연락처를 선택해주세요.");
+                              return false;
+
+                          } else if($checked.length>=2){ // 선택한 경우
+                              alert("한개의 연락처만 선택해주세요.");
+                              return false;
+
+                          }else{
+                        	  const addNo = $(".addNo:checked").val();
+                        	  
+                        	  $.ajax({
+                        	      url: "getAddressInfo.ad",
+                        	      data: { addNo: addNo },
+                        	      dataType: "json",
+                        	      success: function (data) {
+                        	        // 주소록 정보가 담긴 모달 띄우기
+                        	        $("#addAddressModal").modal("show");
+
+                        	        // 모달 안의 입력 필드에 가져온 주소록 정보 넣기
+                        	        $("#updateForm [name='name']").val(data.name);
+                        	        $("#updateForm [name='email']").val(data.email);
+                        	        $("#updateForm [name='phone']").val(data.phone);
+                        	        $("#updateForm [name='bizName']").val(data.bizName);
+                        	        $("#updateForm [name='deptName']").val(data.deptName);
+                        	        $("#updateForm [name='jobName']").val(data.jobName);
+                        	        $("#updateForm [name='groupNo']").val(data.groupNo);
+                        	        $("#updateForm [name='addNo']").val(data.addNo);
+                        	      },
+                        	      error: function () {
+                        	        alert("주소록 정보를 가져오지 못했습니다.");
+                        	      }
+                        	    });
+                     
+                        	    $('#updateAddress').modal('show'); // 모달 띄우기
+                        	  
+                          }
+                      }
+                      </script>
+                      
+                      
+                    <!-- Modal -->
+	               <div class="modal fade" id="updateAddress" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	                       <div class="modal-content">
+	                           <div class="modal-header">
+	                           <b>주소록 수정</b>
+	                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                           </div>
+	                           <div class="modal-body addAddress">
+	                           
+	                           <form  method="post" id="updateForm">
+	                               <table style="text-align: center;">
+	                               		<input type="hidden" id="addNo" name="addNo">
+	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
+	                                   <tr>
+	                                       <th width="100">이름 </th>
+	                                       <td><input type="text" name="name" required  data-name="이름"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>이메일</th>
+	                                       <td><input type="text" name="email" required  data-name="이메일"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>연락처</th>
+	                                       <td><input type="text" name="phone" required data-name="연락처"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>회사명</th>
+	                                       <td><input type="text" name="bizName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>부서</th>
+	                                       <td><input type="text" name="deptName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>직급</th>
+	                                       <td><input type="text" name="jobName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>그룹 </th> 
+	                                       <td>
+	                                           <select name="groupNo">
+	                                           
+	                                           </select>
+
+	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
+	                                       </td>
+	                                   </tr>
+
+	                               </table>
+	                              
+	                           </div>
+	                           <div class="modal-footer">
+	                           <button type="button" class="btn btn-primary btn-sm" onclick="updateAddressBook();">저장</button>
+	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
+	                           </div>
+	                         </form>
+	                       </div>
+	                   </div>
+	               </div>
+	               
+	               <script>
+	               	 function updateAddressBook(){
+	               		
+	        				$.ajax({
+	        					url : "update.ad",
+	        					data : {
+	        						 'addNo': $('.addNo:checked').val(),
+	        						  'name': $('#updateForm [name="name"]').val(),
+	        						  'email': $('#updateForm [name="email"]').val(),
+	        						  'phone': $('#updateForm [name="phone"]').val(),
+	        						  'bizName': $('#updateForm [name="bizName"]').val(),
+	        						  'deptName': $('#updateForm [name="deptName"]').val(),
+	        						  'jobName': $('#updateForm [name="jobName"]').val(),
+	        						  'groupNo': $('select[name="groupNo"]').val()
+	        					},
+	        					success : function(result){
+	        						//console.log(result);
+	        						
+	        						if(result == 'success'){
+	        							alert("성공적으로 연락처를 수정했습니다.");
+	        							location.reload();
+	        						}
+	        					},
+	        					error : function(){
+	        						alert("연락처 정보를 수정하는데 실패했습니다. 다시 시도해주세요.");
+	        						location.reload();
+	        					}
+	        				})
+	        			
+	               	 }
+	               
+	               
+	               </script>
+                      
+
                       <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#" onclick="deleteAddNum();">
+                        <a class="nav-link" aria-current="page" href="#" onclick="deleteAddress();">
                             <img src="resources/images/removeuser.png" width="20px">
                             삭제</a>
                       </li>
                       
                       <script>
                       // '삭제'버튼 클릭시 실행하는 함수
-  					function deleteAddNum(){
+  					function deleteAddress(){
   							 
   						// 선택한 요소가 있는지 확인
   						let $checked = $(".addNo:checked");

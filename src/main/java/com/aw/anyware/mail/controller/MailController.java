@@ -149,7 +149,7 @@ public class MailController {
 		}
 		
 	}
-	
+	//주소록 삭제 
 	@ResponseBody
 	@RequestMapping("delete.ad")
 	public String ajaxDeleteAddressBook(String addPerNo) {
@@ -159,6 +159,23 @@ public class MailController {
 		
 	}
 	
+	//주소록 정보 조회
+	@ResponseBody
+	@RequestMapping(value="getAddressInfo.ad",  produces="application/json; charset=utf-8")
+	public String ajaxSelectAddressInfo(int addNo) {
+		AddressBook ab = mService.selectAddressInfo(addNo);
+		return new Gson().toJson(ab);
+	}
+	
+	//주소록 수정 
+	@ResponseBody
+	@RequestMapping(value="update.ad")
+	public String ajaxUpdateAddressBook(AddressBook ab) {
+		
+		System.out.println(ab);
+		int result = mService.updateAddressBook(ab);
+		return result > 0 ? "success" : "fail";
+	}
 
 	// 그룹별 주소록 조회 
 	@RequestMapping("group.ad")

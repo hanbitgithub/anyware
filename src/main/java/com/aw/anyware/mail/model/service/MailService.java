@@ -43,6 +43,12 @@ public interface MailService {
 	//주소록 삭제
 	int deleteAddressBook(String addPerNo);
 	
+	//선택한 주소록 정보 
+	AddressBook selectAddressInfo(int addNo);
+	
+	//주소록 수정 
+	int updateAddressBook(AddressBook ab);
+	
 	//사내주소록 조회
 	int selectCompanyListCount();
 	ArrayList<Member> selectCompanyList(PageInfo pi);

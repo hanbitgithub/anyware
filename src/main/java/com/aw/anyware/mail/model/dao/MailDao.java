@@ -103,16 +103,34 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertAddressBook",ab);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param addPerNo
+	 * @return 선택한 주소록 삭제 
+	 */
 	public int deleteAddressBook(SqlSessionTemplate sqlSession, String addPerNo) {
-		
 		String[] arr = addPerNo.split(","); // 선택한 String값 배열에 담기
 		
 		return sqlSession.delete("mailMapper.deleteAddressBook", arr);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param addNo
+	 * @return 선택한 주소록 정보 
+	 */
+	public AddressBook selectAddressInfo(SqlSessionTemplate sqlSession, int addNo) {
+		 return sqlSession.selectOne("mailMapper.selectAddressInfo", addNo);
+	}
 	
-	
-	
+	/**
+	 * @param sqlSession
+	 * @param ab
+	 * @return 주소록 수정 
+	 */
+	public int updateAddressBook(SqlSessionTemplate sqlSession, AddressBook ab) {
+		return sqlSession.update("mailMapper.updateAddressBook", ab);
+	}
 	
 	/**
 	 * @param sqlSession

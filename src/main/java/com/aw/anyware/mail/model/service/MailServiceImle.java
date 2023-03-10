@@ -124,6 +124,23 @@ public class MailServiceImle implements MailService {
 	public int deleteAddressBook(String addPerNo) {
 		return mDao.deleteAddressBook(sqlSession, addPerNo);
 	}
+	
+	/**
+	 * 선택한 주소록 정보 
+	 */
+	@Override
+	public AddressBook selectAddressInfo(int addNo) {
+		return mDao.selectAddressInfo(sqlSession, addNo);
+	}
+	
+	/**
+	 * 주소록 수정 
+	 */
+	@Override
+	public int updateAddressBook(AddressBook ab) {
+		return mDao.updateAddressBook(sqlSession, ab);
+	}
+
 
 
 	/**
@@ -154,6 +171,11 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName) {
 		return mDao.selectdeptAddBookList(sqlSession, pi,deptName);
 	}
+
+
+	
+
+	
 
 
 	
