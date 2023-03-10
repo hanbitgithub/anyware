@@ -69,34 +69,20 @@ a{
     color:gray;
     cursor:pointer;
 }
-
-
-.address-title{
-    display:flex;
-    cursor: pointer;
+#plus-tag:hover{
+    color:lightgrey;
+  
 }
-
-.basic-title{
-	cursor: pointer;
-}
-
 
 .tag-delete{
     padding-top: 6px;
     margin-left:70px;
 }
 
-.tag-modify, .tag-modify:hover{
-    color: lightgray;
-    margin: 0px 10px;
-    float: right;
 
-}
 #adbook-area .dropdown-item{
 	font-size:14px;
-}
-.category-title{
-	width:80%;
+	font-weight: bold;
 }
 
 .insertAddress span, .updateAddress span{
@@ -145,6 +131,19 @@ a{
      
 }
 
+#adbook-area .dropdown{
+	 color: lightgray;
+ 	 display:inline-block;
+ 	 float:right;
+ 	 height:15px;
+ 	 border:none;
+ 	 background-color:white;
+ 	 
+}
+#adbook-area .dropdown:hover{
+	background-color:rgba(233, 233, 233, 0.811);
+	border-radius:50px;
+}
 .fa-check{color:green;}
 .fa-times{color:red;}
 
@@ -189,24 +188,13 @@ a{
    					<input id="check-btn" type="checkbox" checked/> 
    					<label for="check-btn" class="label">
    					<ion-icon name="chevron-down-outline"></ion-icon><a href="personal.ad">개인주소록</a></label>
+   					
    					 <ul class="group menubars" id="personal">
                      	 <li id="all"><a href="personal.ad">전체 </a></li>
                      	 
                      	 
-                     <%-- 	 
-                      <div class="dropdown-list dropdown-menu shadow" aria-labelledby="dotDropdown">
-										
-							<!--========== 수정, 삭제 버튼 ==========-->
-							<a class="dropdown-item d-flex align-items-center"
-								onclick="updateAddBook('${c.groupNo}');"> <span
-								class="font-weight-bold">수정하기</span>
-								
-							</a> <a class="dropdown-item d-flex align-items-center"
-								onclick="deleteAddBook('${c.groupNo}');"> <span
-								class="font-weight-bold">삭제하기</span>
-							</a>
-					 </div> --%>
-                  	
+                    </ul>
+                    
 				<!--반복문 시작 -->
 				<%-- <c:choose>
 					<c:when test="${not empty glist}">
@@ -214,26 +202,7 @@ a{
 							<c:if test="${c.memNo == loginUser.memberNo}">
 								<div class="address-title" id="addTitle${c.groupNo }">
 								
-									<!--==========주소록 클릭시 수정,삭제 처리하는 dropdown 생성 ==========-->
-									<a class="tag-modify" href="#" id="dotDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-									</a>
-									
-									<div class="dropdown-list dropdown-menu shadow" aria-labelledby="dotDropdown">
-										
-										<!--========== 수정, 삭제 버튼 ==========-->
-										<a class="dropdown-item d-flex align-items-center"
-											onclick="updateAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">수정하기</span>
-											
-										</a> <a class="dropdown-item d-flex align-items-center"
-											onclick="deleteAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">삭제하기</span>
-										</a>
-									</div>
-
-								</div>
+								
 
 								<form id="post" action="" method="post">
 
@@ -242,16 +211,7 @@ a{
 
 								</form>
 
-								<!--========== 주소록 그룹명 수정 처리하는 함수 ==========-->
-								<div class="insider updateAddBook" id="update${c.groupNo }">
-									<div class="updateAddress">
-										<span><input type="text" id="groupName${c.groupNo }" name="groupName" value="${c.groupName }"></span>
-										<div class="update-addBtn">
-											<span onclick="updateAddGroup('${c.groupNo}')"><i class="fas fa-check"></i></span> 
-											<span onclick="dismissUpdateAdd('${c.groupNo}');"><i class="fas fa-times"></i></span>
-										</div>
-									</div>
-								</div>
+								
 							</c:if>
 						</c:forEach>
 						<!-- 반복문 끝 -->
@@ -260,7 +220,7 @@ a{
 				 --%>
 				
 				
-                </ul>
+          
                 
                   <!--========== 주소록 그룹 추가하는 함수 ==========-->
 					<div class="insider insertAddBook">
@@ -273,6 +233,17 @@ a{
 							</div>
 						</div>
 					</div>
+					
+				<!--========== 주소록 그룹명 수정 처리하는 함수 ==========-->
+								<div class="insider updateAddBook" id="update${c.groupNo }">
+									<div class="updateAddress">
+										<span><input type="text" id="groupName${c.groupNo }" name="groupName" value="${c.groupName }"></span>
+										<div class="update-addBtn">
+											<span onclick="updateAddGroup('${c.groupNo}')"><i class="fas fa-check"></i></span> 
+											<span onclick="dismissUpdateAdd('${c.groupNo}');"><i class="fas fa-times"></i></span>
+										</div>
+									</div>
+								</div>	
 	
 					<div id="plus-tag" onclick="return insertAddBook();" style="color:rgb(139, 139, 139)">+ 그룹 추가</div>
    					
@@ -288,39 +259,44 @@ a{
                		selectGroupList();
                	 })
                
-               	  function selectGroupList(){
-               		  $.ajax({
-               			  url:"glist.ad",
-               			  data: {no: ${loginUser.memberNo}},
-               			  success:function(list){
-               				  //console.log(list);
-               			  
-               				    var li=""
-               				  for(let i=0; i<list.length; i++){
-               					  li   += "<li>"  
-               					        + "<a href='group.ad?groupNo="+
-	               				   		+ list[i].groupNo + "'>"
-               					        + list[i].groupName 
-               					        +"<a class='tag-modify' id='dotDropdown' role='button'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i></a>"
-               					        +"</li>"
-               					       
-               				  }
-               			
-               				  $(".menubars").append(li);
-               				  
-               			   var dropdown = $('<div>').addClass('dropdown').appendTo(li);
-               		      var dropdownButton = $('<button>').addClass('dropdown-toggle').attr('type', 'button').attr('id', 'dropdownMenuButton').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'false').appendTo(dropdown);
-               		      dropdownButton.text('Dropdown');
-               		    var dropdownMenu = $('<div>').addClass('dropdown-menu').attr('aria-labelledby', 'dropdownMenuButton').appendTo(dropdown);
-               		    var dropdownItem1 = $('<a>').addClass('dropdown-item').attr('href', '#').text('Item 1').appendTo(dropdownMenu);
-               		    var dropdownItem2 = $('<a>').addClass('dropdown-item').attr('href', '#').text('Item 2').appendTo(dropdownMenu);
-                 			
-               				   
-               			  },error:function(){
-               				  console.log("그룹조회용 ajax 통신실패");
-               			  }
-               		  })
-               	  }
+				function selectGroupList() {
+               		$.ajax({
+               		    url: "glist.ad",
+               		    data: { no: ${loginUser.memberNo} },
+               		    success: function (list) {
+               		      var li = "";
+               		      for (let i = 0; i < list.length; i++) {
+               		        li += "<li class='glist'>" +
+               		          "<a href='group.ad?groupNo=" + list[i].groupNo + "'>" + list[i].groupName + "</a>" 
+               		    
+               		          +"</li>";
+               		      }
+               		      $(".menubars").append(li);
+
+               		      $(".menubars li.glist").each(function () {
+               		        var dropdown = $("<div>").addClass("dropdown");
+               		        var dropdownButton = $("<button>").addClass("btn-default").addClass("dropdown").attr("type", "button").attr("id", "dropdownMenuButton").attr("data-toggle", "dropdown").attr("aria-haspopup", "true").attr("aria-expanded", "false").html("<i class='fas fa-ellipsis-v'>");
+               		        var dropdownMenu = $("<div>").addClass("dropdown-menu").attr("aria-labelledby", "dropdownMenuButton");
+               		        var dropdownItem1 = $("<a>").addClass("dropdown-item").attr("href", "#").text("수정하기");
+               		        var dropdownItem2 = $("<a>").addClass("dropdown-item").attr("href", "#").text("삭제하기");
+
+               		        dropdownButton.appendTo(dropdown);
+               		        dropdownItem1.appendTo(dropdownMenu);
+               		        dropdownItem2.appendTo(dropdownMenu);
+               		        dropdownMenu.appendTo(dropdown);
+               		        dropdown.appendTo(this);
+
+               		        $(this).find(".dropdown-toggle").on("click", function (e) {
+               		          e.preventDefault();
+               		          $(this).closest(".dropdown").toggleClass("show");
+               		        });
+               		      });
+               		    },
+               		    error: function () {
+               		      console.log("그룹조회용 ajax 통신실패");
+               		    },
+               		  });
+               		}
        
                </script>
 				
@@ -421,17 +397,35 @@ a{
     								groupName : $("#addName").val()
     							},
     							success:function(adg) {
-										console.log(adg);
+										//console.log(adg);
 
     		               				  let value="";
-    		               				   value += "<li>" 
+    		               				   value += "<li class='newGroup'>" 
     		               				   		+"<a href='group.ad?groupNo="+
     		               				   		+ adg.groupNo + "'>"
     		               				   		+ $("#addName").val() 
-    		               				   		+ "<a class='tag-modify' id='dotDropdown' role='button'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i></a>"
     		               				   		+ "</li>";
     		               				   
     		               				 $(".menubars").append(value);	
+    		               				 $(".menubars li.newGroup").each(function () {
+    		                    		        var dropdown = $("<div>").addClass("dropdown");
+    		                    		        var dropdownButton = $("<button>").addClass("btn-default").addClass("dropdown").attr("type", "button").attr("id", "dropdownMenuButton").attr("data-toggle", "dropdown").attr("aria-haspopup", "true").attr("aria-expanded", "false").html("<i class='fas fa-ellipsis-v'>");
+    		                    		        var dropdownMenu = $("<div>").addClass("dropdown-menu").attr("aria-labelledby", "dropdownMenuButton");
+    		                    		        var dropdownItem1 = $("<a>").addClass("dropdown-item").attr("href", "#").text("수정하기");
+    		                    		        var dropdownItem2 = $("<a>").addClass("dropdown-item").attr("href", "#").text("삭제하기");
+
+    		                    		        dropdownButton.appendTo(dropdown);
+    		                    		        dropdownItem1.appendTo(dropdownMenu);
+    		                    		        dropdownItem2.appendTo(dropdownMenu);
+    		                    		        dropdownMenu.appendTo(dropdown);
+    		                    		        dropdown.appendTo(this);
+
+    		                    		        $(this).find(".dropdown-toggle").on("click", function (e) {
+    		                    		          e.preventDefault();
+    		                    		          $(this).closest(".dropdown").toggleClass("show");
+    		                    		        });
+    		                    		      });
+    		               				 
     									$(".insertAddBook").hide();
     						
     								
