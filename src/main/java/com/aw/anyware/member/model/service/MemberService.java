@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
+import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 
 
@@ -11,7 +12,11 @@ public interface MemberService {
 	//전체회원조회 
 	int selectListCount();
 	
-	ArrayList<Member> selectAllMember();
+	ArrayList<Member> selectAllMember(PageInfo pi);
+	
+	Member detailAllMember(int memberNo);
+	
+	Member loginUserRrn(int memberNo);
 	
 	//로그인
 	Member loginMember(Member m);
@@ -20,6 +25,8 @@ public interface MemberService {
 	Member selectPwd(Member m);
 	
 	int changePwd(Member m);
+	
+	
 	
 	
 

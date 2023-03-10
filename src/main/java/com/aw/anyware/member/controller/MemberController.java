@@ -45,8 +45,9 @@ public class MemberController {
 		if(deptName.equals("인사부")) {
 			
 			int listCount = mService.selectListCount();
-			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
-			ArrayList<Member> list = mService.selectAllMember();
+			System.out.println("listCount : " + listCount);
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+			ArrayList<Member> list = mService.selectAllMember(pi);
 			if(list != null) {
 				model.addAttribute("pi",pi);
 				model.addAttribute("list",list);
@@ -65,14 +66,17 @@ public class MemberController {
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
-		
+		System.out.println("m.getMemberPwd :" + m.getMemberPwd());
+		System.out.println("loginUser.getMemberPwd :" + loginUser.getMemberPwd());
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
 			mv.setViewName("common/errorPage");
+			
 		}else {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("main");
 		}
+				
 		
 		return mv;
 	}
@@ -89,17 +93,23 @@ public class MemberController {
 		return mv;
 	}
 	
-	@RequestMapping("changePwd.me") //성공시 알람 필요
+	@RequestMapping("changePwd.me") //성공시 알람 필요, 비밀번호 변경 후 재변경 기능 추가?
 	public String changePwd(Member m, Model model, HttpSession session) {
 		System.out.println(m);
 		Member memberPwd = mService.selectPwd(m);
 		
 		if(memberPwd != null) {
+			/*
 			String newMemberPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();
 			String encPwd = bcryptPasswordEncoder.encode(newMemberPwd);
 			m.setEncPwd(encPwd);
 			int result = mService.changePwd(m);
 			System.out.println("왔나?");
+			*/
+			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
+			m.setEncPwd(encPwd);
+			int result = mService.changePwd(m);
+			System.out.println("m :" + m);
 			if(result > 0) {
 				model.addAttribute("alertMsg", "비밀번호 변경에 성공하였습니다");
 				return "member/memberPersonalInfo";
@@ -112,6 +122,26 @@ public class MemberController {
 			return "common/errorPage";
 		}
 		
+	}
+	
+	@RequestMapping("detailAllMember.me")
+	public ModelAndView detailAllMember(int memberNo, ModelAndView mv, HttpSession session) {
+		System.out.println("memberNo : " + memberNo);
+		Member m = mService.detailAllMember(memberNo);
+		System.out.println("m: " + m);
+		int loginMemberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		System.out.println("loginMemberNo : " + loginMemberNo);
+		if(memberNo == loginMemberNo) {
+			Member loginUserRrn = mService.loginUserRrn(memberNo);
+			System.out.println("loginUserRrn.getRrn : " + loginUserRrn.getRrn());
+			m.setRrn(loginUserRrn.getRrn());
+			System.out.println("setRrn : " + m.getRrn());
+			mv.addObject(m).setViewName("member/detailAllMember");
+			return mv;
+		}else {
+			mv.addObject(m).setViewName("member/detailAllMember");
+			return mv;
+		}
 	}
 	
 

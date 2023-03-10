@@ -214,21 +214,18 @@ a {
     margin-top: 50px;
 }
 .partLine{border: 1px solid gray;}
-#employImg-div{float: left; width: 150px; height: 150px;}
-#employProfile-div{margin-left: 30%; width: 150px; height: 150px;}
+#employImg-div{border: 1px solid gray; float: left; width: 150px; height: 150px;}
+#employProfile-div{border: 1px solid gray; margin-left: 30%; width: 150px; height: 150px;}
 #employProfile-div2{padding-top: 70%;} 
-#address{width: 100%;}
 .profileContent1{float: left;}  
 .profileContent2{margin-left: 30%;}
-#changePwd{margin-left: 90%; width: 120px;}
+
 #submit{margin-left: 90%; width: 120px;}
-.changePwd{width: 300px;}
+#leave{margin-top: 1%; margin-left: 90%; width: 120px;background-color: red;color: blanchedalmond;}
  
     </style>
 </head>
 <body id="body-pd">
-	
-	
     <div id="side">
         <div class="l-navbar" id="navbar">
          <nav class="nav">
@@ -456,11 +453,8 @@ a {
 
 
         <div class="content">
-        
-        
-        
-        
-            <b> ${ loginUser.name }님의 정보관리</b>
+            <b> ${ m.name }님의 인사관리</b>
+            <span>${ loginUser.name }님이 조회</span>
             <br><br>
             <div class="partLine"></div>
 
@@ -471,113 +465,118 @@ a {
         
                 <div id="employProfile-div" >
                     <div id="employProfile-div2">
-                        <div id="empolyId">${ loginUser.memberId }</div>
-                        <div id="empolyName">${ loginUser.name }</div>
+                        <div id="empolyId">사원아이디</div>
+                        <div id="empolyName">사원이름</div>
+                    </div>
+                </div>
+
+                <div id="employProfile-div00" >
+                    <div id="employProfile-div200">
+                        <div id="empolyId">사원아이디00</div>
+                        <div id="empolyName">사원이름</div>
                     </div>
                 </div>
                 <br><br>
                 <div class="partLine"></div>
-        <form action="">
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>이메일</b></div>
-                    <div class="profileContent2"><input type="email" name="" value="${ loginUser.email}"></div>
-                </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>사원번호</b></div>
-                    <div class="profileContent2"><input type="text" id="memberNo" name="" value="${ loginUser.memberNo }"></div>
-                </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>휴대폰</b></div>
-                    <div class="profileContent2"><input type="tel" name="" value="${ loginUser.phone }"></div>
-                </div>
-                
-                <div id="employProfile-div3">
-                    <button id="changePwdButton" type="button" data-toggle="modal" data-target="#changePwd">비밀번호변경</button>
-                </div>
-                
-                
-                
                 <br>
-                <div class="partLine"></div>
-                <br>
+         <div class="employContent">
+
+            <form action="" method="post">
+
                 <div id="employProfile-div3">
-                    <div class="profileContent1"><b>조직</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="qq회사" readonly></div>
+                    <div class="profileContent1"><b>출근시간</b></div>
+                    <div class="profileContent2">출근시간입력</div>
                 </div>
                 <div id="employProfile-div3">
-                    <div class="profileContent1"><b>직급</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.position }" readonly></div>
+                    <div class="profileContent1"><b>퇴근시간</b></div>
+                    <div class="profileContent2">퇴근시간입력</div>
                 </div>
                 <div id="employProfile-div3">
-                    <div class="profileContent1"><b>부서/직책</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.deptName }/${ loginUser.jobName }"  readonly></div>
+                    <div class="profileContent1"><b>이번달 근무시간</b></div>
+                    <div class="profileContent2">이번달 근무시간 입력</div>
                 </div>
                 <div id="employProfile-div3">
-                    <div class="profileContent1"><b>담당업무</b></div>
-                    <div class="profileContent2"><input type="text" id="duty" name="" value="${ loginUser.duty }" readonly></div>
+                    <div class="profileContent1"><b>남은 연차 개수</b></div>
+                    <div class="profileContent2">남은 연차 개수 입력</div>
                 </div>
-                <script>
+                <div id="employProfile-div3">
+                    <div class="profileContent1"><b>사용한 연차개수</b></div>
+                    <div class="profileContent2">사용한 연차 개수 입력</div>
+                </div>
+        </div>       
+                <br><br>
+                    <div class="partLine"></div>
+                    <br>
+        <div class="employContent">
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>이메일</b></div>
+                        <div class="profileContent2"><input type="email" name="" value="${ m.email }"></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>사원번호</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="${ m.memberNo }"></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>휴대폰</b></div>
+                        <div class="profileContent2"><input type="tel" name="" value="${ m.phone }"></div>
+                    </div>
+                    
+         </div> 
+                    <br><br>
+                    <div class="partLine"></div>
+                    <br>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>조직</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="qq회사" readonly></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>직급</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="${ m.jobName }" ></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>부서/직책</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="${ m.deptName }/${ m.position }" ></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>담당업무</b></div>
+                        <div class="profileContent2"><input type="text" id="duty" name="" value="${ m.duty }" ></div>
+                    </div>
+                    <script>
                 	$(function(){
                 		if('${loginUser.duty}'==''){
                 			$("#duty").val('미정');
                 		}
                 	})
                 </script>
-                <br><br>
-                <div class="partLine"></div>
-                <br>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>주소</b></div>
-                    <div class="profileContent2" id="address"><input type="text" name="" value="${ loginUser.address }"></div>
-                </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>입사일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.enrollDate }"></div>
-                </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>생일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="나중에"></div>
-                </div>
-                <div id="employProfile-div3">
-                    <button id="submit" type="submit">정보변경</button>
-                </div>
-        </form>
+                    <br><br>
+                    <div class="partLine"></div>
+                    <br>
+        <div class="employContent">            
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>주소</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="${ m.address }"></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>입사일</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="${ m.enrollDate }"></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <div class="profileContent1"><b>생일</b></div>
+                        <div class="profileContent2"><input type="text" name="" value="나중에"></div>
+                    </div>
+                    <div id="employProfile-div3">
+                        <button id="submit" type="submit">정보변경</button>
+                    </div>
+         </div>       
+            </form>
+        <div id="employLeave-div">
+            <button id="leave" type="button">퇴사처리</button>
+        </div>
 
 
             
-        </div>   
-        
-        <!-- 비밀번호 변경 모달 -->
-    <div class="modal" id="changePwd" align="center">
-     <div class="modal-dialog">
-       <div class="modal-content">
-   
-         <div class="modal-header">
-           <h4 class="modal-title">비밀번호 변경</h4>
-           <button type="button" class="close" data-dismiss="modal">&times;</button>
-         </div>
-   
-         <div class="modal-body" align="center">
-           <form action="changePwd.me" method="post">
-              <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
-              <table>
-                 <tr>
-                    <td>현재 비밀번호</td>
-                    <td><input type="password" name="memberPwd" required></td>
-                 </tr>
-                 <tr>
-                    <td>새 비밀번호</td>
-                    <td><input type="password" name="updatePwd" required></td>
-                 </tr>
-              </table>
-              <br>
-              <button type="submit" class="btn btn-sm btn-secondary" >비밀번호 변경</button>
-           </form>
-         </div>
-   
-       </div>
-     </div>
-   </div>
+        </div>    
+            
         
 
        
