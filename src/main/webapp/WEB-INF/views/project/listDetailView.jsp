@@ -13,6 +13,7 @@
         width: 1400px;
         height: 650px;
         padding: 10px;
+        overflow: auto;
     }
     .input-area{
         width: 1400px;
@@ -52,6 +53,42 @@
         color: gray;
     }
     
+    .chat-other, .chat-mine{
+        display: flex;
+        margin-bottom: 10px;
+    }
+    .chat-mine{
+        justify-content:flex-end;
+    }
+    img{
+        width: 50px;
+        height: 50px;
+        box-sizing: border-box;
+        margin-right: 5px;
+    }
+    .content-other{
+        background-color: lightgray;
+        border-radius: 0.3em;
+        padding: 5px;
+        max-width: 700px;
+        margin-right: 2px;
+    }
+    .content-mine{
+        background-color: beige;
+        border-radius: 0.3em;
+        padding: 5px;
+        max-width: 700px;
+        margin-left: 2px;
+    }
+    .time-td{
+        vertical-align: bottom;
+    }
+    .time{
+        font-size: 10px;
+    }
+    .writer{
+        margin-bottom: 2px;
+    }
 </style>
 </head>
 <body>
@@ -66,13 +103,43 @@
         <br><br>
 
         <div class="chat-area">
-            <div class="chat-message mine">
+            <table class="chat-other">
+                <tr>
+                    <td rowspan="2">
+                        <img src="../../../resources/images/chat/defaultProfile.png">
+                    </td>
+                    <td colspan="2">
+                        <div class="writer">김현지(개발부/사원)</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="content-other">사진보내주세요...제발요ㅠ</div>
+                    </td>
+                    <td class="time-td">
+                        <span class="time">12:10 PM</span>
+                    </td>
+                </tr>
+            </table>
+            
+            <table class="chat-mine">
+                <tr>
+                    <td class="time-td">
+                        <span class="time">12:10 PM</span>
+                    </td>
+                    <td>
+                        <div class="content-mine">키키</div>
+                    </td>
+                </tr>
+            </table>
+
+            <!-- <div class="chat-message mine">
 	            <div class="send-message">내가보낸 메세지내가보낸 메세지내가보낸 메세지내가보낸 메세지내가보낸 메세지</div>
 	        </div>
          
             <div class="chat-message other">
             	<span class="send-user">상대방</span>
-            	<div class="send-message">남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지</div>
+            	<div class="send-message">남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지</div> -->
             </div>
         </div>
 
