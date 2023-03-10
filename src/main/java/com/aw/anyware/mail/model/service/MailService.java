@@ -31,7 +31,6 @@ public interface MailService {
 	int updateGroupName(AddressGroup ag);
 	
 	//그룹삭제
-	int deleteGroupList(AddressGroup ag);
 	int deleteGroup(AddressGroup ag);
 
 	//그룹별 리스트조회
@@ -40,6 +39,9 @@ public interface MailService {
 
 	//주소록 추가
 	int insertAddressBook(AddressBook ab);
+	
+	//주소록 삭제
+	int deleteAddressBook(String addPerNo);
 	
 	//사내주소록 조회
 	int selectCompanyListCount();

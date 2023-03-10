@@ -85,6 +85,7 @@
       from tb_addressgroup
       where member_no = #{memNo}  <!--로그인한 사원번호로 변경하기 -->
       and status= 'Y' 
+      order by group_no asc
 </select>
 
 <!-- 그룹추가 -->
@@ -127,13 +128,6 @@
 </update>
 
 <!-- 그룹삭제  -->
-<delete id="deleteGroupList">
-    delete
-	  from tb_addressbook
-	  where group_no = #{groupNo}
-
-</delete>
-
 <delete id="deleteGroup">
 	delete
 	  from tb_addressgroup
@@ -171,6 +165,17 @@
 	  
 
 </insert>
+
+<!-- 주소록 삭제 -->
+<delete id="deleteAddressBook">
+		delete
+			from tb_addressbook
+		  where add_no in 
+				<foreach item="addPerNo" index="i" collection="array"
+					open="(" separator="," close=")">
+					#{addPerNo}
+				</foreach>
+</delete>
 
 <!-- 그룹별 리스트개수 -->
 <select id="selectGroupAddListCount" resultType="_int">

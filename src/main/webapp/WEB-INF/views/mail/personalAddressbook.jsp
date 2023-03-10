@@ -46,6 +46,7 @@
     width: 265px;
     height: 35px;
 }
+
 .btn2{
     background-color:  #a8a8a8;
     border: none;
@@ -92,20 +93,20 @@
 	                           </div>
 	                           <div class="modal-body addAddress">
 	                           
-	                           <form action="insert.ad" method="post">
+	                           <form action="insert.ad" method="post" id="addForm">
 	                               <table style="text-align: center;">
 	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
 	                                   <tr>
-	                                       <th width="100">이름</th>
-	                                       <td><input type="text" name="name"></td>
+	                                       <th width="100">이름 </th>
+	                                       <td><input type="text" name="name" required class="required"  data-name="이름"></td>
 	                                   </tr>
 	                                   <tr>
 	                                       <th>이메일</th>
-	                                       <td><input type="text" name="email"></td>
+	                                       <td><input type="text" name="email" required class="required" data-name="이메일"></td>
 	                                   </tr>
 	                                   <tr>
 	                                       <th>연락처</th>
-	                                       <td><input type="text" name="phone"></td>
+	                                       <td><input type="text" name="phone" required class="required" data-name="연락처"></td>
 	                                   </tr>
 	                                   <tr>
 	                                       <th>회사명</th>
@@ -123,13 +124,9 @@
 	                                       <th>그룹 </th> 
 	                                       <td>
 	                                           <select name="groupNo">
-	                                           	    <option>전체</option>
-	                                           <c:forEach var="gr" items="${glist}">
-	                                               <option value="${gr.groupNo }">${gr.groupName }</option>
-	                                            </c:forEach> 
-	                                           </select>
 	                                           
-	                                   
+	                                           </select>
+
 	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
 	                                       </td>
 	                                   </tr>
@@ -138,14 +135,61 @@
 	                              
 	                           </div>
 	                           <div class="modal-footer">
-	                           <button type="submit" class="btn btn-primary btn-sm">저장</button>
+	                           <button type="submit" class="btn btn-primary btn-sm sub">저장</button>
 	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
 	                           </div>
 	                         </form>
 	                       </div>
 	                   </div>
 	               </div>
-                     
+	               
+				           <script>
+				           
+				           $.ajax({
+				        	   url: 'glist.ad',
+				        	   method: 'GET',
+				        	   data : {no: '${loginUser.memberNo}'},
+				        	   success: function(list) {
+				        		   //console.log(list);
+				        		   
+				        		   var selectOptions = '';
+				        		    $.each(list, function(index, item) {
+				        		      selectOptions += '<option value="' + item.groupNo + '">' + item.groupName + '</option>';
+				        		    });
+
+				        		    // 생성된 option 요소들을 select 요소에 삽입
+				        		    $('select[name="groupNo"]').html(selectOptions);
+				        	   
+				        	   },
+				        	   error: function() {
+				        	     console.log('Error');
+				        	   }
+				        	 });
+				          
+				           
+						    $(function(){
+						        $(".sub").click(function(){
+						            var isRight = true;
+						            $("#addForm").find(".required").each(function(index, item){
+						                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
+						                if ($(this).val().trim() == '') {
+						                    alert($(this).attr("data-name")+" 항목을 입력하세요.");
+						                    isRight = false;
+						                    return false;
+						                }
+						                     
+						            });
+						            if (!isRight) {
+						                return;
+						            }
+						
+						            $(this).prop("disabled", true);
+						            $(this).prop("disabled", false);
+						        });
+						
+						    });
+						</script>
+		                     
                          
                      <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
@@ -153,10 +197,64 @@
                             수정</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" href="#" onclick="deleteAddNum();">
                             <img src="resources/images/removeuser.png" width="20px">
                             삭제</a>
                       </li>
+                      
+                      <script>
+                      // '삭제'버튼 클릭시 실행하는 함수
+  					function deleteAddNum(){
+  							 
+  						// 선택한 요소가 있는지 확인
+  						let $checked = $(".addNo:checked");
+  							 
+  						// 선택하지 않은 경우
+  						if( $checked.length < 1){
+  							alert("삭제할 연락처를 선택해주세요.");
+  							return false;
+  								 
+  						} else { // 선택한 경우
+  								
+  							 if( confirm("선택한 연락처를 삭제하시겠습니까?") ){
+  								 let checkArr = [];
+  								 
+  								 $(".addNo").each(function(){
+  									 
+  									 if($(this).prop("checked")){
+  										 checkArr.push( $(this).val() );
+  									 }
+  								 });
+  								 
+  							const addPerNo = checkArr.toString();
+  							
+  								$.ajax({
+  									url : "delete.ad",
+  									data : {
+  										memNo : ${loginUser.memberNo},
+  										addPerNo : addPerNo
+  									},
+  									success : function(result){
+  										
+  										if(result == 'success'){
+  											alert("성공적으로 연락처를 삭제했습니다.");
+  											location.reload();
+  										}
+  									},
+  									error : function(){
+  										alert("연락처를 삭제하는데 실패했습니다.\n다시 시도해주세요.");
+  										console.log("실패");
+  									}
+  								 })
+  							   }
+  						    } 
+  						 }
+  					 
+                      
+                      </script>
+                      
+                      
+                      
                       <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/send (1).png" width="18px">
@@ -181,30 +279,69 @@
                                     <tr>
                                         <th width="100">그룹관리</th>
                                         <td>
-                                            <select>
-                                                <option>거래처1</option>
-                                                <option>거래처2</option>
-                                            </select>
-                                            <button class="btn btn-secondary btn-sm btn2" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
+                                             <select name="groupNo">
+	                                           
+	                                         </select>
+                                             <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd2">+</button>
                                          </td>
                                     </tr>
                                     <tr>
                                         <th>새이름</th>
-                                        <td><input type="text"></td>
+                                        <td><input type="text" name="newName" id="groupName"></td>
                                     </tr>
                                 </table>
                     
                                 </div>
                                 <div class="modal-footer">
                                 
-                                <button type="button" class="btn btn-primary btn-sm">그룹이름변경</button>
-                                <button type="button" class="btn2">그룹삭제</button>
+                                <button type="button" class="btn btn-primary btn-sm" onclick="updateGroup();">그룹이름변경</button>
+                                <button type="button" class="btn2" onclick="deleteGroup();">그룹삭제</button>
                               
                                 </div>
                             </div>
                             </div>
                         </div>
                       </li>
+                      <script>
+                      function deleteGroup(){
+	                      var selectedGroupNo = $('select[name="groupNo"]').val(); // 선택된 그룹 번호 가져오기
+	                      //console.log(selectedGroupNo);  
+	                      deleteAddBook(selectedGroupNo);
+                      }
+                      
+                      function updateGroup(){
+                    	  var groupNo = $('select[name="groupNo"]').val(); 
+        
+                    	  updateAddGroup2(groupNo);
+                      }
+                     
+                      function updateAddGroup2(groupNo){
+      					
+                    	  var newName = $("#groupName").val();
+      				
+      					$.ajax({
+      						url : "updateGroup.ad",
+      						data : {
+      							memNo : '${loginUser.memberNo}',
+      							groupNo : groupNo,
+      							groupName : newName
+      						},
+      						success : function(result){
+      							if(result == 'success'){
+      								selectGroupList();
+      								alert("그룹명 수정 성공")
+      							}
+      						},
+      						error : function(){
+      							console.log("그룹명 수정 실패");
+      						}
+      					})
+      					
+      				}   
+                      
+                      
+                      
+                      </script>
                      
                       
                     </ul>
@@ -241,7 +378,7 @@
                 	<c:forEach var="ad" items="${list}">
                 	
 	                    <tr style="font-size: 14px;">
-	                        <td width="10"><input type="checkbox" name="check"></td>
+	                        <td width="10"><input type="checkbox" name="check" class="addNo" value="${ad.addNo }"></td>
 	                        <td width="50">${ad.name }</td>
 	                        <td width="150">${ad.email }</td>
 	                        <td width="100">${ad.phone }</td>
@@ -265,6 +402,9 @@
                             }
                         })
                     })
+                    
+                    
+                    
                 </script>
 
 
@@ -324,34 +464,85 @@
 
 
 	</div> 
-       
-       		 <!-- Modal -->
-                        <div class="modal fade" id="groupAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <b>그룹관리</b>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                <table>
-                                  
-                                    <tr>
-                                        <th width="100">그룹명</th>
-                                        <td><input type="text"></td>
-                                    </tr>
-                                </table>
-                    
-                                </div>
-                                <div class="modal-footer">
-                                
-                                <button type="button" class="btn btn-primary btn-sm">그룹추가</button>
-                                <button type="button" class="btn2">취소</button>
-                              
-                                </div>
-                            </div>
-                            </div>
-                        </div>
+
+ 			<!-- Modal -->
+               <div class="modal fade" id="groupAdd" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                       <b>그룹관리</b>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                       </div>
+                       <div class="modal-body">
+                       <table>
+                           <tr>
+                               <th width="100">그룹명</th>
+                               <td><input type="text" name="groupName" id="groupName"></td>
+                           </tr>
+                       </table>
+           
+                       </div>
+                       <div class="modal-footer">
+                       
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#addAddress" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#addAddress">취소</button>
+                     
+                       </div>
+                   </div>
+                   </div>
+             </div>      
+                            
+       		 			
+
+                        
+                        
+                        <script>
+                        // 주소록 그룹 '추가'시 실행하는 ajax
+        				function insertAddGroup2(){
+                  
+        					if ($("#groupName").val().trim() != 0) {
+        						$.ajax({
+        							url : "insertAddGroup.ad",
+        							data : {
+        								memNo : '${loginUser.memberNo}',
+        								groupName : $("#groupName").val()
+        							},
+        							success:function(result) {
+    										console.log(result);
+    										alert("그룹 추가 완료");
+    										
+    										$.ajax({
+    						                    url: 'glist.ad',
+    						                    method: 'GET',
+    						                    data: {no: '${loginUser.memberNo}'},
+    						                    success: function(list) {
+    						                        var selectOptions = '';
+    						                        $.each(list, function() {
+    						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
+    						                        });
+    						                        $('select[name="groupNo"]').html(selectOptions);
+    						                    },
+    						                    error: function() {
+    						                        console.log('Error');
+    						                    }
+    						                });
+    										
+    										
+        							},
+        							error: function(){
+        								console.log("주소록 추가 ajax 통신실패");
+        							}
+
+        						})
+        					} else {
+        						alert("그룹명을 입력해주세요.");
+        						return false;
+        					}
+
+        				}
+
+                        
+                        </script>
 
        
 

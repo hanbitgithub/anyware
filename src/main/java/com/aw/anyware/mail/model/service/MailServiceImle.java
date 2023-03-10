@@ -64,13 +64,7 @@ public class MailServiceImle implements MailService {
 		return mDao.insertAddressGroup(sqlSession,ag);
 	}
 	
-	/**
-	 * 주소록 연락처 추가 
-	 */
-	@Override
-	public int insertAddressBook(AddressBook ab) {
-		return mDao.insertAddressBook(sqlSession, ab);
-	}
+	
 
 
 	/**
@@ -111,13 +105,24 @@ public class MailServiceImle implements MailService {
 	 *그룹삭제
 	 */
 	@Override
-	public int deleteGroupList(AddressGroup ag) {
-		return mDao.deleteGroupList(sqlSession, ag);
-	}
-
-	@Override
 	public int deleteGroup(AddressGroup ag) {
 		return mDao.deleteGroup(sqlSession,ag);
+	}
+	
+	/**
+	 * 주소록 연락처 추가 
+	 */
+	@Override
+	public int insertAddressBook(AddressBook ab) {
+		return mDao.insertAddressBook(sqlSession, ab);
+	}
+	
+	/**
+	 * 주소록 연락처 삭제 
+	 */
+	@Override
+	public int deleteAddressBook(String addPerNo) {
+		return mDao.deleteAddressBook(sqlSession, addPerNo);
 	}
 
 
@@ -149,6 +154,9 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName) {
 		return mDao.selectdeptAddBookList(sqlSession, pi,deptName);
 	}
+
+
+	
 
 
 	

@@ -161,21 +161,21 @@ a{
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
-                <a href="test.do">test</a>
+               
             <ul>
                 <li><a href="receivebox.em">받은메일함</a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
                 <li><a href="important.em">중요메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
                 <li>
-                    <a>스팸메일함 </a>&nbsp;
+                    <a>스팸메일함&nbsp;&nbsp;&nbsp;&nbsp; </a>
                     <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 
                 </li>
                 <li>
-                    <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
@@ -297,7 +297,7 @@ a{
 
     				// 개인 주소록 수정 클릭시 실행하는 함수
     				function updateAddBook(groupNo,groupName) {
-    					// 해당 주소록 번호만 들어간 요소 hide, show 이벤트 부여
+    				// 해당 주소록 번호만 들어간 요소 hide, show 이벤트 부여
     				$("#addTitle"+groupNo).hide();
     					
     				var updateDiv = $("<div>").addClass("insider updateAddBook").attr("id", "update"+groupNo );
@@ -321,7 +321,7 @@ a{
     				function updateAddGroup(groupNo){
     					
     					let name = $("#groupName" + groupNo).val();
-    					console.log($("#groupName" + groupNo).val());
+    					//console.log($("#groupName" + groupNo).val());
     					
     					
     					$.ajax({
@@ -357,10 +357,12 @@ a{
     				 				groupNo : groupNo
     				 			},
     				 			success : function(result){
-    				 				console.log(result);
+    				 				//console.log(result);
     				 				if(result == 'success'){
     					 				alert("주소록을 삭제했습니다.");
-    					 				location.reload(); // 서버 새로고침
+    					 				selectGroupList();
+    					 				
+    					 				window.location.href = "personal.ad";
     				 				}
 
     				 			},

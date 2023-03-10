@@ -128,10 +128,9 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping("deleteGroup.ad")
 	public String deleteGroupName(AddressGroup ag) {
-		int result1 = mService.deleteGroupList(ag);
-		int result2 = mService.deleteGroup(ag);
+		int result = mService.deleteGroup(ag);
 		
-		return result1*result2 >0 ? "success": "fail";
+		return result >0 ? "success": "fail";
 	}
 
 	//주소록 추가 
@@ -151,9 +150,16 @@ public class MailController {
 		
 	}
 	
+	@ResponseBody
+	@RequestMapping("delete.ad")
+	public String ajaxDeleteAddressBook(String addPerNo) {
+		int result = mService.deleteAddressBook(addPerNo);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
 	
-	
-	
+
 	// 그룹별 주소록 조회 
 	@RequestMapping("group.ad")
 	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,AddressGroup ag,HttpSession session, Model model){

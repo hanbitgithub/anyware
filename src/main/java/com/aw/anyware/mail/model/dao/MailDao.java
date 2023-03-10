@@ -103,6 +103,16 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.insertAddressBook",ab);
 	}
 	
+	public int deleteAddressBook(SqlSessionTemplate sqlSession, String addPerNo) {
+		
+		String[] arr = addPerNo.split(","); // 선택한 String값 배열에 담기
+		
+		return sqlSession.delete("mailMapper.deleteAddressBook", arr);
+	}
+	
+	
+	
+	
 	
 	/**
 	 * @param sqlSession
