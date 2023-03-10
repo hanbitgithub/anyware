@@ -356,10 +356,10 @@ a {
           
             </img>
             <div class="dropdown-menu" style="font-size: 12px;">
-              <a class="dropdown-item" href="#">정보수정</a>
+              <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
               <a class="dropdown-item" href="#">일정관리</a>
-              <a class="dropdown-item" href="#">로그아웃</a>
+              <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
           </div>
 

@@ -16,6 +16,11 @@ public interface MemberService {
 	//로그인
 	Member loginMember(Member m);
 	
+	//비밀번호 변경
+	Member selectPwd(Member m);
+	
+	int changePwd(Member m);
+	
 	
 
 }

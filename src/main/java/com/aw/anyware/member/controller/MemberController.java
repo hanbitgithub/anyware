@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,14 @@ public class MemberController {
 	
 	@Autowired 
 	private MemberService mService;
+	
+	@Autowired
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
+	
+	
+	
 	
 	
 	@RequestMapping("main.do")
@@ -67,5 +76,43 @@ public class MemberController {
 		
 		return mv;
 	}
+	
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
+	}
+	
+	@RequestMapping("memberUpdate.me")
+	public ModelAndView memberUpdate(ModelAndView mv) {
+		mv.setViewName("member/memberPersonalInfo");
+		return mv;
+	}
+	
+	@RequestMapping("changePwd.me") //성공시 알람 필요
+	public String changePwd(Member m, Model model, HttpSession session) {
+		System.out.println(m);
+		Member memberPwd = mService.selectPwd(m);
+		
+		if(memberPwd != null) {
+			String newMemberPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();
+			String encPwd = bcryptPasswordEncoder.encode(newMemberPwd);
+			m.setEncPwd(encPwd);
+			int result = mService.changePwd(m);
+			System.out.println("왔나?");
+			if(result > 0) {
+				model.addAttribute("alertMsg", "비밀번호 변경에 성공하였습니다");
+				return "member/memberPersonalInfo";
+			}else {
+				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다");
+				return "common/errorPage";
+			}
+		}else {
+			model.addAttribute("errorMsg", "비밀번호를 정확히 입력해주세요");
+			return "common/errorPage";
+		}
+		
+	}
+	
 
 }
