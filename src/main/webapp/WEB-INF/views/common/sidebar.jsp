@@ -236,7 +236,7 @@ a {
             <div>
                 <div class="nav__brand">
                     <ion-icon name="menu-outline" class="nav__toggle" id="nav-toggle"></ion-icon>
-                    <a href="${pageContext.request.contextPath}" class="nav__logo">ANYWARE</a>
+                    <a href="main.do" class="nav__logo">ANYWARE</a>
                 </div>
                 <div class="nav__list">
                    
@@ -273,7 +273,7 @@ a {
                         <span class="nav_name">예약</span>
                     </a>
 
-                    <a href="list.bo" class="nav__link">
+                    <a href="main.bo" class="nav__link">
                         <ion-icon name="people-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">게시판</span>
 

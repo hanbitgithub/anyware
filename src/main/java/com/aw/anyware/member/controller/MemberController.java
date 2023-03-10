@@ -23,9 +23,11 @@ public class MemberController {
 	@Autowired 
 	private MemberService mService;
 	
-	@Autowired
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
+	@RequestMapping("main.do")
+	public String mainPage() {
+		return "main";
+	}
 		
 	@RequestMapping("selectAll.me")
 	public String selectAllMember(@RequestParam(value="cpage", defaultValue="1") int currentPage,
