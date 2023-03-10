@@ -20,10 +20,19 @@ public interface MailService {
 	
 	//그룹리스트 조회
 	ArrayList<AddressGroup> selectGroupList(int memNo);
+	
 	//그룹추가 
 	int insertAddressGroup(AddressGroup ag);
+
 	//등록한 그룹조회
 	AddressGroup selectInsertGroup(AddressGroup ag);
+	
+	//그룹명 수정
+	int updateGroupName(AddressGroup ag);
+	
+	//그룹삭제
+	int deleteGroupList(AddressGroup ag);
+	int deleteGroup(AddressGroup ag);
 
 	//그룹별 리스트조회
 	int selectGroupAddListCount(AddressGroup ag);
@@ -35,6 +44,10 @@ public interface MailService {
 	//사내주소록 조회
 	int selectCompanyListCount();
 	ArrayList<Member> selectCompanyList(PageInfo pi);
+	
+	//부서별 주소록
+	int selectdeptAddBookListCount(String deptName);
+	ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName);
 	
 	
 	

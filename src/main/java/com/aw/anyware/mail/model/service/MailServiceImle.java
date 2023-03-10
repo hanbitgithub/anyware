@@ -12,6 +12,7 @@ import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.member.model.vo.Member;
 
+
 @Service
 public class MailServiceImle implements MailService {
 	
@@ -89,12 +90,36 @@ public class MailServiceImle implements MailService {
 	}
 
 
+	/**
+	 *등록한 그룹 조회 
+	 */
 	@Override
 	public AddressGroup selectInsertGroup(AddressGroup ag) {
 		return mDao.selectInsertGroup(sqlSession,ag);
 	}
 	
+	/**
+	 * 그룹명 수정 
+	 */
+	@Override
+	public int updateGroupName(AddressGroup ag) {
+		return mDao.updateGroupName(sqlSession,ag);
+	}
 	
+
+	/**
+	 *그룹삭제
+	 */
+	@Override
+	public int deleteGroupList(AddressGroup ag) {
+		return mDao.deleteGroupList(sqlSession, ag);
+	}
+
+	@Override
+	public int deleteGroup(AddressGroup ag) {
+		return mDao.deleteGroup(sqlSession,ag);
+	}
+
 
 	/**
 	 * 사내 주소록 조회 
@@ -110,6 +135,27 @@ public class MailServiceImle implements MailService {
 		return mDao.selectCompanyList(sqlSession, pi);
 	}
 
+
+	/**
+	 * 부서별 주소록 
+	 */
+	@Override
+	public int selectdeptAddBookListCount(String deptName) {
+		return mDao.selectdeptAddBookListCount(sqlSession,deptName);
+	}
+
+
+	@Override
+	public ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName) {
+		return mDao.selectdeptAddBookList(sqlSession, pi,deptName);
+	}
+
+
+	
+
+
+
+	
 
 	
 

@@ -33,7 +33,7 @@ public class MailController {
 		//그룹리스트 
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
 		session.setAttribute("glist", glist);
-	
+
 		return "mail/receiveMailBox";
 	}
 	@RequestMapping("sendbox.em")
@@ -108,21 +108,32 @@ public class MailController {
 	
 	//주소록 그룹 추가 
 	@ResponseBody
-	@RequestMapping(value="insertAddGroup.ad", produces="application/json; charset=utf-8")
+	@RequestMapping("insertAddGroup.ad")
 	public String ajaxInsertAddressGroup(AddressGroup ag) {
 		int result = mService.insertAddressGroup(ag);
+	 	return result>0 ? "success": "fail";
 		
-		if(result>0) {
-			
-			AddressGroup adg = mService.selectInsertGroup(ag);
-			//System.out.println(adg);
-			return new Gson().toJson(adg);
-		}else {
-			return "fail";
-		}
 		
 	}
 	
+	//그룹명 수정
+	@ResponseBody
+	@RequestMapping("updateGroup.ad")
+	public String updateGroupName(AddressGroup ag) {
+		int result = mService.updateGroupName(ag);
+		return result>0 ? "success": "fail";
+	}
+	
+	//그룹삭제 
+	@ResponseBody
+	@RequestMapping("deleteGroup.ad")
+	public String deleteGroupName(AddressGroup ag) {
+		int result1 = mService.deleteGroupList(ag);
+		int result2 = mService.deleteGroup(ag);
+		
+		return result1*result2 >0 ? "success": "fail";
+	}
+
 	//주소록 추가 
 	@RequestMapping("insert.ad")
 	public String InsertAddressBook(AddressBook ab,HttpSession session) {
@@ -131,14 +142,17 @@ public class MailController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "mail/personalAddressbook";
+			return "redirect:personal.ad";
 			
 		}else {
 			session.setAttribute("alertMsg", "주소록 등록 실패.");
-			return "mail/personalAddressbook";
+			return "redirect:personal.ad";
 		}
 		
 	}
+	
+	
+	
 	
 	// 그룹별 주소록 조회 
 	@RequestMapping("group.ad")
@@ -169,6 +183,18 @@ public class MailController {
 		return "mail/companyAddressbook";
 	}
 	
+	@RequestMapping("dept.ad")
+	public String deptAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,String deptName, Model model) {
+		int count = mService.selectdeptAddBookListCount(deptName);
+		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectdeptAddBookList(pi,deptName);
+		
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+		
+		return "mail/companyAddressbook";
+	}
 	
 	@RequestMapping("test.do")
 	public String test() {

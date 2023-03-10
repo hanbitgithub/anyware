@@ -104,19 +104,41 @@
 	  )
 
 </insert>
+<!-- 등록한 그룹 조회 -->
 <select id="selectInsertGroup" resultMap="groupResult">
 
-	    select
-			   group_no
-			  ,group_name
-			  ,member_no
-	      from tb_addressgroup
-	      where member_no = #{memNo} 
-	      and status= 'Y'
-	      and group_name= #{groupName}
+	select
+			group_no
+			,group_name
+			,member_no
+	from  tb_addressgroup
+	where member_no = #{memNo}
+	  and status= 'Y'
+	  and group_name= #{groupName}
 
 </select>
 
+<!-- 그룹명 수정 -->
+<update id="updateGroupName">
+	update
+		   tb_addressGroup
+      set  group_name = #{groupName}		   
+     where group_no = #{groupNo}
+</update>
+
+<!-- 그룹삭제  -->
+<delete id="deleteGroupList">
+    delete
+	  from tb_addressbook
+	  where group_no = #{groupNo}
+
+</delete>
+
+<delete id="deleteGroup">
+	delete
+	  from tb_addressgroup
+	  where group_no = #{groupNo}
+ </delete>	
 
 <!-- 주소록추가 -->
 <insert id="insertAddressBook">
@@ -208,8 +230,33 @@ select count(*)
   order by name asc
 </select>
 
+<!--부서별 주소록 -->
+<select id="selectdeptAddBookListCount" resultType="_int">
+  select count(*)  		
+   from tb_member
+   where status = 'Y'
+   and dept_name = #{deptName}
 
+</select>
 
+<select id="selectdeptAddBookList" resultMap="memberResult">
+ select 
+  		 member_no
+  		,dept_name
+  		,job_name
+  		,name
+  		,member_id
+  		,email
+  		,phone
+  		,email
+  		,address
+  		,enroll_date
+  		,profile_url
+   from tb_member
+   where status = 'Y'
+   and dept_name = #{deptName}
+  order by name asc
+</select>
 
 
 
