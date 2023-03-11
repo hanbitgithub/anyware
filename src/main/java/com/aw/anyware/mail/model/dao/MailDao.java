@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.aw.anyware.mail.model.vo.Mail;
 import com.aw.anyware.member.model.vo.Member;
 
 @Repository
@@ -200,7 +201,24 @@ public class MailDao {
 	}
 	
 	
+	//메일
 	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 받은메일 개수 
+	 */
+	public int selectReceiveMailListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectReceiveMailListCount");
+	}
+	
+	public ArrayList<Mail> selectReceiveMailList(SqlSessionTemplate sqlSession,PageInfo pi, String memId){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList",memId,rowBounds);
+	}
 	
 	
 

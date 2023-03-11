@@ -12,6 +12,7 @@
 	<typeAliases>
 		<typeAlias type="com.aw.anyware.approval.vo.Approval" alias="Approval"/> 
 		<typeAlias type="com.aw.anyware.mail.model.vo.Mail" alias="Mail"/>
+		<typeAlias type="com.aw.anyware.mail.model.vo.MailStatus" alias="MailStatus"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressBook" alias="AddressBook"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>

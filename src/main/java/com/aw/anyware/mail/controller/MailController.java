@@ -16,6 +16,7 @@ import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.mail.model.service.MailService;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.aw.anyware.mail.model.vo.Mail;
 import com.aw.anyware.member.model.vo.Member;
 import com.google.gson.Gson;
 
@@ -27,13 +28,24 @@ public class MailController {
 	
 	//메일 메인페이지 
 	@RequestMapping("receivebox.em")
-	public String receiveMailList(HttpSession session) {
+	public String receiveMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
 		//로그인한 사원번호
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
 		//그룹리스트 
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
 		session.setAttribute("glist", glist);
+		
+		//받은 메일갯수 조회
+		int listCount = mService.selectReceiveMailListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 
+		//받은 메일 리스트 조회 
+		ArrayList<Mail> rlist = mService.selectReceiveMailList(pi,memId);
+        
+		model.addAttribute("rlist", rlist);
+		model.addAttribute("pi",pi);
 		return "mail/receiveMailBox";
 	}
 	@RequestMapping("sendbox.em")
@@ -171,8 +183,7 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping(value="update.ad")
 	public String ajaxUpdateAddressBook(AddressBook ab) {
-		
-		System.out.println(ab);
+		//System.out.println(ab);
 		int result = mService.updateAddressBook(ab);
 		return result > 0 ? "success" : "fail";
 	}

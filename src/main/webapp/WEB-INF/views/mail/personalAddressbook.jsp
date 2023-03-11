@@ -319,7 +319,7 @@
 	        						  'bizName': $('#updateForm [name="bizName"]').val(),
 	        						  'deptName': $('#updateForm [name="deptName"]').val(),
 	        						  'jobName': $('#updateForm [name="jobName"]').val(),
-	        						  'groupNo': $('select[name="groupNo"]').val()
+	        						  'groupNo': $('#updateForm [name="groupNo"]').val()
 	        					},
 	        					success : function(result){
 	        						//console.log(result);

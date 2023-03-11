@@ -18,9 +18,9 @@ public class Mail {
 	private String emContent;
 	private String memName;
 	private String sender;
-	private String receiver;
+	private String receivers;
 	private String refEmail;
 	private String sendDate;
-	private String tempStock;
-	
+	private String tempStock;	
+	private MailStatus mailStatus;
 }

@@ -10,6 +10,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.dao.MailDao;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.aw.anyware.mail.model.vo.Mail;
 import com.aw.anyware.member.model.vo.Member;
 
 
@@ -21,11 +22,6 @@ public class MailServiceImle implements MailService {
 	
 	@Autowired
 	private MailDao mDao;
-
-	@Override
-	public int selectListCount() {
-		return 0;
-	}
 
 	
 	//주소록
@@ -167,9 +163,30 @@ public class MailServiceImle implements MailService {
 	}
 
 
+	/**
+	 * 부서별 주소록 리스트 
+	 */
 	@Override
 	public ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName) {
 		return mDao.selectdeptAddBookList(sqlSession, pi,deptName);
+	}
+	
+	//메일
+
+	/**
+	 * 받은 메일 갯수 
+	 */
+	@Override
+	public int selectReceiveMailListCount(String memId) {
+		return mDao.selectReceiveMailListCount(sqlSession,memId);
+	}
+
+	/**
+	 * 받은 메일 리스트 
+	 */
+	@Override
+	public ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId) {
+		return mDao.selectReceiveMailList(sqlSession, pi, memId);
 	}
 
 

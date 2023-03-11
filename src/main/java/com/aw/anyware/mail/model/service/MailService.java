@@ -5,13 +5,11 @@ import java.util.ArrayList;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.aw.anyware.mail.model.vo.Mail;
 import com.aw.anyware.member.model.vo.Member;
 
 public interface MailService {
-	/*메일*/
 
-	int selectListCount();
-	
 	
 	/*주소록*/
 	//개인 주소록 조회
@@ -56,8 +54,12 @@ public interface MailService {
 	//부서별 주소록
 	int selectdeptAddBookListCount(String deptName);
 	ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName);
+
+	/*메일*/
 	
-	
+	//받은메일 갯수
+	int selectReceiveMailListCount(String memId);
+	ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId);
 	
 
 	
