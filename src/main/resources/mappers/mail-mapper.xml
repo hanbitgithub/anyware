@@ -55,11 +55,12 @@
 	<result column="ref_email" property="refEamil" />
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
+	
 	<association property="mailStatus" resultMap="mailStatusResult" />
+	<collection property="fileList" resultMap="mailFileResult" />
 </resultMap>
 
-<resultMap id="mailStatusResult" type="MailStatus">
-	<id column="em_no" property="emNo" />
+<resultMap id="mailStatusResult" type="MailStatus">	
 	<result column="em_type" property="emType"/>
 	<result column="receiver_Name" property="receiverName" />
 	<result column="receiver" property="receiver" />
@@ -68,6 +69,15 @@
 	<result column="important" property="important" />
 	<result column="trash" property="trash" />
 	<result column="spam" property="spam" />
+
+</resultMap>
+
+<resultMap id="mailFileResult" type="MailFile">
+	<id column="emf_no" property="emfNo" />
+	<result column="origin_name" property="originName" />
+	<result column="change_name" property="changeName" />
+	<result column="file_path" property="filePath" />
+	<result column="file_size" property="fileSize" />
 
 </resultMap>
 
@@ -98,7 +108,7 @@
 	from tb_addressbook b
 	join tb_addressgroup g on (b.group_no = g.group_no)
 	where b.status = 'Y' 
-	  and mem_no = #{memNo}  <!--로그인한 사원번호로 변경하기 -->
+	  and mem_no = #{memNo} 
 	 order by add_no desc
 
 </select>
@@ -364,13 +374,41 @@ select m.em_no
 
 </select>
 
+<!-- 메일주소록 조회 -->
+<select id="addressbookGroupList" resultMap="addressResult">
+SELECT 
+    group_name,
+    name || ' ' || email as name
+   , b.add_no
+FROM 
+    tb_addressbook b
+    JOIN tb_addressgroup g ON (b.group_no = g.group_no)
+WHERE 
+    b.status = 'Y' 
+    AND mem_no = #{memNo}
+ORDER BY 
+    group_name, name
 
+</select>
+<!-- <select id="selectPublicAddress" resultMap="memberResult">
+ select 
+  		 member_no
+  		,dept_name
+  		,job_name
+  		,name
+  		,member_id
+  		,email
+  		,phone
+  		,email
+  		,address
+  		,enroll_date
+  		,profile_url
+   from tb_member
+   where status = 'Y'
+  order by name asc
 
-
-
-
-
-
+</select>
+ -->
 
 
 

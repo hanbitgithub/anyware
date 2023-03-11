@@ -1,6 +1,8 @@
 package com.aw.anyware.mail.controller;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -35,7 +37,7 @@ public class MailController {
 		
 		//그룹리스트 
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
-		session.setAttribute("glist", glist);
+		
 		
 		//받은 메일갯수 조회
 		int listCount = mService.selectReceiveMailListCount(memId);
@@ -44,6 +46,7 @@ public class MailController {
 		//받은 메일 리스트 조회 
 		ArrayList<Mail> rlist = mService.selectReceiveMailList(pi,memId);
         
+		//System.out.println(rlist);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("pi",pi);
 		return "mail/receiveMailBox";
@@ -75,8 +78,15 @@ public class MailController {
 		return "mail/receiveMailDetail";
 	}
 	
+	//메일 쓰기 
 	@RequestMapping("sendForm.em")
-	public String sendMailForm() {
+	public String sendMailForm(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
+	    model.addAttribute("groupList", groupList);
+	   // System.out.println(groupList);
+	
 		return "mail/sendMailForm";
 		
 	}
@@ -202,7 +212,7 @@ public class MailController {
 		return "mail/personalAddressbook";
 	}
 	
-	
+	//사내 주소록 
 	@RequestMapping("company.ad")
 	public String companyAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
 		//전 사원수 조회
@@ -223,7 +233,7 @@ public class MailController {
 		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
 		
 		ArrayList<Member> mlist = mService.selectdeptAddBookList(pi,deptName);
-		
+
 		model.addAttribute("mlist",mlist);
 		model.addAttribute("pi",pi);
 		
@@ -232,8 +242,20 @@ public class MailController {
 	
 	@RequestMapping("test.do")
 	public String test() {
-		return "mail/test2";
+		return "mail/test";
 	}
-
+	
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "publicMailAddress.ad", produces =
+	 * "application/json; charset=UTF-8") public String ajaxSelectPublicAddresss() {
+	 * ArrayList<Member> pAdd = mService.selectPublicAddress();
+	 * System.out.println(pAdd); return new Gson().toJson(pAdd); }
+	 */
+	
+	
+	
 
 }

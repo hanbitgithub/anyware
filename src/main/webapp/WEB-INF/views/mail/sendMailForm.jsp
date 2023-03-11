@@ -42,13 +42,13 @@
 }
 
 /*모달*/
-.nav-pills> .nav-item>.active{
+.nav-tabs> .nav-item>.active{
 	background-color: white;
 	color:#7291f6;
 }
 
 
-.nav-pills> .nav-item a{
+.nav-tabs> .nav-item a{
 	color:black;
 
 }
@@ -352,7 +352,7 @@
                     <a href=""><img src="resources/images/refresh.png" width="22px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="23px"> 임시저장</a>
                     <a href="sendToMe.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
-                  
+                
                 </div>
                 <br>
                 <div>
@@ -366,7 +366,7 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input placeholder="" name="receiver" class="email">
+                                <input placeholder="" name="receiver" class="email" id="receiver">
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 <script>
                                 
@@ -459,7 +459,8 @@
                 </div>
 
             </div>
-
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+		<script src="resources/js/jquery.multi-select.js"></script>
             
         </div>
 
@@ -471,127 +472,102 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">주소록</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
+					 <!-- Nav tabs -->
+               <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" style="height:45px" role="tablist">
+                 <li class="nav-item">
+                   <a class="nav-link active" data-toggle="tab" href="#companyAd" style="color:black;">사내주소록</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" data-toggle="tab" href="#personalAd" style="color:black;">개인주소록</a>
+                 </li>
+                
+               </ul>
 
-					<div class="container2">
-						<br>
-						<!-- Nav tabs -->
-						<ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#public">사내주소록</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#personal">개인주소록</a>
-							</li>
+             
+               <!-- Tab panes -->
+               <div class="tab-content">
+                 <div id="companyAd" class="container tab-pane active">
+                 	<select id='pre-selected-options' multiple='multiple'>
 
-						</ul>
-
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div id="public" class="container tab-pane active">
-								<br>
-
-								<p>
-									<select id='pre-selected-options' multiple='multiple'>
-
-										<optgroup label='인사팀'>
-											<option value='1'>Yoda</option>
-											<option value='2'>Obiwan</option>
-										</optgroup>
-										<optgroup label='개발팀'>
-											<option value='3'>Palpatine</option>
-											<option value='4'>Darth Vader</option>
-										</optgroup>
-										<optgroup label='총무팀'>
-											<option value='5'>Palpatine</option>
-											<option value='6'>Darth Vader</option>
-										</optgroup>
-										<optgroup label='기획팀'>
-											<option value='7'>Palpatine</option>
-											<option value='8'>Darth Vader</option>
-										</optgroup>
-
-										<option value='elem_1'>elem 1</option>
-										<option value='elem_2'>elem 2</option>
-										<option value='elem_3'>elem 3</option>
-										<option value='elem_4'>elem 4</option>
-										<option value='elem_100'>elem 100</option>
-									</select>
+										<c:forEach items="${groupList}" var="group">
+											<optgroup label="${group.groupName}">
+												<c:forEach items="${group.name}" var="member">
+													<option value="${member}">${member}</option>
+												</c:forEach>
+											</optgroup>
+										</c:forEach>
 
 
-									<!-- ends -->
-
-
-
-
-						<!-- Bootstrap JavaScript -->
-						<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-						<script src="resources/js/jquery.multi-select.js"></script>
-						<script type="text/javascript">
+					</select>
+					
+					<script type="text/javascript">
                           // run pre selected options
                           $('#pre-selected-options').multiSelect();
-                       
+                   
+                    </script>
+					
+                  
+                 </div>
+                 <div id="personalAd" class="container tab-pane fade">       
+                   <select id='pre-selected-options2' multiple='multiple'>
 
-                        </script>
-
-
-								</p>
-							</div>
-							<div id="personal" class="container tab-pane fade">
-								<br> <select id='pre-selected-options2' multiple='multiple'>
-
-									<optgroup label='인사팀'>
-										<option value='1'>Yoda</option>
-										<option value='2'>Obiwan</option>
-									</optgroup>
-									<optgroup label='개발팀'>
-										<option value='3'>Palpatine</option>
-										<option value='4'>Darth Vader</option>
-									</optgroup>
-									<optgroup label='총무팀'>
-										<option value='5'>Palpatine</option>
-										<option value='6'>Darth Vader</option>
-									</optgroup>
-									<optgroup label='기획팀'>
-										<option value='7'>Palpatine</option>
-										<option value='8'>Darth Vader</option>
-									</optgroup>
-
-									<option value='elem_1'>elem 1</option>
-									<option value='elem_2'>elem 2</option>
-									<option value='elem_3'>elem 3</option>
-									<option value='elem_4'>elem 4</option>
-									<option value='elem_100'>elem 100</option>
-								</select>
+										<c:forEach items="${groupList}" var="group">
+											<optgroup label="${group.groupName}">
+												<c:forEach items="${group.name}" var="member">
+													<option value="${member}">${member}</option>
+												</c:forEach>
+											</optgroup>
+										</c:forEach>
 
 
-								<!-- ends -->
-
-
-
-
-								<script type="text/javascript">
-                                       // run pre selected options
-                                       
-                                       $('#pre-selected-options2').multiSelect();
-         
-                                     </script>
-							</div>
-
-						</div>
-					</div>
+					</select>
+					
+					<script type="text/javascript">
+                          // run pre selected options
+                          $('#pre-selected-options2').multiSelect();
+                   
+                    </script>
+	                 
+	                 
+	                   
+                  </table>
+                 </div>
+                
+               </div>
+				
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary btn-sm"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary btn-sm">추가</button>
+					<button type="button" class="btn btn-primary btn-sm" onclick="addMail();">추가</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+			<script>
+				function addMail(){
+					  var selectedValues = [];
+					  $('#pre-selected-options option:selected').each(function() {
+					    selectedValues.push($(this).val());
+					  });
+					  $('#pre-selected-options2 option:selected').each(function() {
+						    selectedValues.push($(this).val());
+						  });
+					  
+					  
+					  $('#receiver').val(selectedValues.join(', '));
+					  
+					  $('#addressbook').modal('hide');
+				}
+		
+			</script>
+
 
 
 

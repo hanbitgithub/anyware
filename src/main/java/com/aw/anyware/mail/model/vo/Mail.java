@@ -1,5 +1,7 @@
 package com.aw.anyware.mail.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +24,8 @@ public class Mail {
 	private String refEmail;
 	private String sendDate;
 	private String tempStock;	
+	private String emfNo;
+	
 	private MailStatus mailStatus;
+	private ArrayList<MailFile> fileList;
 }

@@ -1,6 +1,8 @@
 package com.aw.anyware.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
@@ -12,7 +14,7 @@ public interface MailService {
 
 	
 	/*주소록*/
-	//개인 주소록 조회
+	//개인 주소록 조회 
 	int selectAddressListCount(int memNo);
 	ArrayList<AddressBook> selectAddbookList(PageInfo pi,int memNo);
 	
@@ -47,7 +49,7 @@ public interface MailService {
 	//주소록 수정 
 	int updateAddressBook(AddressBook ab);
 	
-	//사내주소록 조회
+	//사내주소록 조회 (전체)
 	int selectCompanyListCount();
 	ArrayList<Member> selectCompanyList(PageInfo pi);
 	
@@ -60,7 +62,11 @@ public interface MailService {
 	//받은메일 갯수
 	int selectReceiveMailListCount(String memId);
 	ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId);
-	
 
-	
+	//메일 개인주소록 조회
+	 List<Map<String, Object>> addressbookGroupList(int memNo);
+	//메일 사내주소록 조회 
+	 List<Map<String, Object>> addressbookMemberList();
+	 
+	 
 }

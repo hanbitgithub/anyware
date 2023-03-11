@@ -1,6 +1,8 @@
 package com.aw.anyware.mail.model.service;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -188,6 +190,20 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId) {
 		return mDao.selectReceiveMailList(sqlSession, pi, memId);
 	}
+
+	@Override
+	public List<Map<String, Object>> addressbookGroupList(int memNo) {
+		return mDao.addressbookGroupList(sqlSession, memNo);
+	}
+
+	@Override
+	public Map<String, Object> addressbookMemberList() {
+		return null;
+	}
+
+	
+
+	
 
 
 	

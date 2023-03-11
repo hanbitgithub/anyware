@@ -1,6 +1,8 @@
 package com.aw.anyware.mail.model.dao;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -219,6 +221,15 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList",memId,rowBounds);
 	}
+	
+	public List<Map<String, Object>> addressbookGroupList(SqlSessionTemplate sqlSession, int memNo){
+		return sqlSession.selectList("mailMapper.addressbookGroupList",memNo);
+	}
+	
+	/*
+	 * public ArrayList<Member> selectPublicAddress(SqlSessionTemplate sqlSession){
+	 * return (ArrayList)sqlSession.selectList("mailMapper.selectPublicAddress"); }
+	 */
 	
 	
 
