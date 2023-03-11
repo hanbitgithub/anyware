@@ -13,7 +13,7 @@
 	<result column="group_no" property="groupNo" />
 	<result column="mem_no" property="memNo" />
 	<result column="group_name" property="groupName" />
-
+	<result column="nameMail" property="nameMail" />
 
 </resultMap>
 
@@ -69,6 +69,7 @@
 	<result column="important" property="important" />
 	<result column="trash" property="trash" />
 	<result column="spam" property="spam" />
+	<result column="sender" property="sender" />
 
 </resultMap>
 
@@ -378,7 +379,9 @@ select m.em_no
 <select id="addressbookGroupList" resultMap="addressResult">
 SELECT 
     group_name,
-    name || ' ' || email as name
+    name || ' ' || email as nameMail
+    ,name
+    ,email
    , b.add_no
 FROM 
     tb_addressbook b
@@ -390,27 +393,31 @@ ORDER BY
     group_name, name
 
 </select>
-<!-- <select id="selectPublicAddress" resultMap="memberResult">
- select 
-  		 member_no
-  		,dept_name
-  		,job_name
-  		,name
-  		,member_id
-  		,email
-  		,phone
-  		,email
-  		,address
-  		,enroll_date
-  		,profile_url
-   from tb_member
-   where status = 'Y'
-  order by name asc
 
+<select id="addressBookMemberList" resultMap="memberResult">
+select
+       dept_name
+      ,name
+      ,member_id
+      ,name || ' ' || member_id ||'@anyware.com' as email
+      ,member_no
+from tb_member
+order by 1,2
+ 
 </select>
- -->
 
-
+<select id="receiverMemberList" resultMap="mailStatusResult">
+select distinct
+       s.receiver
+      , receiver_name
+      , sender
+     
+from tb_mail_status s
+join tb_mail m on(s.em_no = m.em_no)
+where em_type in (1,2)
+and sender = #{memId}
+ 
+</select>
 
 
 

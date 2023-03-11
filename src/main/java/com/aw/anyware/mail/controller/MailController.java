@@ -86,11 +86,23 @@ public class MailController {
 		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
 	    model.addAttribute("groupList", groupList);
 	   // System.out.println(groupList);
-	
+	    List<Map<String, Object>> memberList = mService.addressbookMemberList();
+	    model.addAttribute("memberList",memberList);
+
 		return "mail/sendMailForm";
 		
 	}
 	
+	// 메일전송 기록이있는 사람 조회 
+	@ResponseBody
+	@RequestMapping(value="reList.em", produces="application/json; charset=utf-8")
+	public String ajaxReceiverMemberList(String memId) {
+		ArrayList<Mail> reList = mService.receiverMemberList(memId);
+		 List<Map<String, Object>> memberList = mService.addressbookMemberList();
+		return new Gson().toJson(memberList);
+	}
+	
+	//내게쓰기 
 	@RequestMapping("sendToMe.em")
 	public String sendMailToMe() {
 		return "mail/sendMailToMe";

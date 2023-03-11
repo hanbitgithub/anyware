@@ -126,7 +126,7 @@
               </nav>
 
             <table class="table">
-                <tr style="font-size: 14px; font-weight: bold;">
+               <!--  <tr style="font-size: 14px; font-weight: bold;">
                     <td width="20"><input type="checkbox"></td>
                     <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
                     <td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
@@ -134,7 +134,7 @@
                     <td width="700">2월 3주차 주간 매출 보고</td>
                     <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
-                </tr>
+                </tr> -->
                 <c:choose>
                 	<c:when test="${ empty rlist }">
                 		<tr align="center">
@@ -144,32 +144,45 @@
                 	
                 	<c:otherwise>
                 		<c:forEach var="r" items="${rlist }">
-	                		<tr style="font-size: 14px;"> 
-	                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
-	                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
-	                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-	                			<td width="100">${r.memName }</td>
-	                			<td width="700">${r.emTitle }</td>
-	                			<td width="50">
-	                				
-	                				<c:if test="${not empty r.emfNo}">
-	                					<img src="resources/images/paper-clip.png" width="16">
-	                				</c:if>
-	                			</td>	
-	                			<td>${r.sendDate }</td>	
-	                		</tr>
+                			<c:choose>
+                				<c:when test="${r.mailStatus.read eq 'Y' }">
+			                		<tr style="font-size: 14px;"> 
+			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="100">${r.memName }</td>
+			                			<td width="700">${r.emTitle }</td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty r.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${r.sendDate }</td>	
+			                		</tr>
+	                			</c:when>
+	                			<c:otherwise>
+	                				<tr style="font-size: 14px; font-weight: bold"> 
+			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="100">${r.memName }</td>
+			                			<td width="700">${r.emTitle }</td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty r.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${r.sendDate }</td>	
+			                		</tr>
+	                			</c:otherwise>
+	                		</c:choose>
                 		</c:forEach>
               
                 	</c:otherwise>
                 </c:choose>
-               				 <c:choose>
-	                				<c:when test="">
-	                					<td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-	                				</c:when>
-	                				<c:otherwise>
-	                				</c:otherwise>
-	                			</c:choose>
-                
+               				
                 
               
                

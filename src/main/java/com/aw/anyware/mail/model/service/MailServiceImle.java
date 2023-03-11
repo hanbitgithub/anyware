@@ -191,15 +191,32 @@ public class MailServiceImle implements MailService {
 		return mDao.selectReceiveMailList(sqlSession, pi, memId);
 	}
 
+	/**
+	 * 개인주소록 그룹별 리스트 
+	 */
 	@Override
 	public List<Map<String, Object>> addressbookGroupList(int memNo) {
 		return mDao.addressbookGroupList(sqlSession, memNo);
 	}
 
+	/**
+	 * 사내주소록 부서별 리스트 
+	 */
 	@Override
-	public Map<String, Object> addressbookMemberList() {
-		return null;
+	public List<Map<String, Object>> addressbookMemberList() {
+		return mDao.addressBookMemberList(sqlSession);
 	}
+
+	/**
+	 * 보낸적있는 메일주소 조회
+	 */
+	@Override
+	public ArrayList<Mail> receiverMemberList(String memId) {
+		return mDao.receiverMemberList(sqlSession, memId);
+	}
+
+	
+	
 
 	
 

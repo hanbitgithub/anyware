@@ -366,55 +366,86 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input placeholder="" name="receiver" class="email" id="receiver">
+                                <input placeholder="" name="receiver" class="email" id="receivers">
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
-                                <script>
                                 
-                                
-                                var input = document.querySelector('input[name=receiver]')
-                                tagify = new Tagify(input, {
-                                whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                maxTags: 10,
-                                dropdown: {
-                                    maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                    enabled: 0,             // <- show suggestions on focus
-                                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                }
-                            })  
-                                // 태그가 추가되면 이벤트 발생
-                                tagify.on('add', function() {
-                                  console.log(tagify.value); // 입력된 태그 정보 객체
-                                })
-                                </script>
-
                             </td>
                         </tr>
                         <tr>
                             <th  width="120" height="40px">참조</th>
                             <td>
                              
-                                <input placeholder="" name="cc"  class="email">
+                                <input placeholder="" name="cc"  class="email" id="cc">
                                 <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
-                                <script>
-                                    var input = document.querySelector('input[name=cc]')
-                                    tagify = new Tagify(input, {
-                                    whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                    maxTags: 10,
-                                    dropdown: {
-                                        maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                        enabled: 0,             // <- show suggestions on focus
-                                        closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                    }
-                                })  
-                                    // 태그가 추가되면 이벤트 발생
-                                    tagify.on('add', function() {
-                                    console.log(tagify.value); // 입력된 태그 정보 객체
-                                    })
-                                    </script>
+                              
                             </td>
                         </tr>
+                        
+                         <script>
+                                //whitelist 값 불러오기
+                              
+                                $.ajax({
+                                	url:"reList.em",
+                                	data:{memId : '${loginUser.memberId}'},
+                                	success:function(list){
+                                		console.log(list);
+                                		var whitelist = [];
+
+                                		 for (var i = 0; i < list.length; i++) {
+                                		    whitelist.push(list[i].name + ' ' + list[i].memberId + '@anyware.com' );
+                                		  }
+                                		 var input = document.querySelector('input[name=receiver]')
+                                     	tagify1 = new Tagify(input, {
+                                         whitelist: whitelist,
+                                         maxTags: 10,
+                                         dropdown: {
+                                             maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                             classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                             enabled: 0,             // <- show suggestions on focus
+                                             closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                         }
+
+                                     	})
+                                         tagify1.on('add', function() {
+                                        		 console.log(tagify1.value); // 입력된 태그 정보 객체
+                                         })		 
+                                        	
+                                   	 
+                                          var input = document.querySelector('input[name=cc]')
+                                          tagify2 = new Tagify(input, {
+                                          whitelist: whitelist,
+                                          maxTags: 10,
+                                          dropdown: {
+                                              maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                              classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                              enabled: 0,             // <- show suggestions on focus
+                                              closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                          }
+                                      })  
+                                          // 태그가 추가되면 이벤트 발생
+                                          tagify2.on('add', function() {
+                                          	console.log(tagify2.value); // 입력된 태그 정보 객체
+                                          })  	 
+                               
+                                		
+                                      
+                                	}
+                                	,error:function(){
+                                		console.log("ajax whitelist 값 가져오기 실패 ");
+                                	}
+                                })
+                                
+                                
+                                
+                                </script>
+                                
+                        
+                        
+                        
+                        
+                        
+                        
+                        
                         <tr>
                             <th  width="120" height="40px">제목</th>
                             <td><input type="text" name="" value="" class="form-control"></td>
@@ -451,8 +482,6 @@
                         });
                     });
 
-
-                   
                       </script>
                     
 
@@ -490,46 +519,67 @@
              
                <!-- Tab panes -->
                <div class="tab-content">
+                 
                  <div id="companyAd" class="container tab-pane active">
+                 <div><b>수신자</b></div>
                  	<select id='pre-selected-options' multiple='multiple'>
 
-										<c:forEach items="${groupList}" var="group">
-											<optgroup label="${group.groupName}">
-												<c:forEach items="${group.name}" var="member">
-													<option value="${member}">${member}</option>
-												</c:forEach>
-											</optgroup>
-										</c:forEach>
-
-
+						<c:forEach items="${memberList}" var="member">
+							<optgroup label="${member.deptName}">
+								<c:forEach items="${member.email}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
 					</select>
 					
+					<div><b>참조자</b></div>
+                 	<select id='pre-selected-options-cc' multiple='multiple'>
+
+						<c:forEach items="${memberList}" var="member">
+							<optgroup label="${member.deptName}">
+								<c:forEach items="${member.email}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
+					</select>
 					<script type="text/javascript">
                           // run pre selected options
                           $('#pre-selected-options').multiSelect();
-                   
+                          $('#pre-selected-options-cc').multiSelect();
                     </script>
 					
                   
                  </div>
                  <div id="personalAd" class="container tab-pane fade">       
+                    <div><b>수신자</b></div>
                    <select id='pre-selected-options2' multiple='multiple'>
+						<c:forEach items="${groupList}" var="group">
+							<optgroup label="${group.groupName}">
+								<c:forEach items="${group.nameMail}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
 
-										<c:forEach items="${groupList}" var="group">
-											<optgroup label="${group.groupName}">
-												<c:forEach items="${group.name}" var="member">
-													<option value="${member}">${member}</option>
-												</c:forEach>
-											</optgroup>
-										</c:forEach>
-
+					</select>
+					<div><b>참조자</b></div>
+					 <select id='pre-selected-options2-cc' multiple='multiple'>
+						<c:forEach items="${groupList}" var="group">
+							<optgroup label="${group.groupName}">
+								<c:forEach items="${group.nameMail}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
 
 					</select>
 					
 					<script type="text/javascript">
                           // run pre selected options
                           $('#pre-selected-options2').multiSelect();
-                   
+                          $('#pre-selected-options2-cc').multiSelect();
                     </script>
 	                 
 	                 
@@ -553,21 +603,30 @@
 			<script>
 				function addMail(){
 					  var selectedValues = [];
+					  var selectedValuesCC = [];
 					  $('#pre-selected-options option:selected').each(function() {
 					    selectedValues.push($(this).val());
 					  });
 					  $('#pre-selected-options2 option:selected').each(function() {
 						    selectedValues.push($(this).val());
 						  });
+					  $('#pre-selected-options-cc option:selected').each(function() {
+						    selectedValuesCC.push($(this).val());
+					  });
+					  $('#pre-selected-options2-cc option:selected').each(function() {
+						    selectedValuesCC.push($(this).val());
+					 });
 					  
-					  
-					  $('#receiver').val(selectedValues.join(', '));
-					  
+					  $('#receivers').val(selectedValues.join(', '));
+					  $('#cc').val(selectedValuesCC.join(', '));
+					 
+					  console.log($("#receivers").val());
 					  $('#addressbook').modal('hide');
 				}
 		
 			</script>
-
+			
+			
 
 
 

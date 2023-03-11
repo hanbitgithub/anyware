@@ -65,8 +65,11 @@ public interface MailService {
 
 	//메일 개인주소록 조회
 	 List<Map<String, Object>> addressbookGroupList(int memNo);
-	//메일 사내주소록 조회 
+	
+	 //메일 전사주소록 조회
 	 List<Map<String, Object>> addressbookMemberList();
 	 
+	 //보낸적있는 메일주소 조회
+	 ArrayList<Mail> receiverMemberList(String memId);
 	 
 }

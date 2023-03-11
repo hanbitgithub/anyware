@@ -214,6 +214,12 @@ public class MailDao {
 		return sqlSession.selectOne("mailMapper.selectReceiveMailListCount");
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param pi
+	 * @param memId
+	 * @return 받은메일 리스트 조회 (페이징처리)
+	 */
 	public ArrayList<Mail> selectReceiveMailList(SqlSessionTemplate sqlSession,PageInfo pi, String memId){
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
@@ -222,15 +228,29 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList",memId,rowBounds);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param memNo
+	 * @return 개인주소록 그룹별 조회 
+	 */
 	public List<Map<String, Object>> addressbookGroupList(SqlSessionTemplate sqlSession, int memNo){
 		return sqlSession.selectList("mailMapper.addressbookGroupList",memNo);
 	}
 	
-	/*
-	 * public ArrayList<Member> selectPublicAddress(SqlSessionTemplate sqlSession){
-	 * return (ArrayList)sqlSession.selectList("mailMapper.selectPublicAddress"); }
+	/**
+	 * @param sqlSession
+	 * @return 사내 주소록 부서별 조회 
 	 */
+	public List<Map<String, Object>> addressBookMemberList(SqlSessionTemplate sqlSession){
+		return sqlSession.selectList("mailMapper.addressBookMemberList");
+	}
 	
-	
+	/**
+	 * @param sqlSession
+	 * @return 보낸적있는 메일 주소 조회 
+	 */
+	public ArrayList<Mail> receiverMemberList(SqlSessionTemplate sqlSession,String memId){
+		return (ArrayList)sqlSession.selectList("mailMapper.receiverMemberList",memId);
+	}
 
 }
