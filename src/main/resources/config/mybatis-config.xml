@@ -17,6 +17,7 @@
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarList" alias="CalendarList"/>
 		
 	</typeAliases>
 	
@@ -27,6 +28,7 @@
 		<mapper resource="/mappers/mail-mapper.xml"/> 
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/schedule-mapper.xml"/>
 	</mappers>
 	
 </configuration>
