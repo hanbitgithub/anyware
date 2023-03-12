@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -149,7 +150,24 @@
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-			                			<td width="100">${s.memName }</td>
+			                			<td width="100">
+			                			<c:set var="r" value="${s.receivers}"/>
+			                			
+									    <c:choose>
+									      <c:when test="${not empty receivers}">
+									        <c:set var="emails" value="${fn:split(receivers, ',')}" />
+									       		 <c:forEach var="name" items="${names}" varStatus="loop">
+											      <c:if test="${loop.index < 2}">
+											        ${fn:trim(fn:substringBefore(name, ' '))}
+											        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
+											      </c:if>
+											      <c:if test="${loop.index == 2}">
+											        ..
+											      </c:if>
+											    </c:forEach>
+									        </c:when>
+									     </c:choose>   
+			                			</td>
 			                			<td width="700">${s.emTitle }</td>
 			                			<td width="50">
 			                				
@@ -165,7 +183,23 @@
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
-			                			<td width="100">${s.memName }</td>
+			                			<td width="150">
+			                			<c:set var="receivers" value="${s.receivers}"/>
+  
+									    <c:choose>
+									      <c:when test="${not empty receivers}">
+									         <c:set var="names" value="${fn:split(receivers, ',')}" />
+											    <c:forEach var="name" items="${names}" varStatus="loop">
+											      <c:if test="${loop.index < 2}">
+											        ${fn:trim(fn:substringBefore(name, ' '))}
+											        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
+											      </c:if>
+											      <c:if test="${loop.index == 2}">
+											        ..
+											      </c:if>
+											    </c:forEach>
+									        </c:when>
+									    </c:choose>    
 			                			<td width="700">${s.emTitle }</td>
 			                			<td width="50">
 			                				

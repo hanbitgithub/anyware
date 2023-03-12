@@ -151,7 +151,7 @@
 			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
 			                			<td width="100">${r.memName }</td>
-			                			<td width="700">${r.emTitle }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty r.emfNo}">
@@ -167,7 +167,7 @@
 			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
 			                			<td width="100">${r.memName }</td>
-			                			<td width="700">${r.emTitle }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty r.emfNo}">

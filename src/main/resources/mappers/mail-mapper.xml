@@ -445,7 +445,7 @@
 	    , em_content
 	    , send_date
 	    , receiver_name
-	    , s.receiver
+	    , m.receiver
 	    , read
 	    , important
 	    , emf_no

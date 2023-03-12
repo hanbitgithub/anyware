@@ -55,6 +55,7 @@ public class MailController {
 		return "mail/receiveMailBox";
 	}
 	
+	
 	//보낸메일함 
 	@RequestMapping("sendbox.em")
 	public String sendMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
@@ -68,6 +69,7 @@ public class MailController {
 		
 		ArrayList<Mail> slist = mService.selectSendeMailList(pi,memId);
 		
+	
 		model.addAttribute("slist", slist);
 		model.addAttribute("pi",pi);
 		model.addAttribute("listCount",listCount);
@@ -89,6 +91,12 @@ public class MailController {
 	@RequestMapping("trash.em")
 	public String trashMailList() {
 		return "mail/trashMailBox";
+	}
+	
+	//메일 상세페이지 
+	@RequestMapping("mail.em")
+	public String selectMailDetail() {
+		return "mail/mailDetailView";
 	}
 	
 	
@@ -130,7 +138,7 @@ public class MailController {
 	
 	//메일 쓰기
 	@RequestMapping("sendMail.em")
-	public String insertSendMail(Mail m, HttpSession session) {
+	public String insertSendMail(Mail m, HttpSession session,Model model) {
 		//System.out.println(m);	
 		String receivers = m.getReceivers();
 		receivers = receivers.replaceAll("\"value\":\"", "");
@@ -143,7 +151,9 @@ public class MailController {
 		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
 		
 		m.setRefEmail(cc);
-    
+        
+		model.addAttribute("receivers",receivers);
+		model.addAttribute("cc",cc);
 		
 		//메일 테이블 insert 
 		int result1 = mService.insertSendMail(m);
@@ -177,7 +187,11 @@ public class MailController {
 					
 					list.add(ms2);
 				}
+				
+		
 			//--------- 참조 메일 --------------	
+			if(!cc.equals("")) { // 참조메일이 있을경우 
+				
 				//참조자 이름 배열에  담은후 구분자로 나누기
 				String[] ccArr = cc.split(",");
 				for(String c: ccArr) {
@@ -192,6 +206,7 @@ public class MailController {
 					
 					list.add(ms3);
 				}
+	      	}
 	
 		}
 		int result2 = mService.insertMailStatus(list);
