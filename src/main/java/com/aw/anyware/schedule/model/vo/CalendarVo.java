@@ -15,11 +15,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 @NoArgsConstructor
-public class CalendarList {
+public class CalendarVo {
 	
     private String calendarNo;
     private String myCalendar;
     private String scColor;
-    private String memberNo;
+    private int memberNo;
     
 }

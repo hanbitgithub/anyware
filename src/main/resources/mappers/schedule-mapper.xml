@@ -69,4 +69,28 @@
 	and member_no = #{memberNo}
 	</select>
 	
+		<!-- 내 캘린더 수정 화면 -->
+	<select id="calendarModify" resultMap="calendars">
+		select
+			CALENDAR_NO
+			,MY_CALENDAR
+			,SC_COLOR
+			,MEMBER_NO
+		from tb_category
+		where 1=1
+			and calendar_no = #{calendarNo}
+			and member_no = #{memberNo}
+	</select>
+
+	<!-- 내 캘린더 수정 -->
+	<update id="updateCalendar">
+		update tb_category
+		set
+			MY_CALENDAR = #{myCalendar},
+			SC_COLOR = #{scColor}
+		where 1=1
+			and calendar_no = #{calendarNo}
+			and member_no = #{memberNo}
+	</update>
+	
 </mapper>

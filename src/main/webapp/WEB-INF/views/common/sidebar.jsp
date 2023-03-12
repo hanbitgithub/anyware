@@ -263,7 +263,7 @@ a {
                     </a>
 
 
-                    <a href="#" class="nav__link">
+                    <a href="main.sc" class="nav__link">
                         <ion-icon name="calendar-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">일정관리</span>
                     </a>

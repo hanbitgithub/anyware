@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aw.anyware.schedule.model.dao.ScheduleDao;
-import com.aw.anyware.schedule.model.vo.CalendarList;
 import com.aw.anyware.schedule.model.vo.CalendarModalSave;
+import com.aw.anyware.schedule.model.vo.CalendarVo;
 import com.aw.anyware.schedule.model.vo.ScheduleModalSave;
 
 
@@ -35,8 +35,19 @@ public class ScheduleServiceImpl implements ScheduleService {
 
 	// 내 캘린더 목록
 	@Override
-	public List<CalendarList> calendarList(int memberNo) {
+	public List<CalendarVo> calendarList(int memberNo) {
 		return scheduleDao.calendarList(sqlSession, memberNo);
+	}
+	
+	// 내 캘린더 수정 화면
+	@Override
+	public CalendarVo calendarModify(CalendarVo calendarVo) {
+		return scheduleDao.calendarModify(sqlSession, calendarVo);
+	}
+
+	@Override
+	public int updateCalendar(CalendarVo calendarVo) {
+		return scheduleDao.updateCalendar(sqlSession, calendarVo);
 	}
 
 }
