@@ -51,4 +51,9 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginUserRrn", memberNo);
 	}
 
+	public int memberPersonalUpdate(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.memberPersonalUpdate", m);
+	}
+
 }

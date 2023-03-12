@@ -60,6 +60,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.changePwd(sqlSession, m);
 	}
 
+	@Override
+	public int memberPersonalUpdate(Member m) {
+		
+		return mDao.memberPersonalUpdate(sqlSession, m);
+	}
+
 	
 
 	

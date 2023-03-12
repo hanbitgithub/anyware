@@ -117,4 +117,16 @@
   		set member_pwd = #{encPwd}
   	   where member_no = #{memberNo}
   </update>
+  
+   <update id="memberPersonalUpdate">
+  	update
+  			tb_member
+  		set email = #{email},
+  			member_no = #{memberNo},
+  			phone = #{phone},
+  			position = #{position},
+  			address = #{address}
+  		where member_no = #{memberNo}
+  			
+  </update>
 </mapper>

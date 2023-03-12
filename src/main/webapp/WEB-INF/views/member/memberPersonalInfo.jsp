@@ -477,18 +477,18 @@ a {
                 </div>
                 <br><br>
                 <div class="partLine"></div>
-        <form action="">
+        <form action="" method="post" id="updateForm">
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이메일</b></div>
-                    <div class="profileContent2"><input type="email" name="" value="${ loginUser.email}"></div>
+                    <div class="profileContent2"><input type="email" name="email" value="${ loginUser.email}"></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>사원번호</b></div>
-                    <div class="profileContent2"><input type="text" id="memberNo" name="" value="${ loginUser.memberNo }"></div>
+                    <div class="profileContent2"><input type="text" id="memberNo" name="memberNo" value="${ loginUser.memberNo }" readonly></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>휴대폰</b></div>
-                    <div class="profileContent2"><input type="tel" name="" value="${ loginUser.phone }"></div>
+                    <div class="profileContent2"><input type="tel" name="phone" value="${ loginUser.phone }"></div>
                 </div>
                 
                 <div id="employProfile-div3">
@@ -502,19 +502,19 @@ a {
                 <br>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>조직</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="qq회사" readonly></div>
+                    <div class="profileContent2">qq회사</div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>직급</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.position }" readonly></div>
+                    <div class="profileContent2"><input type="text" name="position" value="${ loginUser.position }" readonly></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>부서/직책</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.deptName }/${ loginUser.jobName }"  readonly></div>
+                    <div class="profileContent2">${ loginUser.deptName }/${ loginUser.jobName }"</div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>담당업무</b></div>
-                    <div class="profileContent2"><input type="text" id="duty" name="" value="${ loginUser.duty }" readonly></div>
+                    <div class="profileContent2"><input type="text" id="duty" name="duty" value="${ loginUser.duty }" readonly></div>
                 </div>
                 <script>
                 	$(function(){
@@ -528,11 +528,11 @@ a {
                 <br>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>주소</b></div>
-                    <div class="profileContent2" id="address"><input type="text" name="" value="${ loginUser.address }"></div>
+                    <div class="profileContent2" id="address"><input type="text" name="address" value="${ loginUser.address }"></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>입사일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.enrollDate }"></div>
+                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.enrollDate }" readonly></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>생일</b></div>
@@ -542,7 +542,14 @@ a {
                     <button id="submit" type="submit">정보변경</button>
                 </div>
         </form>
-
+        	
+				<script>
+					$(function(){
+						$("#submit").click(function(){
+							$("#updateForm").attr("action", "memberPersonalUpdate").submit();
+						})
+					})
+				</script>
 
             
         </div>   

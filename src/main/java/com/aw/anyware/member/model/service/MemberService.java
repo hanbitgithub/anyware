@@ -26,6 +26,9 @@ public interface MemberService {
 	
 	int changePwd(Member m);
 	
+	//사원의 개인정보 업데이트
+	int memberPersonalUpdate(Member m);
+	
 	
 	
 	
