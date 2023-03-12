@@ -543,7 +543,7 @@ a {
                     </div>
                     <script>
                 	$(function(){
-                		if('${loginUser.duty}'==''){
+                		if('${m.duty}'==''){
                 			$("#duty").val('미정');
                 		}
                 	})

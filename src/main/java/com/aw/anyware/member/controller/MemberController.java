@@ -126,20 +126,22 @@ public class MemberController {
 	
 	@RequestMapping("detailAllMember.me")
 	public ModelAndView detailAllMember(int memberNo, ModelAndView mv, HttpSession session) {
-		System.out.println("memberNo : " + memberNo);
+		
 		Member m = mService.detailAllMember(memberNo);
-		System.out.println("m: " + m);
+		
 		int loginMemberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		System.out.println("loginMemberNo : " + loginMemberNo);
+		
 		if(memberNo == loginMemberNo) {
 			Member loginUserRrn = mService.loginUserRrn(memberNo);
-			System.out.println("loginUserRrn.getRrn : " + loginUserRrn.getRrn());
+			
 			m.setRrn(loginUserRrn.getRrn());
-			System.out.println("setRrn : " + m.getRrn());
-			mv.addObject(m).setViewName("member/detailAllMember");
+			
+			mv.addObject("m", m).setViewName("member/detailAllMember");
+			
 			return mv;
 		}else {
-			mv.addObject(m).setViewName("member/detailAllMember");
+			mv.addObject("m", m).setViewName("member/detailAllMember");
+			
 			return mv;
 		}
 	}
