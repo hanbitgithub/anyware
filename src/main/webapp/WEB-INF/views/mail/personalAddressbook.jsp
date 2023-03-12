@@ -290,7 +290,7 @@
 	                                           
 	                                           </select>
 
-	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
+	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd2">+</button>
 	                                       </td>
 	                                   </tr>
 
@@ -427,12 +427,12 @@
                                              <select name="groupNo">
 	                                           
 	                                         </select>
-                                             <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd2">+</button>
+                                             <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd3">+</button>
                                          </td>
                                     </tr>
                                     <tr>
                                         <th>새이름</th>
-                                        <td><input type="text" name="newName" id="groupName"></td>
+                                        <td><input type="text" name="newName" id="newgroup"></td>
                                     </tr>
                                 </table>
                     
@@ -462,7 +462,7 @@
                      
                       function updateAddGroup2(groupNo){
       					
-                    	  var newName = $("#groupName").val();
+                    	  var newName = $("#newgroup").val();
       				
       					$.ajax({
       						url : "updateGroup.ad",
@@ -615,14 +615,14 @@
                    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
                    <div class="modal-content">
                        <div class="modal-header">
-                       <b>그룹관리</b>
+                       <b>그룹추가</b>
                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                        </div>
                        <div class="modal-body">
                        <table>
                            <tr>
                                <th width="100">그룹명</th>
-                               <td><input type="text" name="groupName" id="groupName"></td>
+                               <td><input type="text" name="groupName" class="groupName"></td>
                            </tr>
                        </table>
            
@@ -636,6 +636,61 @@
                    </div>
                    </div>
              </div>      
+             
+             <!-- Modal -->
+               <div class="modal fade" id="groupAdd2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                       <b>그룹추가</b>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                       </div>
+                       <div class="modal-body">
+                       <table>
+                           <tr>
+                               <th width="100">그룹명</th>
+                               <td><input type="text" name="groupName" class="groupName"></td>
+                           </tr>
+                       </table>
+           
+                       </div>
+                       <div class="modal-footer">
+                       
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#updateAddress" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#updateAddress">취소</button>
+                     
+                       </div>
+                   </div>
+                   </div>
+             </div>  
+             <!-- Modal -->
+               <div class="modal fade" id="groupAdd3" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+                   <div class="modal-content">
+                       <div class="modal-header">
+                       <b>그룹추가</b>
+                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                       </div>
+                       <div class="modal-body">
+                       <table>
+                           <tr>
+                               <th width="100">그룹명</th>
+                               <td><input type="text" name="groupName" class="groupName"></td>
+                           </tr>
+                       </table>
+           
+                       </div>
+                       <div class="modal-footer">
+                       
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#groupModal" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#groupModal">취소</button>
+                     
+                       </div>
+                   </div>
+                   </div>
+             </div>      
+                              
+                            
                             
        		 			
 
@@ -645,16 +700,16 @@
                         // 주소록 그룹 '추가'시 실행하는 ajax
         				function insertAddGroup2(){
                   
-        					if ($("#groupName").val().trim() != 0) {
+        					if ($(".groupName").val().trim() != 0) {
         						$.ajax({
         							url : "insertAddGroup.ad",
         							data : {
         								memNo : '${loginUser.memberNo}',
-        								groupName : $("#groupName").val()
+        								groupName : $(".groupName").val()
         							},
         							success:function(result) {
     										console.log(result);
-    										alert("그룹 추가 완료");
+    										 alert("그룹 추가성공");
     										
     										$.ajax({
     						                    url: 'glist.ad',

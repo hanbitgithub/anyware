@@ -1,6 +1,8 @@
 package com.aw.anyware.mail.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,12 @@ import com.aw.anyware.mail.model.service.MailService;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 
 @Controller
@@ -28,7 +35,7 @@ public class MailController {
 	@Autowired
 	private MailService mService;
 	
-	//메일 메인페이지 
+	//메일 메인페이지 (받은메일함)
 	@RequestMapping("receivebox.em")
 	public String receiveMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
 		//로그인한 사원번호
@@ -37,8 +44,7 @@ public class MailController {
 		
 		//그룹리스트 
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
-		
-		
+	
 		//받은 메일갯수 조회
 		int listCount = mService.selectReceiveMailListCount(memId);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
@@ -51,8 +57,25 @@ public class MailController {
 		model.addAttribute("pi",pi);
 		return "mail/receiveMailBox";
 	}
+	
+	//보낸메일함 
 	@RequestMapping("sendbox.em")
-	public String sendMailList() {
+	public String sendMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+
+		//보낸메일 갯수조회
+		int listCount = mService.selectSendMailListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Mail> slist = mService.selectSendeMailList(pi,memId);
+		
+		model.addAttribute("slist", slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount",listCount);
+		
+		
 		return "mail/sendMailBox";
 	}
 	
@@ -78,7 +101,7 @@ public class MailController {
 		return "mail/receiveMailDetail";
 	}
 	
-	//메일 쓰기 
+	//메일 작성폼 
 	@RequestMapping("sendForm.em")
 	public String sendMailForm(HttpSession session, Model model) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
@@ -102,10 +125,82 @@ public class MailController {
 		return new Gson().toJson(memberList);
 	}
 	
-	//내게쓰기 
+	//내게쓰기 폼
 	@RequestMapping("sendToMe.em")
 	public String sendMailToMe() {
 		return "mail/sendMailToMe";
+	}
+	
+	//메일 쓰기
+	@RequestMapping("sendMail.em")
+	public String insertSendMail(Mail m, HttpSession session) {
+		//System.out.println(m);	
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
+    
+		
+		//메일 테이블 insert 
+		int result1 = mService.insertSendMail(m);
+		
+		
+		ArrayList<MailStatus> list = new ArrayList<>();
+		if(result1>0) {
+			// 메일 상태 insert
+			// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+			// ----------- 보낸 메일 ------------
+				MailStatus ms = new MailStatus();
+				ms.setEmType(0);
+			
+				list.add(ms); // ArrayList<MailStatus>에 추가
+
+				
+			//---------- 받은 메일 ---------------
+				//받는사람 이름 배열에 담은후 구분자로 나누기
+				String[] receiverArr = receivers.split(",");
+				for(String r : receiverArr) {
+				    String[] parts = r.split(" ");
+				    String id = parts[1].split("@")[0];
+				   // System.out.println(id);
+				    String name = parts[0].split("@")[0];
+				   // System.out.println(name);    
+				   
+				    MailStatus ms2 = new MailStatus();
+					ms2.setEmType(1);
+					ms2.setReceiverName(name);
+					ms2.setReceiver(id);
+					
+					list.add(ms2);
+				}
+			//--------- 참조 메일 --------------	
+				//참조자 이름 배열에  담은후 구분자로 나누기
+				String[] ccArr = cc.split(",");
+				for(String c: ccArr) {
+					String[] parts = c.split(" ");
+					String id = parts[1].split("@")[0];
+					String name = parts[0].split("@")[0];
+					
+					MailStatus ms3 = new MailStatus();
+					ms3.setEmType(2);
+					ms3.setReceiverName(name);
+					ms3.setReceiver(id);
+					
+					list.add(ms3);
+				}
+	
+		}
+		int result2 = mService.insertMailStatus(list);
+		
+		
+		return "mail/successSendmail";
 	}
 	
 	

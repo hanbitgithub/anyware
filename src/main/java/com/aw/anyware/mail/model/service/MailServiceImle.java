@@ -13,6 +13,7 @@ import com.aw.anyware.mail.model.dao.MailDao;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
 
@@ -214,6 +215,36 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> receiverMemberList(String memId) {
 		return mDao.receiverMemberList(sqlSession, memId);
 	}
+
+	/**
+	 * 보낸메일함 갯수조회
+	 */
+	@Override
+	public int selectSendMailListCount(String memId) {
+		return mDao.selectSendMailListCount(sqlSession, memId);
+	}
+
+	/**
+	 * 보낸메일함 리스트 조회
+	 */
+	@Override
+	public ArrayList<Mail> selectSendeMailList(PageInfo pi, String memId) {
+		return mDao.selectSendMailList(sqlSession,pi,memId);
+	}
+
+	/**
+	 * 메일 쓰기 ( mail테이블 insert)
+	 */
+	@Override
+	public int insertSendMail(Mail m) {
+		return mDao.insertSendMail(sqlSession, m);
+	}
+
+	@Override
+	public int insertMailStatus(ArrayList<MailStatus> list) {
+		return mDao.insertMailStatus(sqlSession, list);
+	}
+	
 
 	
 	

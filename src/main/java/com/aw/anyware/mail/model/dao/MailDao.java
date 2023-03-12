@@ -12,6 +12,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
 @Repository
@@ -252,5 +253,59 @@ public class MailDao {
 	public ArrayList<Mail> receiverMemberList(SqlSessionTemplate sqlSession,String memId){
 		return (ArrayList)sqlSession.selectList("mailMapper.receiverMemberList",memId);
 	}
+	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 보낸 메일 개수 조회
+	 */
+	public int selectSendMailListCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectSendMailListCount", memId);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param pi
+	 * @param memId
+	 * @return 보낸메일 리스트 조회 
+	 */
+	public ArrayList<Mail> selectSendMailList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSendeMailList",memId,rowBounds);
+				
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 메일쓰기 (메일table)
+	 */
+	public int insertSendMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.insert("mailMapper.insertSendMail",m);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 메일쓰기 (메일상태table)
+	 */
+	public int insertMailStatus(SqlSessionTemplate sqlSession,ArrayList<MailStatus> list) {
+		int result = 0;
+		for(MailStatus ms : list) {
+			result += sqlSession.insert("mailMapper.insertMailStatus", ms);
+		}
+		
+		return result;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 
 }

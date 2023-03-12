@@ -251,11 +251,11 @@
 
 <!-- 그룹별 리스트개수 -->
 <select id="selectGroupAddListCount" resultType="_int">
-select count(*)
-	 from tb_addressbook
-	 where status = 'Y'
-	 and mem_no = #{memNo}
-	 and group_no = #{groupNo} 
+	select count(*)
+      from tb_addressbook
+	where status = 'Y'
+	  and mem_no = #{memNo}
+	  and group_no = #{groupNo} 
 
 </select>
 
@@ -284,27 +284,27 @@ select count(*)
 
 <!--사내 주소록 조회 -->
 <select id="selectCompanyListCount" resultType="_int">
-  select count(*)  		
-   from tb_member
-   where status = 'Y'
+	select count(*)  		
+	   from tb_member
+	   where status = 'Y'
 
 </select>
 <select id="selectCompanyList" resultMap="memberResult">
- select 
-  		 member_no
-  		,dept_name
-  		,job_name
-  		,name
-  		,member_id
-  		,email
-  		,phone
-  		,email
-  		,address
-  		,enroll_date
-  		,profile_url
-   from tb_member
-   where status = 'Y'
-  order by name asc
+	 select 
+	  		 member_no
+	  		,dept_name
+	  		,job_name
+	  		,name
+	  		,member_id
+	  		,email
+	  		,phone
+	  		,email
+	  		,address
+	  		,enroll_date
+	  		,profile_url
+	   from tb_member
+	   where status = 'Y'
+	  order by name asc
 </select>
 
 <!--부서별 주소록 -->
@@ -317,24 +317,24 @@ select count(*)
 </select>
 
 <select id="selectdeptAddBookList" resultMap="memberResult">
- select 
-  		 member_no
-  		,dept_name
-  		,job_name
-  		,name
-  		,member_id
-  		,email
-  		,phone
-  		,email
-  		,address
-  		,enroll_date
-  		,profile_url
-   from tb_member
-   where status = 'Y'
-   and dept_name = #{deptName}
-  order by name asc
+	 select 
+	  		 member_no
+	  		,dept_name
+	  		,job_name
+	  		,name
+	  		,member_id
+	  		,email
+	  		,phone
+	  		,email
+	  		,address
+	  		,enroll_date
+	  		,profile_url
+	   from tb_member
+	   where status = 'Y'
+	   and dept_name = #{deptName}
+	  order by name asc
 </select>
-
+	
 
 
 <!--메일리스트-->
@@ -343,87 +343,170 @@ select count(*)
 		 from tb_mail m
 		 join  tb_mail_status  s on (m.em_no = s.em_no)
 		 left outer join tb_mail_file f on (m.em_no = f.em_no)
-		 where em_type = 1
+		 where em_type in (1,2)
 		 and s.receiver = #{receiver}
 		 and trash = 'N'
 		 and spam = 'N'
+
 </select>
 
 <select id="selectReceiveMailList" resultMap="mailResult">
-select m.em_no
-     , em_title
-     , em_content
-     , mem_name
-     , sender
-     , send_date
-     , em_type
-     , receiver_name
-     , s.receiver
-     , s.read
-     , s.important
-     , trash
-     , spam
-     , f.emf_no
- from tb_mail m
- join  tb_mail_status  s on (m.em_no = s.em_no)
- left outer join tb_mail_file f on (m.em_no = f.em_no)
- where em_type = 1
- and s.receiver = #{receiver}
- and trash = 'N'
- and spam = 'N'
- 
+	select m.em_no
+	     , em_title
+	     , em_content
+	     , mem_name
+	     , sender
+	     , send_date
+	     , em_type
+	     , receiver_name
+	     , s.receiver
+	     , s.read
+	     , s.important
+	     , trash
+	     , spam
+	     , f.emf_no
+	 from tb_mail m
+	 join  tb_mail_status  s on (m.em_no = s.em_no)
+	 left outer join tb_mail_file f on (m.em_no = f.em_no)
+	 where em_type in (1,2)
+	 and s.receiver = #{receiver}
+	 and trash = 'N'
+	 and spam = 'N'
+     order by m.em_no desc
 
 </select>
 
 <!-- 메일주소록 조회 -->
 <select id="addressbookGroupList" resultMap="addressResult">
-SELECT 
-    group_name,
-    name || ' ' || email as nameMail
-    ,name
-    ,email
-   , b.add_no
-FROM 
-    tb_addressbook b
-    JOIN tb_addressgroup g ON (b.group_no = g.group_no)
-WHERE 
-    b.status = 'Y' 
-    AND mem_no = #{memNo}
-ORDER BY 
-    group_name, name
+	SELECT 
+	    group_name,
+	    name || ' ' || email as nameMail
+	    ,name
+	    ,email
+	   , b.add_no
+	FROM 
+	    tb_addressbook b
+	    JOIN tb_addressgroup g ON (b.group_no = g.group_no)
+	WHERE 
+	    b.status = 'Y' 
+	    AND mem_no = #{memNo}
+	ORDER BY 
+	    group_name, name
 
 </select>
 
+<!--메일 사내 주소록 조회 -->
 <select id="addressBookMemberList" resultMap="memberResult">
-select
-       dept_name
-      ,name
-      ,member_id
-      ,name || ' ' || member_id ||'@anyware.com' as email
-      ,member_no
-from tb_member
-order by 1,2
+	select
+	       dept_name
+	      ,name
+	      ,member_id
+	      ,name || ' ' || member_id ||'@anyware.com' as email
+	      ,member_no
+	from tb_member
+	order by 1,2
  
 </select>
 
+<!-- 메일 보낸적있는 멤버 조회 -->
 <select id="receiverMemberList" resultMap="mailStatusResult">
-select distinct
-       s.receiver
-      , receiver_name
-      , sender
-     
-from tb_mail_status s
-join tb_mail m on(s.em_no = m.em_no)
-where em_type in (1,2)
-and sender = #{memId}
+	select distinct
+	       s.receiver
+	      , receiver_name
+	      , sender
+	     
+	 from tb_mail_status s
+	 join tb_mail m on(s.em_no = m.em_no)
+	 where em_type in (1,2)
+	 and sender = #{memId}
  
 </select>
 
+<!-- 보낸메일 개수조회 -->
+<select id="selectSendMailListCount" resultType="_int">
+	select 
+	      count(m. em_no)
+	   
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where  em_type = 0
+	 and sender=#{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+</select>
 
+<!-- 보낸메일함 조회 -->
+<select id="selectSendeMailList" resultMap="mailResult">
+ select 
+ 		 m. em_no
+        , sender
+	    , em_title
+	    , em_content
+	    , send_date
+	    , receiver_name
+	    , s.receiver
+	    , read
+	    , important
+	    , emf_no
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where em_type = 0
+	 and sender= #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+   order by m.em_no desc
 
+</select>
 
+<!-- 메일쓰기 메일테이블insert -->
+<insert id="insertSendMail">
+	insert 
+	  into tb_mail
+	  (
+	    em_no
+	   ,em_title
+	   ,em_content
+	   ,mem_name
+	   ,sender
+	   ,receiver
+	   ,ref_email
+	  )
+	  values
+	  (
+	   seq_emno.nextval
+	   ,#{emTitle}
+	   ,#{emContent}
+	   ,#{memName}
+	   ,#{sender}
+	   ,#{receivers}
+	   ,#{refEmail}
+	  
+	  )
 
+</insert>
 
+<!--메일쓰기 메일상태테이블 insert-->
+<insert id="insertMailStatus">
+	 insert
+	   into tb_mail_status
+	   (
+	    em_no
+	   ,em_type
+	   ,receiver_name
+	   ,receiver
+	   )
+	   values
+	   (
+	   seq_emno.currval
+	   ,#{emType}
+	   ,#{receiverName}
+	   ,#{receiver}
+	   
+	   )
+	
+</insert>
 
 
 

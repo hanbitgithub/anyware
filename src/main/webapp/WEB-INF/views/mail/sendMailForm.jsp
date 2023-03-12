@@ -348,14 +348,48 @@
             <br><br>
             <div id="write-area">
                 <div id="btn-area">
-                    <a href=""><img src="resources/images/send-mail.png" width="23px"> 전송</a>
+                    <a onclick="return sendMail();"><img src="resources/images/send-mail.png" width="23px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="22px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="23px"> 임시저장</a>
                     <a href="sendToMe.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
                 
                 </div>
                 <br>
-                <div>
+                
+                <script>
+				
+				
+				// 메일 '전송'시 실행하는 함수
+				function sendMail() {
+					if ($("#receivers").val().trim() == 0) {
+						// 받는 사람 주소 없는 경우
+						alert("받는 사람을 입력해 주세요.");
+					} else {
+						if ($("#title").val().trim() == 0) {
+							// 메일 제목이 없는 경우
+							let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
+							if (answer) {
+								$("#mailForm").submit(); // 메일 전송
+							} else {
+								$("#title").focus();
+								return false; // 메일 전송 안됨
+							}
+						}
+						// 제목이 입력된 경우
+						// 메일 전송
+						$("#mailForm").submit();
+					}
+				}
+
+			</script>
+                
+                
+                
+                
+            <div>
+               <form method="post" action="sendMail.em" id="mailForm" enctype="multipart/form-data">
+                   	<input type="hidden" name="sender" value="${loginUser.memberId }">
+                    <input type="hidden" name="memName" value="${loginUser.name }">
                     <table id="write"style="font-size: 15px;">
                         <tr>
                             <th width="120" height="40px">받는사람</th>
@@ -366,8 +400,8 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input placeholder="" name="receiver" class="email" id="receivers">
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
+                                <input type="text" placeholder="" name="receivers" class="email" id="receivers">
+                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 
                             </td>
                         </tr>
@@ -375,8 +409,8 @@
                             <th  width="120" height="40px">참조</th>
                             <td>
                              
-                                <input placeholder="" name="cc"  class="email" id="cc">
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
+                                <input type="text" placeholder="" name="refEmail"  class="email" id="cc">
+                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                               
                             </td>
                         </tr>
@@ -394,7 +428,7 @@
                                 		 for (var i = 0; i < list.length; i++) {
                                 		    whitelist.push(list[i].name + ' ' + list[i].memberId + '@anyware.com' );
                                 		  }
-                                		 var input = document.querySelector('input[name=receiver]')
+                                		 var input = document.querySelector('input[name=receivers]')
                                      	tagify1 = new Tagify(input, {
                                          whitelist: whitelist,
                                          maxTags: 10,
@@ -411,7 +445,7 @@
                                          })		 
                                         	
                                    	 
-                                          var input = document.querySelector('input[name=cc]')
+                                          var input = document.querySelector('input[name=refEmail]')
                                           tagify2 = new Tagify(input, {
                                           whitelist: whitelist,
                                           maxTags: 10,
@@ -438,17 +472,12 @@
                                 
                                 
                                 </script>
-                                
-                        
-                        
-                        
-                        
-                        
+                            
                         
                         
                         <tr>
                             <th  width="120" height="40px">제목</th>
-                            <td><input type="text" name="" value="" class="form-control"></td>
+                            <td><input type="text" name="emTitle" id="title" class="form-control"></td>
                         </tr>
                         <tr>
                             <th height="40px">첨부파일</th>
@@ -460,14 +489,14 @@
                         
                         <tr>
                             <td colspan="2">
-                                <textarea id="summernote" name="editordata"></textarea>
+                                <textarea id="summernote" name="emContent"></textarea>
                             </td>
                         </tr>
                         
                        
 
                     </table>
-
+				
                     <script>
                         $(document).ready(function() {
                         //여기 아래 부분
@@ -484,9 +513,9 @@
 
                       </script>
                     
-
+					</form>
                 </div>
-
+			
             </div>
     	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
 		<script src="resources/js/jquery.multi-select.js"></script>
@@ -584,7 +613,7 @@
 	                 
 	                 
 	                   
-                  </table>
+                
                  </div>
                 
                </div>
@@ -620,7 +649,7 @@
 					  $('#receivers').val(selectedValues.join(', '));
 					  $('#cc').val(selectedValuesCC.join(', '));
 					 
-					  console.log($("#receivers").val());
+					  //console.log($("#receivers").val());
 					  $('#addressbook').modal('hide');
 				}
 		
