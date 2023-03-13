@@ -42,13 +42,13 @@
 }
 
 /*모달*/
-.nav-pills> .nav-item>.active{
+.nav-tabs> .nav-item>.active{
 	background-color: white;
 	color:#7291f6;
 }
 
 
-.nav-pills> .nav-item a{
+.nav-tabs> .nav-item a{
 	color:black;
 
 }
@@ -348,14 +348,48 @@
             <br><br>
             <div id="write-area">
                 <div id="btn-area">
-                    <a href=""><img src="resources/images/send-mail.png" width="23px"> 전송</a>
+                    <a onclick="return sendMail();"><img src="resources/images/send-mail.png" width="23px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="22px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="23px"> 임시저장</a>
                     <a href="sendToMe.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
-                  
+                
                 </div>
                 <br>
-                <div>
+                
+                <script>
+				
+				
+				// 메일 '전송'시 실행하는 함수
+				function sendMail() {
+					if ($("#receivers").val().trim() == 0) {
+						// 받는 사람 주소 없는 경우
+						alert("받는 사람을 입력해 주세요.");
+					} else {
+						if ($("#title").val().trim() == 0) {
+							// 메일 제목이 없는 경우
+							let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
+							if (answer) {
+								$("#mailForm").submit(); // 메일 전송
+							} else {
+								$("#title").focus();
+								return false; // 메일 전송 안됨
+							}
+						}
+						// 제목이 입력된 경우
+						// 메일 전송
+						$("#mailForm").submit();
+					}
+				}
+
+			</script>
+                
+                
+                
+                
+            <div>
+               <form method="post" action="sendMail.em" id="mailForm" enctype="multipart/form-data">
+                   	<input type="hidden" name="sender" value="${loginUser.memberId }">
+                    <input type="hidden" name="memName" value="${loginUser.name }">
                     <table id="write"style="font-size: 15px;">
                         <tr>
                             <th width="120" height="40px">받는사람</th>
@@ -366,58 +400,84 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input placeholder="" name="receiver" class="email">
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
-                                <script>
+                                <input type="text" placeholder="" name="receivers" class="email" id="receivers">
+                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 
-                                
-                                var input = document.querySelector('input[name=receiver]')
-                                tagify = new Tagify(input, {
-                                whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                maxTags: 10,
-                                dropdown: {
-                                    maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                    classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                    enabled: 0,             // <- show suggestions on focus
-                                    closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                }
-                            })  
-                                // 태그가 추가되면 이벤트 발생
-                                tagify.on('add', function() {
-                                  console.log(tagify.value); // 입력된 태그 정보 객체
-                                })
-                                </script>
-
                             </td>
                         </tr>
                         <tr>
                             <th  width="120" height="40px">참조</th>
                             <td>
                              
-                                <input placeholder="" name="cc"  class="email">
-                                <button class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
-                                <script>
-                                    var input = document.querySelector('input[name=cc]')
-                                    tagify = new Tagify(input, {
-                                    whitelist: ["유한빛"+"(gksqlcdl93@naver.com)","김정남"+"(gksqlcdl93@naver.com)", "A-0 System", "A+", "A++", "ABAP", "ABC", "ABC ALGOL", "ABSET", "ABSYS", "ACC", "Accent", "Ace DASL", "ACL2", "Avicsoft", "ACT-III", "Action!", "ActionScript", "Ada", "Adenine", "Agda", "Agilent VEE", "Agora", "AIMMS", "Alef", "ALF", "ALGOL 58", "ALGOL 60", "ALGOL 68", "ALGOL W", "Alice", "Alma-0", "AmbientTalk", "Amiga E", "AMOS", "AMPL", "Apex (Salesforce.com)", "APL", "AppleScript", "Arc", "ARexx", "Argus", "AspectJ", "Assembly language", "ATS", "Ateji PX", "AutoHotkey", "Autocoder", "AutoIt", "AutoLISP / Visual LISP", "Averest", "AWK", "Axum", "Active Server Pages", "ASP.NET", "B", "Babbage", "Bash", "BASIC", "bc", "BCPL", "BeanShell", "Batch (Windows/Dos)", "Bertrand", "BETA", "Bigwig", "Bistro", "BitC", "BLISS", "Blockly", "BlooP", "Blue", "Boo", "Boomerang", "Bourne shell (including bash and ksh)", "BREW", "BPEL", "B", "C--", "C++ – ISO/IEC 14882", "C# – ISO/IEC 23270", "C/AL", "Caché ObjectScript", "C Shell", "Caml", "Cayenne", "CDuce", "Cecil", "Cesil", "Céu", "Ceylon", "CFEngine", "CFML", "Cg", "Ch", "Chapel", "Charity", "Charm", "Chef", "CHILL", "CHIP-8", "chomski", "ChucK", "CICS", "Cilk", "Citrine (programming language)", "CL (IBM)", "Claire", "Clarion", "Clean", "Clipper", "CLIPS", "CLIST", "Clojure", "CLU", "CMS-2", "COBOL – ISO/IEC 1989", "CobolScript – COBOL Scripting language", "Cobra", "CODE", "CoffeeScript", "ColdFusion", "COMAL", "Combined Programming Language (CPL)", "COMIT", "Common Intermediate Language (CIL)", "Common Lisp (also known as CL)", "COMPASS", "Component Pascal", "Constraint Handling Rules (CHR)", "COMTRAN", "Converge", "Cool", "Coq", "Coral 66", "Corn", "CorVision", "COWSEL", "CPL", "CPL", "Cryptol", "csh", "Csound", "CSP", "CUDA", "Curl", "Curry", "Cybil", "Cyclone", "Cython", "Java", "Javascript", "M2001", "M4", "M#", "Machine code", "MAD (Michigan Algorithm Decoder)", "MAD/I", "Magik", "Magma", "make", "Maple", "MAPPER now part of BIS", "MARK-IV now VISION:BUILDER", "Mary", "MASM Microsoft Assembly x86", "MATH-MATIC", "Mathematica", "MATLAB", "Maxima (see also Macsyma)", "Max (Max Msp – Graphical Programming Environment)", "Maya (MEL)", "MDL", "Mercury", "Mesa", "Metafont", "Microcode", "MicroScript", "MIIS", "Milk (programming language)", "MIMIC", "Mirah", "Miranda", "MIVA Script", "ML", "Model 204", "Modelica", "Modula", "Modula-2", "Modula-3", "Mohol", "MOO", "Mortran", "Mouse", "MPD", "Mathcad", "MSIL – deprecated name for CIL", "MSL", "MUMPS", "Mystic Programming L"],
-                                    maxTags: 10,
-                                    dropdown: {
-                                        maxItems: 20,           // <- mixumum allowed rendered suggestions
-                                        classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
-                                        enabled: 0,             // <- show suggestions on focus
-                                        closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
-                                    }
-                                })  
-                                    // 태그가 추가되면 이벤트 발생
-                                    tagify.on('add', function() {
-                                    console.log(tagify.value); // 입력된 태그 정보 객체
-                                    })
-                                    </script>
+                                <input type="text" placeholder="" name="refEmail"  class="email" id="cc">
+                                <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
+                              
                             </td>
                         </tr>
+                        
+                         <script>
+                                //whitelist 값 불러오기
+                              
+                                $.ajax({
+                                	url:"reList.em",
+                                	data:{memId : '${loginUser.memberId}'},
+                                	success:function(list){
+                                		console.log(list);
+                                		var whitelist = [];
+
+                                		 for (var i = 0; i < list.length; i++) {
+                                		    whitelist.push(list[i].name + ' ' + list[i].memberId + '@anyware.com' );
+                                		  }
+                                		 var input = document.querySelector('input[name=receivers]')
+                                     	tagify1 = new Tagify(input, {
+                                         whitelist: whitelist,
+                                         maxTags: 10,
+                                         dropdown: {
+                                             maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                             classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                             enabled: 0,             // <- show suggestions on focus
+                                             closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                         }
+
+                                     	})
+                                         tagify1.on('add', function() {
+                                        		 console.log(tagify1.value); // 입력된 태그 정보 객체
+                                         })		 
+                                        	
+                                   	 
+                                          var input = document.querySelector('input[name=refEmail]')
+                                          tagify2 = new Tagify(input, {
+                                          whitelist: whitelist,
+                                          maxTags: 10,
+                                          dropdown: {
+                                              maxItems: 20,           // <- mixumum allowed rendered suggestions
+                                              classname: "tags-look", // <- custom classname for this dropdown, so it could be targeted
+                                              enabled: 0,             // <- show suggestions on focus
+                                              closeOnSelect: false    // <- do not hide the suggestions dropdown once an item has been selected
+                                          }
+                                      })  
+                                          // 태그가 추가되면 이벤트 발생
+                                          tagify2.on('add', function() {
+                                          	console.log(tagify2.value); // 입력된 태그 정보 객체
+                                          })  	 
+                               
+                                		
+                                      
+                                	}
+                                	,error:function(){
+                                		console.log("ajax whitelist 값 가져오기 실패 ");
+                                	}
+                                })
+                                
+                                
+                                
+                                </script>
+                            
+                        
+                        
                         <tr>
                             <th  width="120" height="40px">제목</th>
-                            <td><input type="text" name="" value="" class="form-control"></td>
+                            <td><input type="text" name="emTitle" id="title" class="form-control"></td>
                         </tr>
                         <tr>
                             <th height="40px">첨부파일</th>
@@ -429,14 +489,14 @@
                         
                         <tr>
                             <td colspan="2">
-                                <textarea id="summernote" name="editordata"></textarea>
+                                <textarea id="summernote" name="emContent"></textarea>
                             </td>
                         </tr>
                         
                        
 
                     </table>
-
+				
                     <script>
                         $(document).ready(function() {
                         //여기 아래 부분
@@ -451,15 +511,14 @@
                         });
                     });
 
-
-                   
                       </script>
                     
-
+					</form>
                 </div>
-
+			
             </div>
-
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
+		<script src="resources/js/jquery.multi-select.js"></script>
             
         </div>
 
@@ -471,127 +530,132 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<h1 class="modal-title fs-5" id="exampleModalLabel">주소록</h1>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"
+						aria-label="Close"></button>
 				</div>
 				<div class="modal-body">
+					 <!-- Nav tabs -->
+               <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" style="height:45px" role="tablist">
+                 <li class="nav-item">
+                   <a class="nav-link active" data-toggle="tab" href="#companyAd" style="color:black;">사내주소록</a>
+                 </li>
+                 <li class="nav-item">
+                   <a class="nav-link" data-toggle="tab" href="#personalAd" style="color:black;">개인주소록</a>
+                 </li>
+                
+               </ul>
 
-					<div class="container2">
-						<br>
-						<!-- Nav tabs -->
-						<ul class="nav nav-pills flex-column flex-sm-row nav-justified" role="tablist">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#public">사내주소록</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#personal">개인주소록</a>
-							</li>
+             
+               <!-- Tab panes -->
+               <div class="tab-content">
+                 
+                 <div id="companyAd" class="container tab-pane active">
+                 <div><b>수신자</b></div>
+                 	<select id='pre-selected-options' multiple='multiple'>
 
-						</ul>
+						<c:forEach items="${memberList}" var="member">
+							<optgroup label="${member.deptName}">
+								<c:forEach items="${member.email}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
+					</select>
+					
+					<div><b>참조자</b></div>
+                 	<select id='pre-selected-options-cc' multiple='multiple'>
 
-						<!-- Tab panes -->
-						<div class="tab-content">
-							<div id="public" class="container tab-pane active">
-								<br>
-
-								<p>
-									<select id='pre-selected-options' multiple='multiple'>
-
-										<optgroup label='인사팀'>
-											<option value='1'>Yoda</option>
-											<option value='2'>Obiwan</option>
-										</optgroup>
-										<optgroup label='개발팀'>
-											<option value='3'>Palpatine</option>
-											<option value='4'>Darth Vader</option>
-										</optgroup>
-										<optgroup label='총무팀'>
-											<option value='5'>Palpatine</option>
-											<option value='6'>Darth Vader</option>
-										</optgroup>
-										<optgroup label='기획팀'>
-											<option value='7'>Palpatine</option>
-											<option value='8'>Darth Vader</option>
-										</optgroup>
-
-										<option value='elem_1'>elem 1</option>
-										<option value='elem_2'>elem 2</option>
-										<option value='elem_3'>elem 3</option>
-										<option value='elem_4'>elem 4</option>
-										<option value='elem_100'>elem 100</option>
-									</select>
-
-
-									<!-- ends -->
-
-
-
-
-						<!-- Bootstrap JavaScript -->
-						<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha/js/bootstrap.min.js"></script>
-						<script src="resources/js/jquery.multi-select.js"></script>
-						<script type="text/javascript">
+						<c:forEach items="${memberList}" var="member">
+							<optgroup label="${member.deptName}">
+								<c:forEach items="${member.email}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
+					</select>
+					<script type="text/javascript">
                           // run pre selected options
                           $('#pre-selected-options').multiSelect();
-                       
+                          $('#pre-selected-options-cc').multiSelect();
+                    </script>
+					
+                  
+                 </div>
+                 <div id="personalAd" class="container tab-pane fade">       
+                    <div><b>수신자</b></div>
+                   <select id='pre-selected-options2' multiple='multiple'>
+						<c:forEach items="${groupList}" var="group">
+							<optgroup label="${group.groupName}">
+								<c:forEach items="${group.nameMail}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
 
-                        </script>
+					</select>
+					<div><b>참조자</b></div>
+					 <select id='pre-selected-options2-cc' multiple='multiple'>
+						<c:forEach items="${groupList}" var="group">
+							<optgroup label="${group.groupName}">
+								<c:forEach items="${group.nameMail}" var="member">
+									<option value="${member}">${member}</option>
+								</c:forEach>
+							</optgroup>
+						</c:forEach>
 
-
-								</p>
-							</div>
-							<div id="personal" class="container tab-pane fade">
-								<br> <select id='pre-selected-options2' multiple='multiple'>
-
-									<optgroup label='인사팀'>
-										<option value='1'>Yoda</option>
-										<option value='2'>Obiwan</option>
-									</optgroup>
-									<optgroup label='개발팀'>
-										<option value='3'>Palpatine</option>
-										<option value='4'>Darth Vader</option>
-									</optgroup>
-									<optgroup label='총무팀'>
-										<option value='5'>Palpatine</option>
-										<option value='6'>Darth Vader</option>
-									</optgroup>
-									<optgroup label='기획팀'>
-										<option value='7'>Palpatine</option>
-										<option value='8'>Darth Vader</option>
-									</optgroup>
-
-									<option value='elem_1'>elem 1</option>
-									<option value='elem_2'>elem 2</option>
-									<option value='elem_3'>elem 3</option>
-									<option value='elem_4'>elem 4</option>
-									<option value='elem_100'>elem 100</option>
-								</select>
-
-
-								<!-- ends -->
-
-
-
-
-								<script type="text/javascript">
-                                       // run pre selected options
-                                       
-                                       $('#pre-selected-options2').multiSelect();
-         
-                                     </script>
-							</div>
-
-						</div>
-					</div>
+					</select>
+					
+					<script type="text/javascript">
+                          // run pre selected options
+                          $('#pre-selected-options2').multiSelect();
+                          $('#pre-selected-options2-cc').multiSelect();
+                    </script>
+	                 
+	                 
+	                   
+                
+                 </div>
+                
+               </div>
+				
 
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary btn-sm"
 						data-bs-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary btn-sm">추가</button>
+					<button type="button" class="btn btn-primary btn-sm" onclick="addMail();">추가</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+			<script>
+				function addMail(){
+					  var selectedValues = [];
+					  var selectedValuesCC = [];
+					  $('#pre-selected-options option:selected').each(function() {
+					    selectedValues.push($(this).val());
+					  });
+					  $('#pre-selected-options2 option:selected').each(function() {
+						    selectedValues.push($(this).val());
+						  });
+					  $('#pre-selected-options-cc option:selected').each(function() {
+						    selectedValuesCC.push($(this).val());
+					  });
+					  $('#pre-selected-options2-cc option:selected').each(function() {
+						    selectedValuesCC.push($(this).val());
+					 });
+					  
+					  $('#receivers').val(selectedValues.join(', '));
+					  $('#cc').val(selectedValuesCC.join(', '));
+					 
+					  //console.log($("#receivers").val());
+					  $('#addressbook').modal('hide');
+				}
+		
+			</script>
+			
+			
 
 
 

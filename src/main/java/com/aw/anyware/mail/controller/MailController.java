@@ -1,6 +1,10 @@
 package com.aw.anyware.mail.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +20,10 @@ import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.mail.model.service.MailService;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
+import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
+
 import com.google.gson.Gson;
 
 @Controller
@@ -25,19 +32,62 @@ public class MailController {
 	@Autowired
 	private MailService mService;
 	
-	//메일 메인페이지 
+	//메일 메인페이지 (받은메일함)
 	@RequestMapping("receivebox.em")
-	public String receiveMailList(HttpSession session) {
+	public String receiveMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
 		//로그인한 사원번호
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
 		//그룹리스트 
 		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
-		session.setAttribute("glist", glist);
 	
+		//받은 메일갯수 조회
+		int listCount = mService.selectReceiveMailListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+
+		//받은 메일 리스트 조회 
+		ArrayList<Mail> rlist = mService.selectReceiveMailList(pi,memId);
+        
+		//안읽은 메일 수 조회 
+		int unreadCount = mService.selectUnreadReceiveMail(memId);
+		//System.out.println(rlist);
+		model.addAttribute("rlist", rlist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("rCount",listCount);
+		model.addAttribute("unread",unreadCount);
+		
 		return "mail/receiveMailBox";
 	}
+	//안읽은 메일 수 조회 ajax
+	@ResponseBody
+	@RequestMapping("unread.em")
+	public String unReadMailCount(String memId) {
+		int unreadCount = mService.selectUnreadReceiveMail(memId);
+		
+		return new Gson().toJson(unreadCount);
+	}
+	
+	
+	//보낸메일함 
 	@RequestMapping("sendbox.em")
-	public String sendMailList() {
+	public String sendMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+
+		//보낸메일 갯수조회
+		int listCount = mService.selectSendMailListCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Mail> slist = mService.selectSendeMailList(pi,memId);
+		
+	
+		model.addAttribute("slist", slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount",listCount);
+		//System.out.println(pi);
+		
 		return "mail/sendMailBox";
 	}
 	
@@ -56,6 +106,12 @@ public class MailController {
 		return "mail/trashMailBox";
 	}
 	
+	//메일 상세페이지 
+	@RequestMapping("mail.em")
+	public String selectMailDetail() {
+		return "mail/mailDetailView";
+	}
+	
 	
 	
 	@RequestMapping("detail.em")
@@ -63,15 +119,113 @@ public class MailController {
 		return "mail/receiveMailDetail";
 	}
 	
+	//메일 작성폼 
 	@RequestMapping("sendForm.em")
-	public String sendMailForm() {
+	public String sendMailForm(HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
+		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
+	    model.addAttribute("groupList", groupList);
+	   // System.out.println(groupList);
+	    List<Map<String, Object>> memberList = mService.addressbookMemberList();
+	    model.addAttribute("memberList",memberList);
+
 		return "mail/sendMailForm";
 		
 	}
 	
+	// 메일전송 기록이있는 사람 조회 
+	@ResponseBody
+	@RequestMapping(value="reList.em", produces="application/json; charset=utf-8")
+	public String ajaxReceiverMemberList(String memId) {
+		ArrayList<Mail> reList = mService.receiverMemberList(memId);
+		 List<Map<String, Object>> memberList = mService.addressbookMemberList();
+		return new Gson().toJson(memberList);
+	}
+	
+	//내게쓰기 폼
 	@RequestMapping("sendToMe.em")
 	public String sendMailToMe() {
 		return "mail/sendMailToMe";
+	}
+	
+	//메일 쓰기
+	@RequestMapping("sendMail.em")
+	public String insertSendMail(Mail m, HttpSession session,Model model) {
+		//System.out.println(m);	
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
+        
+		model.addAttribute("receivers",receivers);
+		model.addAttribute("cc",cc);
+		
+		//메일 테이블 insert 
+		int result1 = mService.insertSendMail(m);
+		
+		
+		ArrayList<MailStatus> list = new ArrayList<>();
+		if(result1>0) {
+			// 메일 상태 insert
+			// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+			// ----------- 보낸 메일 ------------
+				MailStatus ms = new MailStatus();
+				ms.setEmType(0);
+			
+				list.add(ms); // ArrayList<MailStatus>에 추가
+
+				
+			//---------- 받은 메일 ---------------
+				//받는사람 이름 배열에 담은후 구분자로 나누기
+				String[] receiverArr = receivers.split(",");
+				for(String r : receiverArr) {
+				    String[] parts = r.split(" ");
+				    String id = parts[1].split("@")[0];
+				   // System.out.println(id);
+				    String name = parts[0].split("@")[0];
+				   // System.out.println(name);    
+				   
+				    MailStatus ms2 = new MailStatus();
+					ms2.setEmType(1);
+					ms2.setReceiverName(name);
+					ms2.setReceiver(id);
+					
+					list.add(ms2);
+				}
+				
+		
+			//--------- 참조 메일 --------------	
+			if(!cc.equals("")) { // 참조메일이 있을경우 
+				
+				//참조자 이름 배열에  담은후 구분자로 나누기
+				String[] ccArr = cc.split(",");
+				for(String c: ccArr) {
+					String[] parts = c.split(" ");
+					String id = parts[1].split("@")[0];
+					String name = parts[0].split("@")[0];
+					
+					MailStatus ms3 = new MailStatus();
+					ms3.setEmType(2);
+					ms3.setReceiverName(name);
+					ms3.setReceiver(id);
+					
+					list.add(ms3);
+				}
+	      	}
+	
+		}
+		int result2 = mService.insertMailStatus(list);
+		
+		
+		return "mail/successSendmail";
 	}
 	
 	
@@ -108,21 +262,31 @@ public class MailController {
 	
 	//주소록 그룹 추가 
 	@ResponseBody
-	@RequestMapping(value="insertAddGroup.ad", produces="application/json; charset=utf-8")
+	@RequestMapping("insertAddGroup.ad")
 	public String ajaxInsertAddressGroup(AddressGroup ag) {
 		int result = mService.insertAddressGroup(ag);
+	 	return result>0 ? "success": "fail";
 		
-		if(result>0) {
-			
-			AddressGroup adg = mService.selectInsertGroup(ag);
-			//System.out.println(adg);
-			return new Gson().toJson(adg);
-		}else {
-			return "fail";
-		}
 		
 	}
 	
+	//그룹명 수정
+	@ResponseBody
+	@RequestMapping("updateGroup.ad")
+	public String updateGroupName(AddressGroup ag) {
+		int result = mService.updateGroupName(ag);
+		return result>0 ? "success": "fail";
+	}
+	
+	//그룹삭제 
+	@ResponseBody
+	@RequestMapping("deleteGroup.ad")
+	public String deleteGroupName(AddressGroup ag) {
+		int result = mService.deleteGroup(ag);
+		
+		return result >0 ? "success": "fail";
+	}
+
 	//주소록 추가 
 	@RequestMapping("insert.ad")
 	public String InsertAddressBook(AddressBook ab,HttpSession session) {
@@ -131,15 +295,41 @@ public class MailController {
 		
 		if(result>0) {
 			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "mail/personalAddressbook";
+			return "redirect:personal.ad";
 			
 		}else {
 			session.setAttribute("alertMsg", "주소록 등록 실패.");
-			return "mail/personalAddressbook";
+			return "redirect:personal.ad";
 		}
 		
 	}
+	//주소록 삭제 
+	@ResponseBody
+	@RequestMapping("delete.ad")
+	public String ajaxDeleteAddressBook(String addPerNo) {
+		int result = mService.deleteAddressBook(addPerNo);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
 	
+	//주소록 정보 조회
+	@ResponseBody
+	@RequestMapping(value="getAddressInfo.ad",  produces="application/json; charset=utf-8")
+	public String ajaxSelectAddressInfo(int addNo) {
+		AddressBook ab = mService.selectAddressInfo(addNo);
+		return new Gson().toJson(ab);
+	}
+	
+	//주소록 수정 
+	@ResponseBody
+	@RequestMapping(value="update.ad")
+	public String ajaxUpdateAddressBook(AddressBook ab) {
+		//System.out.println(ab);
+		int result = mService.updateAddressBook(ab);
+		return result > 0 ? "success" : "fail";
+	}
+
 	// 그룹별 주소록 조회 
 	@RequestMapping("group.ad")
 	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,AddressGroup ag,HttpSession session, Model model){
@@ -154,7 +344,7 @@ public class MailController {
 		return "mail/personalAddressbook";
 	}
 	
-	
+	//사내 주소록 
 	@RequestMapping("company.ad")
 	public String companyAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
 		//전 사원수 조회
@@ -169,11 +359,35 @@ public class MailController {
 		return "mail/companyAddressbook";
 	}
 	
+	@RequestMapping("dept.ad")
+	public String deptAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,String deptName, Model model) {
+		int count = mService.selectdeptAddBookListCount(deptName);
+		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectdeptAddBookList(pi,deptName);
+
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+		
+		return "mail/companyAddressbook";
+	}
 	
 	@RequestMapping("test.do")
 	public String test() {
-		return "mail/test2";
+		return "mail/test";
 	}
-
+	
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value = "publicMailAddress.ad", produces =
+	 * "application/json; charset=UTF-8") public String ajaxSelectPublicAddresss() {
+	 * ArrayList<Member> pAdd = mService.selectPublicAddress();
+	 * System.out.println(pAdd); return new Gson().toJson(pAdd); }
+	 */
+	
+	
+	
 
 }

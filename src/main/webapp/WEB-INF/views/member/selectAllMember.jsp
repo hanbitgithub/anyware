@@ -485,48 +485,56 @@ a {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr onclick="">
-                            <td class="tbody-td">0000001</td>
-                            <td class="tbody-td">인사부</td>
-                            <td class="tbody-td">대리/팀원</td>
-                            <td class="tbody-td">홍길동</td>
-                            <td class="tbody-td">920101</td>
-                            <td class="tbody-td">서울시 구로구</td>
-                            <td class="tbody-td">010-1111-2222</td>
+                    <c:forEach var="m" items="${ list }">
+                        <tr>
+                            <td class="tbody-td" id="memberNo">${ m.memberNo }</td>
+                            <td class="tbody-td">${ m.deptName }</td>
+                            <td class="tbody-td">${ m.jobName }/${ m.position }</td>
+                            <td class="tbody-td">${ m.name }</td>
+                            <td class="tbody-td">${ m.rrn }</td>
+                            <td class="tbody-td">${ m.address }</td>
+                            <td class="tbody-td">${ m.phone }</td>
                         </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </div>
 
             <script>
                 //한행 클릭시 실행할 함수
+                $(function(){
+                	$("tbody>tr").click(function(){
+                		location.href = 'detailAllMember.me?memberNo=' + $(this).children("#memberNo").text();
+                	})
+                })
             </script>
 
             <div id="paging-area">
                 <div id="paging-area2" align="center">
+                <h2>${ loginUser.deptName }</h2>
                     <!--페이징바 영역-->
                     <ul class="pagination">
                         <c:choose>
                             <c:when test="${ pi.currentPage eq 1 }">
-                                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
                             </c:when>
                             
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage - 1 }">Previous</a></li>
+                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage - 1 }&deptName=${ loginUser.deptName }">이전</a></li>
                             </c:otherwise>
                         </c:choose>
                         
                         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            <li class="page-item"><a class="page-link" href="list.bo?cpage=${ p }">${ p }</a></li>
+                            <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ p }&deptName=${ loginUser.deptName }">${ p }</a></li>
                         </c:forEach>
                         
                     
                         <c:choose>
                             <c:when test="${pi.currentPage eq pi.maxPage }">
-                                <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+                                <li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="list.bo?cpage=${ pi.currentPage + 1 }">Next</a></li>
+                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage + 1 }&deptName=${ loginUser.deptName }">다음</a></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

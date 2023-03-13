@@ -12,10 +12,13 @@
 	<typeAliases>
 		<typeAlias type="com.aw.anyware.approval.vo.Approval" alias="Approval"/> 
 		<typeAlias type="com.aw.anyware.mail.model.vo.Mail" alias="Mail"/>
+		<typeAlias type="com.aw.anyware.mail.model.vo.MailStatus" alias="MailStatus"/>
+		<typeAlias type="com.aw.anyware.mail.model.vo.MailFile" alias="MailFile"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressBook" alias="AddressBook"/>
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarVo" alias="CalendarList"/>
 		
 	</typeAliases>
 	
@@ -26,6 +29,7 @@
 		<mapper resource="/mappers/mail-mapper.xml"/> 
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/member-mapper.xml"/>
+		<mapper resource="/mappers/schedule-mapper.xml"/>
 	</mappers>
 	
 </configuration>

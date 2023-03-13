@@ -24,7 +24,7 @@
 	<select id="selectListCount" resultType="_int">
 		select
 				count(*)
-			from member
+			from tb_member
 		   where status = 'Y'
 	</select>
 
@@ -38,16 +38,46 @@
     		name,
     		member_id,
     		member_pwd,
-    		rrn,
+    		RPAD(SUBSTR(rrn, 1, 8), 14, '*') as "rrn",
     		email,
     		phone,
     		address,
-    		enroll_date,
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
     		profile_url
-    	from member
+    	from tb_member
        where status = 'Y'
     		
+  </select>
+  
+  <select id="detailAllMember" resultMap="memberResult">
+    select
+    		member_no,
+    		dept_name,
+    		job_name,
+    		position,
+    		duty,
+    		name,
+    		member_id,
+    		member_pwd,
+    		RPAD(SUBSTR(rrn, 1, 8), 14, '*') as "rrn",
+    		email,
+    		phone,
+    		address,
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
+    		leave_off,
+    		profile_url
+    	from tb_member
+       where status = 'Y'
+       and member_no = #{memberNo}
+    		
+  </select>
+  
+  <select id="loginUserRrn" resultMap="memberResult">
+  	select
+  			rrn
+  		from tb_member
+  	   where member_no = #{memberNo}
   </select>
   
   <select id="loginMember" resultMap="memberResult">
@@ -64,13 +94,39 @@
     		email,
     		phone,
     		address,
-    		enroll_date,
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
     		profile_url
     	from tb_member
        where status = 'Y'
        and member_id = #{memberId}
-       and member_pwd = #{memberPwd}
+      
     		
   </select>
+  
+  <select id="selectPwd" resultMap="memberResult">
+  	select 
+  			member_pwd
+  		from tb_member
+  	   where member_pwd = #{memberPwd}
+  </select>
+  
+  <update id="changePwd">
+  	update
+  			tb_member
+  		set member_pwd = #{encPwd}
+  	   where member_no = #{memberNo}
+  </update>
+  
+   <update id="memberPersonalUpdate">
+  	update
+  			tb_member
+  		set email = #{email},
+  			member_no = #{memberNo},
+  			phone = #{phone},
+  			position = #{position},
+  			address = #{address}
+  		where member_no = #{memberNo}
+  			
+  </update>
 </mapper>

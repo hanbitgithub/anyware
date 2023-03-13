@@ -25,6 +25,9 @@
  
 }
 
+#search{ 
+	width:250px;
+}
 
 /*페이징*/
 #paging-area button{
@@ -50,7 +53,7 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-		 <b style="font-size: 18px;"> 받은메일함</b>
+		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 15px">&nbsp; ${unread} / ${ rCount }</span>
             <br><br><br>
 
             <nav class="navbar navbar-expand-lg bg-light">
@@ -118,7 +121,7 @@
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -126,7 +129,7 @@
               </nav>
 
             <table class="table">
-                <tr style="font-size: 14px; font-weight: bold;">
+               <!--  <tr style="font-size: 14px; font-weight: bold;">
                     <td width="20"><input type="checkbox"></td>
                     <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
                     <td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
@@ -134,26 +137,76 @@
                     <td width="700">2월 3주차 주간 매출 보고</td>
                     <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
                     <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-               <tr style="font-size: 14px; ">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
-                    <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                <tr style="font-size: 14px; font-weight: bold;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
-                    <td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
+                </tr> -->
+                <c:choose>
+                	<c:when test="${ empty rlist }">
+                		<tr align="center">
+                			<td colspan="7">받은 메일함이 비어있습니다.</td>
+                		</tr>
+                	</c:when>
+                	
+                	<c:otherwise>
+                		<c:forEach var="r" items="${rlist }">
+                			<c:choose>
+                				<c:when test="${r.mailStatus.read eq 'Y' }">
+			                		<tr style="font-size: 14px;"> 
+			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="150">${r.memName }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty r.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${r.sendDate }</td>	
+			                		</tr>
+	                			</c:when>
+	                			<c:otherwise>
+	                				<tr style="font-size: 14px; font-weight: bold"> 
+			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="150">${r.memName }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty r.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${r.sendDate }</td>	
+			                		</tr>
+	                			</c:otherwise>
+	                		</c:choose>
+                		</c:forEach>
+              
+                	</c:otherwise>
+                </c:choose>
+               				
                 
+              
+               
                 
             </table>
             <script>
@@ -190,8 +243,6 @@
 
                       })
                       
-                 
-                 
 
              })
             </script>
@@ -201,19 +252,62 @@
 
 
 
+     <!--페이징 영역-->
+		<div id="paging-area" align="center">
 
-            <!--페이징 영역-->
-            <div id="paging-area" align="center">
-                <button>이전</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>다음</button>
-            </div>  
-              
+			<c:choose>
+				<c:when test="${pi.currentPage eq 1}">
+					<button disabled>이전</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='receivebox.em?cpage=${pi.currentPage - 1}'">이전</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='receivebox.em?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+				<c:choose>
+					<c:when test="${empty keyword }">
+						<button onclick="location.href='receivebox.em.em?cpage=${p}'">${p}</button>
+					</c:when>
+					<c:otherwise>
+						<button
+							onclick="location.href='receivebox.em.em?cpage=${p}&keyword=${keyword}'">${p}</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
 
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage }">
+					<button disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='receivebox.em?cpage=${pi.currentPage + 1}'">다음</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='receivebox.em?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+
+		</div>
+
+
+
+	</div> 
 
         
 		

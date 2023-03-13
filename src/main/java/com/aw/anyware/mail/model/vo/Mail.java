@@ -1,5 +1,7 @@
 package com.aw.anyware.mail.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,11 +18,14 @@ public class Mail {
 	private int emNo;
 	private String emTitle;
 	private String emContent;
-	private String memName;
-	private String sender;
-	private String receiver;
+	private String memName; //보낸사람이름
+	private String sender;  //보낸사람 이메일 
+	private String receivers;
 	private String refEmail;
 	private String sendDate;
-	private String tempStock;
+	private String tempStock;	
+	private String emfNo;
 	
+	private MailStatus mailStatus;
+	private ArrayList<MailFile> fileList;
 }

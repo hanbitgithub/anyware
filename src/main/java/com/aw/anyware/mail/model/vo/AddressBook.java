@@ -25,6 +25,6 @@ public class AddressBook {
 	private String memNo;
 	
 	private String groupName;
-	
+	private String nameMail;
 
 }

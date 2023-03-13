@@ -2,7 +2,13 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
 <style>
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
+
 /* ========== 메뉴바 전체(공통) ========== */
 
 .container-fluid .menu-sidebar{
@@ -11,7 +17,6 @@
     border-right:2px solid lightgray;
     text-decoration: none;
     color:black;
-    background: white;
 }
 
 .container-fluid .menu-sidebar h4{
@@ -40,6 +45,7 @@ a:hover{
 .container-fluid{
     display:flex;
     padding-left:0px;
+    background-color: white;
 }
 
 .insider{
@@ -47,102 +53,32 @@ a:hover{
     margin-bottom: 30px;
 }
 
-        /* 아영 */
-        h1{
-            margin:25px 15px 25px 15px; 
-            color:black
-        }
-        h2{
-            font-weight: 600;
-            /* margin:25px 15px 25px 15px; */
-        }
-        /* .searchbar{margin-left:20px;} */
-        b{
-            font-size:20px; 
-            color:black
-        }
-        .tableOption{
-            display:flex; 
-            justify-content: space-between;
-            margin: 30px 0px 3px 0px;
-        }
-        .board-content td, table th{
-            color:black;
-            text-align:center;
-        }
-        .btn_two_spacing{margin: 0 0 10px 20px}
-        .main_width{
-            display:flex; 
-            align-items: center;
-            width:100%;
-        }
-       .main-list tr{
-            cursor: pointer;
-        }
-        .main-list tbody>tr:hover{
-            background:rgb(236, 233, 233);
-        }
-        
+/* ============= 개인 =============== */
 
-/* =========== 은영 ============== */
+/* ========== 사이브 메뉴바 제목(개인) =========== */
 .container-fluid .menu-sidebar h2{
     padding-bottom:10px;
     font-weight: 600;
-    	background-color:white;
-    padding-right:20px;
+    color: black;
+}
+
+.setup{
+    padding: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    color:black;
+    cursor: pointer;
+}
+
+.setup:hover{
     color:black;
 }
 
-.writeForm{
-    display:inline-block;
-    width:90%;
-    font-size:16px;
-    background-color: white;
-    border:2px solid #5e7e9b;
-}
-
-.container-fluid{
-	background-color:white;
-    padding-right:20px;
-}
-
 .insider h4{
-	color: black;
+	color:black;
 }
 
-
-/* ========= 주소록 상위 제목 ========= */
-.mailListCheck{
-    display: inline-block;
-    border-color: #cbcbcb;
-    border: 1px solid #cbcbcb;
-    background-color: #ebebeb;
-    padding: 7px 7px 10px;
-    border-radius: 0;
-    margin:0px 6px 0px 10px;
-    font-size: 0;
-}
-
-.reply-btn{
-    width:100px;
-    height:33px;
-    background-color:slategray; 
-    color:white; 
-    border:none;
-}
-
-.sub-btn{
-    width:100px;
-    height:33px;
-    border:none;
-    background-color:white;
-}
-
-.sub-btn:hover{
-    background-color:rgba(0, 0, 0, 0.1);
-}
-
-/* ======== 개인 주소록 수정 ======== */
+/* ========== 메뉴바 : 태그 =========== */
 #plus-tag{
     margin-left: 27px;
     color:gray;
@@ -150,16 +86,11 @@ a:hover{
 }
 
 
-.address-title{
+.tag-title{
     display:flex;
-    cursor: pointer;
 }
 
-.basic-title{
-	cursor: pointer;
-}
-
-.address-title input[type=text]{
+.tag-title input[type=text]{
     width:130px;
 }
 
@@ -170,430 +101,1017 @@ a:hover{
 
 .tag-modify, .tag-modify:hover{
     color: lightgray;
-    margin: 0px 10px;
+   /* margin-left: 80px; */
 }
 
-.category-title{
-	width:80%;
-}
 
-.insertAddBook, .updateAddBook{
-    margin-bottom: 10px;
-    display:none;
-}
-
-.insertAddress, .updateAddress{
-    display:flex;
-}
-
-.insertAddress span, .updateAddress span{
-    width: 70%;
-}
-
-.insertAddress input[type=text], .updateAddress input[type=text], #select-addressBook{
-    width:90%;
-    height: 25px;
-}
-
-.update-addBtn span, .update-addBtn a, .update-addBtn a:hover{
+/* ========== 메뉴바 : 메일함, 빠른검색 =========== */
+.first-title{
+    font-size:21px;
+    font-weight: bold;
+    text-decoration: none;
     color:black;
-    cursor: pointer;
-    margin-right:10px;
 }
 
-/* ========= 주소록 검색 ========== */
-
-.address-search{
-    cursor: pointer;
-    margin-left:5px;
-    border:none;
-    background-color:transparent;
+.first-title:hover{
+    font-size:21px;
+    font-weight: bold;
+    text-decoration: none;
+    color:black;
 }
 
-.filterHead{
-    /* border:1px solid black; */
-    height:40px;
+/* ========= 휴지통 비우기 ============= */
+#empty{
+    float:right;
+    margin-right:20px;
 }
 
-.searchbar input[type=text]{
-    border: 1px solid gray;
-    border-radius: 6px;
-}
 
-/* ========= 주소록 목록 ========== */
-
+/* ==========  메인콘텐츠 : 상위 제목  ========== */
 .main-content{
-    width:100%;
-    color:black;
-	margin: 0px 20px;
-}
-
-.main-content_indiv{
     width:85%;
     color:black;
-    margin: 0px 20px;
+    margin-left: 20px;
 }
 
-.second-title h2 { 
+.navigation{display:flex;}
+
+.main-list{ height:85%;}
+
+
+#plus-tag{
+    /* margin-left:30px;
+    font-size:15px; */
+    cursor:pointer;
+}
+
+.second-menu dd:hover{
+    color:slategray;
+}
+
+.second-title { 
+    height:10%;
     padding-top:20px;
     font-weight:bold;
-    color:black;
 }
 
-.table>tbody>tr{
-	cursor:pointer;
-	
+.mail-count{
+    font-weight:lighter;
+    font-size:15px;
+    margin-left:20px;
 }
+
+.mail-list{height:65%;}
+/* .page-nav{height:10%;} */
 
 .second-title>div{ margin-bottom: 10px; font-size:30px;}
-
-.main-list{ height:550px;}
-
-/* ========= 주소록 추가 모달 ========== */
-
-.address-table{
-    width:100%;
-    margin:0px 20px;
+.mailListCheck{
+    display: inline-block;
+    border-color: #cbcbcb;
+    border: 1px solid #cbcbcb;
+    background-color: #ebebeb;
+    padding: 7px 7px 10px;
+    border-radius: 0;
+    margin-right: 6px;
+    font-size: 0;
 }
 
-.address-table th{text-align: left;}
 
-.insertAddress tr{
-    height:60px;
+.icon{
+    font-size:18px;
+    margin:0px 4px;
+    cursor: pointer;
 }
 
-.address-table input, .address-table select{
-    width:90%;
+#select-tag>i{
+    cursor: pointer;
 }
 
-.addBtn{
-    font-size:15px;
-    width:60px;
-    height:35px;
+.writeForm{
+    display:inline-block;
+    /* width:40%; */
+    /* height:50px; */
+    font-size:16px;
+    /* margin:5px 3px; */
+    background-color: white;
+    border:2px solid #5e7e9b;
+    /* font-weight: bold; */
+    /* border-radius: 10px; */
+}
+
+.key_btn-lg{
+	padding: 0.5rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.3rem;
+}
+
+.mailBtn{
+    font-size:13px;
+    width:50px;
+    height:30px;
     margin-left:3px;
     background-color: white;
     border:2px solid #5e7e9b;
     border-radius: 5px;
 }
 
+#empty{
+    font-size:11px;
+    width:45px;
+    height:25px;
+    background-color: #5e7e9b;
+    border:none;
+    color:white;
+    border-radius: 5px;
+}
+
+.sub-btn{
+    width:100px;
+    height:33px;
+    border:none;
+    background-color:white;
+}
+
+.tag-btn{
+    display:inline-block; 
+    padding:0;
+}
+
+.sub-btn:hover{
+    background-color:rgba(0, 0, 0, 0.1);
+}
+
+
+.reply-btn{
+    width:100px;
+    height:33px;
+    background-color:slategray; 
+    color:white; 
+    border:none;
+}
+
+/* ========= 메인 콘텐츠 =========== */
+
+table{
+    border-collapse: separate;
+  border-spacing: 0 8px;
+}
+.mail-select, .icon{width:25px;}
+
+.mail-person{ width:15%; padding-left:20px;}
+.person{ 
+    width:70%;
+    text-align: center; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+} 
+.mail-title{width:70%;}
+.mail-Metitle{width:100%;}
+.mail-sendtime{width:15%; font-size:12px;}
+
+.setup-tag{
+    text-align: left;
+    /* margin: 20px 50px; */
+    padding: 10px 50px;
+}
+
+.modal-content{
+    margin:auto;
+}
+
+.modal-content div, .modal-content input{
+    margin-bottom:10px;
+    color:black;
+    font-size:19px;
+    font-weight: 600;
+}
+
+#select-tag i{
+    margin: 8px 10px;
+}
+
+.mail tr{
+    cursor: pointer;
+    height: 50px;
+}
+
+.mail tr:hover{
+    background-color: #ebebeb;
+}
+
+#import{
+	color: gold;
+}
+
+/* ========= 모달 ========= */
+.modal-title{
+	color:black;
+}
+
+/* ============ 메일 조회 ============== */
+.mail-content {
+    border: 1px solid lightgray;
+    width: 100%;
+    height: 650px;
+    margin-top: 15px;
+    padding: 2.5em;
+}
+
+.mail-form {
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.mail-form table {
+  width: 100%;
+}
+
+.mail-form th {
+  width: 150px;
+  height: 35px;
+}
+
+#mail-file {
+  background-color: #f7f7f7;
+  width: 100%;
+  padding: 8px;
+  margin-top: 15px;
+}
+
+.mail-content table {
+  width: 100%;
+  border: 1px solid lightgray;
+}
+
+.mail-content table th {
+  width: 10%;
+  height: 50px;
+  padding-left: 18px;
+  font-size: 17px;
+}
+
+.shortcut-btn {
+  width: 200px;
+  height: 40px;
+  border: none;
+  background-color: #cfdeeb;
+  font-size: 17px;
+}
+
+.mail tr {
+  cursor: pointer;
+}
+
+.mail tr:hover {
+  background-color: #ebebeb;
+}
+
+.detail-title{
+	color:black;
+}
+
+.detail-form th{
+	font-size: 16px;
+	font-weight: 600;
+}
+
+.importCheck{
+	vertical-align:3px;
+}
+
+#select-tag{
+	padding: 0px;
+}
+
+#select-tag a{
+	float: left;
+    width: 25px;     
+    height: 25px;
+    text-indent: -3000em;
+    margin-top: 8px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.bgcolor1{
+	background: red;
+    border: red;
+}
+
+.bgcolor2{
+	background: orange;
+    border: orange;
+}
+
+.bgcolor3{
+	background: gold;
+    border: gold;
+}
+
+.bgcolor4{
+	background: green;
+    border: green;
+}
+
+.bgcolor5{
+	background: rgb(123, 209, 72);
+    border: 1px solid rgb(123, 209, 72);
+}
+
+.bgcolor6{
+	background: blue;
+    border: blue;
+}
+
+.bgcolor7{
+	background: rgb(205, 116, 230);
+    border: 1px solid rgb(205, 116, 230);
+}
+
+.bgcolor8{
+	background: pink;
+    border: pink;
+}
+
+.bgcolor9{
+	background: rgb(144, 83, 65);
+    border: 1px solid rgb(144, 83, 65);
+}
+
+.bgcolor10{
+	background: gray;
+    border: gray;
+}
+
+.tagBtn{
+	margin-top: 30px;
+}
+
+.tagColor:hover, .active{
+	border: 2px solid black;
+}
+
+.addTag{
+	background-color:slategray; 
+	color:white; 
+	border:none;
+}
+
+#tagName{
+	width: 100%;
+	font-size: 16px;
+    font-weight: 500;
+}
+
+.tag-name{
+	width:190px;
+	cursor: pointer;
+}
+
+.dropdown-item{
+	cursor:pointer;
+}
 
 
 </style>
-<html>
-<head>
-<meta charset="UTF-8">
-
-	<!-- css -->
-	<link href="${pageContext.request.contextPath}/resources/css/addressBook.css" rel="stylesheet" type="text/css">
-
-<title>개인 주소록</title>
 </head>
 <body>
 
+   <!-- 사이드 바  -->
+	<jsp:include page="../common/sidebar.jsp"></jsp:include>
+
+	<!-- 세부 메뉴 -->
+	<jsp:include page="../common/mailmenu.jsp"></jsp:include>
+	<!-- 메인 콘텐츠 영역 -->
+	<div class="main-content">
 	
-	<!-- Begin Page Content -->
-	<!--Begin of Main Content -->
-	<div class="container-fluid" style="display: flex;">
-		<nav class="menu-sidebar">
+	
+		<form method="post" action="insertMail.ma" id="mailForm" enctype="multipart/form-data">
 
-			<div class="insider">
-				<h2>주소록</h2>
-				<div class="address-btn">
-					<button type="button" class="writeForm btn-lg" data-toggle="modal"
-						data-target="#add-Address">연락처 추가</button>
-				</div>
+			<div class="second-title">
+				<div style="font-weight: bold;">메일 작성</div>
+				<button type="button" class="reply-btn" onclick="return sendMail()">
+					<i class="fas fa-location-arrow"></i>&nbsp;&nbsp;전송
+				</button>
+				<button type="button" class="sub-btn" data-toggle="modal" id="preview"
+						data-target="#mail-preview">
+					<i class="fas fa-desktop"></i>&nbsp;&nbsp;미리보기
+				</button>
+				<button type="button" class="sub-btn" id="propertyMail" onclick="saveMail();">
+					<i class="far fa-save"></i>&nbsp;&nbsp;임시저장
+				</button>
+				<button type="button" class="sub-btn" onclick="history.go(-1);">
+					<i class="fas fa-undo"></i>&nbsp;&nbsp;취소
+				</button>
 			</div>
-
-			<div class="insider">
-				<h4>주소록 목록</h4>
-				<a onclick="postFormSubmit('individualAddress.ad')" class="basic-title"><h6>개인 주소록</h6></a>
-
-				<!--반복문 시작 -->
-				<c:choose>
-					<c:when test="${not empty glist}">
-						<c:forEach var="c" items="${glist}">
-							<c:if test="${c.groupName != '개인주소록' and c.memNo == loginUser.memberNo}">
-								<div class="address-title" id="addTitle${c.groupNo }">
-								
-									<!-- =========== 해당 주소록 그룹으로 이동 ============== -->
-									<a onclick="postSubmit('indivAddressBook.ad', '${c.groupNo}')"
-										class="category-title"><h6>${c.groupNo }</h6></a>
-										
-									<!--==========주소록 클릭시 수정,삭제 처리하는 dropdown 생성 ==========-->
-									<a class="tag-modify" href="#" id="dotDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-									</a>
-									
-									<div class="dropdown-list dropdown-menu shadow"
-										aria-labelledby="dotDropdown"
-										style="margin-left: -180px; margin-top: -10px;">
-										
-										<!--========== 수정, 삭제 버튼 ==========-->
-										<a class="dropdown-item d-flex align-items-center"
-											onclick="updateAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">수정하기</span>
-											
-										</a> <a class="dropdown-item d-flex align-items-center"
-											onclick="deleteAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">삭제하기</span>
-										</a>
-									</div>
-
-								</div>
-
-								<form id="post" action="" method="post">
-
-									<input type="hidden" name="memNo" value="${loginUser.memberNo }">
-									<input type="hidden" name="addNo" id="addNo">
-
-								</form>
-
-								<!--========== 주소록 그룹명 수정 처리하는 함수 ==========-->
-								<div class="insider updateAddBook" id="update${c.groupNo }">
-									<div class="updateAddress">
-										<span><input type="text" id="groupName${c.groupNo }" name="addName" value="${c.addName }"></span>
-										<div class="update-addBtn">
-											<span onclick="updateAddGroup('${c.groupNo}')"><i class="fas fa-check"></i></span> 
-											<span onclick="dismissUpdateAdd('${c.groupNo}');"><i class="fas fa-times"></i></span>
-										</div>
-									</div>
-								</div>
-							</c:if>
-						</c:forEach>
-						<!-- 반복문 끝 -->
-					</c:when>
-				</c:choose>
-
-				<!--========== 주소록 그룹 추가하는 함수 ==========-->
-				<div class="insider insertAddBook">
-					<div class="insertAddress">
-						<span> <input type="text" name="addName" id="addName">
-						</span>
-
-						<div class="update-addBtn">
-							<a id="insertAddIndiv" onclick="insertAddIndiv();"><i class="fas fa-check"></i></a> 
-							<a onclick="dismissInsertAdd();"><i class="fas fa-times"></i></a>
-						</div>
-					</div>
-				</div>
-
-				<div id="plus-tag" onclick="return insertAddBook();">+ 주소록 추가</div>
-			</div>
+			<hr style="margin: 20px 0px 10px 0px;">
 
 			<script>
-		
-			// 해당 주소록 그룹으로 이동 처리하는 함수	
-				function postSubmit(url, addNo) {
-					$("#post").children("#addNo").val(addNo); // hidden값에 반복되는 addNo요소 중 클릭된 요소만 value값에 넣기
-					$("#post").attr("action", url).submit();
-				}
-
-				// 개인 주소록 수정 클릭시 실행하는 함수
-				function updateAddBook(addNo) {
-					// 해당 주소록 번호만 들어간 요소 hide, show 이벤트 부여
-					$("#addTitle"+addNo).hide();
-					$("#update"+addNo).show();
-					
+				
+				
+				// 메일 '전송'시 실행하는 함수
+				function sendMail() {
+					if ($("#receive").val() == "") {
+						// 받는 사람 주소 없는 경우
+						alert("받는 사람 주소를 입력해 주세요.");
+					} else {
+						if ($("#title").val() == "") {
+							// 메일 제목이 없는 경우
+							let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
+							if (answer) {
+								$("#mailForm").submit(); // 메일 전송
+							} else {
+								$("#title").focus();
+								return false; // 메일 전송 안됨
+							}
+						}
+						// 제목이 입력된 경우
+						// 메일 전송
+						$("#mailForm").submit();
+					}
 				}
 				
-				// 개인 주소록 수정 처리하는 함수
-				function updateAddGroup(addNo){
+				// 메일 '임시저장'시 실행하는 함수
+				function saveMail(){
 					
-					let name = $("#groupName" + addNo).val();
-					console.log($("#groupName" + addNo).val());
+					let formData = new FormData(document.getElementById("mailForm"));
 					
-					
+					// 임시저장 값 전달
+					formData.append("mailTemporary", "N");
+
 					$.ajax({
-						url : "updateIndivAddGroup.ma",
-						data : {
-							memNo : '${loginUser.memberNo}',
-							addNo : addNo,
-							addName : name
-						},
+						url : "save.ma",
+						processData : false,
+						contentType : false,
+						type : "POST",
+						data : formData,
 						success : function(result){
+
 							if(result == 'success'){
-								location.reload();
+								location.href="sendMailList.ma";
+								alert("메일을 임시보관함에 저장하였습니다.");
+								
+							} else {
+								alert("메일을 임시보관함에 저장하는데 실패했습니다.");
 							}
+
+							console.log("임시저장 ajax 성공");
 						},
 						error : function(){
-							console.log("주소록 그룹명 수정 실패");
+							console.log("임시저장 ajax 실패");
 						}
 					})
-					
-				}
-
-				// 개인 주소록 삭제 처리하는 함수
-				function deleteAddBook(addNo) {
-					let answer = confirm("주소록을 삭제하면 안에 있는 연락처가 모두 삭제됩니다.\n주소록을 삭제하시겠습니까?");
-					
-					// 삭제 '확정'시 실행
-				 	if(answer == true){
-				 		
-				 		$.ajax({
-				 			url : "deleteAllIndivAddBook.ad",
-				 			data : {
-				 				memNo : ${loginUser.memberNo},
-				 				addNo : addNo
-				 			},
-				 			success : function(result){
-				 				console.log(result);
-				 				if(result == 'success'){
-					 				alert("주소록을 삭제했습니다.");
-					 				location.reload(); // 서버 새로고침
-				 				}
-
-				 			},
-				 			error : function(){
-				 				console.log("실패");
-				 			}
-				 		})
-				 		
-				 	}
-				}
-
-				// 주소록 그룹명 수정 '취소'시 처리하는 함수
-				function dismissUpdateAdd(addNo) {
-					$("#update"+addNo).hide();
-					$("#addTitle"+addNo).show();
-				}
-
-				// 주소록 추가 클릭시 처리하는 함수
-				function insertAddBook() {
-
-					// 추가하는 구문 보이도록 처리
-					$(".insertAddBook").show();
-					
-				}
-				
-				// 주소록 그룹 '추가'시 실행하는 ajax함수
-				function insertAddIndiv(){
-
-					if ($("#addName").val().trim() != 0) {
-
-						$.ajax({
-							url : "insertAddIndiv.ad",
-							data : {
-								memNo : '${loginUser.memberNo }',
-								addName : $("#addName").val()
-							},
-							success : function(result) {
-								console.log($("#addName").val());
-								if (result == "success") {
-									location.reload(); // 서버 새로고침
-								}
-							},
-							error : function() {
-								alert("주소록을 추가하는데 실패했습니다. 다시 시도해주세요.");
-							}
-
-						})
-					} else {
-						alert("주소록명을 입력해주세요.");
-						return false;
-					}
 
 				}
-
-				// 주소록 추가 '취소'시 처리하는 함수
-				function dismissInsertAdd() {
-					$(".insertAddBook").hide();
-					$("#addName").val("");
-				}
-				
-		</script>
-
-		</nav>
-		<!-- 게시판 영역 -->
-		<div class="main-content_indiv">
-			<!-- Page Heading -->
-			<div class="second-title">
-				<h2>개인 주소록</h2>
-			</div>
-
-			<div>
-				<!-- 
-				<button type="button" class="reply-btn">
-					<i class="fas fa-location-arrow"></i>&nbsp;&nbsp;메일 작성
-				</button>
-				 -->
-				<button type="button" class="sub-btn" onclick="return deleteAddNum();">
-					<i class="fas fa-trash-alt"></i>&nbsp;&nbsp;삭제
-				</button>
-			</div>
-			
-			<div class="tableOption">
-			<!-- ==================== 연락처 검색 =================== -->
-				<form action="searchIndivAdd.ad" method="post">
-					<div class="searchbar" align="center">
-						<input type="text" name="keyword" placeholder="검색">
-						<input type="hidden" name="memNo" value="${loginUser.memberNo }">
-						<input type="hidden" name="kind" value="basic">
-						<input type="hidden" name="addNo" value="${addNo }">
-						<button type="submit" class="address-search"><i class="fas fa-search fa-lg"></i></button>
-					</div>
-				</form>
-			
-			<c:choose>
-				<c:when test="${empty keyword }">
-					<div class="selectOption" style="margin-bottom: 10px">
-					<!-- =============== 주소록 정렬 ================== -->
-					<form action="individualAddress.ad" id="rangeForm" method="post">
-						<input type="hidden" name="memNo" value="${loginUser.memberNo }">
-						<input type="hidden" name="addNo" value="${addNo }">
-						<select name="range">
-							<option value="oldest">오래된순</option>
-							<option value="newest">최신순</option>
-						</select>
-					</form>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<div class="selectOption" style="margin-bottom: 10px">
-					<!-- =============== 주소록 정렬 ================== -->
-					<form action="searchIndivAdd.ad" id="rangeSearchForm" method="post">
-						<input type="hidden" name="keyword" value="${keyword }">
-						<input type="hidden" name="memNo" value="${loginUser.memberNo }">
-						<input type="hidden" name="addNo" value="${addNo }">
-						<select name="range">
-							<option value="oldest">오래된순</option>
-							<option value="newest">최신순</option>
-						</select>
-					</form>
-					</div>
-				</c:otherwise>
-			</c:choose>
-			</div>
-
-			<script>
-				
-				// 주소록 정렬시 실행하는 함수
-				$(function(){
-					$("select[name=range]").change(function(){
-						$("#rangeForm").submit(); // 검색하지 않은 경우
-						$("#rangeSearchForm").submit(); // 검색한 경우
-					})
-					
-				})
-				
-				// 주소록 선택시 선택된 값 유지하는 함수
-				$(function(){
-					$(".selectOption option").each(function(){
-						if( $(this).val() == '${range}'){
-							$(this).attr("selected", true);
-						}
-					})
-					
-				})
 				
 			</script>
 
+			<div class="send-form" id="mailForm">
+				<!-- 보내는 사람 -->
+				<input type="hidden" name="memNo" value="${loginUser.memberNo }">
+
+				<table>
+
+					<tr>
+						<th>받는사람</th>
+						<td style="width: 75%;">
+							<input type="text" name="receiverMem" class="input-mail" id="receive">
+						</td>
+						<td><button type="button" class="address-btn"
+								onclick="publicAdd();" data-toggle="modal"
+								data-target="#findAdd">주소록에서 찾기
+							</button>
+						</td>
+					</tr>
+					<tr>
+						<th>참조</th>
+						<td colspan="2">
+							<input type="text" name="ccMem" id="cc" class="input-mail" id="cc">
+						</td>
+					</tr>
+					<tr>
+						<th><span>제목</span> <span class="send-check"> 
+							<input type="checkbox" name="mailType" id="mailType" value="1">
+							<label for="mailType">&nbsp;&nbsp;중요!</label>
+							</span>
+						</th>
+						<td colspan="2">
+							<input type="text" name="mailTitle" class="input-mail" id="title">
+						</td>
+					</tr>
+					<tr>
+						<th>첨부파일</th>
+						<td colspan="2">
+							<button id="btn-upload" type="button">파일 추가</button> 
+							<input type="file" name="upfile" class="input-mail" id="upfile" onchange="addFile();" multiple>
+						</td>
+					</tr>
+
+				</table>
+
+				<div class="dropBox file-list">
+					<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
+				</div>
+
+				<div>
+					<textarea id="summernote" name="mailContent"></textarea>
+				</div>
+
+			</div>
+			
+			 
+
+			<script>
+
+				// 메일 제목 글자수 초과인 경우 
+				$(function(){
+					$("#title").keyup(function(e){
+						let title = $(this).val();
+						if(title.length > 50){
+							alert("최대 50자까지 입력 가능합니다.");
+							$(this).val(title.substring(0,100));
+							
+							console.log(title.length);
+						}
+					})
+				})
+
+				// '파일 추가' 누를 때 실행하는 함수
+				$(function() {
+					$('#btn-upload').click(function(e) {
+						e.preventDefault();
+						$('#upfile').click();
+					});
+				});
+				
+				// 서머노트 에디터
+				$('#summernote')
+						.summernote(
+								{
+									//   tabsize: 2,
+									height : 550, // 기본 길이
+									minHeight : 550,
+									maxHeight : 700, // 최대 길이
+									toolbar : [
+											// 글꼴 설정
+											[ 'fontname', [ 'fontname' ] ],
+											// 글자 크기 설정
+											[ 'fontsize', [ 'fontsize' ] ],
+											// 굵기, 기울임꼴, 밑줄,취소 선, 서식지우기
+											[
+													'style',
+													[ 'bold', 'italic',
+															'underline',
+															'strikethrough',
+															'clear' ] ],
+											// 글자색
+											[ 'color', [ 'forecolor', 'color' ] ],
+											// 표만들기
+											[ 'table', [ 'table' ] ],
+											// 글머리 기호, 번호매기기, 문단정렬
+											[ 'para',
+													[ 'ul', 'ol', 'paragraph' ] ],
+											// 줄간격
+											[ 'height', [ 'height' ] ],
+											// 그림첨부, 링크만들기, 동영상첨부
+											// ['insert',['picture','link','video']],
+											// 코드보기, 확대해서보기, 도움말
+											[
+													'view',
+													[ 'codeview', 'fullscreen',
+															'help' ] ] ],
+									// 추가한 글꼴
+									fontNames : [ 'Arial', 'Arial Black',
+											'Comic Sans MS', 'Courier New',
+											'맑은 고딕', '궁서', '굴림체', '굴림', '돋음체',
+											'바탕체' ],
+									// 추가한 폰트사이즈
+									fontSizes : [ '8', '9', '10', '11', '12',
+											'14', '16', '18', '20', '22', '24',
+											'28', '30', '36', '50', '72' ]
+								});
+
+				// ---------------- 첨부 파일 ---------------------
+
+				var fileNo = 0; // 첨부파일 번호
+				var filesArr = new Array(); // 다중 첨부파일 들어갈 파일 배열
+
+				/* 첨부파일 추가 */
+				function addFile() {
+					
+					// 안내문 삭제
+					$(".fileMsg").remove();
+					
+					var maxFileCnt = 5; // 첨부파일 최대 개수
+					var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
+					var remainFileCnt = maxFileCnt - attFileCnt; // 추가로 첨부가능한 개수
+					var files = $('#upfile')[0].files; // 현재 선택된 첨부파일 리스트 FileList
+
+					// 첨부파일 개수 확인
+					if (files.length > remainFileCnt) {
+						alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+						
+						fileDataTransfer();
+					}else{
+						// 파일 배열에 담기
+						let currFileArr = Array.from(files); // FileList => Array로 변환
+						filesArr = filesArr.concat(currFileArr); // 추가한 fileList에 또 추가할 수 있도록 설정
+						
+						fileDataTransfer();
+					    
+					}
+					renderingFileDiv(); // 추가 및 삭제할 때 마다 호출해서 index번호 초기화
+					
+				}
+				
+				/* 첨부파일 목록 html */
+				function renderingFileDiv(){
+					
+					let htmlData = '';
+					for(let i=0; i<filesArr.length; i++){
+						// i => 삭제할 파일 인덱스 번호
+						
+						// 목록 추가
+						htmlData += '<div id="file' + i + '" class="filebox">';
+						htmlData += '<span class="name">'+ filesArr[i].name + '</span>';
+						htmlData += '<a class="delete" onclick="deleteFile('+ i + ');"><i class="far fa-minus-square"></i></a>';
+						htmlData += '</div>';
+					}
+					
+					$(".file-list").html(htmlData); // change가 발생할 때마다 목록 초기화한 뒤 넣어짐
+
+				}
+
+				/* 첨부파일 삭제 */
+				function deleteFile(fileNo) { // 매개변수 : 첨부된 파일 번호(fileNo, i)
+				
+					console.log(fileNo);
+					
+					// class="fileMsg"에 있는 문구 삭제
+					document.querySelector("#file" + fileNo).remove();
+					
+				    filesArr.splice(fileNo, 1);	// 해당되는 index의 파일을 배열에서 제거(1 : 한개만 삭제하겠다 라는 의미)
+					
+				    fileDataTransfer();
+
+				    renderingFileDiv();
+				}
+				
+				
+				/* 첨부파일 담는 배열 */
+				function fileDataTransfer(){
+					
+					const dataTransfer = new DataTransfer();
+
+				    filesArr.forEach(function(file){ 
+				    //남은 배열을 dataTransfer로 처리(Array -> FileList)
+				    	dataTransfer.items.add(file); 
+				    });
+				    
+				    $('#upfile')[0].files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+				}
+								
+			</script>
+		</form>
+	</div>
+	
+	<!-- =================== 메일 미리보기 모달 ======================= -->
+	<div class="modal" id="mail-preview">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content" style="height: 900px">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>미리보기</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					
+				</div>
+
+				<!-- Modal body -->
+				<form action="updateIndivAdd.ad" method="post">
+
+					<div class="modal-body" align="center">
+
+					<div class="form-group">
+						<div class="send-title">
+							<span>받는사람 <span class="border-line">:</span></span>
+						</div>
+						<div class="receive-person"></div>
+					</div>
+					
+					<div class="form-group">
+						<div class="send-title">
+							<span>참조 <span class="border-line">:</span></span>
+						</div>
+						<div class="cc-person"></div>
+					</div>
+					
+					<div class="form-group">
+						<div class="send-title">
+							<span>제목 <span class="border-line">:</span></span>
+						</div>
+						<div class="title"></div>
+					</div>
+					
+					<div class="form-group">
+						<div class="send-title">
+							<span>첨부파일 <span class="border-line">:</span></span>
+						</div>
+						<div class="file-name"></div>
+					</div>
+					
+					<div>
+						<p id="preview-form" readonly>
+
+						</p>
+					</div>
+
+						<div style="margin-top: 10px;">
+							<!-- 
+							<button type="submit" class="addBtn"
+								style="background-color: slategray; color: white; border: none;">전송</button>
+							 -->
+							<button type="button" data-dismiss="modal" class="class addBtn">닫기</button>
+						</div>
+
+					</div>
+				</form>
+
+			</div>
+		</div>
+	</div>
+
+
+	<!-- =================== 주소록에서 찾기 모달 ======================= -->
+
+	<div class="modal" id="findAdd">
+		<div class="modal-dialog modal-dialog-centered modal-lg">
+			<div class="modal-content" style="height: 800px">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">
+						<b>주소록에서 찾기</b>
+					</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<!-- 해당 버튼 클릭시 모달과 연결해제 -->
+				</div>
+
+				<!-- Modal body -->
+
+					<div class="modal-body" align="center">
+
+						<input type="hidden" name="memNo" value="${loginUser.memberNo }">
+
+						<div class="address-tag">
+
+							<span onclick="publicAdd();">공용 주소록</span> 
+							<span onclick="indivAdd();">개인 주소록</span>
+
+						</div>
+						<div class="add-choice">
+							<div class="add-title">
+								
+							</div>
+							<div class="add-person">
+								<!-- 
+								<div>
+									<input type="text" name="" placeholder="이름, 이메일, 회사 입력해서 찾기">
+								</div>
+								 -->
+
+								<div id="table-container">
+									<table id="add-table" class="addArea">
+
+										<thead>
+											<tr>
+												<th class="checkbox">
+												<input type="checkbox" name="addNo" onclick="allCheck(this);">
+												</th>
+												<th><span>이름</span></th>
+												<th><span>부서</span></th>
+												<th><span>직위</span></th>
+												<th><span>이메일</span></th>
+											</tr>
+										</thead>
+
+										<tbody>
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+
+						<div>
+							<button type="button" class="addBtn" onclick="addMail();" data-dismiss="modal"
+								style="background-color: slategray; color: white; border: none;">추가</button>
+							<button type="button" data-dismiss="modal" class="addBtn">취소</button>
+						</div>
+
+					</div>
+
+			</div>
+		</div>
+	</div>
 		
+	<script>
+	
+		  // '전체클릭'버튼 클릭시 실행하는 함수
+		  function allCheck(allCheck){
+			 
+			 let checkboxes = document.getElementsByName("addNo");
+			  
+	         checkboxes.forEach((checkbox)=>{
+	      	   
+	            checkbox.checked = allCheck.checked; // 전체 클릭 클릭시 => 항목 전체 선택 실행
+	  	            
+	         });
+	      }
+		  
+			
+		 // 주소록에서 이메일 추가시 실행하는 함수
+		function addMail(){
+			 
+			checkCnt = "";
 
+			$("input[name='addNo']:checked").each(function(){
+				checkCnt += ( $(this).parent().siblings(".email").text() ) + ",";
+			});
+			
+			checkCnt = checkCnt.substring(0,checkCnt.lastIndexOf(",")); // 맨 뒤 콤마 삭제 "2,3,4"
+			
+			$("#receive").val(checkCnt);
+			
+		}
+		
+		$(document).on("change", "input[name=addNo]", function(){
+			addMail();
+			console.log( $("#receive").val() );
+			
+		})
+			
+		// '주소록 찾기' 클릭시 실행하는 함수(전사 주소록)
+		function publicAdd() {
+			$.ajax({
+				url : "publicMailAddress.ad",
+				success : function(address) {
+
+					let value = "";
+					for (let i = 0; i < address.length; i++) {
+						value += "<tr>" 
+									+ "<td class='checkbox'>"
+									// + "<input type='checkbox' name='addNo' onchange=" + "addMail" + "('" + address[i].memEmail + "');" + ">"
+									+ "<input type='checkbox' name='addNo' >"
+									+ "</td>" 
+									+ "<td>" + address[i].name + "</td>" 
+									+ "<td>" + address[i].deptName + "</td>" 
+									+ "<td>" + address[i].jobName + "</td>" 
+									+ "<td class='email'>" + address[i].email + "</td>" 
+							  + "</tr>";
+					}
+
+					let category = "<p>전사 주소록</p>";
+
+					$(".add-title").html(category);
+					$(".addArea tbody").html(value);
+
+				},
+				error : function() {
+					console.log("주소록 찾기 실패");
+				}
+			})
+		}
+
+		// '주소록 찾기' 클릭시 실행하는 함수(개인 기본 주소록)
+		function indivAdd() {
+			$.ajax({
+				url : "personalMail.ad",
+				data : {
+					memNo : ${loginUser.memberNo}
+				},
+				success : function(address){
+					
+					let value = "";
+					if(address.iAdd.length == 0){
+						value += "<tr>"
+									+ "<td>" + "</td>" 
+									+ "<td>" + "</td>"
+									+ "<td>" + "</td>"
+									+ "<td>" + "</td>" 
+									+ "<td style='width:100%;'>" +"</td>"
+							  + "</tr>";
+					} else {
+						
+						for (let i = 0; i < address.iAdd.length; i++) {
+							value += "<tr>" + "<td class='checkbox'>"
+										+ "<input type='checkbox' name='addNo'>" + "</td>" 
+										+ "<td>" + address.iAdd[i].addName + "</td>" 
+										+ "<td>" + address.iAdd[i].addDept + "</td>" 
+										+ "<td>" + address.iAdd[i].addJob + "</td>" 
+										+ "<td style='width:100%;'>" + address.iAdd[i].addEmail + "</td>" 
+								  + "</tr>";
+						}
+					}
+					
+					let category = "";
+					for(let i = 0; i < address.c.length; i++){
+						category += "<p onclick='indivCategory(" + address.c[i].addNo + ");'>" 
+										+ address.c[i].addName
+								 + "</p>";
+					}
+					
+					$(".add-title").html(category);
+					$(".addArea tbody").html(value);
+				},
+				error : function(){
+					console.log("개인 주소록 찾기 실패");
+				}
+			})
+
+		}
+
+		// '주소록 찾기' 클릭시 실행하는 함수(개인 카테고리 주소록)
+		function indivCategory(num){
+			
+		 	$.ajax({
+		 		url : "indivMailAddressGroup.ad",
+		 		data : {
+		 			memNo : ${loginUser.memberNo},
+		 			addNo : num
+		 		},
+		 		success : function(address){
+		 			
+					let value = "";
+					
+					if(address.iAdd.length == 0){
+						value += "<tr>"
+									+ "<td>" +"</td>" 
+									+ "<td>" + "</td>"
+									+ "<td>" +"</td>"
+									+ "<td>" + "</td>" 
+									+ "<td style='width:100%;'>" +"</td>"
+							  + "</tr>";
+					} else {
+						
+						for (let i = 0; i < address.iAdd.length; i++) {
+							value += "<tr>" + "<td class='checkbox'>"
+										+ "<input type='checkbox' name='addCheck'>" + "</td>" 
+										+ "<td>" + address.iAdd[i].addName + "</td>" 
+										+ "<td>" + address.iAdd[i].addDept + "</td>" 
+										+ "<td>" + address.iAdd[i].addJob + "</td>" 
+										+ "<td style='width:100%;'>" + address.iAdd[i].addEmail + "</td>" 
+								  + "</tr>";
+						}
+					}
+	
+					let category = "";
+					for(let i = 0; i < address.c.length; i++){
+						category += "<p onclick='indivCategory(" + address.c[i].addNo + ");'>" 
+										+ address.c[i].addName
+								 + "</p>";
+					}
+					
+					$(".add-title").html(category);
+					$(".addArea tbody").html(value);
+
+		 		},
+		 		error : function(){
+		 			console.log("개인 주소록 그룹 찾기 실패");
+		 		}
+		 	})
+			
+		}
+
+		// 메일 '미리보기'클릭시 실행하는 함수
+		$("#preview").click(
+				function() {
+
+					let file = $('#upfile')[0].files.length;
+
+					$(".receive-person").html($("#receive").val());
+					$(".cc-person").html($("#cc").val());
+					$(".title").html($("#title").val());
+					$("#preview-form").html($("#summernote").val());
+					if (file > 0) {
+						// 첨부파일이 있는 경우
+						$(".file-name").html(
+								"<i class='icon fas fa-paperclip'></i>일반 첨부파일 "
+										+ file + "개");
+					} else {
+						// 첨부파일이 없는 경우
+						$(".file-name").html("첨부파일이 없습니다.");
+					}
+
+				})
+	</script>
+	
+	
 	
 
-
-	
-	
 </body>
 </html>

@@ -43,17 +43,27 @@
                 <table class="table">
                     <tr>
                         <th width="100">받는사람</th>
-                        <td>김강순(kim@goodee.com) </td>
+                        <c:if test="${not empty receivers }">
+                       		  <td>${receivers } </td>
+                        </c:if>
                     </tr>
                     <tr>
                         <th width="100">참조</th>
-                        <td>강과장(kang@goodee.com)</td>
+                        <c:choose>
+                        	<c:when test="${not empty cc }">
+                        		<td>${cc }</td>
+                        	</c:when>
+                        	<c:otherwise>
+                        		<td></td>
+                        	</c:otherwise>
+                        </c:choose>
+                        
                     </tr>
                 </table>
 
                 <div class="btn-area" align="center">
-                    <button class="btn btn-primary btn-sm">메일쓰기</button>
-                    <button class="btn btn-primary btn-sm">메일목록</button>
+                    <button class="btn btn-primary btn-sm" onclick="location.href='sendForm.em'">메일쓰기</button>
+                    <button class="btn btn-primary btn-sm" onclick="location.href='sendbox.em'">메일목록</button>
                 </div>
             </div>
         </div>

@@ -69,34 +69,23 @@ a{
     color:gray;
     cursor:pointer;
 }
-
-
-.address-title{
-    display:flex;
-    cursor: pointer;
+#plus-tag:hover{
+    color:lightgrey;
+  
 }
-
-.basic-title{
-	cursor: pointer;
-}
-
 
 .tag-delete{
     padding-top: 6px;
     margin-left:70px;
 }
-
-.tag-modify, .tag-modify:hover{
-    color: lightgray;
-    margin: 0px 10px;
-    float: right;
-
+#adbook-area a:hover{
+	text-decoration:none;
+	 color: gray;
 }
+
 #adbook-area .dropdown-item{
 	font-size:14px;
-}
-.category-title{
-	width:80%;
+	font-weight: bold;
 }
 
 .insertAddress span, .updateAddress span{
@@ -119,7 +108,7 @@ a{
     border: 1px solid rgb(206, 206, 206);
     border-radius : 5px;
 }
-.insertAddBook, .updateAddBook{
+.insertAddBook {
     margin-bottom: 10px;
     display:none;
 }
@@ -145,6 +134,19 @@ a{
      
 }
 
+#adbook-area .dropdown{
+	 color: lightgray;
+ 	 display:inline-block;
+ 	 float:right;
+ 	 height:15px;
+ 	 border:none;
+ 	 background-color:white;
+ 	 
+}
+#adbook-area .dropdown:hover{
+	background-color:rgba(233, 233, 233, 0.811);
+	border-radius:50px;
+}
 .fa-check{color:green;}
 .fa-times{color:red;}
 
@@ -159,27 +161,51 @@ a{
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
-                <a href="test.do">test</a>
+              <!--  <a href="test.do">테스트</a> -->
             <ul>
-                <li><a href="receivebox.em">받은메일함</a></li>
+                <li id="receivebox"><a href="receivebox.em">받은메일함 </a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
                 <li><a href="important.em">중요메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
                 <li>
-                    <a>스팸메일함 </a>&nbsp;
+                    <a>스팸메일함&nbsp;&nbsp;&nbsp;&nbsp; </a>
                     <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 
                 </li>
                 <li>
-                    <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
                
             </ul>
+            
+            
+            <script>
+            	$(function(){
+            		
+                   		$.ajax({
+                   		    url: "uread.em",
+                   		    data: { no: ${loginUser.memberId} },
+                   		    success: function (count){
+                   		      value += "<span class='badge text-bg-primary'>"
+                   		            + count
+                   		            + "</span>"
+                   		         $("#receivebox a").after(value);
+                   		          
+                   		    	
+                   		    },error:{
+                   		      console.log("안읽은 메일 조회 ajax통신실패");
+                   		    
+                   		    }
+                   		     
+            	})
+            
+            
+            </script>
 
             </div>
             <br><br>
@@ -188,143 +214,102 @@ a{
 
    					<input id="check-btn" type="checkbox" checked/> 
    					<label for="check-btn" class="label">
-   					<ion-icon name="chevron-down-outline"></ion-icon><a href="personal.ad">개인주소록</a></label>
+   					<ion-icon name="chevron-down-outline"></ion-icon><a href="personal.ad"> 개인주소록</a></label>
+   					
    					 <ul class="group menubars" id="personal">
                      	 <li id="all"><a href="personal.ad">전체 </a></li>
                      	 
                      	 
-                     <%-- 	 
-                      <div class="dropdown-list dropdown-menu shadow" aria-labelledby="dotDropdown">
-										
-							<!--========== 수정, 삭제 버튼 ==========-->
-							<a class="dropdown-item d-flex align-items-center"
-								onclick="updateAddBook('${c.groupNo}');"> <span
-								class="font-weight-bold">수정하기</span>
-								
-							</a> <a class="dropdown-item d-flex align-items-center"
-								onclick="deleteAddBook('${c.groupNo}');"> <span
-								class="font-weight-bold">삭제하기</span>
-							</a>
-					 </div> --%>
-                  	
-				<!--반복문 시작 -->
-				<%-- <c:choose>
-					<c:when test="${not empty glist}">
-						<c:forEach var="c" items="${glist}">
-							<c:if test="${c.memNo == loginUser.memberNo}">
-								<div class="address-title" id="addTitle${c.groupNo }">
-								
-									<!--==========주소록 클릭시 수정,삭제 처리하는 dropdown 생성 ==========-->
-									<a class="tag-modify" href="#" id="dotDropdown" role="button"
-										data-toggle="dropdown" aria-haspopup="true"
-										aria-expanded="false"> <i class="fas fa-ellipsis-v"></i>
-									</a>
-									
-									<div class="dropdown-list dropdown-menu shadow" aria-labelledby="dotDropdown">
-										
-										<!--========== 수정, 삭제 버튼 ==========-->
-										<a class="dropdown-item d-flex align-items-center"
-											onclick="updateAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">수정하기</span>
-											
-										</a> <a class="dropdown-item d-flex align-items-center"
-											onclick="deleteAddBook('${c.groupNo}');"> <span
-											class="font-weight-bold">삭제하기</span>
-										</a>
-									</div>
+                    </ul>
 
-								</div>
+			<!--========== 주소록 그룹 추가==========-->
+			<div class="insider insertAddBook">
+				<div class="insertAddress">
+					<span><input type="text" name="addName" id="addName"></span>
 
-								<form id="post" action="" method="post">
-
-									<input type="hidden" name="memNo" value="${loginUser.memberNo }">
-									<input type="hidden" name="groupNo" id="groupNo">
-
-								</form>
-
-								<!--========== 주소록 그룹명 수정 처리하는 함수 ==========-->
-								<div class="insider updateAddBook" id="update${c.groupNo }">
-									<div class="updateAddress">
-										<span><input type="text" id="groupName${c.groupNo }" name="groupName" value="${c.groupName }"></span>
-										<div class="update-addBtn">
-											<span onclick="updateAddGroup('${c.groupNo}')"><i class="fas fa-check"></i></span> 
-											<span onclick="dismissUpdateAdd('${c.groupNo}');"><i class="fas fa-times"></i></span>
-										</div>
-									</div>
-								</div>
-							</c:if>
-						</c:forEach>
-						<!-- 반복문 끝 -->
-					</c:when>
-				</c:choose>
-				 --%>
-				
-				
-                </ul>
-                
-                  <!--========== 주소록 그룹 추가하는 함수 ==========-->
-					<div class="insider insertAddBook">
-						<div class="insertAddress">
-							<span> <input type="text" name="addName" id="addName"></span>
-	
-							<div class="update-addBtn">
-								<a id="insertAddIndiv" onclick="insertAddGroup();"><i class="fas fa-check"></i></a> 
-								<a onclick="dismissInsertAdd();"><i class="fas fa-times"></i></a>
-							</div>
-						</div>
+					<div class="update-addBtn">
+						<a id="insertAddIndiv" onclick="insertAddGroup();"><i
+							class="fas fa-check"></i></a> <a onclick="dismissInsertAdd();"><i
+							class="fas fa-times"></i></a>
 					</div>
-	
-					<div id="plus-tag" onclick="return insertAddBook();" style="color:rgb(139, 139, 139)">+ 그룹 추가</div>
-   					
-     
-                    <script>
+				</div>
+			</div>
+
+
+			<div id="plus-tag" onclick="return insertAddBook();"
+				style="color: rgb(139, 139, 139)">+ 그룹 추가</div>
+
+
+			<script>
 	            	function postFormSubmit(url){
 	            		$("#post").attr("action", url).submit();
 	            	}
-	               </script>
-	               
-	                <script>
+	        </script>
+
+			<script>
                	 $(function(){
                		selectGroupList();
                	 })
                
-               	  function selectGroupList(){
-               		  $.ajax({
-               			  url:"glist.ad",
-               			  data: {no: ${loginUser.memberNo}},
-               			  success:function(list){
-               				  //console.log(list);
-               			  
-               				    var li=""
-               				  for(let i=0; i<list.length; i++){
-               					  li   += "<li>"  
-               					        + "<a href='group.ad?groupNo="+
-	               				   		+ list[i].groupNo + "'>"
-               					        + list[i].groupName 
-               					        +"<a class='tag-modify' id='dotDropdown' role='button'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i></a>"
-               					        +"</li>"
-               					       
-               				  }
-               			
-               				  $(".menubars").append(li);
-               				  
-               			   var dropdown = $('<div>').addClass('dropdown').appendTo(li);
-               		      var dropdownButton = $('<button>').addClass('dropdown-toggle').attr('type', 'button').attr('id', 'dropdownMenuButton').attr('data-toggle', 'dropdown').attr('aria-haspopup', 'true').attr('aria-expanded', 'false').appendTo(dropdown);
-               		      dropdownButton.text('Dropdown');
-               		    var dropdownMenu = $('<div>').addClass('dropdown-menu').attr('aria-labelledby', 'dropdownMenuButton').appendTo(dropdown);
-               		    var dropdownItem1 = $('<a>').addClass('dropdown-item').attr('href', '#').text('Item 1').appendTo(dropdownMenu);
-               		    var dropdownItem2 = $('<a>').addClass('dropdown-item').attr('href', '#').text('Item 2').appendTo(dropdownMenu);
-                 			
-               				   
-               			  },error:function(){
-               				  console.log("그룹조회용 ajax 통신실패");
-               			  }
-               		  })
-               	  }
+				function selectGroupList() {
+               		$.ajax({
+               		    url: "glist.ad",
+               		    data: { no: ${loginUser.memberNo} },
+               		    success: function (list) {
+               		      var all = "<li id='all'><a href='personal.ad'>전체 </a></li>"	
+               		      var li = all;
+               		      for (let i = 0; i < list.length; i++) {
+               		        li += "<li class='glist' id='addTitle"
+               		           + list[i].groupNo +"'>" 
+               		           +"<a class='addTitle' href='group.ad?groupNo=" + list[i].groupNo + "'>" + list[i].groupName + "</a>" 
+               		           +"</li>";
+               		      }
+               		     
+               		      $(".menubars").html(li);
+
+               		      $(".menubars li.glist").each(function () {
+               		        var dropdown = $("<div>").addClass("dropdown");
+               		        var dropdownButton = $("<button>").addClass("btn-default").addClass("dropdown").attr("type", "button").attr("id", "dropdownMenuButton").attr("data-toggle", "dropdown").attr("aria-haspopup", "true").attr("aria-expanded", "false").html("<i class='fas fa-ellipsis-v'>");
+               		        var dropdownMenu = $("<div>").addClass("dropdown-menu").attr("aria-labelledby", "dropdownMenuButton");
+               		        var dropdownItem1 = $("<a>").addClass("dropdown-item").attr("href", "#").text("수정하기").click(function() {
+               		          var listItem = $(this).closest(".glist");
+               		          var groupNo = listItem.attr("id").substring("addTitle".length);
+               		          var groupName = listItem.find(".addTitle").text();
+
+               		          updateAddBook(groupNo,groupName);
+               		        
+               		        })
+               		
+               		        var dropdownItem2 = $("<a>").addClass("dropdown-item").attr("href", "#").text("삭제하기").click(function() {
+                 		          var listItem = $(this).closest(".glist");
+                   		          var groupNo = listItem.attr("id").substring("addTitle".length);
+
+                   		         deleteAddBook(groupNo);
+                   		        
+                   		        })
+                   		
+
+               		        dropdownButton.appendTo(dropdown);
+               		        dropdownItem1.appendTo(dropdownMenu);
+               		        dropdownItem2.appendTo(dropdownMenu);
+               		        dropdownMenu.appendTo(dropdown);
+               		        dropdown.appendTo(this);
+
+               		        $(this).find(".dropdown-toggle").on("click", function (e) {
+               		          e.preventDefault();
+               		          $(this).closest(".dropdown").toggleClass("show");
+               		        });
+               		
+               		      });
+               		    },
+               		    error: function () {
+               		      console.log("그룹조회용 ajax 통신실패");
+               		    },
+               		  });
+               		}
        
                </script>
-				
-                    
+        
                 <script>
         
                     
@@ -335,30 +320,44 @@ a{
     				}
 
     				// 개인 주소록 수정 클릭시 실행하는 함수
-    				function updateAddBook(addNo) {
-    					// 해당 주소록 번호만 들어간 요소 hide, show 이벤트 부여
-    					$("#addTitle"+groupNo).hide();
-    					$("#update"+groupNo).show();
+    				function updateAddBook(groupNo,groupName) {
+    				// 해당 주소록 번호만 들어간 요소 hide, show 이벤트 부여
+    				$("#addTitle"+groupNo).hide();
     					
+    				var updateDiv = $("<div>").addClass("insider updateAddBook").attr("id", "update"+groupNo );
+    			    var updateAddressDiv = $("<div>").addClass("updateAddress");
+    			    var groupNameInput = $("<input>").attr("type", "text").attr("id", "groupName"+groupNo).attr("name", "groupName").attr("value", groupName);
+    			    var updateAddBtnDiv = $("<div>").addClass("update-addBtn");
+    			    var updateBtnSpan = $("<span>").click(function() {updateAddGroup(groupNo);}).html("<i class='fas fa-check'></i>");
+    			    var dismissBtnSpan = $("<span>").click(function() {dismissUpdateAdd(groupNo);}).html("<i class='fas fa-times'></i>");
+
+    			    groupNameInput.appendTo(updateAddressDiv);
+    			    updateBtnSpan.appendTo(updateAddBtnDiv);
+    			    dismissBtnSpan.appendTo(updateAddBtnDiv);
+    			    updateAddressDiv.appendTo(updateDiv);
+    			    updateAddBtnDiv.appendTo(updateDiv);
+    			    
+    			    $("#addTitle"+groupNo).after(updateDiv);
+    				
     				}
     				
-    				// 개인 주소록 수정 처리하는 함수
+    				// 개인 주소록 수정 처리
     				function updateAddGroup(groupNo){
     					
     					let name = $("#groupName" + groupNo).val();
-    					console.log($("#groupName" + groupNo).val());
+    					//console.log($("#groupName" + groupNo).val());
     					
     					
     					$.ajax({
-    						url : "updateIndivAddGroup.ma",
+    						url : "updateGroup.ad",
     						data : {
     							memNo : '${loginUser.memberNo}',
     							groupNo : groupNo,
-    							addName : name
+    							groupName : name
     						},
     						success : function(result){
     							if(result == 'success'){
-    								location.reload();
+    								selectGroupList();
     							}
     						},
     						error : function(){
@@ -368,7 +367,7 @@ a{
     					
     				}
 
-    				// 개인 주소록 삭제 처리하는 함수
+    				// 개인 주소록 삭제 처리
     				function deleteAddBook(groupNo) {
     					let answer = confirm("주소록을 삭제하면 안에 있는 연락처가 모두 삭제됩니다.\n주소록을 삭제하시겠습니까?");
     					
@@ -376,16 +375,18 @@ a{
     				 	if(answer == true){
     				 		
     				 		$.ajax({
-    				 			url : "deleteAllIndivAddBook.ad",
+    				 			url : "deleteGroup.ad",
     				 			data : {
     				 				memNo : ${loginUser.memberNo},
     				 				groupNo : groupNo
     				 			},
     				 			success : function(result){
-    				 				console.log(result);
+    				 				//console.log(result);
     				 				if(result == 'success'){
     					 				alert("주소록을 삭제했습니다.");
-    					 				location.reload(); // 서버 새로고침
+    					 				selectGroupList();
+    					 				
+    					 				window.location.href = "personal.ad";
     				 				}
 
     				 			},
@@ -420,18 +421,9 @@ a{
     								memNo : '${loginUser.memberNo}',
     								groupName : $("#addName").val()
     							},
-    							success:function(adg) {
-										console.log(adg);
-
-    		               				  let value="";
-    		               				   value += "<li>" 
-    		               				   		+"<a href='group.ad?groupNo="+
-    		               				   		+ adg.groupNo + "'>"
-    		               				   		+ $("#addName").val() 
-    		               				   		+ "<a class='tag-modify' id='dotDropdown' role='button'data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'> <i class='fas fa-ellipsis-v'></i></a>"
-    		               				   		+ "</li>";
-    		               				   
-    		               				 $(".menubars").append(value);	
+    							success:function(result) {
+										//console.log(adg);
+										selectGroupList();
     									$(".insertAddBook").hide();
     						
     								
@@ -464,15 +456,26 @@ a{
     					<a><ion-icon name="chevron-down-outline" ></ion-icon></a><a href="company.ad"> 사내주소록</a>
                    		</label>
                     <ul class="group menubars2">
-                        <li><a href="company.ad"> 전체</a></li>
+                        <li><a href="company.ad"> 전체</a></li>          
                         <li><a href="#">인사부</a></li>
                         <li><a href="#">개발부</a></li>
                         <li><a href="#">총무부</a></li>
                         <li><a href="#">디자인부</a></li>
                     </ul>
-             
-             
-            </div>
+
+			<script>
+        	$(function(){
+        		$(".menubars2 a").click(function(){
+        			location.href = "dept.ad?&deptName="+ $(this).eq(0).text();
+        	
+        		})
+        		
+        	})
+
+         </script>
+
+
+		</div>
             
 			
 			 

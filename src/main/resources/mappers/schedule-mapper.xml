@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
+<mapper namespace="scheduleMapper">
+
+	<!-- 새 일정 등록 -->
+	<insert id="scheduleModalSave" parameterType="com.aw.anyware.schedule.model.vo.ScheduleModalSave">
+		insert into TB_M_SCHEDULE
+		(
+			SCHEDULE_NO
+			,START_DATE
+			,END_DATE
+			,START_TIME
+			,END_TIME
+			,SC_TITLE
+			,SC_CONTENT
+			,STATUS
+			,WRITE_DATE
+			,MEMBER_NO
+			,CALENDAR_NO
+			,ALLDAY
+		) values (
+			SEQ_SNO.nextval
+			,#{startDate}
+			,#{endDate}
+			,#{startTime}
+			,#{endTime}
+			,#{scTitle}
+			,#{scContent}
+			,'Y'
+			,#{writeDate}
+			,1
+			,#{calendarNo}
+			,#{allday}
+		)
+	</insert>
+	
+	<insert id="calendarModalSave" parameterType="com.aw.anyware.schedule.model.vo.CalendarModalSave">
+	insert into TB_CATEGORY
+	(
+		CALENDAR_NO
+		,MY_CALENDAR
+		,SC_COLOR
+		,MEMBER_NO
+	) values (
+		SEQ_CNO.nextval
+		,#{myCalendar}
+		,#{scColor}
+		,1
+	)
+	</insert>
+	
+	<resultMap id="calendars" type="CalendarList">
+	<id column="CALENDAR_NO" property="calendarNo" />
+	<result column="MY_CALENDAR" property="myCalendar" />
+	<result column="SC_COLOR" property="scColor" />
+	<result column="MEMBER_NO" property="memberNo" />
+	
+</resultMap>
+	
+	<!-- 캘린더 목록 -->
+	<select id="calendarList" resultMap="calendars">
+	select 
+	    CALENDAR_NO
+	    ,MY_CALENDAR
+	    ,SC_COLOR
+	    ,MEMBER_NO
+	From TB_CATEGORY
+	where 1=1
+	and member_no = #{memberNo}
+	</select>
+	
+		<!-- 내 캘린더 수정 화면 -->
+	<select id="calendarModify" resultMap="calendars">
+		select
+			CALENDAR_NO
+			,MY_CALENDAR
+			,SC_COLOR
+			,MEMBER_NO
+		from tb_category
+		where 1=1
+			and calendar_no = #{calendarNo}
+			and member_no = #{memberNo}
+	</select>
+
+	<!-- 내 캘린더 수정 -->
+	<update id="updateCalendar">
+		update tb_category
+		set
+			MY_CALENDAR = #{myCalendar},
+			SC_COLOR = #{scColor}
+		where 1=1
+			and calendar_no = #{calendarNo}
+			and member_no = #{memberNo}
+	</update>
+	
+</mapper>

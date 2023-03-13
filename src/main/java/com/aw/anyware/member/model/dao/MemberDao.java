@@ -2,9 +2,11 @@ package com.aw.anyware.member.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 
 @Repository
@@ -14,13 +16,44 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectListCount");
 	}
 	
-	public ArrayList<Member> selectAllMember(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("memberMapper.selectAllMember");
+	public ArrayList<Member> selectAllMember(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		 int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		 int limit = pi.getBoardLimit();
+		 RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectAllMember", null, rowBounds);
 		
 	}
 	
 	public Member loginMember(SqlSessionTemplate sqlSession, Member m) {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
+	}
+	
+	public Member selectPwd(SqlSessionTemplate sqlSession, Member m) {
+		Member a = sqlSession.selectOne("memberMapper.selectPwd", m);
+		System.out.println("a : " + a);
+		return a;
+			
+	}
+	
+	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.changePwd", m);
+	}
+
+	public Member detailAllMember(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.selectOne("memberMapper.detailAllMember", memberNo);
+	}
+
+	public Member loginUserRrn(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.selectOne("memberMapper.loginUserRrn", memberNo);
+	}
+
+	public int memberPersonalUpdate(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.memberPersonalUpdate", m);
 	}
 
 }

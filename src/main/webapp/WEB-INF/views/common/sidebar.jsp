@@ -240,10 +240,11 @@ a {
                 </div>
                 <div class="nav__list">
                    
-                    <a href="selectAll.me?deptName=" + ${ deptName } class="nav__link">
+                    <a href="selectAll.me?deptName=${ loginUser.deptName }" class="nav__link">
                         <ion-icon name="person-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">인사</span>
                     </a>
+                   
 
 
                     <a href="receivebox.em" class="nav__link">
@@ -262,7 +263,7 @@ a {
                     </a>
 
 
-                    <a href="#" class="nav__link">
+                    <a href="main.sc" class="nav__link">
                         <ion-icon name="calendar-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">일정관리</span>
                     </a>
@@ -356,10 +357,10 @@ a {
           
             </img>
             <div class="dropdown-menu" style="font-size: 12px;">
-              <a class="dropdown-item" href="#">정보수정</a>
+              <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
               <a class="dropdown-item" href="#">일정관리</a>
-              <a class="dropdown-item" href="#">로그아웃</a>
+              <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
           </div>
 
