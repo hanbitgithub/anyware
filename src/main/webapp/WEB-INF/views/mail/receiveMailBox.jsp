@@ -342,11 +342,7 @@ input[type=checkbox] {
 
 
               })
-              
 
-            
-            
-            
             </script>
                
 

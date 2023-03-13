@@ -144,7 +144,10 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping("read.em")
 	public String ajaxCheckReadMail(MailStatus ms) {
-		
+
+		if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+			ms.setReceiver(null);
+		}
 		int result = mService.checkReadMail(ms);
 		return result>0 ? "success": "fail";
 	}
@@ -153,6 +156,10 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping("unread.em")
 	public String ajaxUncheckReadMail(MailStatus ms) {
+
+		if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+			ms.setReceiver(null);
+		}
 		int result = mService.uncheckReadMail(ms);
 		return result>0 ? "success": "fail";
 	}

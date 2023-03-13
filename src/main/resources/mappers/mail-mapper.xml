@@ -609,8 +609,14 @@
 	update tb_mail_status
 	   set read = 'Y'
 	 where em_no = #{emNo}
-	 and receiver = #{receiver}  
-
+	<choose>
+	     <when test="receiver == null">
+	     		 and  receiver is null
+	     	</when>
+	     	<otherwise>
+	     		and  receiver = #{receiver}
+	     	</otherwise>
+      </choose>
 
 </update>
 
@@ -620,8 +626,14 @@
 	update tb_mail_status
 	   set read = 'N'
 	 where em_no = #{emNo}
-	 and receiver = #{receiver}  
-
+	 <choose>
+	     <when test="receiver == null">
+	     		 and  receiver is null
+	     	</when>
+	     	<otherwise>
+	     		and  receiver = #{receiver}
+	     	</otherwise>
+      </choose>
 
 </update>
 

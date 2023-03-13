@@ -136,7 +136,7 @@ input[type=checkbox] {
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" id="search"type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -164,7 +164,7 @@ input[type=checkbox] {
                 		<c:forEach var="s" items="${slist }">
                 			<c:choose>
                 				<c:when test="${s.mailStatus.read eq 'Y' }">
-			                		<tr style="font-size: 14px;"> 
+			                		<tr style="font-size: 14px;" class="mstatus${s.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25">
 			                				<c:choose>
@@ -177,7 +177,7 @@ input[type=checkbox] {
 			                			</c:choose>
 			                			
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
 			                			<c:set var="r" value="${s.receivers}"/>
 			                			
@@ -207,7 +207,7 @@ input[type=checkbox] {
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
-	                				<tr style="font-size: 14px; font-weight: bold"> 
+	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${s.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
@@ -219,7 +219,7 @@ input[type=checkbox] {
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
 			                			<c:set var="receivers" value="${s.receivers}"/>
   
@@ -303,20 +303,66 @@ input[type=checkbox] {
 
            })
             
-                 var read= "resources/images/envelope.png"
-                     var nonRead = "resources/images/envelope2.png"
-                    	 $(".envelope").click(function(){
-                             if($(this).attr("src") != read){  
-                            	  $(this).attr("src",read);
-         	
-                             }else{
-                              	 $(this).attr("src",nonRead);
-                             }
-
-                          })
-                      
-           
             </script>
+            
+            
+            <script>
+        	 $(".envelope").click(function(){
+        		 var read= "resources/images/envelope.png"
+                 var nonRead = "resources/images/envelope2.png" 
+        		 var emNo = $(this).data("emno");
+			     var $button = $(this);
+					 
+        		 
+                 if($button.attr("src") != read){  
+                	 $.ajax({
+                		 url: "read.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : 0,
+                			 sender : '${loginUser.memberId}'
+
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",read);
+                			 $(".mstatus"+emNo ).css("font-weight","300");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시 ajax실패");
+                		 }
+                		 
+                	 })
+                	 
+                 }else{
+                	 $.ajax({
+                		 url: "unread.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : 0,
+                			 sender : '${loginUser.memberId}'
+
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",nonRead);
+                			 $(".mstatus"+emNo ).css("font-weight","bold");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시해제 ajax실패");
+                		 }
+                		 
+                	 })
+            
+                 }
+
+
+              })
+
+            </script>
+               
 	   				
 			
 

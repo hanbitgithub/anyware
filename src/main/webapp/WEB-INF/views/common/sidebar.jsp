@@ -182,12 +182,17 @@ a {
    float: right;
 }
 .chat{
-    margin-right: 20px;
+    margin-right: 25px;
     margin-top: 20px;
 }
 #profile{
     margin-right: 50px;
     margin-top: 10px;
+}
+
+.drop-btn{
+	border:none;
+	background:white;
 }
 
 /*서브메뉴*/
@@ -353,10 +358,12 @@ a {
 
     <div class="header">
         <div class="dropdown" id="profile" style="display: inline-block;">
-            <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+             <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
+   				 <img src="resources/images/profile.jpg" type="button" width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+  			 </button>
+           
           
-            </img>
-            <div class="dropdown-menu" style="font-size: 12px;">
+            <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
               <a class="dropdown-item" href="#">일정관리</a>
