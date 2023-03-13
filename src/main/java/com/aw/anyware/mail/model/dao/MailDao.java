@@ -212,7 +212,7 @@ public class MailDao {
 	 * @return 받은메일 개수 
 	 */
 	public int selectReceiveMailListCount(SqlSessionTemplate sqlSession, String memId) {
-		return sqlSession.selectOne("mailMapper.selectReceiveMailListCount");
+		return sqlSession.selectOne("mailMapper.selectReceiveMailListCount",memId);
 	}
 	
 	/**
@@ -228,6 +228,11 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList",memId,rowBounds);
 	}
+
+	public int selectUnreadReceiveMail(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectUnreadReceiveMail",memId);
+	}
+	
 	
 	/**
 	 * @param sqlSession

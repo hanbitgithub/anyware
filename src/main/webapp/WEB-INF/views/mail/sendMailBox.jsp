@@ -25,6 +25,11 @@
 	background-color: rgb(250, 249, 249);
 }
 
+#search{ 
+	width:250px;
+}
+
+
 
 /*페이징*/
 #paging-area button{
@@ -118,7 +123,7 @@
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search"type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -148,9 +153,19 @@
                 				<c:when test="${s.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
-			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25">
+			                				<c:choose>
+			                				<c:when test="${s.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			
+			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-			                			<td width="100">
+			                			<td width="150">
 			                			<c:set var="r" value="${s.receivers}"/>
 			                			
 									    <c:choose>
@@ -181,7 +196,16 @@
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
-			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${s.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
 			                			<td width="150">
 			                			<c:set var="receivers" value="${s.receivers}"/>

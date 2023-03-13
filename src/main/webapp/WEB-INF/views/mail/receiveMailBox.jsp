@@ -25,6 +25,9 @@
  
 }
 
+#search{ 
+	width:250px;
+}
 
 /*페이징*/
 #paging-area button{
@@ -50,7 +53,7 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-		 <b style="font-size: 18px;"> 받은메일함</b>
+		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 15px">&nbsp; ${unread} / ${ rCount }</span>
             <br><br><br>
 
             <nav class="navbar navbar-expand-lg bg-light">
@@ -118,7 +121,7 @@
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -148,9 +151,18 @@
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;"> 
 			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
-			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-			                			<td width="100">${r.memName }</td>
+			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
@@ -164,9 +176,18 @@
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold"> 
 			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
-			                			<td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
-			                			<td width="100">${r.memName }</td>
+			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
@@ -254,14 +275,15 @@
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
 					<c:when test="${empty keyword }">
-						<button onclick="location.href='receivebox.em?cpage=${p}'">${p}</button>
+						<button onclick="location.href='receivebox.em.em?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='receivebox.em?cpage=${p}&keyword=${keyword}'">${p}</button>
+							onclick="location.href='receivebox.em.em?cpage=${p}&keyword=${keyword}'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
+
 
 			<c:choose>
 				<c:when test="${pi.currentPage eq pi.maxPage }">

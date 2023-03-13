@@ -161,9 +161,9 @@ a{
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
-               <a href="test.do">테스트</a>
+              <!--  <a href="test.do">테스트</a> -->
             <ul>
-                <li><a href="receivebox.em">받은메일함</a></li>
+                <li id="receivebox"><a href="receivebox.em">받은메일함 </a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
                 <li><a href="important.em">중요메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
@@ -182,6 +182,30 @@ a{
                 </li>
                
             </ul>
+            
+            
+            <script>
+            	$(function(){
+            		
+                   		$.ajax({
+                   		    url: "uread.em",
+                   		    data: { no: ${loginUser.memberId} },
+                   		    success: function (count){
+                   		      value += "<span class='badge text-bg-primary'>"
+                   		            + count
+                   		            + "</span>"
+                   		         $("#receivebox a").after(value);
+                   		          
+                   		    	
+                   		    },error:{
+                   		      console.log("안읽은 메일 조회 ajax통신실패");
+                   		    
+                   		    }
+                   		     
+            	})
+            
+            
+            </script>
 
             </div>
             <br><br>
@@ -198,7 +222,7 @@ a{
                      	 
                     </ul>
 
-			<!--========== 주소록 그룹 추가하는 함수 ==========-->
+			<!--========== 주소록 그룹 추가==========-->
 			<div class="insider insertAddBook">
 				<div class="insertAddress">
 					<span><input type="text" name="addName" id="addName"></span>
@@ -317,7 +341,7 @@ a{
     				
     				}
     				
-    				// 개인 주소록 수정 처리하는 함수
+    				// 개인 주소록 수정 처리
     				function updateAddGroup(groupNo){
     					
     					let name = $("#groupName" + groupNo).val();
@@ -343,7 +367,7 @@ a{
     					
     				}
 
-    				// 개인 주소록 삭제 처리하는 함수
+    				// 개인 주소록 삭제 처리
     				function deleteAddBook(groupNo) {
     					let answer = confirm("주소록을 삭제하면 안에 있는 연락처가 모두 삭제됩니다.\n주소록을 삭제하시겠습니까?");
     					

@@ -63,7 +63,10 @@ public interface MailService {
 	//받은메일 갯수, 리스트 조회
 	int selectReceiveMailListCount(String memId);
 	ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId);
-
+	
+	//안읽은 메일 수 조회
+	int selectUnreadReceiveMail(String memId);
+	
 	//메일 개인주소록 조회
 	 List<Map<String, Object>> addressbookGroupList(int memNo);
 	

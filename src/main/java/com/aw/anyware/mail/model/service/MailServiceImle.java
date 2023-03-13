@@ -191,6 +191,16 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId) {
 		return mDao.selectReceiveMailList(sqlSession, pi, memId);
 	}
+	
+	/**
+	 * 받은 메일 중 안읽은 메일 개수 
+	 */
+	@Override
+	public int selectUnreadReceiveMail(String memId) {
+		return mDao.selectUnreadReceiveMail(sqlSession,memId);
+	}
+	
+	
 
 	/**
 	 * 개인주소록 그룹별 리스트 
@@ -240,10 +250,15 @@ public class MailServiceImle implements MailService {
 		return mDao.insertSendMail(sqlSession, m);
 	}
 
+	/**
+	 * 메일 쓰기 ( mailStatus 테이블 insert)
+	 */
 	@Override
 	public int insertMailStatus(ArrayList<MailStatus> list) {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
+
+	
 	
 
 	

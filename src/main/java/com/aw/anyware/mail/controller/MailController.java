@@ -49,10 +49,23 @@ public class MailController {
 		//받은 메일 리스트 조회 
 		ArrayList<Mail> rlist = mService.selectReceiveMailList(pi,memId);
         
+		//안읽은 메일 수 조회 
+		int unreadCount = mService.selectUnreadReceiveMail(memId);
 		//System.out.println(rlist);
 		model.addAttribute("rlist", rlist);
 		model.addAttribute("pi",pi);
+		model.addAttribute("rCount",listCount);
+		model.addAttribute("unread",unreadCount);
+		
 		return "mail/receiveMailBox";
+	}
+	//안읽은 메일 수 조회 ajax
+	@ResponseBody
+	@RequestMapping("unread.em")
+	public String unReadMailCount(String memId) {
+		int unreadCount = mService.selectUnreadReceiveMail(memId);
+		
+		return new Gson().toJson(unreadCount);
 	}
 	
 	
@@ -73,7 +86,7 @@ public class MailController {
 		model.addAttribute("slist", slist);
 		model.addAttribute("pi",pi);
 		model.addAttribute("listCount",listCount);
-		
+		//System.out.println(pi);
 		
 		return "mail/sendMailBox";
 	}

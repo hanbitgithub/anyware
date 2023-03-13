@@ -338,25 +338,26 @@
 
 
 <!--메일리스트-->
+<!-- 받은메일 개수조회 -->
 <select id="selectReceiveMailListCount" resultType="_int">
-	select count(m.em_no) "count"   
-		 from tb_mail m
-		 join  tb_mail_status  s on (m.em_no = s.em_no)
-		 left outer join tb_mail_file f on (m.em_no = f.em_no)
-		 where em_type in (1,2)
-		 and s.receiver = #{receiver}
-		 and trash = 'N'
-		 and spam = 'N'
+	select count(m.em_no) "count"
+	 from tb_mail m
+	 join  tb_mail_status  s on (m.em_no = s.em_no)
+	 left outer join tb_mail_file f on (m.em_no = f.em_no)
+	 where em_type in (1,2)
+	 and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
 
 </select>
-
+<!-- 받은메일 리스트  -->
 <select id="selectReceiveMailList" resultMap="mailResult">
 	select m.em_no
 	     , em_title
 	     , em_content
 	     , mem_name
 	     , sender
-	     , send_date
+	     , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	     , em_type
 	     , receiver_name
 	     , s.receiver
@@ -369,12 +370,28 @@
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
 	 left outer join tb_mail_file f on (m.em_no = f.em_no)
 	 where em_type in (1,2)
-	 and s.receiver = #{receiver}
+	 and s.receiver = #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
      order by m.em_no desc
 
 </select>
+
+<!--안읽은 메일 수 조회 -->
+<select id="selectUnreadReceiveMail" resultType="_int">
+ select  count(read) "unread"
+	from tb_mail_status
+	where read= 'N'
+	and em_type in (1,2)
+	and receiver = #{memId}
+	and trash = 'N'
+	and spam = 'N'
+	group by receiver
+ 
+
+
+</select>
+
 
 <!-- 메일주소록 조회 -->
 <select id="addressbookGroupList" resultMap="addressResult">
@@ -425,7 +442,7 @@
 <!-- 보낸메일 개수조회 -->
 <select id="selectSendMailListCount" resultType="_int">
 	select 
-	      count(m. em_no)
+	      count(m. em_no) "count"
 	   
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
@@ -443,7 +460,7 @@
         , sender
 	    , em_title
 	    , em_content
-	    , send_date
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
 	    , m.receiver
 	    , read
