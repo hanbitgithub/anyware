@@ -379,14 +379,14 @@
 
 <!--안읽은 메일 수 조회 -->
 <select id="selectUnreadReceiveMail" resultType="_int">
- select  count(read) "unread"
+ select  NVL(count(read), 0) as "unread"
 	from tb_mail_status
 	where read= 'N'
 	and em_type in (1,2)
 	and receiver = #{memId}
 	and trash = 'N'
 	and spam = 'N'
-	group by receiver
+
 
 </select>
 
@@ -604,10 +604,26 @@
       </choose>
 </update>
 
+<!-- 메일 읽음으로 표시 -->
+<update id="checkReadMail">
+	update tb_mail_status
+	   set read = 'Y'
+	 where em_no = #{emNo}
+	 and receiver = #{receiver}  
 
 
+</update>
 
 
+<!-- 메일 안읽음으로 표시 -->
+<update id="uncheckReadMail">
+	update tb_mail_status
+	   set read = 'N'
+	 where em_no = #{emNo}
+	 and receiver = #{receiver}  
+
+
+</update>
 
 
 

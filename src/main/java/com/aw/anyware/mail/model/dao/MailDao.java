@@ -338,17 +338,34 @@ public class MailDao {
 	/**
 	 * @param sqlSession
 	 * @param ms
-	 * @return 중요메일 체크시 important 상태 변경 
+	 * @return 중요메일 체크시 important = 'Y' 상태 변경 
 	 */
 	public int checkImportantMail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.update("mailMapper.checkImportantMail",ms);
 	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 중요메일 체크해제시 important = 'N' 상태변경 
+	 */
 	public int uncheckImportantMail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.update("mailMapper.uncheckImportantMail",ms);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 읽음으로 표시 read = 'Y' 상태변경 
+	 */
+	public int checkReadMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.update("mailMapper.checkReadMail",ms);
+	}
+	
+	public int uncheckReadMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.update("mailMapper.uncheckReadMail",ms);
+	}
 	
 
 }

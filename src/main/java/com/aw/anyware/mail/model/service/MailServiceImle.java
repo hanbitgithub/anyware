@@ -200,7 +200,6 @@ public class MailServiceImle implements MailService {
 		return mDao.selectUnreadReceiveMail(sqlSession,memId);
 	}
 	
-	
 
 	/**
 	 * 개인주소록 그룹별 리스트 
@@ -282,9 +281,28 @@ public class MailServiceImle implements MailService {
 		return mDao.checkImportantMail(sqlSession, ms);
 	}
 
+	/**
+	 * 중요메일 표시 해제 
+	 */
 	@Override
 	public int uncheckImportantMail(MailStatus ms) {
 		return mDao.uncheckImportantMail(sqlSession,ms);
+	}
+
+	/**
+	 * 메일 읽음표시 
+	 */
+	@Override
+	public int checkReadMail(MailStatus ms) {
+		return mDao.checkReadMail(sqlSession, ms);
+	}
+
+	/**
+	 * 메일 안읽음표시 
+	 */
+	@Override
+	public int uncheckReadMail(MailStatus ms) {
+		return mDao.uncheckReadMail(sqlSession, ms);
 	}
 	
 	

@@ -97,6 +97,12 @@ public interface MailService {
 	//중요메일 해제
 	int uncheckImportantMail(MailStatus ms);
 	
+	//메일 읽음표시
+	int checkReadMail(MailStatus ms);
+	
+	//메일 안읽음표시
+	int uncheckReadMail(MailStatus ms);
+	
 	
      
 }

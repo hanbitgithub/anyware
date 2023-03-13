@@ -60,13 +60,14 @@ public class MailController {
 		return "mail/receiveMailBox";
 	}
 	//안읽은 메일 수 조회 ajax
-	
 	@ResponseBody
-	@RequestMapping(value="unread.em", produces="application/json; charset=utf-8")
+	@RequestMapping(value="unreadcount.em", produces="application/json; charset=utf-8")
 	public String unReadMailCount(String memId) {
 		
 		int unreadCount = mService.selectUnreadReceiveMail(memId);
-		//System.out.println(unreadCount);
+		
+		//System.out.println("안읽은수:" +unreadCount);
+		
 		return new Gson().toJson(unreadCount);
 	}
 	
@@ -136,6 +137,23 @@ public class MailController {
 		}
 		
 		int result = mService.uncheckImportantMail(ms);
+		return result>0 ? "success": "fail";
+	}
+	
+	//읽음표시
+	@ResponseBody
+	@RequestMapping("read.em")
+	public String ajaxCheckReadMail(MailStatus ms) {
+		
+		int result = mService.checkReadMail(ms);
+		return result>0 ? "success": "fail";
+	}
+	
+	//안읽음으로표시 
+	@ResponseBody
+	@RequestMapping("unread.em")
+	public String ajaxUncheckReadMail(MailStatus ms) {
+		int result = mService.uncheckReadMail(ms);
 		return result>0 ? "success": "fail";
 	}
 	
