@@ -42,8 +42,7 @@
 		<p><b>게시글 작성하기</b></p>
         <hr>
         <form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
-        <!-- <input type="hidden" name="boardWriter" value="${loginUser.userId }"> -->
-        <input type="text" name="boardWriter">
+        <input type="hidden" name="boardWriter" value="${loginUser.memberNo }">
 		         
         <select id="category" name="category">
             <option value="5">자유게시판</option>

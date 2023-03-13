@@ -44,9 +44,15 @@
         <hr>
         <form id="enrollForm" method="post" action="update.bo" enctype="multipart/form-data">
         <input type="hidden" name="boardNo" value="${ b.boardNo }">
-        <!-- <input type="hidden" name="boardWriter" value="${loginUser.userId }"> -->
-        <input type="text" name="boardWriter">
-		<input type="text" name="category" value="${ b.category }" readonly>         
+        <input type="hidden" name="boardWriter" value="${loginUser.memberNo }">     
+		<select id="category" name="category" value="${ b.category }" readonly>
+            <option value="5">자유게시판</option>
+            <option value="6">공지사항</option>
+            <option value="1">인사팀</option>
+            <option value="2">총무팀</option>
+            <option value="3">개발팀</option>
+            <option value="4">디자인팀</option>
+        </select>  
 
         
 	    <input type="text" id="boardTitle" name="boardTitle"

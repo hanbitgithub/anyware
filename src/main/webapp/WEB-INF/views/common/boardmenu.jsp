@@ -49,8 +49,20 @@
 			<br>
 			<span style="font-weight: 600; font-size: 15px;" >전사게시판</span><br>
 			<ul>
-	            <li><a href="">부서별게시판</a></li>
-
+            <c:choose>
+	           <c:when test="${ loginUser.deptName == '인사부' }">
+	               <li><a href="alist.bo">인사팀게시판</a></li>
+	            </c:when>
+	           <c:when test="${ loginUser.deptName == '총무부' }">
+	               <li><a href="">총무팀게시판</a></li>
+	            </c:when>
+	           <c:when test="${ loginUser.deptName == '디자인부' }">
+	               <li><a href="">디자인팀게시판</a></li>
+	            </c:when>
+	            <c:when test="${ loginUser.deptName == '개발부' }">
+	               <li><a href="">개발팀게시판</a></li>
+	            </c:when> 
+            </c:choose>
 	        </ul>
 			
 

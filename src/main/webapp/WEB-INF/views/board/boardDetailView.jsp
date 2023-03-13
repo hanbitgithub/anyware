@@ -89,6 +89,7 @@ textarea {
                  </c:choose> 
 		        </div>
 		        
+		        <c:if test="${ loginUser.memberNo eq b.boardWriter }">
 		        <div id="span2">
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(1);">수정하기</button>  
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(2);">삭제하기</button>  
@@ -98,7 +99,10 @@ textarea {
 					<input type="hidden" name="no" value="${b.boardNo }">
 					<input type="hidden" name="filePath" value="${b.changeName }">
 				</form>
-				
+		
+		    </li>
+		</ul>
+		</table>				
 				<script>
 					function postFormSubmit(num){
 						if(num == 1){
@@ -108,13 +112,10 @@ textarea {
 						}
 					}
 				</script>
-		        
+		        </c:if>
 		            
 		            
-		
-		    </li>
-		</ul>
-		</table>
+
 		
 		<!-- 댓글 -->
 		<table id="replyArea" class="table" style="font-size: 13px;">
@@ -129,10 +130,10 @@ textarea {
 		    <tbody></tbody>  
 		    <tfoot>
 		    	<tr>
-		            <td>
+		            <th>
 		                <textarea class="form-control" id="rcontent" cols="55" rows="2" style="resize:none; width:100%; height:60px;"></textarea>
-		            </td>
-		            <td style="vertical-align: middle"><button onclick="addReply();" id="btn2" class="btn-lg">등록하기</button></td>
+		            </th>
+		            <th style="vertical-align: middle"><button onclick="addReply();" id="btn2" class="btn-lg">등록하기</button></th>
 		        </tr>
 		    </tfoot> 
 		    
@@ -145,9 +146,9 @@ textarea {
     		selectReplyList();
     	})
     	
-    	function addReply(){ // 댓글 작성용 ajax
+    	function addReply(){ 
     		
-    		if($("#rcontent").val().trim().length > 0){ // 유효한 댓글 작성시 => insert ajax요청
+    		if($("#rcontent").val().trim().length > 0){ 
     			
     			$.ajax({
     				url:"rinsert.bo",
@@ -172,7 +173,7 @@ textarea {
     			
     	}
     	
-    	function selectReplyList(){ // 해당 게시글에 딸린 댓글리스트 조회용 ajax
+    	function selectReplyList(){
     		$.ajax({
     			url:"rlist.bo",
     			data:{no:${b.boardNo}},
