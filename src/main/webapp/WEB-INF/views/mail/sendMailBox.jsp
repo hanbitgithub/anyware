@@ -156,10 +156,10 @@
 			                			<td width="25">
 			                				<c:choose>
 			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			
@@ -199,10 +199,10 @@
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
@@ -242,19 +242,51 @@
                 
             </table>
             <script>
-             $(function(){
-                var star = "resources/images/star.png"
-                var award = "resources/images/award.png"
-                  $(".star").click(function(){
-                    if($(this).attr("src") != star){  
-                     $(this).attr("src",star);
+           
+      		 $(".star").click(function(){
+				 var star = "resources/images/star.png"
+		         var award = "resources/images/award.png"
+		         var emNo = $(this).data("emno");
+				 var $button = $(this);
+				 
+           	  if($button.attr("src") != star){  
+           			$.ajax({
+		   					url:"like.em",
+		   					data:{
+		   						emNo : emNo,
+		   						emType: 0,
+		   						sender : '${loginUser.memberId}'
+		   					},
+		   					success:function(result){
+		   						//console.log(result);
+		   					 	$button.attr("src",star);
+		   						 
+		   					},error:function(){
+		   						console.log("좋아요실패");
+		   					}
+           			})
 
-                    }else{
-                      $(this).attr("src",award);
-                    }
+               }else{
+                	$.ajax({
+                		url:"dislike.em",
+                		data:{
+                			emNo : emNo,
+                			emType: 0,
+                			sender : '${loginUser.memberId}'
+                		},
+                		success:function(result){
+                			//console.log(result);
+                			$button.attr("src",award);
+                		
+                		},error: function(){
+                			console.log("좋아요 취소 실패");
+                		}
+                	}) 
+               	
+               }
 
-
-                 })
+           })
+            
                  var read= "resources/images/envelope.png"
                      var nonRead = "resources/images/envelope2.png"
                     	 $(".envelope").click(function(){
@@ -267,7 +299,7 @@
 
                           })
                       
-             })
+           
             </script>
 	   				
 			

@@ -387,8 +387,6 @@
 	and trash = 'N'
 	and spam = 'N'
 	group by receiver
- 
-
 
 </select>
 
@@ -525,12 +523,86 @@
 	
 </insert>
 
+<!-- 중요메일 개수 -->
+<select id="selectImportantMailCount" resultType="_int">
+ select 
+ 		 count(m. em_no) "count"
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where (sender= #{memId} and s.receiver is null
+	 or s.receiver = #{memId})
+	 and trash = 'N'
+	 and spam = 'N'
+     and important = 'Y'
+   order by m.em_no desc
 
 
+</select>
+
+<!-- 중요메일함 리스트 -->
+<select id="selectImportantMailList" resultMap="mailResult">
+     select 
+ 		 m. em_no
+        , sender
+        , mem_name
+        , em_type
+	    , em_title
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+        , s.receiver
+	    , read
+	    , important
+	    , emf_no
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where (sender= #{memId} and s.receiver is null
+	 or s.receiver = #{memId})
+	 and trash = 'N'
+	 and spam = 'N'
+     and important = 'Y'
+   order by m.em_no desc
+
+</select>
+
+<!-- 중요메일 체크시 -->
+
+<update id="checkImportantMail">
+  update tb_mail_status
+     set important = 'Y'
+     where em_no = #{emNo}
+     <choose>
+     	<when test="receiver == null">
+     		 and  receiver is null
+     	</when>
+     	<otherwise>
+     		and  receiver = #{receiver}
+     	</otherwise>
+     </choose>
+     
+
+      
+</update>
 
 
+<!-- 중요메일 체크해제시 -->
 
-
+<update id="uncheckImportantMail">
+  update tb_mail_status
+     set important = 'N'
+     where em_no = #{emNo}
+     <choose>
+	     <when test="receiver == null">
+	     		 and  receiver is null
+	     	</when>
+	     	<otherwise>
+	     		and  receiver = #{receiver}
+	     	</otherwise>
+      </choose>
+</update>
 
 
 

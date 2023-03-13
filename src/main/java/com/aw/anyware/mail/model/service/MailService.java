@@ -60,30 +60,43 @@ public interface MailService {
 
 	/*메일*/
 	
-	//받은메일 갯수, 리스트 조회
+	// 받은메일 갯수, 리스트 조회
 	int selectReceiveMailListCount(String memId);
 	ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId);
-	
-	//안읽은 메일 수 조회
-	int selectUnreadReceiveMail(String memId);
-	
-	//메일 개인주소록 조회
-	 List<Map<String, Object>> addressbookGroupList(int memNo);
-	
-	 //메일 전사주소록 조회
-	 List<Map<String, Object>> addressbookMemberList();
-	 
-	 //보낸적있는 메일주소 조회
-	 ArrayList<Mail> receiverMemberList(String memId);
-	 
-	 //보낸 메일 갯수, 리스트 조회
-	 int selectSendMailListCount(String memId);
-     ArrayList<Mail> selectSendeMailList(PageInfo pi, String memId);
 
-	 //메일 작성 
-     //메일 테이블 insert
-     int insertSendMail(Mail m);
-     //메일status 테이블 insert
-     int insertMailStatus(ArrayList<MailStatus> list);
-	 
+	// 안읽은 메일 수 조회
+	int selectUnreadReceiveMail(String memId);
+
+	// 메일 개인주소록 조회
+	List<Map<String, Object>> addressbookGroupList(int memNo);
+
+	// 메일 전사주소록 조회
+	List<Map<String, Object>> addressbookMemberList();
+
+	// 보낸적있는 메일주소 조회
+	ArrayList<Mail> receiverMemberList(String memId);
+
+	// 보낸 메일 갯수, 리스트 조회
+	int selectSendMailListCount(String memId);
+	ArrayList<Mail> selectSendeMailList(PageInfo pi, String memId);
+
+	// 메일 작성
+	// 메일 테이블 insert
+	int insertSendMail(Mail m);
+
+	// 메일status 테이블 insert
+	int insertMailStatus(ArrayList<MailStatus> list);
+
+	// 중요메일함 개수, 리스트조회
+	int selectImportantMailCount(String memId);
+	ArrayList<Mail> selectImportantMailList(PageInfo pi, String memId);
+	
+	//중요메일 표시
+	int checkImportantMail(MailStatus ms);
+	
+	//중요메일 해제
+	int uncheckImportantMail(MailStatus ms);
+	
+	
+     
 }

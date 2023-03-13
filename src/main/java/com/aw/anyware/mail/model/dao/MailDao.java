@@ -229,6 +229,11 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMailList",memId,rowBounds);
 	}
 
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 읽지않은 메일수 (받은메일)
+	 */
 	public int selectUnreadReceiveMail(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.selectOne("mailMapper.selectUnreadReceiveMail",memId);
 	}
@@ -306,10 +311,43 @@ public class MailDao {
 	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 중요메일 개수 
+	 */
+	public int selectImportantMailCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectImportantMailCount",memId);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param pi
+	 * @param memId
+	 * @return 중요메일 리스트 
+	 */
+	public ArrayList<Mail> selectImportantMailList(SqlSessionTemplate sqlSession, PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectImportantMailList",memId,rowBounds);
+	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 중요메일 체크시 important 상태 변경 
+	 */
+	public int checkImportantMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.update("mailMapper.checkImportantMail",ms);
+	}
 	
 	
+	public int uncheckImportantMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.update("mailMapper.uncheckImportantMail",ms);
+	}
 	
 	
 

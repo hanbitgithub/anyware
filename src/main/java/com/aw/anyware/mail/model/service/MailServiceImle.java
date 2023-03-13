@@ -258,6 +258,37 @@ public class MailServiceImle implements MailService {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
 
+	/**
+	 * 중요메일 수 조회 
+	 */
+	@Override
+	public int selectImportantMailCount(String memId) {
+		return mDao.selectImportantMailCount(sqlSession,memId);
+	}
+
+	/**
+	 * 중요메일 리스트 조회 
+	 */
+	@Override
+	public ArrayList<Mail> selectImportantMailList(PageInfo pi, String memId) {
+		return mDao.selectImportantMailList(sqlSession, pi, memId);
+	}
+
+	/**
+	 *  중요메일 표시 
+	 */
+	@Override
+	public int checkImportantMail(MailStatus ms) {
+		return mDao.checkImportantMail(sqlSession, ms);
+	}
+
+	@Override
+	public int uncheckImportantMail(MailStatus ms) {
+		return mDao.uncheckImportantMail(sqlSession,ms);
+	}
+	
+	
+
 	
 	
 

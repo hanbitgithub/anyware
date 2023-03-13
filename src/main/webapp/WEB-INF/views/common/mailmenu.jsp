@@ -163,7 +163,7 @@ a{
             <div id="mail-area">
               <!--  <a href="test.do">테스트</a> -->
             <ul>
-                <li id="receivebox"><a href="receivebox.em">받은메일함 </a></li>
+                <li id="receivebox"><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
                 <li><a href="important.em">중요메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
@@ -188,19 +188,20 @@ a{
             	$(function(){
             		
                    		$.ajax({
-                   		    url: "uread.em",
-                   		    data: { no: ${loginUser.memberId} },
+                   		    url: "unread.em",
+                   		    data: { memId : '${loginUser.memberId}' },
                    		    success: function (count){
-                   		      value += "<span class='badge text-bg-primary'>"
+                   		        value = "";
+                   		    	value += "<span class='badge text-bg-primary'>"
                    		            + count
                    		            + "</span>"
                    		         $("#receivebox a").after(value);
                    		          
                    		    	
-                   		    },error:{
-                   		      console.log("안읽은 메일 조회 ajax통신실패");
-                   		    
+                   		    },error: function () {
+                     		      console.log("안읽은메일조회용 ajax 통신실패");
                    		    }
+                   		  });
                    		     
             	})
             

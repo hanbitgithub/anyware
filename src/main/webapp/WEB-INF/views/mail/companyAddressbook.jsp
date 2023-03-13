@@ -93,7 +93,7 @@
             <table class="table" style="text-align: center;">
                 <thead>
                     <tr style="font-size: 14px; font-weight: bold;">
-                        <td width="10"><input type="checkbox" id="chkAll"></td>
+                        <td width="10"><input type="checkbox" id="chkAll"></td>       
                         <td width="50">이름</td>
                         <td width="150">이메일</td>
                         <td width="100">연락처</td>
