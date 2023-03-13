@@ -77,7 +77,8 @@ table{
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	
+	<p><b>자유게시판</b></p>
+	<hr>
 	<div class="container">
             <input type="text" value="제목으로 검색하기" class="button">
             <button type="submit" class="button">검색</button>
@@ -85,6 +86,7 @@ table{
 
             <table id="boardList" class="table table-hover" align="center">
               <thead>
+              <tr>
                   <th>번호</th>
                   <th>제목</th>
                   <th>작성자</th>

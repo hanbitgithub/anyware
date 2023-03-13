@@ -31,6 +31,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public ArrayList<Board> selectNoticeList(PageInfo pi) {
+		return bDao.selectNoticeList(sqlSession, pi);
+	}
+	
+	@Override
 	public int insertBoard(Board b) {
 		return bDao.insertBoard(sqlSession, b);
 	}
@@ -46,13 +51,13 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int delectBoard(int boardNo) {
-		return 0;
+	public int deleteBoard(int boardNo) {
+		return bDao.deleteBoard(sqlSession, boardNo);
 	}
 
 	@Override
 	public int updateBoard(Board b) {
-		return 0;
+		return bDao.updateBoard(sqlSession, b);
 	}
 
 	@Override
@@ -64,5 +69,8 @@ public class BoardServiceImpl implements BoardService {
 	public int insertReply(Reply r) {
 		return 0;
 	}
+
+
+
 
 }

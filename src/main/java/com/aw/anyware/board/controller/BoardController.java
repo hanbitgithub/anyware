@@ -49,6 +49,23 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping("nlist.bo")
+	public String selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = bService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectNoticeList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+
+		return "board/noticeListView";
+		
+	}
+	
+	
 	@RequestMapping("enrollForm.bo")
 	public String enrollForm() {
 		return "board/boardEnrollForm";
@@ -92,5 +109,57 @@ public class BoardController {
 		return mv;
 	}
 	
+	@RequestMapping("delete.bo")
+	public String deleteBoard(int no, String filePath, HttpSession session, Model model) {
+		
+		int result = bService.deleteBoard(no);
+		
+		if(result > 0) {
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			return "redirect:list.bo";
+			
+		}else {
+			model.addAttribute("errorMsg", "게시글 삭제 실패");
+			return "common/errorPage";
+			
+		}
+	}
+	
+	@RequestMapping("updateForm.bo")
+	public String updateForm(int no, Model model) {
+		model.addAttribute("b", bService.selectBoard(no));
+		return "board/boardUpdateForm";
+	}
+	
+	@RequestMapping("update.bo")
+	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
+		
+		if(!reupfile.getOriginalFilename().equals("")) {
+			
+			if(b.getOriginName() != null) {
+				new File(session.getServletContext().getRealPath(b.getChangeName())).delete();
+			}
+			
+			String saveFilePath = FileUpload.saveFile(reupfile, session, "resources/uploadFiles/");
+			
+			b.setOriginName(reupfile.getOriginalFilename());
+			b.setChangeName(saveFilePath);
+			
+		}
+
+		int result = bService.updateBoard(b);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "성공적으로 게시글이 수정되었습니다.");
+			return "redirect:detail.bo?no=" + b.getBoardNo();
+		}else {
+			model.addAttribute("errorMsg", "게시글 수정 실패");
+			return "common/errorPage";
+		}
+	}
 	
 }

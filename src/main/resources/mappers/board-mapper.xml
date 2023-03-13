@@ -31,9 +31,25 @@
 		     , count
 		  from tb_board
 		 where status = 'Y'
+		 and category = '5'
 		 order
 		    by board_no desc
 	</select>
+	
+		<select id="selectNoticeList" resultMap="boardResult">
+		select
+		       board_no
+		     , board_title
+		     , board_writer
+		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+		     , count
+		  from tb_board
+		 where status = 'Y'
+		 and category = '6'
+		 order
+		    by board_no desc
+	</select>
+	
 	
 	<insert id="insertBoard">
 		insert
@@ -78,10 +94,24 @@
 			 , change_name
 			 , category
 		from tb_board
-		where board_no = #{boardNo}	 
-
-			   	
+		where board_no = #{boardNo}	 	   	
 	</select>
+	
+	<update id="deleteBoard">
+		update
+			tb_board
+		  set status = 'N'
+		 where board_no = #{ boardNo} 	
+	</update>
+		<update id="updateBoard">
+		update
+		       tb_board
+		   set board_title = #{boardTitle}
+		     , board_content = #{boardContent}
+		     , origin_name = #{originName}
+		     , change_name = #{changeName}
+		 where board_no = #{boardNo}     
+	</update>
 	
 
 </mapper>

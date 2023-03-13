@@ -42,8 +42,8 @@
         <div id="chat-area">
 			<span style="font-weight: 600; font-size: 15px;" >전사게시판</span><br>
 	        <ul>
-	            <li><a href="">공지사항</a></li>
-	            <li><a href="">자유게시판</a></li>
+	            <li><a href="nlist.bo">공지사항</a></li>
+	            <li><a href="list.bo">자유게시판</a></li>
 
 	        </ul>
 			<br>

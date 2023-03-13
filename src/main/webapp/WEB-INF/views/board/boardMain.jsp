@@ -42,30 +42,46 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
+	    <div id="boardList" class="notice" style="display: inline-block"> 
+    		<h3 align="center"><a href="list.bo">자유게시판</a></h3>
+		        <ul class="ul">
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		            <li><a>게시글</a></li>
+		        </ul>    
 	
-	    <div class="notice" style="display: inline-block"> 
-        <h3 align="center"><a href="list.bo">공지사항</a></h3>
-        <ul class="ul">
-            <li><a>공지사항</a></li>
-            <li><a>공지사항</a></li>
-            <li><a>공지사항</a></li>
-            <li><a>공지사항</a></li>
-            <li><a>공지사항</a></li>
-        </ul>
-    </div>
+	    </div>
 
     &nbsp;&nbsp;&nbsp;
 
-    <div class="board" style="display: inline-block">
-        <h3 align="center"><a href="notice.bo">자유게시판</a></h3>
-        <ul class="ul">
-            <li><a>게시글</a></li>
-            <li><a>게시글</a></li>
-            <li><a>게시글</a></li>
-            <li><a>게시글</a></li>
-            <li><a>게시글</a></li>
-        </ul>
-        
-	</div>
+	    <div id="boardList" class="board" style="display: inline-block">
+	        <h3 align="center"><a href="nlist.bo">공지사항</a></h3>
+	        <ul class="ul">
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	            <li><a>게시글</a></li>
+	        </ul>
+	        
+		</div>
+	
+            <script>
+            	$(function(){
+            		
+            		$("#boardList>tbody>tr").click(function(){
+            			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
+            		})
+            	})
+            	
+            </script>
 </body>
 </html>

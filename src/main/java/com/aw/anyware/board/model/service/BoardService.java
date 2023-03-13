@@ -11,6 +11,7 @@ public interface BoardService {
 	// 리스트 조회
 	int selectListCount();
 	ArrayList<Board> selectList(PageInfo pi);
+	ArrayList<Board> selectNoticeList(PageInfo pi);
 	
 	// 작성하기
 	int insertBoard(Board b);
@@ -20,7 +21,7 @@ public interface BoardService {
 	Board selectBoard(int boardNo);
 	
 	// 삭제
-	int delectBoard(int boardNo);
+	int deleteBoard(int boardNo);
 	
 	// 수정하기
 	int updateBoard(Board b);

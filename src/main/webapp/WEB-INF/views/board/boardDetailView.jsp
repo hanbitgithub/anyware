@@ -53,9 +53,10 @@ textarea {
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	<p><b>게시글 상세보기</b></p>
+	<p><b>게시글 상세보기</b></p> 
 	<hr>
 		<!-- 게시글 -->
+		<input id="btn" type="button" value="뒤로가기" onClick="history.go(-1)" style="float: right; height: 25px;"> 
 		<table>
 		<ul id="aaa">
 		    <li>
@@ -72,10 +73,8 @@ textarea {
 		    </li>
 		
 		    <li style="height: 200px;">
-		        <textarea name="boardContent" id="" cols="100px" rows="10" readonly style="resize: none;">
 		        ${b.boardContent }
-		        </textarea>
-		        
+ 
 		    </li>
 		
 		    <li>
@@ -91,10 +90,24 @@ textarea {
 		        </div>
 		        
 		        <div id="span2">
-		        <button id="btn" class="btn-sm">수정하기</button>  
-		        <button id="btn" class="btn-sm">삭제하기</button>  
+		        <button id="btn" class="btn-sm" onclick="postFormSubmit(1);">수정하기</button>  
+		        <button id="btn" class="btn-sm" onclick="postFormSubmit(2);">삭제하기</button>  
 		        </div>
-		
+				
+				<form action="" method="post" id="postForm">
+					<input type="hidden" name="no" value="${b.boardNo }">
+					<input type="hidden" name="filePath" value="${b.changeName }">
+				</form>
+				
+				<script>
+					function postFormSubmit(num){
+						if(num == 1){
+							$("#postForm").attr("action", "updateForm.bo").submit();
+						}else{
+							$("#postForm").attr("action", "delete.bo").submit();
+						}
+					}
+				</script>
 		        
 		            
 		            
@@ -123,30 +136,13 @@ textarea {
 		                <p>댓글입니다.너무웃기다앙</p>
 		            </td>
 		        </tr>
-		        <tr>
-		            <td colspan="2">
-		                <img id="img" src="arrow\이배추대표이사.jpg" alt="">
-		                <span><b>이소민 사원</b></span>
-		                <span style="color: rgb(170, 170, 170);">2020-04-10</span>
-		                <br><br>
-		                <p>댓글입니다.너무웃기다앙</p>
-		            </td>
-		        </tr>
-		        <tr>
-		            <td colspan="2">
-		                <img id="img" src="arrow\이배추대표이사.jpg" alt="">
-		                <span><b>이소민 사원</b></span>
-		                <span style="color: rgb(170, 170, 170);">2020-04-10</span>
-		                <br><br>
-		                <p>댓글입니다.너무웃기다앙</p>
-		            </td>
-		        </tr>
+
 		
 		        
 		        
 		        <tr>
 		            <td>
-		                <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%"></textarea>
+		                <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%; height:60px;"></textarea>
 		            </td>
 		            <td style="vertical-align: middle"><button id="btn2" class="btn-lg">등록하기</button></td>
 		        </tr>
