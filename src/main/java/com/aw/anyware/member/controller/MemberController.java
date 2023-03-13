@@ -147,12 +147,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping("memberPersonalUpdate")
-	public String memberPersonalUpdate(Member m, Model model) {
+	public String memberPersonalUpdate(Member m, Model model, HttpSession session) {
 		int result = mService.memberPersonalUpdate(m);
 		
 		if(result > 0) {
+			
 			Member updateMem = mService.loginMember(m);
-			model.addAttribute(updateMem);
+			
+			session.setAttribute("alertMsg", "정보 변경에 성공했습니다");
+			session.setAttribute("loginUser", updateMem);
 			return "member/memberPersonalInfo";
 		}else {
 			model.addAttribute("errorMsg", "정보 변경에 실패했습니다");

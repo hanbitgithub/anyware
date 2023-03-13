@@ -227,6 +227,13 @@ a {
     </style>
 </head>
 <body id="body-pd">
+
+<c:if test="${ not empty alertMsg }">
+		<script>
+			alert('${alertMsg}');
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
 	
 	
     <div id="side">
@@ -478,6 +485,7 @@ a {
                 <br><br>
                 <div class="partLine"></div>
         <form action="" method="post" id="updateForm">
+        	<div id="Id"><input type="hidden" name="memberId" value="${ loginUser.memberId }"></div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이메일</b></div>
                     <div class="profileContent2"><input type="email" name="email" value="${ loginUser.email}"></div>
@@ -506,7 +514,7 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>직급</b></div>
-                    <div class="profileContent2"><input type="text" name="position" value="${ loginUser.position }" readonly></div>
+                    <div class="profileContent2">"${ loginUser.position }"</div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>부서/직책</b></div>
@@ -514,7 +522,7 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>담당업무</b></div>
-                    <div class="profileContent2"><input type="text" id="duty" name="duty" value="${ loginUser.duty }" readonly></div>
+                    <div class="profileContent2">${ loginUser.duty }</div>
                 </div>
                 <script>
                 	$(function(){
@@ -532,11 +540,11 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>입사일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="${ loginUser.enrollDate }" readonly></div>
+                    <div class="profileContent2">${ loginUser.enrollDate }</div>
                 </div>
                 <div id="employProfile-div3">
-                    <div class="profileContent1"><b>생일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="나중에"></div>
+                    <div class="profileContent1"><b>생일</b></div> <!-- 우선 주민번호로, 추후에 sql문 수정 필요 -->
+                    <div class="profileContent2"><input type="text" name="birthday" value="${ loginUser.rrn }"></div>
                 </div>
                 <div id="employProfile-div3">
                     <button id="submit" type="submit">정보변경</button>
