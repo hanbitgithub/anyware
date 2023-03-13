@@ -357,9 +357,9 @@ a {
     </script>
 
     <div class="header">
-        <div class="dropdown" id="profile" style="display: inline-block;">
-             <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown" data-bs-auto-close="inside" aria-expanded="false">
-   				 <img src="resources/images/profile.jpg" type="button" width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+        <div id="profile" style="display: inline-block;">
+             <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
+   				 <img src="resources/images/profile.jpg"  width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
   			 </button>
            
           
