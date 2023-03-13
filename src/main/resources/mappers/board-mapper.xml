@@ -14,6 +14,16 @@
 		<result column="status" property="status" />
 		<result column="category" property="category" />
 	</resultMap>
+	
+	<resultMap id="replyResult" type="Reply">
+		<id column="reply_no" property="replyNo" />
+		<result column="post_no" property="postNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="reply_content" property="replyContent" />
+		<result column="create_date" property="createDate" />
+		<result column="status" property="status" />
+		
+	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 		select
@@ -113,5 +123,39 @@
 		 where board_no = #{boardNo}     
 	</update>
 	
+	<select id="selectReplyList" resultMap="replyResult">
+		select
+				r.member_no
+			  , r.post_no	
+			  , r.reply_no
+			  , reply_content 	
+			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+			from tb_reply r
+		 inner join tb_member m on (r.member_no = m.member_no) 		
+		   where r.status = 'Y'
+		    and r.post_no = #{boardNo}
+		    order
+		     by r.reply_no desc		  
+	</select>
+	
+	<insert id="insertReply">
+		insert
+			into tb_reply
+			(
+			reply_no
+		  , reply_content
+		  , post_no
+		  , member_no
+		  )
+		  values
+		  (
+		    SEQ_RPNO.nextval
+		  , #{replyContent}
+		  , #{postNo}
+		  , #{memberNo} 
+		  )	
+			
+		
+	</insert>
 
 </mapper>

@@ -121,34 +121,85 @@ textarea {
 		    <thead>
 		        <tr>
 		           <td colspan="2" style="font-size: 13px;">
-		            댓글 (<span id="rcount">3</span>) | 조회수 (<span id="rcount">3</span>)
+		            댓글 (<span id="rcount"></span>)
 		            <a style="float: right; font-size: 13px;"href="">신고하기</a>
 		        </td>
 		        </tr>
 		    </thead>
-		    <tbody>
-		        <tr>
-		            <td colspan="2">
-		                <img id="img" src="arrow\이배추대표이사.jpg" alt="">
-		                <span><b>이소민 사원</b></span>
-		                <span style="color: rgb(170, 170, 170);">2020-04-10</span>
-		                <br><br>
-		                <p>댓글입니다.너무웃기다앙</p>
-		            </td>
-		        </tr>
-
-		
-		        
-		        
-		        <tr>
+		    <tbody></tbody>  
+		    <tfoot>
+		    	<tr>
 		            <td>
-		                <textarea class="form-control" name="" id="content" cols="55" rows="2" style="resize:none; width:100%; height:60px;"></textarea>
+		                <textarea class="form-control" id="rcontent" cols="55" rows="2" style="resize:none; width:100%; height:60px;"></textarea>
 		            </td>
-		            <td style="vertical-align: middle"><button id="btn2" class="btn-lg">등록하기</button></td>
+		            <td style="vertical-align: middle"><button onclick="addReply();" id="btn2" class="btn-lg">등록하기</button></td>
 		        </tr>
-		    </tbody>
+		    </tfoot> 
+		    
 		</table>
 			
 	</div>
+	
+	 <script>
+    	$(function(){
+    		selectReplyList();
+    	})
+    	
+    	function addReply(){ // 댓글 작성용 ajax
+    		
+    		if($("#rcontent").val().trim().length > 0){ // 유효한 댓글 작성시 => insert ajax요청
+    			
+    			$.ajax({
+    				url:"rinsert.bo",
+    				data:{
+    					replyContent:$("#rcontent").val(),
+    					memberNo:${loginUser.memberNo},
+    					postNo:${b.boardNo}
+    				},success:function(result){
+    					if(result == "success"){
+    						$("#rcontent").val("");
+    						selectReplyList();
+    					}
+    				},error:function(){
+    					console.log("댓글 작성용 ajax 통신 실패");
+    				}
+    			})
+    			
+    			
+    		}else{
+    			alertify.alert("댓글 작성 후 등록 요청해주세요");
+    		}
+    			
+    	}
+    	
+    	function selectReplyList(){ // 해당 게시글에 딸린 댓글리스트 조회용 ajax
+    		$.ajax({
+    			url:"rlist.bo",
+    			data:{no:${b.boardNo}},
+    			success:function(list){
+    				console.log(list);
+    				
+    				let value = "";
+					for(let i=0; i<list.length; i++){
+						value += "<tr>"
+								+ "<td>"
+								+ "<span>" + "<b>" + list[i].memberNo + "</b>" + "</span>"
+								+ "&nbsp;"
+								+ "<span>" + list[i].createDate + "</span>"
+								+ "<br><br>"
+								+ "<p>" + list[i].replyContent + "</p>"
+								+ "</td>"
+								+ "</tr>";
+					}
+    				
+    				$("#replyArea tbody").html(value);
+    				$("#rcount").text(list.length);
+    				
+    			},error:function(){
+    				console.log("댓글리스트 조회용 ajax 통신 실패");
+    			}
+    		})
+    	}
+    </script>
 </body>
 </html>
