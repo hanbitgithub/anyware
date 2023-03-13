@@ -24,6 +24,10 @@
 	background-color: rgb(250, 249, 249);
  
 }
+.table a:hover{
+	text-decoration:none;
+	
+}
 
 #search{ 
 	width:250px;

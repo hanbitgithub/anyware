@@ -183,7 +183,7 @@
 									        </c:when>
 									     </c:choose>   
 			                			</td>
-			                			<td width="700">${s.emTitle }</td>
+			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty s.emfNo}">
@@ -224,7 +224,7 @@
 											    </c:forEach>
 									        </c:when>
 									    </c:choose>    
-			                			<td width="700">${s.emTitle }</td>
+			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty s.emfNo}">
