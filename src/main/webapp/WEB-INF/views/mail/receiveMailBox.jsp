@@ -150,24 +150,25 @@
                 			<c:choose>
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;"> 
-			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="20"><input type="checkbox"  value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${r.emNo }">
+			                					
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${r.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
-			                				
 			                				<c:if test="${not empty r.emfNo}">
 			                					<img src="resources/images/paper-clip.png" width="16">
+			                					
 			                				</c:if>
 			                			</td>	
 			                			<td>${r.sendDate }</td>	
@@ -179,14 +180,16 @@
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${r.emNo }">
+			                				
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${r.emNo }">
+			           
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" ></td>
 			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
@@ -210,27 +213,60 @@
                 
             </table>
             <script>
-             $(function(){
-                var star = "resources/images/star.png"
-                var award = "resources/images/award.png"
-                  $(".star").click(function(){
-                    if($(this).attr("src") != star){  
-                   	 	 $(this).attr("src",star);
-	
 
+           		 $(".star").click(function(){
+ 					 var star = "resources/images/star.png"
+ 			         var award = "resources/images/award.png"
+ 			         var emNo = $(this).data("emno");
+ 					 var $button = $(this);
+ 					 
+                	  if($button.attr("src") != star){  
+                			$.ajax({
+    		   					url:"like.em",
+    		   					data:{
+    		   						emNo : emNo,
+    		   						emType : 1,
+    		   						receiver : '${loginUser.memberId}'
+    		   					},
+    		   					success:function(result){
+    		   						//console.log(result);
+    		   					 	$button.attr("src",star);
+    		   						 
+    		   					},error:function(){
+    		   						console.log("좋아요실패");
+    		   					}
+                			})
 
                     }else{
-                     	 $(this).attr("src",award);
+                     	$.ajax({
+                     		url:"dislike.em",
+                     		data:{
+                     			emNo : emNo,
+                     			emType : 1,
+		   						receiver : '${loginUser.memberId}'
+                     		},
+                     		success:function(result){
+                     			//console.log(result);
+                     			$button.attr("src",award);
+                     		
+                     		},error: function(){
+                     			console.log("좋아요 취소 실패");
+                     		}
+                     	}) 
+                    	
                     }
 
-
-                 })
+                })
                  
                  
-                 
-                 var read= "resources/images/envelope.png"
-                 var nonRead = "resources/images/envelope2.png"
                 	 $(".envelope").click(function(){
+                		 var read= "resources/images/envelope.png"
+                         var nonRead = "resources/images/envelope2.png" 
+                		 var emNo = $(this).data("emno");
+     					 var $button = $(this);
+     					 
+                		 
+                		 
                          if($(this).attr("src") != read){  
                         	 	 $(this).attr("src",read);
      	
@@ -244,7 +280,7 @@
                       })
                       
 
-             })
+         
             </script>
                
 

@@ -60,11 +60,13 @@ public class MailController {
 		return "mail/receiveMailBox";
 	}
 	//안읽은 메일 수 조회 ajax
+	
 	@ResponseBody
-	@RequestMapping("unread.em")
+	@RequestMapping(value="unread.em", produces="application/json; charset=utf-8")
 	public String unReadMailCount(String memId) {
-		int unreadCount = mService.selectUnreadReceiveMail(memId);
 		
+		int unreadCount = mService.selectUnreadReceiveMail(memId);
+		//System.out.println(unreadCount);
 		return new Gson().toJson(unreadCount);
 	}
 	
@@ -91,10 +93,52 @@ public class MailController {
 		return "mail/sendMailBox";
 	}
 	
+	//중요메일 조회 
 	@RequestMapping("important.em")
-	public String importantMailList() {
+	public String importantMailList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session,Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
+		//중요메일 수
+		int listCount = mService.selectImportantMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//중요메일 리스트 
+		ArrayList<Mail> ilist = mService.selectImportantMailList(pi,memId);
+		
+		//System.out.println(ilist);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("ilist",ilist);
+		
 		return "mail/importantMailBox";
 	}
+	
+	//중요메일 별표시 
+	@ResponseBody
+	@RequestMapping("like.em")
+	public String ajaxCheckImportantMail(MailStatus ms) {
+
+		if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+			ms.setReceiver(null);
+		}
+		int result = mService.checkImportantMail(ms);
+		return result>0 ? "success": "fail";
+	}
+	
+	//중요메일 해제 
+	@ResponseBody
+	@RequestMapping("dislike.em")
+	public String ajaxUncheckImportantMail(MailStatus ms) {
+		if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+			ms.setReceiver(null);
+		}
+		
+		int result = mService.uncheckImportantMail(ms);
+		return result>0 ? "success": "fail";
+	}
+	
 	
 	@RequestMapping("storage.em")
 	public String temporaryMailList() {

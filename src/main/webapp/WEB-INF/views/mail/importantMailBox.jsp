@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>     
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -125,61 +126,206 @@
 
             <table class="table">
                  
-                <tr style="font-size: 14px;">
+               <!--  <tr style="font-size: 14px;">
                     <td width="20"><input type="checkbox"></td>
                     <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
-                     <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+                    <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
                     <td width="100">곽두팔</td>
                     <td width="700">2월 3주차 주간 매출 보고</td>
                     <td width="50"><img src="resources/images/paper-clip.png" width="16" ></td>
                     <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                 <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
-                     <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                 <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
-                     <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16" class="star"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
-                 <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
-                     <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr>
+                </tr> -->
+                 <c:choose>
+                	<c:when test="${ empty ilist }">
+                		<tr align="center">
+                			<td colspan="7">중요 메일함이 비어있습니다.</td>
+                		</tr>
+                	</c:when>
+                	
+                	<c:otherwise>    	
+                		<c:forEach var="i" items="${ilist }">
+                			<c:choose>
+                				<c:when test="${i.mailStatus.read eq 'Y' }">
+			                		<tr style="font-size: 14px;"> 
+			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
+			                			<td width="25">
+			                				<c:choose>
+			                				<c:when test="${i.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${i.emNo }">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${i.emNo }">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			
+			                			</td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="150">
+			                			<c:choose>
+			                				<c:when test="${i.mailStatus.emType =='0' }"> 
+			                				<c:set var="receivers" value="${i.receivers}"/>
+  
+											    <c:choose>
+											      <c:when test="${not empty receivers}">
+											         <c:set var="names" value="${fn:split(receivers, ',')}" />
+													    <c:forEach var="name" items="${names}" varStatus="loop">
+													      <c:if test="${loop.index < 2}">
+													        ${fn:trim(fn:substringBefore(name, ' '))}
+													        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
+													      </c:if>
+													      <c:if test="${loop.index == 2}">
+													        ..
+													      </c:if>
+													    </c:forEach>
+											        </c:when>
+											    </c:choose>    
+			                				
+			                				</c:when>
+			                				<c:otherwise>
+			                					${i.memName }
+			                				</c:otherwise>	
+			                			
+			                			</c:choose>
+			                			
+			                			</td>
+			                			<td width="700">
+										<c:choose>
+			                				<c:when test="${i.mailStatus.emType eq '0'}">
+			                				  	[보낸메일함] 
+			                				</c:when>
+			                				<c:when test="${i.mailStatus.emType eq '1' }">
+			                					[받은메일함] 
+			                				</c:when>
+			                			
+			                			</c:choose>
+										&nbsp;${i.emTitle }</td>
+										</td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty i.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${i.sendDate }</td>	
+			                		</tr>
+	                			</c:when>
+	                			<c:otherwise>
+	                				<tr style="font-size: 14px; font-weight: bold"> 
+			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
+			                			<td width="25">
+			                			<c:choose>
+			                				<c:when test="${i.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${i.emNo }">
+			                				</c:when>
+			                				<c:otherwise>
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${i.emNo }">
+			                				</c:otherwise>	
+			                			</c:choose>
+			                			</td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="150">
+			                			<c:choose>
+			                				<c:when test="${i.mailStatus.emType =='0' }">
+			                				<c:set var="receivers" value="${i.receivers}"/>
+  
+											    <c:choose>
+											      <c:when test="${not empty receivers}">
+											         <c:set var="names" value="${fn:split(receivers, ',')}" />
+													    <c:forEach var="name" items="${names}" varStatus="loop">
+													      <c:if test="${loop.index < 2}">
+													        ${fn:trim(fn:substringBefore(name, ' '))}
+													        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
+													      </c:if>
+													      <c:if test="${loop.index == 2}">
+													        ..
+													      </c:if>
+													    </c:forEach>
+											        </c:when>
+											    </c:choose>    
+			                				
+			                				</c:when>
+			                				<c:otherwise>
+			                					${i.memName }
+			                				</c:otherwise>	
+			                			
+			                			</c:choose>
+			                			<td width="700">
+			                			<c:choose>
+			                				<c:when test="${i.mailStatus.emType eq '0'}">
+			                				  	[보낸메일함] 
+			                				</c:when>
+			                				<c:when test="${i.mailStatus.emType eq '1' }">
+			                					[받은메일함] 
+			                				</c:when>
+			                			
+			                			</c:choose>
+			                			
+			                			
+			                			&nbsp;${i.emTitle }</td>
+			                			<td width="50">
+			                				
+			                				<c:if test="${not empty i.emfNo}">
+			                					<img src="resources/images/paper-clip.png" width="16">
+			                				</c:if>
+			                			</td>	
+			                			<td>${i.sendDate }</td>	
+			                		</tr>
+	                			</c:otherwise>
+	                		</c:choose>
+                		</c:forEach>
+              
+                	</c:otherwise>
+                </c:choose>
                 
             </table>
             
+          
               <script>
-             $(function(){
-                var star = "resources/images/star.png"
-                var award = "resources/images/award.png"
-                  $(".star").click(function(){
-                    if($(this).attr("src") != star){  
-                   	 	 $(this).attr("src",star);
-	
+              
+       		 $(".star").click(function(){
+ 				 var star = "resources/images/star.png"
+ 		         var award = "resources/images/award.png"
+ 		         var emNo = $(this).data("emno");
+ 				 var $button = $(this);
+ 				 
+            	  if($button.attr("src") != star){  
+            			$.ajax({
+ 		   					url:"like.em",
+ 		   					data:{
+ 		   						emNo : emNo,
+ 		   						emType : 3,
+ 		   						receiver : '${loginUser.memberId}'
+ 		   					},
+ 		   					success:function(result){
+ 		   						//console.log(result);
+ 		   					 	$button.attr("src",star);
+ 		   						 
+ 		   					},error:function(){
+ 		   						console.log("좋아요실패");
+ 		   					}
+            			})
 
+                }else{
+                 	$.ajax({
+                 		url:"dislike.em",
+                 		data:{
+                 			emNo : emNo,
+                 			receiver : '${loginUser.memberId}',
+                 			sender: '${loginUser.memberId}'
+                 		},
+                 		success:function(result){
+                 			//console.log(result);
+                 			$button.attr("src",award);
+                 		
+                 		},error: function(){
+                 			console.log("좋아요 취소 실패");
+                 		}
+                 	}) 
+                	
+                }
 
-                    }else{
-                     	 $(this).attr("src",award);
-                    }
-
-
-                 })
+            })
+             
                  
                  
                  var read= "resources/images/envelope.png"
@@ -198,7 +344,7 @@
                           })
                           
 
-             })
+        
             </script>
 
 
@@ -206,17 +352,64 @@
 
 
 
-            <!--페이징 영역-->
-            <div id="paging-area" align="center">
-                <button>이전</button>
-                <button>1</button>
-                <button>2</button>
-                <button>3</button>
-                <button>4</button>
-                <button>5</button>
-                <button>다음</button>
-            </div>  
-              
+          
+       <!--페이징 영역-->
+		<div id="paging-area" align="center">
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq 1}">
+					<button disabled>이전</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='important.em?cpage=${pi.currentPage - 1}'">이전</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='important.em?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
+				<c:choose>
+					<c:when test="${empty keyword }">
+						<button onclick="location.href='important.em?cpage=${p}'">${p}</button>
+					</c:when>
+					<c:otherwise>
+						<button
+							onclick="location.href='important.em?cpage=${p}&keyword=${keyword}'">${p}</button>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+
+			<c:choose>
+				<c:when test="${pi.currentPage eq pi.maxPage }">
+					<button disabled>다음</button>
+				</c:when>
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${empty keyword }">
+							<button
+								onclick="location.href='important.em?cpage=${pi.currentPage + 1}'">다음</button>
+						</c:when>
+						<c:otherwise>
+							<button
+								onclick="location.href='important.em?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+
+		</div>
+
+
+
+	</div> 
+
+        
 
 
         
