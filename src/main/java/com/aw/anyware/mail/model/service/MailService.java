@@ -115,5 +115,8 @@ public interface MailService {
 	
 	//메일 임시보관 업데이트
 	int updateTemporaryMail(Mail m);
+	
+	//임시저장 메일 번호 조회
+	int selectSaveMailGetEmNo(String memId);
      
 }

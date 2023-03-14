@@ -387,12 +387,12 @@
 				</script>
 				<script>
 				//메일 임시저장 버튼 클릭시 실행하는 함수 
-				let isSaved = false; // 임시저장 여부를 체크하는 변수
-				let emNo;
 			
 				function saveTemp(){
-					
-					    let formData = new FormData($("#mailForm")[0]);
+					let isSaved = false; // 임시저장 여부를 체크하는 변수
+					let emNo;
+				
+				    let formData = new FormData($("#mailForm")[0]);
 		  			    
 					    // 제목이 비어있는 경우에 대한 처리
 					    if ($("#title").val().trim() == "") {
@@ -421,7 +421,7 @@
 						                $.ajax({
 						                    url: "getEmNo.em",
 						                    type: "GET",
-						                    data: {sender: ${loginUSer.memberId}},
+						                    data: {sender: '${loginUSer.memberId}'},
 						                    success: function(result) {
 						                        emNo = result;
 						                        console.log("emNo 조회 성공: " + emNo);
@@ -431,7 +431,7 @@
 						                        console.log("emNo 조회 실패");
 						                    }
 						                
-						                
+						                })
 						            } else {
 						                alert("메일을 임시보관함에 저장하는데 실패했습니다.");
 						            }
@@ -440,10 +440,8 @@
 						        error: function() {
 						            console.log("임시저장 ajax 실패");
 						        }
-						      
-						    });
-						    
-						   
+						    })
+	
 						  } else {
 						        $.ajax({
 						          url: "updateTemp.em",
@@ -463,16 +461,15 @@
 						            } else {
 						              alert("메일을 임시보관함에 저장하는데 실패했습니다.");
 						            }
-	
 						            console.log("임시저장 ajax 성공");
 						          },
 						          error: function() {
 						            console.log("임시저장 ajax 실패");
 						          }
-						        });
+						        })
 						      }
 					  
-		
+				}
 			</script>
                 
                 

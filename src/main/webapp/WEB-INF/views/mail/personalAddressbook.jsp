@@ -145,52 +145,56 @@
 	                   </div>
 	               </div>
 	               
-				           <script>
-				           
-				           $.ajax({
-				        	   url: 'glist.ad',
-				        	   method: 'GET',
-				        	   data : {no: '${loginUser.memberNo}'},
-				        	   success: function(list) {
-				        		   //console.log(list);
-				        		   
-				        		   var selectOptions = '';
-				        		    $.each(list, function(index, item) {
-				        		      selectOptions += '<option value="' + item.groupNo + '">' + item.groupName + '</option>';
-				        		    });
+		           <script>
+		          $(function(){
+		        	  groupList();
+		          }) 
+		           
+		          function groupList(){
+		           $.ajax({
+		        	   url: 'glist.ad',
+		        	   method: 'GET',
+		        	   data : {no: '${loginUser.memberNo}'},
+		        	   success: function(list) {
+		        		   //console.log(list);
+		        		   
+		        		   var selectOptions = '';
+		        		    $.each(list, function(index, item) {
+		        		      selectOptions += '<option name="groupNo" value="' + item.groupNo + '">' + item.groupName + '</option>';
+		        		    });
 
-				        		    // 생성된 option 요소들을 select 요소에 삽입
-				        		    $('select[name="groupNo"]').html(selectOptions);
-				        	   
-				        	   },
-				        	   error: function() {
-				        	     console.log('Error');
-				        	   }
-				        	 });
-				          
-				           
-						    $(function(){
-						        $(".sub").click(function(){
-						            var isRight = true;
-						            $("#addForm").find(".required").each(function(index, item){
-						                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
-						                if ($(this).val().trim() == '') {
-						                    alert($(this).attr("data-name")+" 항목을 입력하세요.");
-						                    isRight = false;
-						                    return false;
-						                }
-						                     
-						            });
-						            if (!isRight) {
-						                return;
-						            }
-						
-						            $(this).prop("disabled", true);
-						            $(this).prop("disabled", false);
-						        });
-						
-						    });
-						</script>
+		        		    // 생성된 option 요소들을 select 요소에 삽입
+		        		    $('select[name="groupNo"]').html(selectOptions);
+		        	   
+		        	   },
+		        	   error: function() {
+		        	     console.log('Error');
+		        	   }
+		        	 });
+		        } 
+		           
+				    $(function(){
+				        $(".sub").click(function(){
+				            var isRight = true;
+				            $("#addForm").find(".required").each(function(index, item){
+				                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
+				                if ($(this).val().trim() == '') {
+				                    alert($(this).attr("data-name")+" 항목을 입력하세요.");
+				                    isRight = false;
+				                    return false;
+				                }
+				                     
+				            });
+				            if (!isRight) {
+				                return;
+				            }
+				
+				            $(this).prop("disabled", true);
+				            $(this).prop("disabled", false);
+				        });
+				
+				    });
+				</script>
 		                     
                          
                      <li class="nav-item">
@@ -422,7 +426,7 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                <table>
+                                <table id="groupUpdate">
                                     <tr>
                                         <th width="100">그룹관리</th>
                                         <td>
@@ -451,14 +455,15 @@
                       </li>
                       <script>
                       function deleteGroup(){
-	                      var selectedGroupNo = $('select[name="groupNo"]').val(); // 선택된 그룹 번호 가져오기
-	                      //console.log(selectedGroupNo);  
+                    	  
+	                      var selectedGroupNo =  $('#groupUpdate [name="groupNo"]').val(); // 선택된 그룹 번호 가져오기
+	                      console.log(selectedGroupNo);
 	                      deleteAddBook(selectedGroupNo);
                       }
                       
                       function updateGroup(){
-                    	  var groupNo = $('select[name="groupNo"]').val(); 
-        
+                    	  var groupNo =  $('#groupUpdate [name="groupNo"]').val();
+        			       console.log(groupNo);
                     	  updateAddGroup2(groupNo);
                       }
                      
@@ -470,13 +475,15 @@
       						url : "updateGroup.ad",
       						data : {
       							memNo : '${loginUser.memberNo}',
-      							groupNo : groupNo,
+      							groupNo :  $('#groupUpdate [name="groupNo"]').val(),
       							groupName : newName
       						},
       						success : function(result){
       							if(result == 'success'){
       								selectGroupList();
-      								alert("그룹명 수정 성공")
+      								alert("그룹명 수정 성공");
+      								$('#groupUpdate [name="newName"]').val("")
+      								groupList();
       							}
       						},
       						error : function(){
@@ -723,6 +730,7 @@
     						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
     						                        });
     						                        $('select[name="groupNo"]').html(selectOptions);
+    						                        selectGroupList();
     						                    },
     						                    error: function() {
     						                        console.log('Error');

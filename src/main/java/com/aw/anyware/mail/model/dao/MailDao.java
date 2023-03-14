@@ -438,7 +438,21 @@ public class MailDao {
 		return sqlSession.insert("mailMapper.saveTemporaryMail",m);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 임시저장 메일번호 
+	 */
+	public int selectSaveMailGetEmNo(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectSaveMailGetEmNo",memId);
+	}
 	
+	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 임시저장 메일 수정 
+	 */
 	public int updateTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
 		return sqlSession.update("mailMapper.updateTemporaryMail",m);
 	}

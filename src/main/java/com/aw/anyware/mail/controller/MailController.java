@@ -210,12 +210,30 @@ public class MailController {
 		int result = mService.saveTemporaryMail(m);
 		return result>0 ? "success": "fail";
 	}
-	
+	//임시저장한 메일 번호
+	@ResponseBody
+	@RequestMapping(value="getEmNo.em", produces="application/json; charset=utf-8")
+	public String ajaxSaveMailGetEmNo(String memId) {
+		int emNo = mService.selectSaveMailGetEmNo(memId);
+		return new Gson().toJson(emNo);
+	}
+
 	
 	//임시저장 버튼 다시 눌렀을경우 update
 	@ResponseBody
 	@RequestMapping("updateTemp.em")
 	public String ajaxUpdateTemporaryMail(Mail m) {
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
 		
 		int result = mService.updateTemporaryMail(m);
 		return result>0 ? "success": "fail";
