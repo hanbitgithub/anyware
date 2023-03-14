@@ -122,11 +122,25 @@
   	update
   			tb_member
   		set email = #{email},
-  			member_no = #{memberNo},
+  			
   			phone = #{phone},
-  			position = #{position},
+  			
   			address = #{address}
   		where member_no = #{memberNo}
   			
   </update>
+  <update id="allMemberUpdate">
+  	update
+  			tb_member
+  		set 
+  			
+  			job_name = #{jobName},
+  			position = #{position},
+  			dept_name = #{deptName},
+  			duty = #{duty}
+  		where member_no = #{memberNo}
+  			
+  </update>
+  
+  
 </mapper>
