@@ -52,9 +52,10 @@
 	<result column="mem_name" property="memName" />
 	<result column="sender" property="sender" />
 	<result column="receiver" property="receivers" />
-	<result column="ref_email" property="refEamil" />
+	<result column="ref_email" property="refEmail" />
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
+	<result column="temp_date" property="tempDate" />
 	
 	<association property="mailStatus" resultMap="mailStatusResult" />
 	<collection property="fileList" resultMap="mailFileResult" />
@@ -452,7 +453,7 @@
 </select>
 
 <!-- 보낸메일함 조회 -->
-<select id="selectSendeMailList" resultMap="mailResult">
+<select id="selectSendMailList" resultMap="mailResult">
  select 
  		 m. em_no
         , sender
@@ -461,6 +462,7 @@
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
 	    , m.receiver
+	    , ref_email
 	    , read
 	    , important
 	    , emf_no
@@ -522,6 +524,9 @@
 	   )
 	
 </insert>
+
+
+
 
 <!-- 중요메일 개수 -->
 <select id="selectImportantMailCount" resultType="_int">
@@ -636,6 +641,92 @@
       </choose>
 
 </update>
+
+<!-- 내게쓴메일 개수 -->
+<select id="selectSendToMeMailCount" resultType="_int">
+select 
+ 		 count(m. em_no) "count"    
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where em_type = 3
+	 and sender = #{memId}
+     and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+   order by m.em_no desc
+
+
+</select>
+
+<!--내게쓴 메일함리스트 -->
+<select id="selectSendToMeMailList" resultMap="mailResult">
+ select 
+ 		 m. em_no
+ 		, mem_name 
+        , sender
+	    , em_title
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+	    , read
+	    , important
+	    , emf_no
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where em_type = 3
+	 and sender = #{memId}
+     and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+   order by m.em_no desc
+
+</select>
+
+<!-- 임시보관함 개수  -->
+
+<select id="selectTempStorageMailCount" resultType="_int">
+select 
+ 		count(m. em_no)
+	  
+	from tb_mail m
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId}
+     and temp_stock = 'Y'
+   order by m.em_no desc
+
+</select>
+
+
+<!-- 임시보관함 리스트 -->
+<select id="selectTempStorageMailList" resultMap="mailResult">
+select 
+ 		 m. em_no
+	    , em_title
+	    , em_content
+        , mem_name
+        , sender
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver
+        , ref_email
+	    , emf_no
+	    , to_char(temp_date,'YYYY-MM-DD(DY) HH24:MI:SS') "temp_date"
+	from tb_mail m
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId}
+     and temp_stock = 'Y'
+   order by m.em_no desc
+
+
+</select>
+
+
+
+
+
+
 
 
 

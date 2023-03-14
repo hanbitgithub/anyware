@@ -60,7 +60,7 @@ public interface MailService {
 
 	/*메일*/
 	
-	// 받은메일 갯수, 리스트 조회
+	// 받은메일 개수, 리스트 조회
 	int selectReceiveMailListCount(String memId);
 	ArrayList<Mail> selectReceiveMailList(PageInfo pi, String memId);
 
@@ -76,14 +76,13 @@ public interface MailService {
 	// 보낸적있는 메일주소 조회
 	ArrayList<Mail> receiverMemberList(String memId);
 
-	// 보낸 메일 갯수, 리스트 조회
+	// 보낸 메일 개수, 리스트 조회
 	int selectSendMailListCount(String memId);
-	ArrayList<Mail> selectSendeMailList(PageInfo pi, String memId);
+	ArrayList<Mail> selectSendMailList(PageInfo pi, String memId);
 
 	// 메일 작성
 	// 메일 테이블 insert
 	int insertSendMail(Mail m);
-
 	// 메일status 테이블 insert
 	int insertMailStatus(ArrayList<MailStatus> list);
 
@@ -102,6 +101,14 @@ public interface MailService {
 	
 	//메일 안읽음표시
 	int uncheckReadMail(MailStatus ms);
+	
+	//내게쓴 메일함 개수, 리스트 조회
+	int selectSendToMeMailCount(String memId);
+	ArrayList<Mail> selectSendToMeMailList(PageInfo pi, String memId);
+	
+	//임시보관함개수, 리스트조회
+	int selectTempStorageMailCount(String memId);
+	ArrayList<Mail> selectTempStorageMailList(PageInfo pi, String memId);
 	
 	
      

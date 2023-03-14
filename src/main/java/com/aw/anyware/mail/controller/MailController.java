@@ -83,7 +83,7 @@ public class MailController {
 		int listCount = mService.selectSendMailListCount(memId);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
-		ArrayList<Mail> slist = mService.selectSendeMailList(pi,memId);
+		ArrayList<Mail> slist = mService.selectSendMailList(pi,memId);
 		
 	
 		model.addAttribute("slist", slist);
@@ -165,8 +165,27 @@ public class MailController {
 	}
 	
 	
+	//임시보관함 
 	@RequestMapping("storage.em")
-	public String temporaryMailList() {
+	public String temporaryMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+
+		//임시보관함 갯수조회
+		int listCount = mService.selectTempStorageMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//임시보관함 리스트
+		ArrayList<Mail> slist = mService.selectTempStorageMailList(pi,memId);
+		
+	
+		model.addAttribute("slist", slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount",listCount);
+		//System.out.println(pi);
+		
+		
 		return "mail/temporaryStorageMailBox";
 	}
 	
@@ -213,10 +232,63 @@ public class MailController {
 	}
 	
 	//내게쓰기 폼
-	@RequestMapping("sendToMe.em")
-	public String sendMailToMe() {
+	@RequestMapping("sendToMeForm.em")
+	public String sendMailToMeForm() {
 		return "mail/sendMailToMe";
 	}
+	
+	//내게쓴메일함
+	@RequestMapping("sendToMebox.em")
+	public String sendToMeMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
+		//내게쓴 메일 수
+		int listCount = mService.selectSendToMeMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//내게쓴 메일 리스트  
+		ArrayList<Mail> rlist = mService.selectSendToMeMailList(pi,memId);
+		
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+		
+		//System.out.println(rlist);
+	
+		return "mail/sendToMeBox";
+	}
+	
+	
+	//내게쓰기 insert
+    @RequestMapping("sendToMe.em")
+    public String insertSendToMe(Mail m, Model model) {
+    	//메일 테이블 insert
+    	String memName = m.getMemName();
+    	String sender = m.getSender();
+  
+    	m.setReceivers(memName + " " + sender + "@anyware.com");
+    	
+    	int result1 = mService.insertSendMail(m);
+    	
+    	
+    	ArrayList<MailStatus> list = new ArrayList<>();
+    	//메일 상태 insert
+    	if(result1>0) {
+    		MailStatus ms = new MailStatus();
+	    	ms.setEmType(3);
+	    	ms.setReceiverName(memName);
+	    	ms.setReceiver(sender);
+	    	
+	    	list.add(ms);
+    	}
+    	int result2 = mService.insertMailStatus(list);
+    	
+    	
+    	return "mail/successSendmail";
+    	
+    }
+	
 	
 	//메일 쓰기
 	@RequestMapping("sendMail.em")

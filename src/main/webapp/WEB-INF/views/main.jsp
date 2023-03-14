@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
-<title>Insert title here</title>
+<title>anyware</title>
 <style>
 #wrap {
     position:relative;

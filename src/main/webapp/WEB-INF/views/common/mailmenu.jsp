@@ -19,7 +19,7 @@
     padding: 40px 20px;
     border-right: 1px solid rgb(211, 210, 210);
     font-family: 'Nanum Gothic', sans-serif;
-    overflow: auto;
+    /* overflow: auto; */
     
 }
 .menu li{
@@ -86,8 +86,8 @@ a{
 }
 
 #adbook-area .dropdown-item{
-	font-size:14px;
-	font-weight: bold;
+	font-size:13px;
+	font-weight: bold; 
 }
 
 .insertAddress span, .updateAddress span{
@@ -167,15 +167,16 @@ a{
             <ul>
                 <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary"></span></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
-                <li><a href="important.em">중요메일함</a></li>
+                <li><a href="important.em">중요메일함</a></li>         
+                <li><a href="sendToMebox.em">내게쓴메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
-                <li>
+               <!--  <li>
                     <a>스팸메일함&nbsp;&nbsp;&nbsp;&nbsp; </a>
                     <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 
-                </li>
+                </li> -->
                 <li>
                     <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
