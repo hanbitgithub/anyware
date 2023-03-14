@@ -5,6 +5,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>메일쓰기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -351,7 +352,7 @@
                     <a onclick="return sendMail();"><img src="resources/images/send-mail.png" width="23px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="22px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="23px"> 임시저장</a>
-                    <a href="sendToMe.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
+                    <a href="sendToMeForm.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
                 
                 </div>
                 <br>

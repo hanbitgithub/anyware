@@ -24,6 +24,7 @@ public class Mail {
 	private String refEmail;
 	private String sendDate;
 	private String tempStock;	
+	private String tempDate;
 	private String emfNo;
 	
 	private MailStatus mailStatus;

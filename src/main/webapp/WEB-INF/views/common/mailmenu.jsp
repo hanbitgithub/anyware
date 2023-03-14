@@ -14,11 +14,13 @@
 .menu{
     position: fixed;
     height: 100vh;
-    width: 160px;
+    width: 170px;
     font-size: 14px;
     padding: 40px 20px;
     border-right: 1px solid rgb(211, 210, 210);
     font-family: 'Nanum Gothic', sans-serif;
+    /* overflow: auto; */
+    
 }
 .menu li{
     margin-top: 5px;
@@ -84,8 +86,8 @@ a{
 }
 
 #adbook-area .dropdown-item{
-	font-size:14px;
-	font-weight: bold;
+	font-size:13px;
+	font-weight: bold; 
 }
 
 .insertAddress span, .updateAddress span{
@@ -163,17 +165,18 @@ a{
             <div id="mail-area">
               <!--  <a href="test.do">테스트</a> -->
             <ul>
-                <li id="receivebox"><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a></li>
+                <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary"></span></li>
                 <li><a href="sendbox.em">보낸메일함</a></li>
-                <li><a href="important.em">중요메일함</a></li>
+                <li><a href="important.em">중요메일함</a></li>         
+                <li><a href="sendToMebox.em">내게쓴메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
-                <li>
+               <!--  <li>
                     <a>스팸메일함&nbsp;&nbsp;&nbsp;&nbsp; </a>
                     <a href="#" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 
-                </li>
+                </li> -->
                 <li>
                     <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
@@ -186,24 +189,31 @@ a{
             
             <script>
             	$(function(){
-            		
+            		unreadCount();
+            	})
+            		function unreadCount(){
                    		$.ajax({
-                   		    url: "unread.em",
+                   		    url: "unreadcount.em",
                    		    data: { memId : '${loginUser.memberId}' },
                    		    success: function (count){
-                   		        value = "";
-                   		    	value += "<span class='badge text-bg-primary'>"
-                   		            + count
-                   		            + "</span>"
-                   		         $("#receivebox a").after(value);
-                   		          
+                   		    	console.log(count);
+                   		    	var value="";
+                   		    	if(count != 0 ){
+                   		    		value = count;
+                   		    	}else{
+                   		    		value = 0;
+                   		    	}
+                   		            
+                   		         
+                   		          $(".count").html(value);
+                   		       
                    		    	
                    		    },error: function () {
                      		      console.log("안읽은메일조회용 ajax 통신실패");
                    		    }
                    		  });
                    		     
-            	})
+            	}
             
             
             </script>

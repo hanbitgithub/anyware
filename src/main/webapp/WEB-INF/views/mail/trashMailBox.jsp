@@ -22,6 +22,9 @@
 .table tr:hover{
 	background-color: rgb(250, 249, 249);
 }
+input[type=checkbox] {
+	transform : scale(1.01);
+}
 
 
 /*페이징*/
@@ -54,7 +57,13 @@
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"> 
+	                    <li class="nav-item">
+	                        <a class="nav-link" aria-current="page" href="#">
+	                           &nbsp;<input type="checkbox" class="form-check-input">
+	                            </a>
+	                    </li>
+	                    
                     
                       <li class="nav-item dropdown">
                             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

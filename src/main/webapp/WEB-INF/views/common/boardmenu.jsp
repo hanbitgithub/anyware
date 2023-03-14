@@ -12,7 +12,7 @@
 	.menu{
 	    position: fixed;
 	    height: 100vh;
-	    width: 160px;
+	    width: 170px;
 	    font-size: 14px;
 	    padding: 40px 20px;
 	    border-right: 1px solid rgb(211, 210, 210);

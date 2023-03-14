@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>보낸메일함</title>
+<title>내게쓴메일함</title>
 </head>
 <style>
 /*메일*/
@@ -23,19 +22,21 @@
 
 .table tr:hover{
 	background-color: rgb(250, 249, 249);
+ 
 }
-
 .table a:hover{
 	text-decoration:none;
 	
 }
+
 #search{ 
 	width:250px;
 }
+
 input[type=checkbox] {
 	transform : scale(1.01);
-}
 
+}
 
 /*페이징*/
 #paging-area button{
@@ -45,13 +46,12 @@ input[type=checkbox] {
     
 }
 #paging-area button:hover{
-    background-color: rgb(212, 211, 211)
+    background-color: rgb(252, 249, 249)
     
 }
 
 
 </style>
-
 <body>
 
 	<!-- 사이드 바  -->
@@ -62,51 +62,61 @@ input[type=checkbox] {
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-		 <b style="font-size: 18px;"> 보낸메일함</b>
+		 <b style="font-size: 18px;"> 내게쓴메일함</b> <span style="font-size: 13px">&nbsp;
+		   <%-- 안읽은 메일 <span class="count"></span> / 전체메일 ${ rCount }</span>
+
+		   <script>
+		   $(function(){ 
+			   unreadCount();
+		   })
+		   
+		   </script> --%>
             <br><br><br>
 
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
+                 
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-	                    <li class="nav-item">
-	                        <a class="nav-link" aria-current="page" href="#">
-	                           &nbsp;<input type="checkbox" class="form-check-input">
-	                            </a>
-	                    </li>
-	                    
-                    
-                        <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                             <img src="resources/images/email2.png" width='15px' alt=""> 읽음
+
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">
+                           &nbsp;<input type="checkbox" class="form-check-input">
                             </a>
-                            <ul class="dropdown-menu" style="font-size: 12px;">
-                              <li><a class="dropdown-item" href="#">읽음으로 표시</a></li>
-                              <li><a class="dropdown-item" href="#">안읽음으 로표시</a></li>
-                              
-                            </ul>
-                          </li>
-                          
+                      </li>
+                    	
+            
+                      <li class="nav-item dropdown">
+                          <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                           <img src="resources/images/email2.png" width='15px' alt=""> 읽음
+                          </a>
+                          <ul class="dropdown-menu" style="font-size: 12px;">
+                            <li><a class="dropdown-item" href="#">읽음으로 표시</a></li>
+                            <li><a class="dropdown-item" href="#">안읽음으 로표시</a></li>
+                            
+                          </ul>
+                        </li>
+                        
                       <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/bin.png" width='15px' alt="">
                             삭제</a>
                       </li>
-                     
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">
+                            <img src="resources/images/block.png" width='15px' alt="">
+                            스팸차단</a>
+                      </li> -->
+                     <!--  <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/send (1).png" width='15px' alt="">
                             답장</a>
-                      </li>
+                      </li> -->
                       <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/next.png" width='15px' alt="">
                             전달</a>
-                      </li>
-                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <img src="resources/images/cancel.png" width='18px' alt="">
-                            회수</a>
                       </li>
                       <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -117,7 +127,7 @@ input[type=checkbox] {
                           <li><a class="dropdown-item" href="#">받은메일함</a></li>
                           <li><a class="dropdown-item" href="#">보낸메일함</a></li>
                           <li><a class="dropdown-item" href="#">임시저장함</a></li>
-                          <li><a class="dropdown-item" href="#">스팸메일함</a></li>
+                         <!--  <li><a class="dropdown-item" href="#">스팸메일함</a></li> -->
                           <li><a class="dropdown-item" href="#">휴지통</a></li>
                         </ul>
                       </li>
@@ -143,106 +153,69 @@ input[type=checkbox] {
                 </div>
               </nav>
 
-              <table class="table">
-               <!--  <tr style="font-size: 14px; font-weight: bold;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="25"><img src="resources/images/award.png" width="18" class="star"></td>
-                    <td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16"></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr> -->
-               <c:choose>
-                	<c:when test="${ empty slist }">
+            <table class="table">
+             
+                <c:choose>
+                	<c:when test="${ empty rlist }">
                 		<tr align="center">
-                			<td colspan="7">보낸 메일함이 비어있습니다.</td>
+                			<td colspan="7" style="font-size:16px">내게 쓴 메일함이 비어있습니다.</td>
                 		</tr>
                 	</c:when>
                 	
                 	<c:otherwise>
-                		<c:forEach var="s" items="${slist }">
+                		<c:forEach var="r" items="${rlist }">
                 			<c:choose>
-                				<c:when test="${s.mailStatus.read eq 'Y' }">
-			                		<tr style="font-size: 14px;" class="mstatus${s.emNo}"> 
-			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
+                				<c:when test="${r.mailStatus.read eq 'Y' }">
+			                		<tr style="font-size: 14px;" class="mstatus${r.emNo}"> 
+			                			<td width="25"><input type="checkbox"  value="${r.emNo }"></td>
 			                			<td width="25">
-			                				<c:choose>
-			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
+			                			<c:choose>
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${r.emNo }">
+			                					
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${r.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
-			                			
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
-			                			<td width="150">
-			                			<c:set var="receivers" value="${s.receivers}"/>
-									    <c:choose>
-									      <c:when test="${not empty receivers}">
-									         <c:set var="names" value="${fn:split(receivers, ',')}" />
-											    <c:forEach var="name" items="${names}" varStatus="loop">
-											      <c:if test="${loop.index < 2}">
-											        ${fn:trim(fn:substringBefore(name, ' '))}
-											        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
-											      </c:if>
-											      <c:if test="${loop.index == 2}">
-											        ..
-											      </c:if>
-											    </c:forEach>
-									        </c:when>
-									    </c:choose>    
-			                			</td>
-			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
+			                			<td width="150">${r.memName }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
-			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${not empty r.emfNo}">
 			                					<img src="resources/images/paper-clip.png" width="16">
+			                					
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.sendDate }</td>	
+			                			<td>${r.sendDate }</td>	
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
-	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${s.emNo}"> 
-			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
+	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${r.emNo}"> 
+			                			<td width="25"><input type="checkbox" value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
-			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
+			                				<c:when test="${r.mailStatus.important eq 'N' }">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${r.emNo }">
+			                				
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${r.emNo }">
+			           
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
-			                			<td width="150">
-			                			<c:set var="receivers" value="${s.receivers}"/>
-									    <c:choose>
-									      <c:when test="${not empty receivers}">
-									         <c:set var="names" value="${fn:split(receivers, ',')}" />
-											    <c:forEach var="name" items="${names}" varStatus="loop">
-											      <c:if test="${loop.index < 2}">
-											        ${fn:trim(fn:substringBefore(name, ' '))}
-											        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
-											      </c:if>
-											      <c:if test="${loop.index == 2}">
-											        ..
-											      </c:if>
-											    </c:forEach>
-									        </c:when>
-									    </c:choose>    
-			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
+			                			<td width="150">${r.memName }</td>
+			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${not empty r.emfNo}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.sendDate }</td>	
+			                			<td>${r.sendDate }</td>	
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>
@@ -250,60 +223,58 @@ input[type=checkbox] {
               
                 	</c:otherwise>
                 </c:choose>
-                
+             
             </table>
-            
+      
             
             
             <script>
-           
-      		 $(".star").click(function(){
-				 var star = "resources/images/star.png"
-		         var award = "resources/images/award.png"
-		         var emNo = $(this).data("emno");
-				 var $button = $(this);
-				 
-           	  if($button.attr("src") != star){  
-           			$.ajax({
-		   					url:"like.em",
-		   					data:{
-		   						emNo : emNo,
-		   						emType: 0,
-		   						sender : '${loginUser.memberId}'
-		   					},
-		   					success:function(result){
-		   						//console.log(result);
-		   					 	$button.attr("src",star);
-		   						 
-		   					},error:function(){
-		   						console.log("좋아요실패");
-		   					}
-           			})
 
-               }else{
-                	$.ajax({
-                		url:"dislike.em",
-                		data:{
-                			emNo : emNo,
-                			emType: 0,
-                			sender : '${loginUser.memberId}'
-                		},
-                		success:function(result){
-                			//console.log(result);
-                			$button.attr("src",award);
-                		
-                		},error: function(){
-                			console.log("좋아요 취소 실패");
-                		}
-                	}) 
-               	
-               }
+           		 $(".star").click(function(){
+ 					 var star = "resources/images/star.png"
+ 			         var award = "resources/images/award.png"
+ 			         var emNo = $(this).data("emno");
+ 					 var $button = $(this);
+ 					 
+                	  if($button.attr("src") != star){  
+                			$.ajax({
+    		   					url:"like.em",
+    		   					data:{
+    		   						emNo : emNo,
+    		   						emType : 1,
+    		   						receiver : '${loginUser.memberId}'
+    		   					},
+    		   					success:function(result){
+    		   						//console.log(result);
+    		   					 	$button.attr("src",star);
+    		   						 
+    		   					},error:function(){
+    		   						console.log("좋아요실패");
+    		   					}
+                			})
 
-           })
-            
+                    }else{
+                     	$.ajax({
+                     		url:"dislike.em",
+                     		data:{
+                     			emNo : emNo,
+                     			emType : 1,
+		   						receiver : '${loginUser.memberId}'
+                     		},
+                     		success:function(result){
+                     			//console.log(result);
+                     			$button.attr("src",award);
+                     		
+                     		},error: function(){
+                     			console.log("좋아요 취소 실패");
+                     		}
+                     	}) 
+                    	
+                    }
+
+                })
+   
             </script>
-            
-            
             <script>
         	 $(".envelope").click(function(){
         		 var read= "resources/images/envelope.png"
@@ -317,8 +288,8 @@ input[type=checkbox] {
                 		 url: "read.em",
                 		 data: {
                 			 emNo : emNo,
-                			 emType : 0,
-                			 sender : '${loginUser.memberId}'
+                			 emType : 1,
+                			 receiver : '${loginUser.memberId}'
 
                 		 },
                 		 success:function(result){
@@ -338,8 +309,8 @@ input[type=checkbox] {
                 		 url: "unread.em",
                 		 data: {
                 			 emNo : emNo,
-                			 emType : 0,
-                			 sender : '${loginUser.memberId}'
+                			 emType : 1,
+                			 receiver : '${loginUser.memberId}'
 
                 		 },
                 		 success:function(result){
@@ -361,13 +332,8 @@ input[type=checkbox] {
 
             </script>
                
-	   				
-			
 
-
-
-
-       <!--페이징 영역-->
+     <!--페이징 영역-->
 		<div id="paging-area" align="center">
 
 			<c:choose>
@@ -378,11 +344,11 @@ input[type=checkbox] {
 					<c:choose>
 						<c:when test="${empty keyword }">
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage - 1}'">이전</button>
+								onclick="location.href='sendToMebox.em?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+								onclick="location.href='sendToMebox.em?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -390,14 +356,15 @@ input[type=checkbox] {
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
 					<c:when test="${empty keyword }">
-						<button onclick="location.href='sendbox.em?cpage=${p}'">${p}</button>
+						<button onclick="location.href='sendToMebox.em?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='sendbox.em?cpage=${p}&keyword=${keyword}'">${p}</button>
+							onclick="location.href='sendToMebox.em?cpage=${p}&keyword=${keyword}'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
+
 
 			<c:choose>
 				<c:when test="${pi.currentPage eq pi.maxPage }">
@@ -407,11 +374,11 @@ input[type=checkbox] {
 					<c:choose>
 						<c:when test="${empty keyword }">
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage + 1}'">다음</button>
+								onclick="location.href='sendToMebox.em?cpage=${pi.currentPage + 1}'">다음</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+								onclick="location.href='sendToMebox.em?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

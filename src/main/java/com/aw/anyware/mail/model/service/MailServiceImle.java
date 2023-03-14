@@ -200,7 +200,6 @@ public class MailServiceImle implements MailService {
 		return mDao.selectUnreadReceiveMail(sqlSession,memId);
 	}
 	
-	
 
 	/**
 	 * 개인주소록 그룹별 리스트 
@@ -238,7 +237,7 @@ public class MailServiceImle implements MailService {
 	 * 보낸메일함 리스트 조회
 	 */
 	@Override
-	public ArrayList<Mail> selectSendeMailList(PageInfo pi, String memId) {
+	public ArrayList<Mail> selectSendMailList(PageInfo pi, String memId) {
 		return mDao.selectSendMailList(sqlSession,pi,memId);
 	}
 
@@ -257,6 +256,9 @@ public class MailServiceImle implements MailService {
 	public int insertMailStatus(ArrayList<MailStatus> list) {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
+	
+
+	
 
 	/**
 	 * 중요메일 수 조회 
@@ -282,11 +284,63 @@ public class MailServiceImle implements MailService {
 		return mDao.checkImportantMail(sqlSession, ms);
 	}
 
+	/**
+	 * 중요메일 표시 해제 
+	 */
 	@Override
 	public int uncheckImportantMail(MailStatus ms) {
 		return mDao.uncheckImportantMail(sqlSession,ms);
 	}
-	
+
+	/**
+	 * 메일 읽음표시 
+	 */
+	@Override
+	public int checkReadMail(MailStatus ms) {
+		return mDao.checkReadMail(sqlSession, ms);
+	}
+
+	/**
+	 * 메일 안읽음표시 
+	 */
+	@Override
+	public int uncheckReadMail(MailStatus ms) {
+		return mDao.uncheckReadMail(sqlSession, ms);
+	}
+
+	/**
+	 * 내게쓴 메일함 개수
+	 */
+	@Override
+	public int selectSendToMeMailCount(String memId) {
+		return mDao.selectSendToMeMailCount(sqlSession, memId);
+	}
+
+	/**
+	 * 내게쓴 메일함 리스트 
+	 */
+	@Override
+	public ArrayList<Mail> selectSendToMeMailList(PageInfo pi, String memId) {
+		return mDao.selectSendToMeMailList(sqlSession, pi, memId);
+	}
+
+	/**
+	 * 임시보관함 개수
+	 */
+	@Override
+	public int selectTempStorageMailCount(String memId) {
+		return mDao.selectTempStorageMailCount(sqlSession, memId);
+	}
+
+	/**
+	 * 임시보관함 리스트 
+	 */
+	@Override
+	public ArrayList<Mail> selectTempStorageMailList(PageInfo pi, String memId) {
+		return mDao.selectTempStorageMailList(sqlSession, pi,memId);
+	}
+
+		
 	
 
 	

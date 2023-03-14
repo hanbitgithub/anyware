@@ -182,7 +182,7 @@ a {
    float: right;
 }
 .chat{
-    margin-right: 20px;
+    margin-right: 25px;
     margin-top: 20px;
 }
 #profile{
@@ -190,11 +190,16 @@ a {
     margin-top: 10px;
 }
 
+.drop-btn{
+	border:none;
+	background:white;
+}
+
 /*서브메뉴*/
 .menu{
     position: fixed;
     height: 100vh;
-    width: 180px;
+    width: 170px;
     font-size: 14px;
     padding: 50px 20px;
     border-right: 1px solid rgb(211, 210, 210);
@@ -257,7 +262,7 @@ a {
                         <span class="nav_name">메신저</span>
                     </a>
                     
-                    <a href="#" class="nav__link">
+                    <a href="ingListAll.appro?cat=ingListAll" class="nav__link">
                         <ion-icon name="document-text-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">전자결재</span>
                     </a>
@@ -352,11 +357,13 @@ a {
     </script>
 
     <div class="header">
-        <div class="dropdown" id="profile" style="display: inline-block;">
-            <img src="resources/images/profile.jpg" type="button" width="50px" height="50ps"  class="rounded-circle" alt="Cinque Terre" class=" dropdown-toggle" data-toggle="dropdown">
+        <div id="profile" style="display: inline-block;">
+             <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
+   				 <img src="resources/images/profile.jpg"  width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
+  			 </button>
+           
           
-            </img>
-            <div class="dropdown-menu" style="font-size: 12px;">
+            <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
               <a class="dropdown-item" href="#">일정관리</a>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>받은메일함</title>
 </head>
 <style>
 /*메일*/
@@ -24,9 +24,18 @@
 	background-color: rgb(250, 249, 249);
  
 }
+.table a:hover{
+	text-decoration:none;
+	
+}
 
 #search{ 
 	width:250px;
+}
+
+input[type=checkbox] {
+	transform : scale(1.01);
+
 }
 
 /*페이징*/
@@ -53,14 +62,30 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 15px">&nbsp; ${unread} / ${ rCount }</span>
+		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 13px">&nbsp;
+		   안읽은 메일 <span class="count"></span> / 전체메일 ${ rCount }</span>
+
+		   <script>
+		   $(function(){ 
+			   unreadCount();
+		   })
+		   
+		   </script>
             <br><br><br>
 
             <nav class="navbar navbar-expand-lg bg-light">
                 <div class="container-fluid">
                  
                   <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                   
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                      <li class="nav-item">
+                        <a class="nav-link" aria-current="page" href="#">
+                           &nbsp;<input type="checkbox" class="form-check-input">
+                            </a>
+                      </li>
+                    	
             
                       <li class="nav-item dropdown">
                           <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -78,11 +103,11 @@
                             <img src="resources/images/bin.png" width='15px' alt="">
                             삭제</a>
                       </li>
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/block.png" width='15px' alt="">
                             스팸차단</a>
-                      </li>
+                      </li> -->
                       <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/send (1).png" width='15px' alt="">
@@ -149,8 +174,8 @@
                 		<c:forEach var="r" items="${rlist }">
                 			<c:choose>
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
-			                		<tr style="font-size: 14px;"> 
-			                			<td width="20"><input type="checkbox"  value="${r.emNo }"></td>
+			                		<tr style="font-size: 14px;" class="mstatus${r.emNo}"> 
+			                			<td width="25"><input type="checkbox"  value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -175,8 +200,8 @@
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
-	                				<tr style="font-size: 14px; font-weight: bold"> 
-			                			<td width="20"><input type="checkbox" value="${r.emNo }"></td>
+	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${r.emNo}"> 
+			                			<td width="25"><input type="checkbox" value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -189,7 +214,7 @@
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" ></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
@@ -212,6 +237,9 @@
                
                 
             </table>
+      
+            
+            
             <script>
 
            		 $(".star").click(function(){
@@ -257,36 +285,65 @@
                     }
 
                 })
-                 
-                 
-                	 $(".envelope").click(function(){
-                		 var read= "resources/images/envelope.png"
-                         var nonRead = "resources/images/envelope2.png" 
-                		 var emNo = $(this).data("emno");
-     					 var $button = $(this);
-     					 
+   
+            </script>
+            <script>
+        	 $(".envelope").click(function(){
+        		 var read= "resources/images/envelope.png"
+                 var nonRead = "resources/images/envelope2.png" 
+        		 var emNo = $(this).data("emno");
+			     var $button = $(this);
+					 
+        		 
+                 if($button.attr("src") != read){  
+                	 $.ajax({
+                		 url: "read.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : 1,
+                			 receiver : '${loginUser.memberId}'
+
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",read);
+                			 $(".mstatus"+emNo ).css("font-weight","300");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시 ajax실패");
+                		 }
                 		 
+                	 })
+                	 
+                 }else{
+                	 $.ajax({
+                		 url: "unread.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : 1,
+                			 receiver : '${loginUser.memberId}'
+
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",nonRead);
+                			 $(".mstatus"+emNo ).css("font-weight","bold");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시해제 ajax실패");
+                		 }
                 		 
-                         if($(this).attr("src") != read){  
-                        	 	 $(this).attr("src",read);
-     	
+                	 })
+            
+                 }
 
 
-                         }else{
-                          	 $(this).attr("src",nonRead);
-                         }
+              })
 
-
-                      })
-                      
-
-         
             </script>
                
-
-
-
-
 
      <!--페이징 영역-->
 		<div id="paging-area" align="center">
