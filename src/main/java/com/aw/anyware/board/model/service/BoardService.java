@@ -33,5 +33,7 @@ public interface BoardService {
 	int insertReply(Reply r);
 	
 	ArrayList<Board> selectGroupList(PageInfo pi);
-	
+
+	ArrayList<Board> ajaxSelectMainBoardList();
+	ArrayList<Board> SelectMainNoticeList();
 }

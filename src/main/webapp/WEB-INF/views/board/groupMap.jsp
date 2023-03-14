@@ -146,15 +146,15 @@
             <li>
                 <a href="#">CEO</a>
                 <ul>
-
+					
                     <li>
                         <a href="#">Child</a>
                         <ul>
-                            <li><a href="">영업팀</a>
+                            <li><a href="">개발팀</a>
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         <ul>
-                                            <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         </ul>
                                 </ul>
                             </li>
@@ -163,7 +163,7 @@
                                 
                                 <ul>
                                     <li>
-                                        <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                        <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                     </li>
                                 </ul>
                                 
@@ -171,18 +171,18 @@
                             <li>
                                 <a href="">총무팀</a>
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         <ul>
-                                            <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         </ul>
                                 </ul>
                             </li>
                             <li>
                                 <a>디자인팀</a>
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         <ul>
-                                            <a data-toggle="modal" data-target="#myModal">Great Grand Child</a>
+                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         </ul>
                                 </ul>
                             </li>

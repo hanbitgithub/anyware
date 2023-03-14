@@ -52,6 +52,8 @@ public class BoardController {
 		
 	}
 	
+
+	
 	@RequestMapping("nlist.bo")
 	public String selectNoticeList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
 		
@@ -195,5 +197,18 @@ public class BoardController {
 		return result > 0 ? "success" : "fail";
 		
 	}
-
+	
+	@ResponseBody
+	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
+	public String ajaxSelectMainBoardList() {
+		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
+		return new Gson().toJson(list);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
+	public String SelectMainBoardList() {
+		ArrayList<Board> list = bService.SelectMainNoticeList();
+		return new Gson().toJson(list);
+	}
 }

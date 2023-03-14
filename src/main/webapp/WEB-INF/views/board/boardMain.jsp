@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <style>
 .notice{
     background-color: rgb(247, 247, 247);
@@ -22,12 +23,12 @@
     flex:1;
     padding: 30px;    
 }
-.ul{
+#ul{
     list-style:none;
     font-size: 15px;
     line-height: 50px;
 }
-.ul > li > a{
+#ul > li > a{
     color: black;
     
 }
@@ -44,15 +45,8 @@
 	<div class="content">
 	    <div id="boardList" class="notice" style="display: inline-block"> 
     		<h3 align="center"><a href="list.bo">자유게시판</a></h3>
-		        <ul class="ul">
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
-		            <li><a>게시글</a></li>
+		        <ul id="ul" id="blist">
+
 		        </ul>    
 	
 	    </div>
@@ -61,26 +55,44 @@
 
 	    <div id="boardList" class="board" style="display: inline-block">
 	        <h3 align="center"><a href="nlist.bo">공지사항</a></h3>
-	        <ul class="ul">
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
-	            <li><a>게시글</a></li>
+	        <ul id="ul">
+
 	        </ul>
 	        
+			</div>
 		</div>
 	
             <script>
             	$(function(){
             		
-            		$("#boardList>tbody>tr").click(function(){
+            		mainBoardList();
+            		
+            		$("#boardList > ul > li").click(function(){
             			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
             		})
             	})
+            	
+            	function mainBoardList(){
+            		$.ajax({
+            			url:"mainList.bo",
+            			success:function(list){
+            				console.log(list);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let b = list[i];
+            					value += "<li>" + '<input type="hidden" class="bno" value="' + b.boardNo + '">' + b.boardTitle + "</li>" ;
+            						
+            					
+            				}
+            				
+            				$("#boardList ul").html(value);
+            			},error:function(){
+            				console.log("메인 게시글 조회용 ajax 통신실패");
+            			}
+            			
+            		})
+            	}
             	
             </script>
 </body>
