@@ -110,6 +110,10 @@ public interface MailService {
 	int selectTempStorageMailCount(String memId);
 	ArrayList<Mail> selectTempStorageMailList(PageInfo pi, String memId);
 	
+	//메일 임시보관
+	int saveTemporaryMail(Mail m);
 	
+	//메일 임시보관 업데이트
+	int updateTemporaryMail(Mail m);
      
 }

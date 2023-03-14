@@ -429,7 +429,19 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTempStorageMailList",memId,rowBounds);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 메일 임시저장 
+	 */
+	public int saveTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.insert("mailMapper.saveTemporaryMail",m);
+	}
 	
+	
+	public int updateTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.update("mailMapper.updateTemporaryMail",m);
+	}
 	
 	
 

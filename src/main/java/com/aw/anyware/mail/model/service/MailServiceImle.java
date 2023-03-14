@@ -340,6 +340,20 @@ public class MailServiceImle implements MailService {
 		return mDao.selectTempStorageMailList(sqlSession, pi,memId);
 	}
 
+	/**
+	 * 메일 임시저장 
+	 */
+	@Override
+	public int saveTemporaryMail(Mail m) {
+		return mDao.saveTemporaryMail(sqlSession, m);
+	}
+	
+	public int updateTemporaryMail(Mail m) {
+		return mDao.updateTemporaryMail(sqlSession,m);
+	}	
+				
+				
+
 		
 	
 

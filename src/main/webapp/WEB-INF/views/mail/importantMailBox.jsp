@@ -205,17 +205,20 @@ input[type=checkbox] {
 			                			
 			                			</td>
 			                			<td width="700">
-										<c:choose>
-			                				<c:when test="${i.mailStatus.emType eq '0'}">
-			                				  	[보낸메일함] 
-			                				</c:when>
-			                				<c:when test="${i.mailStatus.emType eq '1' }">
-			                					[받은메일함] 
-			                				</c:when>
-			                			
-			                			</c:choose>
-										&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a></td>
+											<c:choose>
+				                				<c:when test="${i.mailStatus.emType eq '0'}">
+				                				  	[보낸메일함] 
+				                				</c:when>
+				                				<c:when test="${i.mailStatus.emType eq '1' or i.mailStatus.emType eq '2' }">
+				                					[받은메일함] 
+				                				</c:when>
+				                				<c:when test="${i.mailStatus.emType eq '3' }">
+				                					[내게쓴메일함] 
+				                				</c:when>
+				                			</c:choose>
+											&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a>
 										</td>
+										
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty i.emfNo}">
@@ -273,6 +276,9 @@ input[type=checkbox] {
 			                				<c:when test="${i.mailStatus.emType eq '1' }">
 			                					[받은메일함] 
 			                				</c:when>
+			                				<c:when test="${i.mailStatus.emType eq '3' }">
+				                					[내게쓴메일함] 
+				                		    </c:when>
 			                			
 			                			</c:choose>
 			                			
