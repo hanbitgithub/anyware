@@ -510,15 +510,15 @@ a {
         <div class="employContent">
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>이메일</b></div>
-                        <div class="profileContent2"><input type="email" name="" value="${ m.email }"></div>
+                        <div class="profileContent2">${ m.email }</div>
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>사원번호</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="${ m.memberNo }"></div>
+                        <div class="profileContent2"><input type="text" name="memberNo" value="${ m.memberNo }"></div>
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>휴대폰</b></div>
-                        <div class="profileContent2"><input type="tel" name="" value="${ m.phone }"></div>
+                        <div class="profileContent2">${ m.phone }</div>
                     </div>
                     
          </div> 
@@ -531,7 +531,7 @@ a {
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>직급</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="${ m.jobName }" ></div>
+                        <div class="profileContent2"><input type="text" name="jobName" value="${ m.jobName }" ></div>
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>부서/직책</b></div>
@@ -539,7 +539,7 @@ a {
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>담당업무</b></div>
-                        <div class="profileContent2"><input type="text" id="duty" name="" value="${ m.duty }" ></div>
+                        <div class="profileContent2"><input type="text" id="duty" name="duty" value="${ m.duty }" ></div>
                     </div>
                     <script>
                 	$(function(){
@@ -554,15 +554,15 @@ a {
         <div class="employContent">            
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>주소</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="${ m.address }"></div>
+                        <div class="profileContent2">${ m.address }</div>
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>입사일</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="${ m.enrollDate }"></div>
+                        <div class="profileContent2">${ m.enrollDate }</div>
                     </div>
                     <div id="employProfile-div3">
-                        <div class="profileContent1"><b>생일</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="나중에"></div>
+                        <div class="profileContent1"><b>생일</b></div> <!-- 일단 주민번호로 -->
+                        <div class="profileContent2">${ m.rrn }</div>
                     </div>
                     <div id="employProfile-div3">
                         <button id="submit" type="submit">정보변경</button>
