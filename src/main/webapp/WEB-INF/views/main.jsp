@@ -104,9 +104,30 @@
             <br>
             퇴근시간 : -- : --
           </p>
-          <button class="boutton button1">출근</button>
-          <button class="boutton button2">퇴근</button>
+          <button class="boutton button1" onclick="enrollAndOut(1);">출근</button>
+          <button class="boutton button2" onclick="enrollAndOut(2);">퇴근</button>
         </div>
+        
+        <script>
+          function enrollAndOut(num){
+        	const crr = [];  
+        	const cTime = new Date();
+        	const hour = cTime.getHours();
+        	const min = cTime.getMinutes();
+        	const sec = cTime.getSeconds();
+        	
+        	crr[0] = hour;
+        	crr[1] = min;
+        	crr[2] = sec;
+        	  
+        	  
+            if(num == 1){
+                    location.href = 'enrollMember.me?memberNo=${loginUser.memberNo}&name=${loginUser.name};
+            }else{
+                    location.href = 'outMember.me?memberNo='${loginUser.memberNo};
+            }
+          }
+        </script>
 
 
         <div id="right">
