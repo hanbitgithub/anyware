@@ -257,7 +257,7 @@ a {
                         <span class="nav_name">메신저</span>
                     </a>
                     
-                    <a href="#" class="nav__link">
+                    <a href="ingListAll.appro?cat=ingListAll" class="nav__link">
                         <ion-icon name="document-text-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">전자결재</span>
                     </a>
@@ -287,7 +287,7 @@ a {
 
                         
                     </div>
-                    <a href="#" class="nav__link">
+                    <a href="groupmap.bo" class="nav__link">
                         <ion-icon name="git-network-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">조직도</span>
                     </a>

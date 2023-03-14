@@ -32,7 +32,16 @@ public class BoardDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return  (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", null, rowBounds);
+	}
+	
+	public ArrayList<Board> selectGroupList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectGroupList", null, rowBounds);
 	}
 
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
@@ -62,6 +71,8 @@ public class BoardDao {
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("boardMapper.insertReply" ,r);
 	}
+
+
 
 
 

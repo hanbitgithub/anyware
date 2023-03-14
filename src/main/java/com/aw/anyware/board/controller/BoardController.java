@@ -68,6 +68,21 @@ public class BoardController {
 		
 	}
 	
+	@RequestMapping("glist.bo")
+	public String selectGroupList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = bService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectGroupList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+
+		return "board/groupListView";
+		
+	}
 	
 	@RequestMapping("enrollForm.bo")
 	public String enrollForm() {
@@ -90,7 +105,7 @@ public class BoardController {
 		
 		if(result > 0) { 
 			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
-			return "redirect:list.bo";
+			return "board/boardMain";
 		}else {
 			model.addAttribute("errorMsg", "게시글 등록 실패");
 			return "common/errorPage";
@@ -180,5 +195,5 @@ public class BoardController {
 		return result > 0 ? "success" : "fail";
 		
 	}
-	
+
 }

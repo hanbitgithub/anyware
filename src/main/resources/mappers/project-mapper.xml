@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="projectMapper">
+
+	<resultMap type="Project" id="projectResult">
+		<id column="project_no"  property="projectNo" />
+		<result column="owner"  property="owner" />
+		<result column="project_title"  property="projectTitle" />
+		<result column="project_content"  property="projectContent" />
+		<result column="public_status"  property="publicStatus" />
+		<result column="create_date"  property="createDate" />
+		<result column="status"  property="status" />
+		<result column="likecount" property="like" />
+	</resultMap>
+	
+	<resultMap type="Like" id="likeResult">
+		<result column="member_no" property="memberNo" />
+		<result column="project_No" property="projectNo" />
+		<result column="like_date" property="likeDate" />
+	</resultMap>
+
+	<select id="selectListCount" resultType="_int">
+		select
+			   count(*)
+		  from tb_project
+		 where status = 'Y'
+	</select>
+	
+	<select id="selectProjectList" resultMap="projectResult">
+		select
+		       project_no
+		     , name owner
+		     , project_title
+		     , public_status
+		     , nvl2(like_date, 1, 0) likecount
+		  from tb_project p
+		  join tb_member on (owner_no = member_no)
+		  full outer join (select
+		                           member_no
+		                         , project_no
+		                         , like_date
+		                      from tb_like
+		                     where member_no = 1) using (project_no)
+		 where p.status = 'Y'
+		 order
+		    by project_no desc
+	</select>
+
+</mapper>

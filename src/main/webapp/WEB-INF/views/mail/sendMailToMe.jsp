@@ -5,12 +5,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>내게쓰기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-   
-   <!--메일쓰기-->
-   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
     <style>
  
@@ -295,19 +291,23 @@
             <br><br>
             <div id="write-area">
                 <div id="btn-area">
-                    <a href=""><img src="resources/images/send-mail.png" width="25px"> 전송</a>
+                    <a onclick="return sendToMe();"><img src="resources/images/send-mail.png" width="25px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="20px"> 취소</a>
                     <a href=""><img src="resources/images/packing.png" width="25px"> 임시저장</a>
-                    <a href=""><img src="resources/images/exchange.png" width="25px"> 내게쓰기</a>
+                    <a href="sendForm.em"><img src="resources/images/exchange.png" width="25px"> 메일쓰기</a>
                   
                 </div>
                 <br>
                 <div>
+                   <form method="post" action="sendToMe.em" id="mailmeForm" enctype="multipart/form-data">
+                   	<input type="hidden" name="sender" value="${loginUser.memberId}">
+                    <input type="hidden" name="memName" value="${loginUser.name }">
+                
                     <table id="write"style="font-size: 15px;">
                       
                         <tr>
                             <th  width="120" height="40px">제목</th>
-                            <td><input type="text" name="" value="" class="form-control"></td>
+                            <td><input type="text" id="title2" name="emTitle" class="form-control"></td>
                         </tr>
                         <tr>
                             <th height="40px">첨부파일</th>
@@ -319,7 +319,7 @@
                         
                         <tr>
                             <td colspan="2">
-                                <textarea id="summernote" name="editordata"></textarea>
+                                <textarea id="summernote" name="emContent"></textarea>
                             </td>
                         </tr>
                         
@@ -344,18 +344,31 @@
 
                    
                       </script>
-                    
+                   </form> 
 
                 </div>
 
-            
-
             </div>
 
-            
         </div>
 
+        <script type="text/javascript">
+        function sendToMe(){
+        	if ($("#title2").val().trim() == 0) {
+				// 메일 제목이 없는 경우
+				let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
+				if (answer) {
+					$("#mailmeForm").submit(); // 메일 전송
+				} else {
+					$("#title2").focus();
+					return false; // 메일 전송 안됨
+        		}
         
+        	}
+        	
+        	$("#mailmeForm").submit();
+        }
+        </script>
 
 
 

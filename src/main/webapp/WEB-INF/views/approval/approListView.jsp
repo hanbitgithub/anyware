@@ -98,7 +98,7 @@
 				if(${cat eq 'ingListContinue'}){
 					location.href ='update.appro?approNo='+$(this).children().eq(0).text();
 				} else {
-					location.href ='detail.appro?approNo='+$(this).children().eq(0).text();
+					location.href ='check.appro?approNo='+$(this).children().eq(0).text();
 				}
 			})
 		})
@@ -109,7 +109,7 @@
                     
                     <c:choose>
 	                    <c:when test="${pi.currentPage != 1}">
-	                        <li class="page-item"><a class="page-link" href="list.appro?cpage=${pi.currentPage - 1}&cat=${cat}">&lt;</a></li>
+	                        <li class="page-item"><a class="page-link" href="${cat}.appro?cpage=${pi.currentPage - 1}&cat=${cat}">&lt;</a></li>
 	                    </c:when>    
 	                    <c:otherwise>
                         	<li class="page-item disabled"><a class="page-link " href="">&lt;</a></li>
@@ -119,17 +119,17 @@
                     <c:forEach var="p" begin="${pi.startPage}" end="${pi.endPage}">
                     	<c:choose>
                     		<c:when test="${pi.currentPage eq p}">
-                            	<li class="page-item active"><a class="page-link" href="list.appro?cpage=${p}&cat=${cat}">${p}</a></li>
+                            	<li class="page-item active"><a class="page-link" href="${cat}.appro?cpage=${p}&cat=${cat}">${p}</a></li>
                             </c:when>
                             <c:otherwise>
-                          		<li class="page-item"><a class="page-link" href="list.appro?cpage=${p}&cat=${cat}">${p}</a></li>
+                          		<li class="page-item"><a class="page-link" href="${cat}.appro?cpage=${p}&cat=${cat}">${p}</a></li>
                             </c:otherwise>
                     	</c:choose>
                     </c:forEach>
                     
                     <c:choose>
                     	<c:when test="${pi.currentPage != pi.maxPage }">
-                        	<li class="page-item"><a class="page-link" href="list.appro?cpage=${pi.currentPage + 1}&cat=${cat}">&gt;</a></li>
+                        	<li class="page-item"><a class="page-link" href="${cat}.appro?cpage=${pi.currentPage + 1}&cat=${cat}">&gt;</a></li>
                        	</c:when>
                        	<c:otherwise>
                         	<li class="page-item disabled"><a class="page-link" href="">&gt;</a></li>

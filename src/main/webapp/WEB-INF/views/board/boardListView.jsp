@@ -80,8 +80,10 @@ table{
 	<p><b>자유게시판</b></p>
 	<hr>
 	<div class="container">
-            <input type="text" value="제목으로 검색하기" class="button">
+		<form action="">
+            <input type="text" name="keyword" value="제목으로 검색하기" class="button">
             <button type="submit" class="button">검색</button>
+        </form>
             <br>
 
             <table id="boardList" class="table table-hover" align="center">

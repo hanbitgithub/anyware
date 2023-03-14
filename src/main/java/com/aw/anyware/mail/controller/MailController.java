@@ -83,7 +83,7 @@ public class MailController {
 		int listCount = mService.selectSendMailListCount(memId);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
-		ArrayList<Mail> slist = mService.selectSendeMailList(pi,memId);
+		ArrayList<Mail> slist = mService.selectSendMailList(pi,memId);
 		
 	
 		model.addAttribute("slist", slist);
@@ -165,9 +165,60 @@ public class MailController {
 	}
 	
 	
+	//임시보관함 
 	@RequestMapping("storage.em")
-	public String temporaryMailList() {
+	public String temporaryMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+
+		//임시보관함 갯수조회
+		int listCount = mService.selectTempStorageMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//임시보관함 리스트
+		ArrayList<Mail> slist = mService.selectTempStorageMailList(pi,memId);
+		
+	
+		model.addAttribute("slist", slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("listCount",listCount);
+		//System.out.println(pi);
+		
+		
 		return "mail/temporaryStorageMailBox";
+	}
+	
+
+	//메일 임시저장 
+	@ResponseBody
+	@RequestMapping("save.em")
+	public String ajaxSavetemporaryMail(Mail m) {
+		
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
+
+		int result = mService.saveTemporaryMail(m);
+		return result>0 ? "success": "fail";
+	}
+	
+	
+	//임시저장 버튼 다시 눌렀을경우 update
+	@ResponseBody
+	@RequestMapping("updateTemp.em")
+	public String ajaxUpdateTemporaryMail(Mail m) {
+		
+		int result = mService.updateTemporaryMail(m);
+		return result>0 ? "success": "fail";
 	}
 	
 	@RequestMapping("trash.em")
@@ -213,10 +264,66 @@ public class MailController {
 	}
 	
 	//내게쓰기 폼
-	@RequestMapping("sendToMe.em")
-	public String sendMailToMe() {
+	@RequestMapping("sendToMeForm.em")
+	public String sendMailToMeForm() {
 		return "mail/sendMailToMe";
 	}
+	
+	//내게쓴메일함
+	@RequestMapping("sendToMebox.em")
+	public String sendToMeMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+		
+		//내게쓴 메일 수
+		int listCount = mService.selectSendToMeMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//내게쓴 메일 리스트  
+		ArrayList<Mail> rlist = mService.selectSendToMeMailList(pi,memId);
+		
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+		
+		//System.out.println(rlist);
+	
+		return "mail/sendToMeBox";
+	}
+	
+	
+	//내게쓰기 insert
+    @RequestMapping("sendToMe.em")
+    public String insertSendToMe(Mail m, Model model) {
+    	//메일 테이블 insert
+    	String memName = m.getMemName();
+    	String sender = m.getSender();
+  
+    	m.setReceivers(memName + " " + sender + "@anyware.com");
+    	
+    	int result1 = mService.insertSendMail(m);
+    	
+    	model.addAttribute("receivers", memName + " " + sender + "@anyware.com");
+    	model.addAttribute("msg","내게 쓴 메일은 [내게쓴메일함]에서 확인할 수 있습니다. ");
+    	
+    	ArrayList<MailStatus> list = new ArrayList<>();
+    	//메일 상태 insert
+    	if(result1>0) {
+    		MailStatus ms = new MailStatus();
+	    	ms.setEmType(3);
+	    	ms.setReceiverName(memName);
+	    	ms.setReceiver(sender);
+	    	
+	    	list.add(ms);
+    	}
+    	int result2 = mService.insertMailStatus(list);
+    	
+    	
+    	
+    	return "mail/successSendmail";
+    	
+    }
+	
 	
 	//메일 쓰기
 	@RequestMapping("sendMail.em")
@@ -233,13 +340,12 @@ public class MailController {
 		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
 		
 		m.setRefEmail(cc);
-        
-		model.addAttribute("receivers",receivers);
-		model.addAttribute("cc",cc);
-		
+   
 		//메일 테이블 insert 
 		int result1 = mService.insertSendMail(m);
-		
+
+		model.addAttribute("receivers",receivers);
+		model.addAttribute("cc",cc);
 		
 		ArrayList<MailStatus> list = new ArrayList<>();
 		if(result1>0) {

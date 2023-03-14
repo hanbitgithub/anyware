@@ -63,11 +63,6 @@
 		text-align:center;
 	}
 	
-	#sign{
-    	cursor:pointer;
-	}
-
-
 
 </style>
 
@@ -116,7 +111,7 @@
 			</tr>
 		</table>
 		<br>
-		<table class="table-bordered ref" role="button" data-toggle="modal" data-target="#myModal2">
+		<table class="table-bordered ref">
 			<tr>
 				<th>참조</th>
 				<td>
@@ -142,11 +137,6 @@
 			<input style="width: 600px;" type="text" name="approTitle" value="${appro.approTitle}" readonly>
 			<br><br>
 			<textarea id="summernote" class="editor" name="approContent"></textarea>
-			<br>
-			<div class="btn-center">
-				<button type="submit" class="btn btn-primary">등록</button>
-				<button type="reset" class="btn btn-danger">취소</button>
-			</div>
 			<br><br><br>
 		</form>
 	</div>

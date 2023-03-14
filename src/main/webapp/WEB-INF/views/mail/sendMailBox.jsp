@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>보낸메일함</title>
 </head>
 <style>
 /*메일*/
@@ -96,7 +96,7 @@ input[type=checkbox] {
                       <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/send (1).png" width='15px' alt="">
-                            재발송</a>
+                            답장</a>
                       </li>
                       <li class="nav-item">
                         <a class="nav-link" href="#">
@@ -179,12 +179,11 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
-			                			<c:set var="r" value="${s.receivers}"/>
-			                			
+			                			<c:set var="receivers" value="${s.receivers}"/>
 									    <c:choose>
 									      <c:when test="${not empty receivers}">
-									        <c:set var="emails" value="${fn:split(receivers, ',')}" />
-									       		 <c:forEach var="name" items="${names}" varStatus="loop">
+									         <c:set var="names" value="${fn:split(receivers, ',')}" />
+											    <c:forEach var="name" items="${names}" varStatus="loop">
 											      <c:if test="${loop.index < 2}">
 											        ${fn:trim(fn:substringBefore(name, ' '))}
 											        <c:if test="${loop.index < fn:length(names)-1}">, </c:if>
@@ -194,7 +193,7 @@ input[type=checkbox] {
 											      </c:if>
 											    </c:forEach>
 									        </c:when>
-									     </c:choose>   
+									    </c:choose>    
 			                			</td>
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
@@ -222,7 +221,6 @@ input[type=checkbox] {
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
 			                			<c:set var="receivers" value="${s.receivers}"/>
-  
 									    <c:choose>
 									      <c:when test="${not empty receivers}">
 									         <c:set var="names" value="${fn:split(receivers, ',')}" />

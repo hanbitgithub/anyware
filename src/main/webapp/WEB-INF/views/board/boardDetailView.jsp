@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
 <!DOCTYPE html>
 <html>
 <head>
@@ -64,7 +64,7 @@ textarea {
 		    </li>
 		
 		    <li>
-		        <img id="img" src="arrow\이배추대표이사.jpg" alt="">
+		        
 		        <span>
 		            <b>${b.boardWriter }</b> 
 		            대표이사
@@ -123,7 +123,7 @@ textarea {
 		        <tr>
 		           <td colspan="2" style="font-size: 13px;">
 		            댓글 (<span id="rcount"></span>)
-		            <a style="float: right; font-size: 13px;"href="">신고하기</a>
+		            <a style="float: right; font-size: 13px;"href="" data-toggle="modal" data-target="#myModal">신고하기</a>
 		        </td>
 		        </tr>
 		    </thead>
@@ -202,5 +202,76 @@ textarea {
     		})
     	}
     </script>
+    
+            <!-- 모달 -->
+        <div class="modal" id="myModal" style="color:rgb(50, 50, 50);">
+            <div class="modal-dialog">
+                <div class="modal-content" style="padding:30px 20px;">
+        
+                    <!-- Modal Header -->
+                    <div class="modal-header" style="justify-content: left;">
+                        <h5 class="modal-title" style="font-weight:600;">신고하기</h5>
+                    </div>
+        
+                    <!-- Modal body -->
+        			<form action="" method="post">
+                    <div class="modal-body" style="color:gray; font-size:13px;">
+                   	<input type="hidden" name="postNo" value="">
+                    
+                    	
+                        <br>
+                        ※ 허위신고일 경우, 신고자의 서비스 활동이 제한될 수 있으니<br> 
+						&nbsp;&nbsp;&nbsp;  유의하시어 신중하게 신고해 주세요. <br>
+                        
+                        <br>
+                        <div style="margin-bottom:10px;">
+                            <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report1" name="reportContent" value="스팸홍보 / 도배글입니다.">
+                            <label for="report1">
+                                <b style="color:rgb(50, 50, 50)">스팸홍보 / 도배글입니다.</b> 
+                            </label>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report2" name="reportContent" value="음란물입니다.">
+                            <label for="report2">
+                                <b style="color:rgb(50, 50, 50)">음란물입니다.</b>
+                            </label>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report3" name="reportContent" value="불법정보를 포함하고 있습니다.">
+                            <label for="report3">
+                                <b style="color:rgb(50, 50, 50)">불법정보를 포함하고 있습니다.</b>
+                            </label>
+                        </div>
+                        <div style="margin-bottom:10px;">
+                            <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report4" name="reportContent" value="개인정보 노출 게시물입니다.">
+                            <label for="report4">
+                                <b style="color:rgb(50, 50, 50)">개인정보 노출 게시물입니다.</b>
+                            </label>
+                        </div>
+                        <div>
+                            <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report5" name="reportContent" value="욕설/생명경시/혐오/차별적 표현입니다.">
+                            <label for="report5">
+                                <b style="color:rgb(50, 50, 50)">욕설/비방/혐오/차별적 표현입니다.</b>
+                            </label>
+                        </div>
+
+                    	<hr>
+                        
+                        <br>
+                        <button type="submit" id="btn" style="float: right;" class="btn-lg">제출</button>
+        
+                    </div>
+        				</form>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            $(function(){
+                $("#myModal button").click(function(){
+                    alert("제출되었습니다.");
+                })
+            })
+        </script>
 </body>
 </html>

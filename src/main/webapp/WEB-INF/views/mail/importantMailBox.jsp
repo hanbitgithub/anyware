@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>중요메일함</title>
 </head>
 <style>
 /*메일*/
@@ -88,11 +88,11 @@ input[type=checkbox] {
                             <img src="resources/images/bin.png" width='15px' alt="">
                             삭제</a>
                       </li>
-                       <li class="nav-item">
+                       <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/block.png" width='15px' alt="">
                             스팸차단</a>
-                      </li>
+                      </li> -->
                      
                       <li class="nav-item">
                         <a class="nav-link" href="#">
@@ -162,20 +162,20 @@ input[type=checkbox] {
                 		<c:forEach var="i" items="${ilist }">
                 			<c:choose>
                 				<c:when test="${i.mailStatus.read eq 'Y' }">
-			                		<tr style="font-size: 14px;"> 
+			                		<tr style="font-size: 14px;" class="mstatus${i.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
 			                			<td width="25">
 			                				<c:choose>
 			                				<c:when test="${i.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${i.emNo }">
+			                					<img src="resources/images/award.png" width="18" class="star" data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }">
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${i.emNo }">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }"></td>
 			                			<td width="150">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.emType =='0' }"> 
@@ -205,17 +205,20 @@ input[type=checkbox] {
 			                			
 			                			</td>
 			                			<td width="700">
-										<c:choose>
-			                				<c:when test="${i.mailStatus.emType eq '0'}">
-			                				  	[보낸메일함] 
-			                				</c:when>
-			                				<c:when test="${i.mailStatus.emType eq '1' }">
-			                					[받은메일함] 
-			                				</c:when>
-			                			
-			                			</c:choose>
-										&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a></td>
+											<c:choose>
+				                				<c:when test="${i.mailStatus.emType eq '0'}">
+				                				  	[보낸메일함] 
+				                				</c:when>
+				                				<c:when test="${i.mailStatus.emType eq '1' or i.mailStatus.emType eq '2' }">
+				                					[받은메일함] 
+				                				</c:when>
+				                				<c:when test="${i.mailStatus.emType eq '3' }">
+				                					[내게쓴메일함] 
+				                				</c:when>
+				                			</c:choose>
+											&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a>
 										</td>
+										
 			                			<td width="50">
 			                				
 			                				<c:if test="${not empty i.emfNo}">
@@ -226,19 +229,19 @@ input[type=checkbox] {
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
-	                				<tr style="font-size: 14px; font-weight: bold"> 
+	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${i.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${i.emNo }">
+			                					<img src="resources/images/award.png" width="18" class="star"  data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }">
 			                				</c:when>
 			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${i.emNo }">
+			                					<img src="resources/images/star.png" width="18" class="star" data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }">
 			                				</c:otherwise>	
 			                			</c:choose>
 			                			</td>
-			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope"></td>
+			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emtype="${i.mailStatus.emType }"data-emNo="${i.emNo }"></td>
 			                			<td width="150">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.emType =='0' }">
@@ -273,6 +276,9 @@ input[type=checkbox] {
 			                				<c:when test="${i.mailStatus.emType eq '1' }">
 			                					[받은메일함] 
 			                				</c:when>
+			                				<c:when test="${i.mailStatus.emType eq '3' }">
+				                					[내게쓴메일함] 
+				                		    </c:when>
 			                			
 			                			</c:choose>
 			                			
@@ -302,6 +308,7 @@ input[type=checkbox] {
  				 var star = "resources/images/star.png"
  		         var award = "resources/images/award.png"
  		         var emNo = $(this).data("emno");
+ 				 var emType = $(this).data("emtype");
  				 var $button = $(this);
  				 
             	  if($button.attr("src") != star){  
@@ -309,8 +316,10 @@ input[type=checkbox] {
  		   					url:"like.em",
  		   					data:{
  		   						emNo : emNo,
- 		   						emType : 3,
- 		   						receiver : '${loginUser.memberId}'
+ 		   						emType:emType,				
+ 		   						receiver : '${loginUser.memberId}',
+ 		   					    sender: '${loginUser.memberId}'
+ 		   						
  		   					},
  		   					success:function(result){
  		   						//console.log(result);
@@ -326,6 +335,7 @@ input[type=checkbox] {
                  		url:"dislike.em",
                  		data:{
                  			emNo : emNo,
+                 			emType:emType ,
                  			receiver : '${loginUser.memberId}',
                  			sender: '${loginUser.memberId}'
                  		},
@@ -342,25 +352,65 @@ input[type=checkbox] {
 
             })
              
-                 
-                 
-                 var read= "resources/images/envelope.png"
-                     var nonRead = "resources/images/envelope2.png"
-                    	 $(".envelope").click(function(){
-                             if($(this).attr("src") != read){  
-                            	 	 $(this).attr("src",read);
-         	
+            </script>
+            
+             <script>
+        	 $(".envelope").click(function(){
+        		 var read= "resources/images/envelope.png"
+                 var nonRead = "resources/images/envelope2.png" 
+        		 var emNo = $(this).data("emno");
+        		 var emType = $(this).data("emtype");
+			     var $button = $(this);
+					 
+        		 
+                 if($button.attr("src") != read){  
+                	 $.ajax({
+                		 url: "read.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : emType,
+                			 receiver : '${loginUser.memberId}',
+							 sender: '${loginUser.memberId}'
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",read);
+                			 $(".mstatus"+emNo ).css("font-weight","300");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시 ajax실패");
+                		 }
+                		 
+                	 })
+                	 
+                 }else{
+                	 $.ajax({
+                		 url: "unread.em",
+                		 data: {
+                			 emNo : emNo,
+                			 emType : emType,
+                			 receiver : '${loginUser.memberId}',
+                			 sender: '${loginUser.memberId}'
+
+                		 },
+                		 success:function(result){
+                			// console.log(result);
+                			 $button.attr("src",nonRead);
+                			 $(".mstatus"+emNo ).css("font-weight","bold");
+                			 unreadCount();
+                			 
+                		 },error:function(){
+                			 console.log("읽음표시해제 ajax실패");
+                		 }
+                		 
+                	 })
+            
+                 }
 
 
-                             }else{
-                              	 $(this).attr("src",nonRead);
-                             }
+              })
 
-
-                          })
-                          
-
-        
             </script>
 
 

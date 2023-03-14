@@ -86,7 +86,7 @@ input[type=checkbox] {
       
                       <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <img src="resources/images/recovery.png" width='25px' alt="">
+                            <img src="resources/images/restore.png" width='25px' alt="">
                             복구</a>
                       </li>
                       

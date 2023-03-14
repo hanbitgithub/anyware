@@ -52,9 +52,10 @@
 	<result column="mem_name" property="memName" />
 	<result column="sender" property="sender" />
 	<result column="receiver" property="receivers" />
-	<result column="ref_email" property="refEamil" />
+	<result column="ref_email" property="refEmail" />
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
+	<result column="temp_date" property="tempDate" />
 	
 	<association property="mailStatus" resultMap="mailStatusResult" />
 	<collection property="fileList" resultMap="mailFileResult" />
@@ -449,10 +450,11 @@
 	 and sender=#{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_stock = 'N'
 </select>
 
 <!-- 보낸메일함 조회 -->
-<select id="selectSendeMailList" resultMap="mailResult">
+<select id="selectSendMailList" resultMap="mailResult">
  select 
  		 m. em_no
         , sender
@@ -461,6 +463,7 @@
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
 	    , m.receiver
+	    , ref_email
 	    , read
 	    , important
 	    , emf_no
@@ -471,6 +474,7 @@
 	 and sender= #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_stock = 'N'
    order by m.em_no desc
 
 </select>
@@ -522,6 +526,9 @@
 	   )
 	
 </insert>
+
+
+
 
 <!-- 중요메일 개수 -->
 <select id="selectImportantMailCount" resultType="_int">
@@ -636,6 +643,149 @@
       </choose>
 
 </update>
+
+<!-- 내게쓴메일 개수 -->
+<select id="selectSendToMeMailCount" resultType="_int">
+select 
+ 		 count(m. em_no) "count"    
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where em_type = 3
+	 and sender = #{memId}
+     and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+   order by m.em_no desc
+
+
+</select>
+
+<!--내게쓴 메일함리스트 -->
+<select id="selectSendToMeMailList" resultMap="mailResult">
+ select 
+ 		 m. em_no
+ 		, mem_name 
+        , sender
+	    , em_title
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+	    , read
+	    , important
+	    , emf_no
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where em_type = 3
+	 and sender = #{memId}
+     and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+   order by m.em_no desc
+
+</select>
+
+<!-- 임시보관함 개수  -->
+
+<select id="selectTempStorageMailCount" resultType="_int">
+select 
+ 		count(m. em_no)
+	  
+	from tb_mail m
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId}
+     and temp_stock = 'Y'
+   order by m.em_no desc
+
+</select>
+
+
+<!-- 임시보관함 리스트 -->
+<select id="selectTempStorageMailList" resultMap="mailResult">
+select 
+ 		 m. em_no
+	    , em_title
+	    , em_content
+        , mem_name
+        , sender
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver
+        , ref_email
+	    , emf_no
+	    , to_char(temp_date,'YYYY-MM-DD(DY) HH24:MI:SS') "temp_date"
+	from tb_mail m
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId}
+     and temp_stock = 'Y'
+   order by m.em_no desc
+
+
+</select>
+
+<insert id="saveTemporaryMail">
+  insert 
+	  into tb_mail
+	  (
+	    em_no
+	   ,em_title
+	   ,em_content
+	   ,mem_name
+	   ,sender
+	   ,receiver
+	   ,ref_email
+	   ,temp_stock
+	   ,temp_date
+	   )
+	  values
+	  (
+	   seq_emno.nextval
+	   ,#{emTitle}
+	   ,#{emContent}
+	   ,#{memName}
+	   ,#{sender}
+	   ,#{receivers}
+	   ,#{refEmail}
+	   ,'Y'
+	   ,SYSDATE
+	  )
+
+</insert>
+
+<!-- 방금임시저장한 메일번호 -->
+<select id="selectGetEmNo" resultMap="mailResult">
+select em_no
+from
+	(select em_no      
+      from tb_mail
+      where sender = #{memId}
+      and temp_stock = 'Y'
+      order by em_no desc )
+where rownum = 1       
+
+</select>
+
+
+<!-- 임시저장한 메일 수정 -->
+<update id="updateTemporaryMail">
+	update tb_mail
+	  set em_title = #{emTitle}
+	   	,em_content = #{emContent}
+	    ,mem_name = #{memName}
+	    ,sender = #{sender}
+	    ,receiver = #{receivers}
+	    ,ref_email = #{refEmail}
+	    ,temp_date = SYSDATE
+	 where em_no = #{emNo}   
+	  and temp_stock = 'Y'
+	
+
+</update>
+
+
+
+
 
 
 

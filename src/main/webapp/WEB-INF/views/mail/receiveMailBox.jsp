@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>받은메일함</title>
 </head>
 <style>
 /*메일*/
@@ -64,8 +64,7 @@ input[type=checkbox] {
 	<div class="content">
 		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 13px">&nbsp;
 		   안읽은 메일 <span class="count"></span> / 전체메일 ${ rCount }</span>
-		   
-		   
+
 		   <script>
 		   $(function(){ 
 			   unreadCount();
@@ -345,10 +344,6 @@ input[type=checkbox] {
 
             </script>
                
-
-
-
-
 
      <!--페이징 영역-->
 		<div id="paging-area" align="center">

@@ -36,10 +36,12 @@
 		select
 		       board_no
 		     , board_title
-		     , board_writer
+		     , b.board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , count
-		  from tb_board
+		     , category
+		  from tb_board b
+		  join tb_member m on ()
 		 where status = 'Y'
 		 and category = '5'
 		 order
@@ -59,18 +61,17 @@
 		 order
 		    by board_no desc
 	</select>
-		<select id="selectAList" resultMap="boardResult">
+	
+	<select id="selectGroupList" resultMap="boardResult">
 		select
 		       board_no
 		     , board_title
-		     , b.board_writer
+		     , board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , count
-		  from tb_board b
-         join tb_member m on (b.board_writer = m.member_no) 
-		 where b.status = 'Y'
-		 and b.category = '1'
-         and m.dept_name = '인사부'
+		     , category
+		  from tb_board
+		 where status = 'Y'
 		 order
 		    by board_no desc
 	</select>
@@ -132,6 +133,7 @@
 		update
 		       tb_board
 		   set board_title = #{boardTitle}
+		   	 , category = #{category}	
 		     , board_content = #{boardContent}
 		     , origin_name = #{originName}
 		     , change_name = #{changeName}
@@ -172,5 +174,7 @@
 			
 		
 	</insert>
+	
+
 
 </mapper>

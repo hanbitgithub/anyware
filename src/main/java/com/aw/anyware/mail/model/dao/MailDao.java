@@ -283,7 +283,7 @@ public class MailDao {
 		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,limit);
-		return (ArrayList)sqlSession.selectList("mailMapper.selectSendeMailList",memId,rowBounds);
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSendMailList",memId,rowBounds);
 				
 	}
 	
@@ -308,6 +308,16 @@ public class MailDao {
 		}
 		
 		return result;
+	}
+	
+	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 내게쓰기 (메일 테이블 insert)
+	 */
+	public int insertSendToMe(SqlSessionTemplate sqlSession,Mail m) {
+		return sqlSession.insert("mailMapper.insertSendToMe",m);
 	}
 	
 	
@@ -363,9 +373,76 @@ public class MailDao {
 		return sqlSession.update("mailMapper.checkReadMail",ms);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 안읽음으로 표시 read = 'N' 상태변경 
+	 */
 	public int uncheckReadMail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.update("mailMapper.uncheckReadMail",ms);
 	}
+	
+	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 내게쓴 메일함 개수 조회
+	 */
+	public int selectSendToMeMailCount(SqlSessionTemplate sqlSession,String memId) {
+		return sqlSession.selectOne("mailMapper.selectSendToMeMailCount",memId);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param pi
+	 * @param memId
+	 * @return 내게쓴 메일함 리스트 조회 
+	 */
+	public ArrayList<Mail> selectSendToMeMailList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+	
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSendToMeMailList",memId,rowBounds);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 임시보관함 개수 
+	 */
+	public int selectTempStorageMailCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectTempStorageMailCount",memId);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param pi
+	 * @param memId
+	 * @return 임시보관함 리스트 조회 
+	 */
+	public ArrayList<Mail> selectTempStorageMailList(SqlSessionTemplate sqlSession, PageInfo pi, String memId){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTempStorageMailList",memId,rowBounds);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 메일 임시저장 
+	 */
+	public int saveTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.insert("mailMapper.saveTemporaryMail",m);
+	}
+	
+	
+	public int updateTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.update("mailMapper.updateTemporaryMail",m);
+	}
+	
 	
 
 }

@@ -36,10 +36,13 @@
        <b style="font-size: 18px;">메일쓰기</b>
             <br><br><br><br>
             <div id="innerOuter">
-                <h6 style="font-weight: 600; color: #7291f6;">
-                <img src="resources/images/paper-plane.png" width="25px"> &nbsp;
+                <h6 style="font-weight: 600; color: #7291f6; font-size: 18px">
+                 <img src="resources/images/message.gif" width ="40"> &nbsp;
                 메일이 성공적으로 발송 되었습니다.</h6>
-                <br>
+               <c:if test="${not empty msg}">
+               	<span style="font-size:16px ">${msg}</span>
+               </c:if>
+                <br><br>
                 <table class="table">
                     <tr>
                         <th width="100">받는사람</th>
@@ -47,18 +50,16 @@
                        		  <td>${receivers } </td>
                         </c:if>
                     </tr>
-                    <tr>
-                        <th width="100">참조</th>
-                        <c:choose>
-                        	<c:when test="${not empty cc }">
-                        		<td>${cc }</td>
-                        	</c:when>
-                        	<c:otherwise>
-                        		<td></td>
-                        	</c:otherwise>
-                        </c:choose>
-                        
-                    </tr>
+                    <c:choose>
+	                    <c:when test="${not empty cc }">
+	                    	<tr>
+		                        <th width="100">참조</th>
+		                        <td>${cc }</td>
+	                        </tr>
+	                     </c:when>
+                        	
+                     </c:choose>
+                     
                 </table>
 
                 <div class="btn-area" align="center">

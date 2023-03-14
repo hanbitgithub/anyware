@@ -123,12 +123,12 @@ table{
                     <a class="arrow prev" href="#" disabled>이전</a>
                   </c:when>
                   <c:otherwise>  
-                    <a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a>
+                    <a class="arrow prev" href="nlist.bo?cpage=${pi.currentPage-1 }">이전</a>
                   </c:otherwise>
                   </c:choose>
                   
                   <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-                    <a class="" href="list.bo?cpage=${ p }">${ p }</a>
+                    <a class="" href="nlist.bo?cpage=${ p }">${ p }</a>
                   </c:forEach>
                   
                   <c:choose>
@@ -136,7 +136,7 @@ table{
                    <a class="arrow next" href="#">다음</a>
                      </c:when>
                      <c:otherwise>
-                   <a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a>
+                   <a class="arrow next" href="nlist.bo?cpage=${ pi.currentPage + 1 }">다음</a>
                       </c:otherwise>
                 </c:choose>   
                 </div>

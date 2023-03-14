@@ -21,5 +21,5 @@ public class Board {
 	private int count;
 	private String status;
 	private int category;
-
+	
 }
