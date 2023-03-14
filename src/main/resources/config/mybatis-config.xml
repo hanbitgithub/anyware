@@ -20,6 +20,13 @@
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarVo" alias="CalendarList"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Reply" alias="Reply"/>
+		<typeAlias type="com.aw.anyware.project.model.vo.Project" alias="Project" />
+		<typeAlias type="com.aw.anyware.project.model.vo.ProjectMember" alias="ProjectMember" />
+		<typeAlias type="com.aw.anyware.project.model.vo.List" alias="PjList" />
+		<typeAlias type="com.aw.anyware.project.model.vo.Todo" alias="Tode" />
+		<typeAlias type="com.aw.anyware.project.model.vo.ListChat" alias="ListChat" />
+		<typeAlias type="com.aw.anyware.project.model.vo.PjSchedule" alias="PjSchedule" />
+		<typeAlias type="com.aw.anyware.project.model.vo.Like" alias="Like" />
 		
 	</typeAliases>
 	
@@ -31,6 +38,7 @@
 		<mapper resource="/mappers/board-mapper.xml"/> 
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
+		<mapper resource="/mappers/project-mapper.xml"/>
 	</mappers>
 	
 </configuration>

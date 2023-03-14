@@ -107,8 +107,8 @@
 		cursor: pointer;
 	}
 
-	.back{
-		margin: 100px;
+	#back{
+		margin: 20px;
 	}
 </style>
 </head>
@@ -157,7 +157,7 @@
 
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-		<button class="btn btn-primary">List 목록</button>
+		<a class="btn btn-primary" id="back" href="detail.pj">List 목록</a>
 
 		<script>
 			function addlist(){

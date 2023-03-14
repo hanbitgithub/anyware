@@ -31,7 +31,7 @@
 	  color: inherit;
 	  text-decoration:none;
 	}
-
+	
 </style>
 </head>
 <body>
@@ -45,6 +45,10 @@
 	            <li><a href="">일정 관리</a></li> <br>
 	        </ul>
         </div>
+
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+		<a class="btn btn-primary" id="back" href="list.pj">project 목록</a>
 
     </div>
 	
