@@ -32,4 +32,6 @@ public interface BoardService {
 	// 댓글 작성
 	int insertReply(Reply r);
 	
+	ArrayList<Board> selectGroupList(PageInfo pi);
+	
 }

@@ -77,13 +77,25 @@ table{
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	<p><b>자유게시판</b></p>
+	<c:choose>
+		<c:when test="${loginUser.deptName eq '인사부' }">
+			<p><b>인사부게시판</b></p>
+		</c:when>
+		<c:when test="${loginUser.deptName eq '총무부' }">
+			<p><b>총무부게시판</b></p>
+		</c:when>
+		<c:when test="${loginUser.deptName eq '디자인부' }">
+			<p><b>디자인부게시판</b></p>
+		</c:when>
+		<c:when test="${loginUser.deptName eq '개발부' }">
+			<p><b>개발부게시판</b></p>
+		</c:when>
+	</c:choose>
+	
 	<hr>
 	<div class="container">
-		<form action="">
-            <input type="text" name="keyword" value="제목으로 검색하기" class="button">
+            <input type="text" value="제목으로 검색하기" class="button">
             <button type="submit" class="button">검색</button>
-        </form>
             <br>
 
             <table id="boardList" class="table table-hover" align="center">
@@ -98,13 +110,50 @@ table{
               </thead>
               <tbody style="border: white">
                 <c:forEach var="b" items="${ list }">
-                <tr>
-                  <td class="bno">${ b.boardNo }</td>
-                  <td>${ b.boardTitle }</td>
-                  <td>${ b.boardWriter }</td>
-                  <td>${ b.createDate }</td>
-                  <td>${ b.count }</td>
-                </tr>
+                  <c:choose>
+         
+		                <c:when test="${b.category eq '1' && loginUser.deptName eq '인사부'}">
+			                <tr>
+			                  <td class="bno">${ b.boardNo }</td>
+			                  <td>${ b.boardTitle }</td>
+			                  <td>${ b.boardWriter }</td>
+			                  <td>${ b.createDate }</td>
+			                  <td>${ b.count }</td>
+			                </tr>
+		                </c:when>
+		                         
+		                <c:when test="${b.category eq '2' && loginUser.deptName eq '총무부'}">
+			                <tr>
+			                  <td class="bno">${ b.boardNo }</td>
+			                  <td>${ b.boardTitle }</td>
+			                  <td>${ b.boardWriter }</td>
+			                  <td>${ b.createDate }</td>
+			                  <td>${ b.count }</td>
+			                </tr>
+		                </c:when>
+		                         
+		                <c:when test="${b.category eq '3' && loginUser.deptName eq '개발부'}">
+			                <tr>
+			                  <td class="bno">${ b.boardNo }</td>
+			                  <td>${ b.boardTitle }</td>
+			                  <td>${ b.boardWriter }</td>
+			                  <td>${ b.createDate }</td>
+			                  <td>${ b.count }</td>
+			                </tr>
+		                </c:when>
+		                         
+		                <c:when test="${b.category eq '4' && loginUser.deptName eq '디자인부'}">
+			                <tr>
+			                  <td class="bno">${ b.boardNo }</td>
+			                  <td>${ b.boardTitle }</td>
+			                  <td>${ b.boardWriter }</td>
+			                  <td>${ b.createDate }</td>
+			                  <td>${ b.count }</td>
+			                </tr>
+		                </c:when>
+		                
+		                
+			 	   </c:choose>
                 </c:forEach>
               </tbody>
             </table>
@@ -123,15 +172,15 @@ table{
               <div class="page_nation">
                 <c:choose>
 	              	<c:when test="${pi.currentPage eq 1 }">
-                    <a class="arrow prev" href="#" disabled>이전</a>
+                    <a class="arrow prev disabled" href="#">이전</a>
                   </c:when>
                   <c:otherwise>  
-                    <a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a>
+                    <a class="arrow prev" href="glist.bo?cpage=${pi.currentPage-1 }">이전</a>
                   </c:otherwise>
                   </c:choose>
                   
                   <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-                    <a class="" href="list.bo?cpage=${ p }">${ p }</a>
+                    <a class="" href="glist.bo?cpage=${ p }">${ p }</a>
                   </c:forEach>
                   
                   <c:choose>
@@ -139,13 +188,13 @@ table{
                    <a class="arrow next" href="#">다음</a>
                      </c:when>
                      <c:otherwise>
-                   <a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a>
+                   <a class="arrow next" href="glist.bo?cpage=${ pi.currentPage + 1 }">다음</a>
                       </c:otherwise>
                 </c:choose>   
                 </div>
               </div>
                
 	
-	</div>
+	</div> </div>
 </body>
 </html>

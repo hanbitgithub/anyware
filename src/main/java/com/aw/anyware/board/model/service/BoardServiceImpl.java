@@ -70,6 +70,11 @@ public class BoardServiceImpl implements BoardService {
 		return bDao.insertReply(sqlSession, r);
 	}
 
+	@Override
+	public ArrayList<Board> selectGroupList(PageInfo pi) {
+		return bDao.selectGroupList(sqlSession, pi);
+	}
+
 
 
 
