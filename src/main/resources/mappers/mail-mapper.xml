@@ -450,6 +450,7 @@
 	 and sender=#{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_stock = 'N'
 </select>
 
 <!-- 보낸메일함 조회 -->
@@ -473,6 +474,7 @@
 	 and sender= #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_stock = 'N'
    order by m.em_no desc
 
 </select>
@@ -722,7 +724,64 @@ select
 
 </select>
 
+<insert id="saveTemporaryMail">
+  insert 
+	  into tb_mail
+	  (
+	    em_no
+	   ,em_title
+	   ,em_content
+	   ,mem_name
+	   ,sender
+	   ,receiver
+	   ,ref_email
+	   ,temp_stock
+	   ,temp_date
+	   )
+	  values
+	  (
+	   seq_emno.nextval
+	   ,#{emTitle}
+	   ,#{emContent}
+	   ,#{memName}
+	   ,#{sender}
+	   ,#{receivers}
+	   ,#{refEmail}
+	   ,'Y'
+	   ,SYSDATE
+	  )
 
+</insert>
+
+<!-- 방금임시저장한 메일번호 -->
+<select id="selectGetEmNo" resultMap="mailResult">
+select em_no
+from
+	(select em_no      
+      from tb_mail
+      where sender = #{memId}
+      and temp_stock = 'Y'
+      order by em_no desc )
+where rownum = 1       
+
+</select>
+
+
+<!-- 임시저장한 메일 수정 -->
+<update id="updateTemporaryMail">
+	update tb_mail
+	  set em_title = #{emTitle}
+	   	,em_content = #{emContent}
+	    ,mem_name = #{memName}
+	    ,sender = #{sender}
+	    ,receiver = #{receivers}
+	    ,ref_email = #{refEmail}
+	    ,temp_date = SYSDATE
+	 where em_no = #{emNo}   
+	  and temp_stock = 'Y'
+	
+
+</update>
 
 
 

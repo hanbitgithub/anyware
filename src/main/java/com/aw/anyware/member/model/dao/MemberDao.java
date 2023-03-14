@@ -55,5 +55,19 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.memberPersonalUpdate", m);
 	}
+	
+	public int allMemberUpdate(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.update("memberMapper.allMemberUpdate", m);
+	}
+	/*
+	public int enrollMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("memberMapper.enrollMember", m);
+	}
 
+	public Member selectDayOff(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.selectDayOff", m);
+	}
+	*/
 }

@@ -49,22 +49,44 @@
 	.project-people{
 		width: 150px;
 		height: 20px;
-		font-size: 13px;
+		font-size: 15px;
 		position: absolute;
-		bottom: 5px;
+		bottom: 7px;
 		left: 10px;
 	}
 	.favorite{
 		width: 25px;
 		height: 20px;
-		font-size: 15px;
+		font-size: 20px;
 		position: absolute;
-		bottom: 5px;
-		right: 0px;
+		bottom: 10px;
+		right: 5px;
 	}
 	.project:hover{
 		cursor: pointer;
 	}
+
+	.page-area{
+		width: 1300px;
+		text-align: center;
+	}
+	.pagebtn{
+		font-size: 18px;
+		background-color: white; 
+		color: #7291f6;
+		border:1px solid #7291f6; 
+		border-radius: 4px; 
+		padding: 4px;
+		padding-left: 8px;
+		padding-right: 8px;
+	}
+    .pagebtn:hover{
+		text-decoration: none; 
+		background-color: #7291f6;
+		color: white; 
+		transition: 0.3s;
+		cursor: pointer;
+		}
 </style>
 </head>
 <body>
@@ -83,82 +105,56 @@
 		<br><br>
 
 		<div class="project-area">
-
-			<div class="project" onclick="location.href='detail.pj';">
-				<div class="project-name">[개발]프로젝트1</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트2</div>
-				<div class="public">🔒</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">🤍</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트3</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트4</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트5</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트6</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트7</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트8</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트9</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
-			<div class="project">
-				<div class="project-name">[개발]프로젝트10</div>
-				<div class="public">🔓</div>
-				<div class="project-people">김현지 외 5명</div>
-				<div class="favorite">💙</div>
-			</div>
+		
+			<c:forEach var="l" items="${ list }">
+				<div class="project" onclick="location.href='detail.pj?no=${ l.projectNo }';">
+					<div class="project-name">${ l.projectTitle }</div>
+					<c:choose>
+						<c:when test="${ l.publicStatus } eq 'Y'">
+							<div class="public">🔓</div>
+						</c:when>
+						<c:otherwise>
+							<div class="public">🔒</div>
+						</c:otherwise>
+					</c:choose>	
+					<div class="project-people">${ l.owner }</div>
+					<c:choose>
+						<c:when test="${ l.like eq '1' }">
+							<div class="favorite">💙</div>
+						</c:when>
+						<c:otherwise>
+							<div class="favorite">🤍</div>
+						</c:otherwise>
+					</c:choose>	
+				</div>
+			</c:forEach>
 			
 		</div>
 
 		<br><br>
 
-		<div class="page-area" style="width: 1300px;">
-			<ul class="pagination" style="justify-content : center;">
-				<li class="page-item"><a class="page-link" href="#">이전</a></li>
-				<li class="page-item"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-				<li class="page-item"><a class="page-link" href="#">다음</a></li>
-			</ul>
+		<div class="page-area">
+			<c:choose>
+				<c:when test="{ pi.currentPage eq 1 }">
+					<a class="pagebtn" href="">&lt;</a>
+				</c:when>
+				<c:otherwise>
+					<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
+				</c:otherwise>
+			</c:choose>
+			
+			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+				<a class="pagebtn" href="list.pj?cpage=${ p }">${ p }</a>
+			</c:forEach>
+			
+			<c:choose>
+				<c:when test="${ pi.currentPage eq pi.maxPage }">
+					<a class="pagebtn" href="">&gt;</a>
+				</c:when>
+				<c:otherwise>
+					<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&gt;</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 

@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date" />  
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -345,21 +347,21 @@
 
       
         <div class="content">
-            <b style="font-size: 18px;">메일쓰기</b>
+            <b style="font-size: 18px;">메일쓰기</b> 
             <br><br>
             <div id="write-area">
                 <div id="btn-area">
                     <a onclick="return sendMail();"><img src="resources/images/send-mail.png" width="23px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="22px"> 취소</a>
-                    <a href=""><img src="resources/images/packing.png" width="23px"> 임시저장</a>
+                    <a onclick="saveTemp();"><img src="resources/images/packing.png" width="23px"> 임시저장</a>
                     <a href="sendToMeForm.em"><img src="resources/images/exchange.png" width="23px"> 내게쓰기</a>
-                
+                	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="now" />
+                	<span id="saveMessage" style="display:none;">임시저장완료 <c:out value="${now}" /></span>
                 </div>
                 <br>
                 
                 <script>
-				
-				
+
 				// 메일 '전송'시 실행하는 함수
 				function sendMail() {
 					if ($("#receivers").val().trim() == 0) {
@@ -381,7 +383,93 @@
 						$("#mailForm").submit();
 					}
 				}
-
+				
+				</script>
+				<script>
+				//메일 임시저장 버튼 클릭시 실행하는 함수 
+			
+				function saveTemp(){
+					let isSaved = false; // 임시저장 여부를 체크하는 변수
+					let emNo;
+				
+				    let formData = new FormData($("#mailForm")[0]);
+		  			    
+					    // 제목이 비어있는 경우에 대한 처리
+					    if ($("#title").val().trim() == "") {
+					        let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 저장하시겠습니까?");
+					        if (!answer) {
+					            $("#title").focus();
+					            return false;
+					        }
+					    }
+					   if (!isSaved) {
+						    $.ajax({
+						        url: "save.em",
+						        processData: false,
+						        contentType: false,
+						        type: "POST",
+						        data: formData,
+						        success: function(result) {
+						            if (result == "success") {
+						                $("#saveMessage").show(); // 저장완료 메시지 보이기
+						                // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
+						                setTimeout(function() {
+						                	  $("#saveMessage").hide();
+						                }, 3000); 
+						                 
+						                // emNo 조회를 위한 Ajax 요청
+						                $.ajax({
+						                    url: "getEmNo.em",
+						                    type: "GET",
+						                    data: {sender: '${loginUSer.memberId}'},
+						                    success: function(result) {
+						                        emNo = result;
+						                        console.log("emNo 조회 성공: " + emNo);
+						                        isSaved = true;
+						                    },
+						                    error: function() {
+						                        console.log("emNo 조회 실패");
+						                    }
+						                
+						                })
+						            } else {
+						                alert("메일을 임시보관함에 저장하는데 실패했습니다.");
+						            }
+						            console.log("임시저장 ajax 성공");
+						        },
+						        error: function() {
+						            console.log("임시저장 ajax 실패");
+						        }
+						    })
+	
+						  } else {
+						        $.ajax({
+						          url: "updateTemp.em",
+						          processData: false,
+						          contentType: false,
+						          type: "POST",
+						          data: {forData: formData,
+						        	     emNo : emNo
+						        	  },
+						          success: function(result) {
+						            if (result == "success") {
+						              $("#saveMessage").show(); // 저장완료 메시지 보이기
+						              // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
+						              setTimeout(function() {
+						                $("#saveMessage").hide();
+						              }, 3000); // 3초
+						            } else {
+						              alert("메일을 임시보관함에 저장하는데 실패했습니다.");
+						            }
+						            console.log("임시저장 ajax 성공");
+						          },
+						          error: function() {
+						            console.log("임시저장 ajax 실패");
+						          }
+						        })
+						      }
+					  
+				}
 			</script>
                 
                 

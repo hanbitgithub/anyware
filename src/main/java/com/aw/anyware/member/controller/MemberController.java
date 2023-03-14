@@ -1,5 +1,6 @@
 package com.aw.anyware.member.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -37,22 +38,14 @@ public class MemberController {
 		return "main";
 	}
 		
-	/**
-	 * @param 관리자용 전체 사원조회 메소드
-	 * @param deptName == "인사부"인 사원들만 조회 가능
-	 * @param 
-	 * @param 
-	 * @return
-	 */
 	@RequestMapping("selectAll.me")
 	public String selectAllMember(@RequestParam(value="cpage", defaultValue="1") int currentPage,
 									String deptName, Model model, HttpSession session) {
-		System.out.println("페이지 : " + currentPage);
-		System.out.println(deptName);
+		
 		if(deptName.equals("인사부")) {
 			
 			int listCount = mService.selectListCount();
-			System.out.println("listCount : " + listCount);
+			
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 			ArrayList<Member> list = mService.selectAllMember(pi);
 			if(list != null) {
@@ -73,8 +66,7 @@ public class MemberController {
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
-		System.out.println("m.getMemberPwd :" + m.getMemberPwd());
-		System.out.println("loginUser.getMemberPwd :" + loginUser.getMemberPwd());
+		
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
 			mv.setViewName("common/errorPage");
@@ -94,25 +86,15 @@ public class MemberController {
 		return "redirect:/";
 	}
 	
-	/**
-	 * 각 사원들의 개인정보 업데이트 창 이동하는 메소드
-	 * 
-	 */
 	@RequestMapping("memberUpdate.me")
 	public ModelAndView memberUpdate(ModelAndView mv) {
 		mv.setViewName("member/memberPersonalInfo");
 		return mv;
 	}
 	
-	/**
-	 * 각 사원용 비밀번호 변경 메소드
-	 * @param model
-	 * @param session
-	 * @return
-	 */
-	@RequestMapping("changePwd.me") //비밀번호 변경 후 재변경 기능 추가?
+	@RequestMapping("changePwd.me") //성공시 알람 필요, 비밀번호 변경 후 재변경 기능 추가?
 	public String changePwd(Member m, Model model, HttpSession session) {
-		
+		System.out.println(m);
 		Member memberPwd = mService.selectPwd(m);
 		
 		if(memberPwd != null) {
@@ -126,9 +108,9 @@ public class MemberController {
 			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
 			m.setEncPwd(encPwd);
 			int result = mService.changePwd(m);
-			
+			System.out.println("m :" + m);
 			if(result > 0) {
-				session.setAttribute("alertMsg", "비밀번호 변경에 성공했습니다");
+				model.addAttribute("alertMsg", "비밀번호 변경에 성공하였습니다");
 				return "member/memberPersonalInfo";
 			}else {
 				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다");
@@ -141,12 +123,6 @@ public class MemberController {
 		
 	}
 	
-	/**
-	 * 관리자용 전체 사원정보 상세조회 메소드
-	 * 인사부 사원들만 각각 사원들 개인정보 상세조회와 변경 가능
-	 * @param session
-	 * @return
-	 */
 	@RequestMapping("detailAllMember.me")
 	public ModelAndView detailAllMember(int memberNo, ModelAndView mv, HttpSession session) {
 		
@@ -169,12 +145,6 @@ public class MemberController {
 		}
 	}
 	
-	/**
-	 * 각 사원이 자신의 정보 변경하는 메소드
-	 * @param model
-	 * @param session
-	 * @return
-	 */
 	@RequestMapping("memberPersonalUpdate")
 	public String memberPersonalUpdate(Member m, Model model, HttpSession session) {
 		int result = mService.memberPersonalUpdate(m);
@@ -192,5 +162,30 @@ public class MemberController {
 		}
 	}
 	
+	@RequestMapping("allMemberUpdate")
+	public ModelAndView allMemberUpdate(Member m, ModelAndView mv, HttpSession session) {
+		
+		int result = mService.allMemberUpdate(m);
+		
+		if(result > 0) {
+			System.out.println("m : " + m);
+			Member updateMem = mService.loginMember(m);
+			System.out.println("updateMem : " + updateMem);
+			session.setAttribute("alertMsg", "정보 변경에 성공했습니다");
+			mv.addObject("m", updateMem);
+			mv.setViewName("member/detailAllMember");
+			return mv;
+		}else {
+			mv.addObject("errorMsg", "정보변경에 실패하였습니다");
+			mv.setViewName("common/errorPage");
+			return mv;
+		}
+	}
+	/*
+	@RequestMapping("enrollMember.me")
+	public String enrollMember(Member m) {
+		LocalDateTime standardTime = LocalDateTime.parse("2023-03-14T09:01:00.000");
+	}
+	*/
 
 }

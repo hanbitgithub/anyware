@@ -44,6 +44,7 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectGroupList", null, rowBounds);
 	}
 
+	
 	public int insertBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.insert("boardMapper.insertBoard", b);
 	}
@@ -70,6 +71,15 @@ public class BoardDao {
 
 	public int insertReply(SqlSessionTemplate sqlSession, Reply r) {
 		return sqlSession.insert("boardMapper.insertReply" ,r);
+	}
+
+	public ArrayList<Board> ajaxSelectMainBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
+	}
+	
+
+	public ArrayList<Board> SelectMainBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
 	}
 
 

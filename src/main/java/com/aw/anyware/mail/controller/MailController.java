@@ -189,6 +189,56 @@ public class MailController {
 		return "mail/temporaryStorageMailBox";
 	}
 	
+
+	//메일 임시저장 
+	@ResponseBody
+	@RequestMapping("save.em")
+	public String ajaxSavetemporaryMail(Mail m) {
+		
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
+
+		int result = mService.saveTemporaryMail(m);
+		return result>0 ? "success": "fail";
+	}
+	//임시저장한 메일 번호
+	@ResponseBody
+	@RequestMapping(value="getEmNo.em", produces="application/json; charset=utf-8")
+	public String ajaxSaveMailGetEmNo(String memId) {
+		int emNo = mService.selectSaveMailGetEmNo(memId);
+		return new Gson().toJson(emNo);
+	}
+
+	
+	//임시저장 버튼 다시 눌렀을경우 update
+	@ResponseBody
+	@RequestMapping("updateTemp.em")
+	public String ajaxUpdateTemporaryMail(Mail m) {
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setReceivers(receivers);
+		
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		
+		m.setRefEmail(cc);
+		
+		int result = mService.updateTemporaryMail(m);
+		return result>0 ? "success": "fail";
+	}
+	
 	@RequestMapping("trash.em")
 	public String trashMailList() {
 		return "mail/trashMailBox";
@@ -271,6 +321,8 @@ public class MailController {
     	
     	int result1 = mService.insertSendMail(m);
     	
+    	model.addAttribute("receivers", memName + " " + sender + "@anyware.com");
+    	model.addAttribute("msg","내게 쓴 메일은 [내게쓴메일함]에서 확인할 수 있습니다. ");
     	
     	ArrayList<MailStatus> list = new ArrayList<>();
     	//메일 상태 insert
@@ -283,6 +335,7 @@ public class MailController {
 	    	list.add(ms);
     	}
     	int result2 = mService.insertMailStatus(list);
+    	
     	
     	
     	return "mail/successSendmail";
@@ -305,13 +358,12 @@ public class MailController {
 		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
 		
 		m.setRefEmail(cc);
-        
-		model.addAttribute("receivers",receivers);
-		model.addAttribute("cc",cc);
-		
+   
 		//메일 테이블 insert 
 		int result1 = mService.insertSendMail(m);
-		
+
+		model.addAttribute("receivers",receivers);
+		model.addAttribute("cc",cc);
 		
 		ArrayList<MailStatus> list = new ArrayList<>();
 		if(result1>0) {

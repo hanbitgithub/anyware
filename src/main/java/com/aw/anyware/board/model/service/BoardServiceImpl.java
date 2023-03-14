@@ -24,7 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	public int selectListCount() {
 		return bDao.selectListCount(sqlSession);
 	}
-
+	
 	@Override
 	public ArrayList<Board> selectList(PageInfo pi) {
 		return bDao.selectList(sqlSession, pi);
@@ -73,6 +73,16 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public ArrayList<Board> selectGroupList(PageInfo pi) {
 		return bDao.selectGroupList(sqlSession, pi);
+	}
+
+	@Override
+	public ArrayList<Board> ajaxSelectMainBoardList() {
+		return bDao.ajaxSelectMainBoardList(sqlSession);
+	}
+	
+	@Override
+	public ArrayList<Board> SelectMainNoticeList() {
+		return bDao.SelectMainBoardList(sqlSession);
 	}
 
 
