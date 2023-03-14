@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.schedule.model.service.ScheduleService;
 import com.aw.anyware.schedule.model.vo.CalendarModalSave;
@@ -23,10 +24,25 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
+	// 메인 화면
 	@RequestMapping("main.sc")
 	public String main(HttpSession session, Model model) {
 		return "schedule/scheduleMain";
 	}
+	
+	// 검색리스트 화면
+	@RequestMapping("searchList.sc")
+	public String scheduleSearchList() {
+		return "schedule/scheduleSearchList";
+	}
+	
+	//--------------------------------------------------------------------------------
+	
+	// 카테고리 조회
+	//@RequestMapping("")
+	
+	
+	
 	
 	// 새 일정 추가
 	@RequestMapping("scheduleModalSave.sc")
@@ -35,20 +51,26 @@ public class ScheduleController {
 		return scheduleService.scheduleModalSave(scheduleModalSave);
 	}
 	
+	// 새 일정 조회
+//	@RequestMapping("scheduleDetail.sc")
+//	@ResponseBody
+//	public ArrayList<ScheduleModalSave>
+	
 	// 내 캘린더 추가
-	@RequestMapping("calendarModalSave.sc")
-	@ResponseBody
-	public int calendarModalSave(CalendarModalSave calendarModalSave) {
-		return scheduleService.calendarModalSave(calendarModalSave);
-	}
+//	@RequestMapping("calendarModalSave.sc")
+//	@ResponseBody
+//	public int calendarModalSave(CalendarModalSave calendarModalSave) {
+//		return scheduleService.calendarModalSave(calendarModalSave);
+//	}
 	
 	// 내 캘린더 목록
 	@RequestMapping("calendarList.sc")
 	@ResponseBody
-	public List<CalendarVo> calendarList(HttpSession session) {
+	public String calendarList(HttpSession session) {
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		List<CalendarVo> aa = scheduleService.calendarList(memberNo);
-		return scheduleService.calendarList(memberNo);
+		List<CalendarVo> list = scheduleService.calendarList(memberNo);
+		return "schedule/scheduleMain";
+		//return scheduleService.calendarList(memberNo);
 	}
 	
 	// 내 캘린더 수정 화면

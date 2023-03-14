@@ -19,8 +19,9 @@
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
 		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarVo" alias="CalendarList"/>
+		<typeAlias type="com.aw.anyware.schedule.model.vo.ScheduleModalSave" alias="ScheduleModalSave" />
+		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarModalSave" alias="CalendarModalSave" />
 		<typeAlias type="com.aw.anyware.board.model.vo.Reply" alias="Reply"/>
-		
 	</typeAliases>
 	
 	
