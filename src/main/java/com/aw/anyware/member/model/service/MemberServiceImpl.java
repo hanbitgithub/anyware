@@ -66,6 +66,30 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.memberPersonalUpdate(sqlSession, m);
 	}
 
+	@Override
+	public int allMemberUpdate(Member m) {
+		
+		return mDao.allMemberUpdate(sqlSession, m);
+	}
+	/*
+	@Override
+	public int enrollMember(Member m) {
+		
+		return mDao.enrollMember(sqlSession, m);
+	}
+
+	@Override
+	public int outMember(Member m) {
+		
+		return 0;
+	}
+
+	@Override
+	public Member selectDayOff(Member m) {
+		
+		return mDao.selectDayOff(sqlSession, m);
+	}
+	*/
 	
 
 	

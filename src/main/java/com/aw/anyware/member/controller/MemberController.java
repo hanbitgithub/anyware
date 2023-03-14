@@ -1,5 +1,6 @@
 package com.aw.anyware.member.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -40,12 +41,11 @@ public class MemberController {
 	@RequestMapping("selectAll.me")
 	public String selectAllMember(@RequestParam(value="cpage", defaultValue="1") int currentPage,
 									String deptName, Model model, HttpSession session) {
-		System.out.println("페이지 : " + currentPage);
-		System.out.println(deptName);
+		
 		if(deptName.equals("인사부")) {
 			
 			int listCount = mService.selectListCount();
-			System.out.println("listCount : " + listCount);
+			
 			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
 			ArrayList<Member> list = mService.selectAllMember(pi);
 			if(list != null) {
@@ -66,8 +66,7 @@ public class MemberController {
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
-		System.out.println("m.getMemberPwd :" + m.getMemberPwd());
-		System.out.println("loginUser.getMemberPwd :" + loginUser.getMemberPwd());
+		
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
 			mv.setViewName("common/errorPage");
@@ -163,5 +162,30 @@ public class MemberController {
 		}
 	}
 	
+	@RequestMapping("allMemberUpdate")
+	public ModelAndView allMemberUpdate(Member m, ModelAndView mv, HttpSession session) {
+		
+		int result = mService.allMemberUpdate(m);
+		
+		if(result > 0) {
+			System.out.println("m : " + m);
+			Member updateMem = mService.loginMember(m);
+			System.out.println("updateMem : " + updateMem);
+			session.setAttribute("alertMsg", "정보 변경에 성공했습니다");
+			mv.addObject("m", updateMem);
+			mv.setViewName("member/detailAllMember");
+			return mv;
+		}else {
+			mv.addObject("errorMsg", "정보변경에 실패하였습니다");
+			mv.setViewName("common/errorPage");
+			return mv;
+		}
+	}
+	/*
+	@RequestMapping("enrollMember.me")
+	public String enrollMember(Member m) {
+		LocalDateTime standardTime = LocalDateTime.parse("2023-03-14T09:01:00.000");
+	}
+	*/
 
 }

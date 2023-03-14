@@ -29,6 +29,16 @@ public interface MemberService {
 	//사원의 개인정보 업데이트
 	int memberPersonalUpdate(Member m);
 	
+	// 관리자의 사원 정보 업데이트
+	int allMemberUpdate(Member m);
+	
+	//출퇴근
+	//int enrollMember(Member m);
+	
+	//int outMember(Member m);
+	
+	//Member selectDayOff(Member m);
+	
 	
 	
 	

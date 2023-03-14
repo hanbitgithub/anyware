@@ -481,8 +481,8 @@ a {
                 <br>
          <div class="employContent">
 
-            <form action="" method="post">
-
+            <form action="allMemberUpdate" method="post">
+				<input type="hidden" name="memberId" value="${ m.memberId }">
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>출근시간</b></div>
                     <div class="profileContent2">출근시간입력</div>
@@ -535,7 +535,21 @@ a {
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>부서/직책</b></div>
-                        <div class="profileContent2"><input type="text" name="" value="${ m.deptName }/${ m.position }" ></div>
+                        <div class="profileContent2">
+                        	<input type="text" id="deptInput" value="${ m.deptName }/${ m.position }">
+                            <select name="deptName" id="deptName">
+                            	<option value="">부서선택</option>
+                                <option value="인사부">인사부</option>
+                                <option value="총무부">총무부</option>
+                                <option value="개발부">개발부</option>
+                                <option value="디자인부">디자인부</option>
+                            </select>
+                            <select name="position" id="position">
+                            	<option value="">직책선택</option>
+                                <option value="팀장">팀장</option>
+                                <option value="팀원">팀원</option>                                
+                            </select>
+                        </div>
                     </div>
                     <div id="employProfile-div3">
                         <div class="profileContent1"><b>담당업무</b></div>
@@ -548,6 +562,7 @@ a {
                 		}
                 	})
                 </script>
+                
                     <br><br>
                     <div class="partLine"></div>
                     <br>

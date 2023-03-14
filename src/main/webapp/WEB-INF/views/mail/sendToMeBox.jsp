@@ -241,7 +241,7 @@ input[type=checkbox] {
     		   					url:"like.em",
     		   					data:{
     		   						emNo : emNo,
-    		   						emType : 1,
+    		   						emType : 3,
     		   						receiver : '${loginUser.memberId}'
     		   					},
     		   					success:function(result){
@@ -258,7 +258,7 @@ input[type=checkbox] {
                      		url:"dislike.em",
                      		data:{
                      			emNo : emNo,
-                     			emType : 1,
+                     			emType : 3,
 		   						receiver : '${loginUser.memberId}'
                      		},
                      		success:function(result){
@@ -288,7 +288,7 @@ input[type=checkbox] {
                 		 url: "read.em",
                 		 data: {
                 			 emNo : emNo,
-                			 emType : 1,
+                			 emType : 3,
                 			 receiver : '${loginUser.memberId}'
 
                 		 },
@@ -309,7 +309,7 @@ input[type=checkbox] {
                 		 url: "unread.em",
                 		 data: {
                 			 emNo : emNo,
-                			 emType : 1,
+                			 emType : 3,
                 			 receiver : '${loginUser.memberId}'
 
                 		 },

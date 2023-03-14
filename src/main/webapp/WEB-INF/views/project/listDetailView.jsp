@@ -132,15 +132,6 @@
                     </td>
                 </tr>
             </table>
-
-            <!-- <div class="chat-message mine">
-	            <div class="send-message">내가보낸 메세지내가보낸 메세지내가보낸 메세지내가보낸 메세지내가보낸 메세지</div>
-	        </div>
-         
-            <div class="chat-message other">
-            	<span class="send-user">상대방</span>
-            	<div class="send-message">남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지남이보낸 메세지</div> -->
-            </div>
         </div>
 
         <br>
