@@ -573,8 +573,8 @@
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${empty keyword }">
-							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
+						
+							<button onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
 						<c:otherwise>
 							<button
@@ -698,12 +698,7 @@
                    </div>
                    </div>
              </div>      
-                              
-                            
-                            
-       		 			
 
-                        
                         
                         <script>
                         // 주소록 그룹 '추가'시 실행하는 ajax

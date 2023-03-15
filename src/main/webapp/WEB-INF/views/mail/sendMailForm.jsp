@@ -129,15 +129,16 @@
 }
 
 .statusbar {
-	border-top: 1px solid #A9CCD1;
+	border-top: 1px solid #dedede;
 	min-height: 25px;
 	width: 99%;
 	padding: 10px 10px 0px 10px;
 	vertical-align: top;
+	font-size: 14px;
 }
 
 .statusbar:nth-child(odd) {
-	background: #EBEFF0;
+	background: #f6f5f5;
 }
 
 .filename {
@@ -387,11 +388,11 @@
 				</script>
 				<script>
 				//메일 임시저장 버튼 클릭시 실행하는 함수 
-			
-				function saveTemp(){
-					let isSaved = false; // 임시저장 여부를 체크하는 변수
-					let emNo;
+			    let isSaved = false; // 임시저장 여부를 체크하는 변수
+				let emNo;
 				
+				function saveTemp(){
+					
 				    let formData = new FormData($("#mailForm")[0]);
 		  			    
 					    // 제목이 비어있는 경우에 대한 처리
@@ -410,28 +411,24 @@
 						        type: "POST",
 						        data: formData,
 						        success: function(result) {
-						            if (result == "success") {
+						            if (result > 0) {
+						            	emNo = result;
+						            	
+						            	value="";
+						            	value += "<input type='hidden' name='emNo' value='"
+						            	      + emNo
+						            	      + "'>"
+						            	      
+						                $("#input").html(value);
+						            	      
+						            	isSaved = true;
 						                $("#saveMessage").show(); // 저장완료 메시지 보이기
 						                // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
 						                setTimeout(function() {
 						                	  $("#saveMessage").hide();
 						                }, 3000); 
 						                 
-						                // emNo 조회를 위한 Ajax 요청
-						                $.ajax({
-						                    url: "getEmNo.em",
-						                    type: "GET",
-						                    data: {sender: '${loginUSer.memberId}'},
-						                    success: function(result) {
-						                        emNo = result;
-						                        console.log("emNo 조회 성공: " + emNo);
-						                        isSaved = true;
-						                    },
-						                    error: function() {
-						                        console.log("emNo 조회 실패");
-						                    }
-						                
-						                })
+						               
 						            } else {
 						                alert("메일을 임시보관함에 저장하는데 실패했습니다.");
 						            }
@@ -443,14 +440,13 @@
 						    })
 	
 						  } else {
+							  
 						        $.ajax({
 						          url: "updateTemp.em",
 						          processData: false,
 						          contentType: false,
 						          type: "POST",
-						          data: {forData: formData,
-						        	     emNo : emNo
-						        	  },
+						          data: formData,
 						          success: function(result) {
 						            if (result == "success") {
 						              $("#saveMessage").show(); // 저장완료 메시지 보이기
@@ -471,14 +467,12 @@
 					  
 				}
 			</script>
-                
-                
-                
-                
+    
             <div>
                <form method="post" action="sendMail.em" id="mailForm" enctype="multipart/form-data">
                    	<input type="hidden" name="sender" value="${loginUser.memberId }">
                     <input type="hidden" name="memName" value="${loginUser.name }">
+                    <div id="input"></div>
                     <table id="write"style="font-size: 15px;">
                         <tr>
                             <th width="120" height="40px">받는사람</th>

@@ -724,7 +724,7 @@ select
 
 </select>
 
-<insert id="saveTemporaryMail">
+<insert id="saveTemporaryMail"  parameterType="Mail">
   insert 
 	  into tb_mail
 	  (
@@ -750,11 +750,13 @@ select
 	   ,'Y'
 	   ,SYSDATE
 	  )
-
+<selectKey keyProperty="emNo" resultType="_int" order="AFTER">
+SELECT SEQ_emno.CURRVAL AS em_no FROM DUAL
+</selectKey>
 </insert>
 
 <!-- 방금임시저장한 메일번호 -->
-<select id="selectGetEmNo" resultMap="mailResult">
+<!-- <select id="selectSaveMailGetEmNo" resultType="_int">
 select em_no
 from
 	(select em_no      
@@ -764,7 +766,9 @@ from
       order by em_no desc )
 where rownum = 1       
 
-</select>
+ 
+ SELECT SEQ_emno.CURRVAL FROM tb_mail
+</select> -->
 
 
 <!-- 임시저장한 메일 수정 -->

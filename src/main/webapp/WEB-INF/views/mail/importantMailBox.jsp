@@ -273,7 +273,7 @@ input[type=checkbox] {
 			                				<c:when test="${i.mailStatus.emType eq '0'}">
 			                				  	[보낸메일함] 
 			                				</c:when>
-			                				<c:when test="${i.mailStatus.emType eq '1' }">
+			                				<c:when test="${i.mailStatus.emType eq '1' or i.mailStatus.emType eq '2'}">
 			                					[받은메일함] 
 			                				</c:when>
 			                				<c:when test="${i.mailStatus.emType eq '3' }">

@@ -206,23 +206,32 @@ public class MailController {
 		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
 		
 		m.setRefEmail(cc);
-
 		int result = mService.saveTemporaryMail(m);
-		return result>0 ? "success": "fail";
+		
+	
+		System.out.println(result);
+		
+		return new Gson().toJson(result);
 	}
-	//임시저장한 메일 번호
-	@ResponseBody
-	@RequestMapping(value="getEmNo.em", produces="application/json; charset=utf-8")
-	public String ajaxSaveMailGetEmNo(String memId) {
-		int emNo = mService.selectSaveMailGetEmNo(memId);
-		return new Gson().toJson(emNo);
-	}
-
+	/*
+	 * //임시저장한 메일 번호
+	 * 
+	 * @ResponseBody
+	 * 
+	 * @RequestMapping(value="getEmNo.em",
+	 * produces="application/json; charset=utf-8") public String
+	 * ajaxSaveMailGetEmNo(String memId) { int emNo =
+	 * mService.selectSaveMailGetEmNo(memId);
+	 * 
+	 * System.out.println(emNo); return new Gson().toJson(emNo); }
+	 */
 	
 	//임시저장 버튼 다시 눌렀을경우 update
 	@ResponseBody
 	@RequestMapping("updateTemp.em")
 	public String ajaxUpdateTemporaryMail(Mail m) {
+		
+		System.out.println(m);
 		String receivers = m.getReceivers();
 		receivers = receivers.replaceAll("\"value\":\"", "");
 		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
@@ -525,8 +534,9 @@ public class MailController {
 
 	// 그룹별 주소록 조회 
 	@RequestMapping("group.ad")
-	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,AddressGroup ag,HttpSession session, Model model){
+	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,int groupNo,AddressGroup ag,HttpSession session, Model model){
 		//그룹별 등록된 연락처 수 
+		ag.setGroupNo(groupNo);
 		int listCount = mService.selectGroupAddListCount(ag);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		

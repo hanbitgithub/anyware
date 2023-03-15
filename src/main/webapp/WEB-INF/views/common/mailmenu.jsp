@@ -251,11 +251,11 @@ a{
 				style="color: rgb(139, 139, 139)">+ 그룹 추가</div>
 
 
-			<script>
+			<!-- <script>
 	            	function postFormSubmit(url){
 	            		$("#post").attr("action", url).submit();
 	            	}
-	        </script>
+	        </script> -->
 
 			<script>
                	 $(function(){

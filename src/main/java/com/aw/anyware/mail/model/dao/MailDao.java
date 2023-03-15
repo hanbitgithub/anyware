@@ -435,7 +435,9 @@ public class MailDao {
 	 * @return 메일 임시저장 
 	 */
 	public int saveTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
-		return sqlSession.insert("mailMapper.saveTemporaryMail",m);
+		   sqlSession.insert("mailMapper.saveTemporaryMail",m);
+		   int emNo = m.getEmNo(); // selectKey에서 받아온 emNo
+		   return emNo;
 	}
 	
 	/**
