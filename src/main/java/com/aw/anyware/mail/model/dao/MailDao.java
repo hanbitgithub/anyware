@@ -12,6 +12,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
@@ -309,6 +310,15 @@ public class MailDao {
 		
 		return result;
 	}
+	
+	public int insertMailAttachment(SqlSessionTemplate sqlSession, ArrayList<MailFile> atList) {
+		int result = 0;
+		for(MailFile at : atList) {
+			result += sqlSession.insert("mailMapper.insertMailAttachment", at);
+		}
+		return result;
+	}
+	
 	
 	
 	/**

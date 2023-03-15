@@ -57,8 +57,9 @@
 	<result column="temp_stock" property="tempStock" />
 	<result column="temp_date" property="tempDate" />
 	<result column="temp_read" property="tempRead" />
+	
 	<association property="mailStatus" resultMap="mailStatusResult" />
-	<collection property="fileList" resultMap="mailFileResult" />
+	<association property="mailFile" resultMap="mailFileResult" />
 </resultMap>
 
 <resultMap id="mailStatusResult" type="MailStatus">	
@@ -79,9 +80,8 @@
 	<id column="emf_no" property="emfNo" />
 	<result column="origin_name" property="originName" />
 	<result column="change_name" property="changeName" />
-	<result column="file_path" property="filePath" />
 	<result column="file_size" property="fileSize" />
-
+	<result column="atcount" property="atcount"/>
 </resultMap>
 
 
@@ -368,7 +368,9 @@
 	     , s.important
 	     , trash
 	     , spam
-	     , f.emf_no
+	     , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	 from tb_mail m
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
 	 left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -470,7 +472,9 @@
 	    , ref_email
 	    , read
 	    , important
-	    , emf_no
+	    ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -531,7 +535,28 @@
 	
 </insert>
 
+<!-- 메일쓰기 첨부파일 insert -->
+<insert id="insertMailAttachment">
+	insert
+  		  into tb_mail_file
+  		  (
+  		  	emf_no
+  		  , em_no
+  		  , origin_name
+  		  , change_name
+  		  , file_size
+  		  )
+  		  values
+  		  (
+  		  	seq_matno.nextval
+  		  , seq_emno.currval
+  		  , #{originName}
+  		  , #{changeName}
+  		  , #{fileSize}
+  		  )
 
+
+</insert>
 
 
 <!-- 중요메일 개수 -->
@@ -566,7 +591,9 @@
         , s.receiver
 	    , read
 	    , important
-	    , emf_no
+	    , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	    , temp_save
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
@@ -680,7 +707,9 @@ select
 	    , m.receiver
 	    , read
 	    , important
-	    , emf_no
+	    , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -728,6 +757,9 @@ select
         , important
         , trash
         , temp_save
+        , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
     left join tb_mail_status s on (m.em_no=s.em_no)
 	left join tb_mail_file f on (m.em_no = f.em_no)
@@ -865,6 +897,9 @@ select
 	    , emf_no
 	    , temp_save
         , trash
+        ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)

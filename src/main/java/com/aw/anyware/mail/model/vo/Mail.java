@@ -28,6 +28,8 @@ public class Mail {
 	private String tempRead;
 	private String emfNo;
 	
+	
 	private MailStatus mailStatus;
 	private ArrayList<MailFile> fileList;
+	private MailFile mailFile;
 }

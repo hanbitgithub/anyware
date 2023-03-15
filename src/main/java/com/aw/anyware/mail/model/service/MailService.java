@@ -8,6 +8,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
@@ -85,6 +86,8 @@ public interface MailService {
 	int insertSendMail(Mail m);
 	// 메일status 테이블 insert
 	int insertMailStatus(ArrayList<MailStatus> list);
+	// 메일 첨부파일 insert
+	int insertMailAttachment(ArrayList<MailFile> atList);
 
 	// 중요메일함 개수, 리스트조회
 	int selectImportantMailCount(String memId);

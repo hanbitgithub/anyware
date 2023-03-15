@@ -1,8 +1,6 @@
 package com.aw.anyware.mail.controller;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -14,16 +12,18 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.common.template.FileUpload;
 import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.mail.model.service.MailService;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
-
 import com.google.gson.Gson;
 
 @Controller
@@ -89,7 +89,7 @@ public class MailController {
 		model.addAttribute("slist", slist);
 		model.addAttribute("pi",pi);
 		model.addAttribute("listCount",listCount);
-		//System.out.println(pi);
+		//System.out.println(slist);
 		
 		return "mail/sendMailBox";
 	}
@@ -202,8 +202,6 @@ public class MailController {
 			receivers = receivers.replaceAll("\"value\":\"", "");
 			receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
 			m.setReceivers(receivers);
-		}else {
-			m.setReceivers(m.getMemName() +" "+ m.getSender() +"@anyware.com");
 		}
 		
 		
@@ -214,6 +212,7 @@ public class MailController {
 		}
 		
 		int result1 = mService.saveTemporaryMail(m);
+
 		
 		ArrayList<MailStatus> list = new ArrayList<>();
 		if(result1>0) {
@@ -376,7 +375,45 @@ public class MailController {
 		return result1*result3 >0 ? "success": "fail";
 	}
 	
+	@ResponseBody
+	@RequestMapping("saveMe.em")
+	public String sendToMeSave(Mail m) {
+		 String memName = m.getMemName();
+    	 String sender = m.getSender();
+		  m.setReceivers(memName +" "+ sender +"@anyware.com");
+		  
+		  int result1 = mService.saveTemporaryMail(m);
+		 
+		  ArrayList<MailStatus> list = new ArrayList<>();
+	    	//메일 상태 insert
+	    	if(result1>0) {
+	    		MailStatus ms = new MailStatus();
+		    	ms.setEmType(0);
+		    	ms.setReceiverName(memName);
+		    	ms.setReceiver(sender);
+		    	ms.setTempSave("Y");
+		    	
+		    	list.add(ms);
+	    	}
+	    	int result2 = mService.saveTemporaryMailStatus(list);
+		  
+		  
+		  return new Gson().toJson(result1);
+		
+	}
 	
+	@ResponseBody
+	@RequestMapping("updateMeTemp.em")
+	public String sendToMetempUpdate(Mail m) {
+		String memName = m.getMemName();
+   	 	String sender = m.getSender();
+		  m.setReceivers(memName +" "+ sender +"@anyware.com");
+		  
+		  int result = mService.updateTemporaryMail(m);
+		 
+		  return result>0 ? "success": "fail";
+	
+	}
 	
 	//휴지통 조회 
 	@RequestMapping("trash.em")
@@ -501,8 +538,19 @@ public class MailController {
 	
 	//메일 쓰기
 	@RequestMapping("sendMail.em")
-	public String insertSendMail(Mail m, HttpSession session,Model model) {
-		//System.out.println(m);	
+	public String insertSendMail(Mail m,MultipartFile[] upfile, HttpSession session,Model model) {
+		//System.out.println(Arrays.toString(fileUpload));	
+		
+		
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//메일상태
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
+	
 		String receivers = m.getReceivers();
 		receivers = receivers.replaceAll("\"value\":\"", "");
 		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
@@ -568,12 +616,50 @@ public class MailController {
 					
 					list.add(ms3);
 				}
+
 	      	}
+			result2 = mService.insertMailStatus(list);
+				
+		 }
+			//-----------------첨부파일 insert--------------
+			
+			for (MultipartFile file : upfile) {
+
+				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
 	
-		}
-		int result2 = mService.insertMailStatus(list);
-		
-		
+					// 저장 파일 경로!
+					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+	
+					// 첨부파일
+					MailFile at = new MailFile();
+	
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(saveFilePath);
+					at.setFileSize((int) file.getSize());
+	
+					// at를 attachmentList에 담기
+					atList.add(at);
+				}
+				
+				// 첨부파일 보내기
+				if (atList.size() > 0) { // 첨부파일이 추가된 경우
+					result3 = mService.insertMailAttachment(atList);
+				}
+
+				if (result1 > 0 && result2 > 0 && result3 > 0) {
+					session.setAttribute("alertIcon", "success");
+					session.setAttribute("alertTitle", "메일 전송 완료");
+					//session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
+				} else {
+					session.setAttribute("alertIcon", "error");
+					session.setAttribute("alertTitle", "메일 전송 실패");
+					session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
+				}
+
+
+			}
+
+	
 		return "mail/successSendmail";
 	}
 	

@@ -13,6 +13,7 @@ import com.aw.anyware.mail.model.dao.MailDao;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
@@ -257,6 +258,11 @@ public class MailServiceImle implements MailService {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
 	
+	@Override
+	public int insertMailAttachment(ArrayList<MailFile> atList) {
+		return mDao.insertMailAttachment(sqlSession, atList);
+	}
+
 
 	
 
@@ -383,6 +389,7 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> selectTrashMailList(PageInfo pi, String memId) {
 		return mDao.selectTrashMailList(sqlSession,pi,memId);
 	}
+
 
 	
 	
