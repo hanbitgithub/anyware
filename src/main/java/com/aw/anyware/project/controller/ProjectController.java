@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
@@ -36,6 +37,18 @@ public class ProjectController {
 		return "project/projectListView";
 	}
 	
+	@RequestMapping("insert.pj")
+	public String insertProject(Project pj, Model model) {
+		
+		int result = pService.insertProject(pj);
+		
+		if(result == 0) {
+			model.addAttribute("alertMsg", "프로젝트 생성에 실패했습니다.");
+		}
+		
+		return "redirect:list.pj";
+	}
+	
 	@RequestMapping("detail.pj")
 	public String projectDetailView() {
 		return "project/projectDetailView";
@@ -44,6 +57,12 @@ public class ProjectController {
 	@RequestMapping("detail.li")
 	public String listDetailView() {
 		return "project/listDetailView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertLike.ajax",  produces="text/html; charset=UTF-8")
+	public String insertLike(int no) {
+		return "성공";
 	}
 
 }
