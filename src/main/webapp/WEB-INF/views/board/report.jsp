@@ -66,6 +66,13 @@ table{
 	color:#fff;
 	border:1px solid #42454c;
 }
+#btn{
+    border-radius: 5px;
+    border: 1px solid rgb(219, 219, 219);
+    background-color: rgb(255, 255, 255);
+    font-size: 13px;
+	
+}
 </style>   
 </head>
 <body>
@@ -91,17 +98,36 @@ table{
                   <th>번호</th>
                   <th>제목</th>
                   <th>신고사유</th>
-                  <th>작성자</th>
+                  <th>신고자</th>
                   <th>신고접수일</th>
                   <th>상태</th>
                   <th>관리</th>
                 </tr>
               </thead>
-              <tbody style="border: white"
-              >
+              <tbody style="border: white">
+              <c:forEach var="r" items="${ list }">
+              	<tr>
+              		<td>${r.reportNo}</td>
+              		<td class="bno">${r.postNo}</td>
+              		<td>${r.reportContent}</td>
+              		<td>${r.name}</td>
+              		<td>${r.reportDate}</td>
+              		<td>${r.status}</td>
+              		<td><button id="btn" onclick="postFormSubmit();">블라인드</button></td>
+              	</tr>
+              </c:forEach>
               </tbody> 
          </table>   
-	
+			
+				<form action="" method="post" id="postForm">
+					<input type="hidden" name="no" value="${r.postNo }">
+					<input type="hidden" name="filePath" value="${b.changeName }">
+				</form>
+			<script>
+				function postFormSubmit(){
+					$("#postForm").attr("action", "delete.bo").submit();
+				}
+			</script>
 		    
 		    
 		    <script>
@@ -122,12 +148,12 @@ table{
                     <a class="arrow prev disabled" href="#">이전</a>
                   </c:when>
                   <c:otherwise>  
-                    <a class="arrow prev" href="rlist.bo?cpage=${pi.currentPage-1 }">이전</a>
+                    <a class="arrow prev" href="list.rp?cpage=${pi.currentPage-1 }">이전</a>
                   </c:otherwise>
                   </c:choose>
                   
                   <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-                    <a class="" href="rlist.bo?cpage=${ p }">${ p }</a>
+                    <a class="" href="list.rp?cpage=${ p }">${ p }</a>
                   </c:forEach>
                   
                   <c:choose>
@@ -135,7 +161,7 @@ table{
                    <a class="arrow next" href="#">다음</a>
                      </c:when>
                      <c:otherwise>
-                   <a class="arrow next" href="rlist.bo?cpage=${ pi.currentPage + 1 }">다음</a>
+                   <a class="arrow next" href="list.rp?cpage=${ pi.currentPage + 1 }">다음</a>
                       </c:otherwise>
                 </c:choose>   
                 </div>

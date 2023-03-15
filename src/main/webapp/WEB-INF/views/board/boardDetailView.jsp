@@ -207,9 +207,10 @@ textarea {
     			}
     		})
     	}
+		
     </script>
     
-            <!-- 신고 모달 -->
+           <!-- 신고 모달 -->
         <div class="modal" id="myModal" style="color:rgb(50, 50, 50);">
             <div class="modal-dialog">
                 <div class="modal-content" style="padding:30px 20px;">
@@ -246,7 +247,7 @@ textarea {
                         <div style="margin-bottom:10px;">
                             <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report3" name="reportContent" value="불법정보를 포함하고 있습니다.">
                             <label for="report3">
-                                <b style="color:rgb(50, 50, 50)">불법정보를 포함하고 있습니다.</b>
+                               <b style="color:rgb(50, 50, 50)">불법정보를 포함하고 있습니다.</b>
                             </label>
                         </div>
                         <div style="margin-bottom:10px;">
@@ -276,7 +277,7 @@ textarea {
         <script>
             $(function(){
                 $("#myModal button").click(function(){
-                    alert("제출되었습니다.");
+                    alert("신고가 접수되었습니다.");
                 })
             })
         </script>

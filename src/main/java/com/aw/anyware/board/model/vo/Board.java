@@ -24,4 +24,10 @@ public class Board {
 	
 	private String name;
 	private String jobName;
+	
+	private int postNo;
+	private int memberNo;
+	private String reportContent;
+	private String reportDate;
+	private int reportNo;
 }

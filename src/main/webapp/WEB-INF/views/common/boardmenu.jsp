@@ -52,7 +52,7 @@
 				<c:choose>
 					<c:when test="${loginUser.deptName eq '인사부' }">
 						<li><a href="glist.bo">인사팀게시판</a></li>
-						<li><a href="rlist.bo">신고관리</a></li>
+						<li><a href="list.rp">신고관리</a></li>
 					</c:when>
 					<c:when test="${loginUser.deptName eq '총무부' }">
 						<li><a href="glist.bo">총무팀게시판</a></li>

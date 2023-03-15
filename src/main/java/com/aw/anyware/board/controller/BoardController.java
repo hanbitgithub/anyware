@@ -209,15 +209,22 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
 	public String selectMainNoticeList() {
-		ArrayList<Board> list2 = bService.selectMainNoticeList();
-		return new Gson().toJson(list2);
+		ArrayList<Board> list = bService.selectMainNoticeList();
+		return new Gson().toJson(list);
 	}
 	
-	@RequestMapping("rlist.bo")
+	@RequestMapping("main.rp")
 	public String reportPage() {
 		return "board/report";
 	}
-	/*
+	
+	/**
+	 * 신고하기
+	 * @param b
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("insert.rp")
 	public String insertReport(Board b, HttpSession session, Model model) {
 
@@ -225,12 +232,53 @@ public class BoardController {
 		int result = bService.insertReport(b);
 		
 		if(result > 0) { 
-			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
-			return "board/boardMain";
+			return "redirect:detail.bo?no=" + b.getPostNo();
 		}else {
-			model.addAttribute("errorMsg", "게시글 등록 실패");
+			model.addAttribute("errorMsg", "신고접수 실패");
 			return "common/errorPage";
 		}
 	}
-	*/
+	
+	/**
+	 * 신고게시글조회
+	 * @param currentPage
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("list.rp")
+	public String selectReportList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = bService.selectRListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectReportList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+
+		return "board/report";
+		
+	}
+	
+	@RequestMapping("delete.rp")
+	public String deleteReport(int no, String filePath, HttpSession session, Model model) {
+		
+		int result = bService.deleteReport(no);
+		
+		if(result > 0) {
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "게시글이 블라인드처리 되었습니다.");
+			return "redirect:list.rp";
+			
+		}else {
+			model.addAttribute("errorMsg", "게시글 블라인드 실패");
+			return "common/errorPage";
+			
+		}
+	}
+	
 }

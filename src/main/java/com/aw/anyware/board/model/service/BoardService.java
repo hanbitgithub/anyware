@@ -36,7 +36,13 @@ public interface BoardService {
 	int insertReply(Reply r);
 	
 	// 신고하기
-	//int insertReport(Board b);
+	int insertReport(Board b);
+	
+	// 신고조회
+	int selectRListCount();
+	ArrayList<Board> selectReportList(PageInfo pi);
+	
+	int deleteReport(int postNo);
 	
 	
 

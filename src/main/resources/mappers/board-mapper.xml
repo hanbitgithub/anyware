@@ -15,6 +15,11 @@
 		<result column="category" property="category" />
 		<result column="name" property="name" />
 		<result column="job_name" property="jobName" />
+		<result column="post_no" property="postNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="report_content" property="reportContent" />
+		<result column="report_date" property="reportDate" />
+		<result column="report_no" property="reportNo" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -34,6 +39,11 @@
 		       count(*)
 		  from tb_board
 		 where status = 'Y'
+	</select>
+		<select id="selectRListCount" resultType="_int">
+		select
+		       count(*)
+		  from tb_report
 	</select>
 	
 	<!-- 자유게시판 조회 -->
@@ -251,5 +261,28 @@
 		
 			)
 	</insert>
-
+	
+	<!-- 신고조회 -->
+		<select id="selectReportList" resultMap="boardResult">
+		select
+		       report_no
+		     , post_no
+		     , r.member_no
+		     , report_content
+		     , r.status
+		     , to_char(report_date, 'YYYY-MM-DD') as "report_date"
+		     , m.name
+		  from tb_report r
+		  join tb_member m on (r.member_no = m.member_no)
+		 order
+		    by report_no desc
+	</select>
+	
+	<!-- 블라인드처리 -->
+	<update id="deleteReport">
+		update
+			tb_report
+		  set status = 'Y'
+		 where report_no = #{ report_no} 	
+	</update>
 </mapper>
