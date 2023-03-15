@@ -631,14 +631,14 @@
                        <table>
                            <tr>
                                <th width="100">그룹명</th>
-                               <td><input type="text" name="groupName" class="groupName"></td>
+                               <td><input type="text" name="groupName" class="groupName1"></td>
                            </tr>
                        </table>
            
                        </div>
                        <div class="modal-footer">
                        
-                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#addAddress" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#addAddress" onclick="insertAddGroup2(1);">그룹추가</button>
                        <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#addAddress">취소</button>
                      
                        </div>
@@ -658,14 +658,14 @@
                        <table>
                            <tr>
                                <th width="100">그룹명</th>
-                               <td><input type="text" name="groupName" class="groupName"></td>
+                               <td><input type="text" name="groupName" class="groupName2"></td>
                            </tr>
                        </table>
            
                        </div>
                        <div class="modal-footer">
                        
-                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#updateAddress" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#updateAddress" onclick="insertAddGroup2(2);">그룹추가</button>
                        <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#updateAddress">취소</button>
                      
                        </div>
@@ -684,14 +684,14 @@
                        <table>
                            <tr>
                                <th width="100">그룹명</th>
-                               <td><input type="text" name="groupName" class="groupName"></td>
+                               <td><input type="text" name="groupName" class="groupName3"></td>
                            </tr>
                        </table>
            
                        </div>
                        <div class="modal-footer">
                        
-                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#groupModal" onclick="insertAddGroup2();">그룹추가</button>
+                       <button type="button" class="btn btn-primary btn-sm"  data-bs-toggle="modal" data-bs-target="#groupModal" onclick="insertAddGroup2(3);">그룹추가</button>
                        <button type="button" class="btn2"  data-bs-toggle="modal" data-bs-target="#groupModal">취소</button>
                      
                        </div>
@@ -702,18 +702,18 @@
                         
                         <script>
                         // 주소록 그룹 '추가'시 실행하는 ajax
-        				function insertAddGroup2(){
+        				function insertAddGroup2(num){
                   
-        					if ($(".groupName").val().trim() != 0) {
+        					if ($(".groupName"+num).val().trim() != 0) {
         						$.ajax({
         							url : "insertAddGroup.ad",
         							data : {
         								memNo : '${loginUser.memberNo}',
-        								groupName : $(".groupName").val()
+        								groupName : $(".groupName"+num).val()
         							},
         							success:function(result) {
     										console.log(result);
-    										 alert("그룹 추가성공");
+    										// alert("그룹 추가성공");
     										
     										$.ajax({
     						                    url: 'glist.ad',
@@ -725,6 +725,7 @@
     						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
     						                        });
     						                        $('select[name="groupNo"]').html(selectOptions);
+    						                        $(".groupName"+num).val("");
     						                        selectGroupList();
     						                    },
     						                    error: function() {

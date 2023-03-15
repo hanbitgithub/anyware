@@ -440,14 +440,29 @@ public class MailDao {
 		   return emNo;
 	}
 	
+	
+	public int saveTemporaryMailStatus(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;
+		for(MailStatus ms : list) {
+			result += sqlSession.insert("mailMapper.saveTemporaryMailStatus", ms);
+		}
+		
+		return result;
+	}
+	
+	public int deleteTemporaryStatus(SqlSessionTemplate sqlSession, int emNo) {
+		return sqlSession.delete("mailMapper.deleteTemporaryStatus",emNo);
+	}
+	
+	
 	/**
 	 * @param sqlSession
 	 * @param memId
 	 * @return 임시저장 메일번호 
 	 */
-	public int selectSaveMailGetEmNo(SqlSessionTemplate sqlSession, String memId) {
-		return sqlSession.selectOne("mailMapper.selectSaveMailGetEmNo",memId);
-	}
+	//public int selectSaveMailGetEmNo(SqlSessionTemplate sqlSession, String memId) {
+	//	return sqlSession.selectOne("mailMapper.selectSaveMailGetEmNo",memId);
+	//}
 	
 	
 	/**
@@ -459,6 +474,24 @@ public class MailDao {
 		return sqlSession.update("mailMapper.updateTemporaryMail",m);
 	}
 	
+
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 휴지통 메일개수 조회 
+	 */
+	public int selectTrashMailCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectTrashMailCount",memId);
+	}
+	
+	public ArrayList<Mail> selectTrashMailList(SqlSessionTemplate sqlSession,PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashMailList",memId,rowBounds);
+	}
+
 	
 
 }

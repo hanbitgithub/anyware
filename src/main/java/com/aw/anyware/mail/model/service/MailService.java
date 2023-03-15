@@ -112,11 +112,15 @@ public interface MailService {
 	
 	//메일 임시보관
 	int saveTemporaryMail(Mail m);
+	int saveTemporaryMailStatus(ArrayList<MailStatus> list);
 	
 	//메일 임시보관 업데이트
 	int updateTemporaryMail(Mail m);
+	int deleteTemporaryStatus(int emNo);
 	
-	//임시저장 메일 번호 조회
-	int selectSaveMailGetEmNo(String memId);
-     
+	
+	//휴지통 개수, 리스트조회
+	int selectTrashMailCount(String memId);
+	ArrayList<Mail> selectTrashMailList(PageInfo pi, String memId);
+	
 }

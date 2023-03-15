@@ -22,6 +22,7 @@ public class MailStatus {
 	private String important;
 	private String trash;
 	private String spam;
+	private String tempSave;
 	
 	private String sender;
 

@@ -194,24 +194,84 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping("save.em")
 	public String ajaxSavetemporaryMail(Mail m) {
-		
-		String receivers = m.getReceivers();
-		receivers = receivers.replaceAll("\"value\":\"", "");
-		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
-		
-		m.setReceivers(receivers);
-		
+		System.out.println(m);
 		String cc = m.getRefEmail();
-		cc = cc.replaceAll("\"value\":\"", "");
-		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		String receivers = m.getReceivers();
 		
-		m.setRefEmail(cc);
-		int result = mService.saveTemporaryMail(m);
+		if(receivers != null) { 	
+			receivers = receivers.replaceAll("\"value\":\"", "");
+			receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			m.setReceivers(receivers);
+		}else {
+			m.setReceivers(m.getMemName() +" "+ m.getSender() +"@anyware.com");
+		}
 		
+		
+		if(cc != null) {
+			cc = cc.replaceAll("\"value\":\"", "");
+			cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			m.setRefEmail(cc);
+		}
+		
+		int result1 = mService.saveTemporaryMail(m);
+		
+		ArrayList<MailStatus> list = new ArrayList<>();
+		if(result1>0) {
+			// 메일 상태 insert
+			// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+			// ----------- 보낸 메일 ------------
+				MailStatus ms = new MailStatus();
+				ms.setEmType(0);
+				ms.setTempSave("Y");
+			
+				list.add(ms); // ArrayList<MailStatus>에 추가
+
+			
+			//---------- 받은 메일 ---------------
+				//받는사람 이름 배열에 담은후 구분자로 나누기
+				if(!receivers.equals("")) {
+				String[] receiverArr = receivers.split(",");
+				for(String r : receiverArr) {
+				    String[] parts = r.split(" ");
+				    String id = parts[1].split("@")[0];
+				   // System.out.println(id);
+				    String name = parts[0].split("@")[0];
+				   // System.out.println(name);    
+				   
+				    MailStatus ms2 = new MailStatus();
+					ms2.setEmType(1);
+					ms2.setReceiverName(name);
+					ms2.setReceiver(id);
+					ms2.setTempSave("Y");
+					list.add(ms2);
+				}
+				
+			 }
+			//--------- 참조 메일 --------------	
+			if(!cc.equals("")) { // 참조메일이 있을경우 
+				
+				//참조자 이름 배열에  담은후 구분자로 나누기
+				String[] ccArr = cc.split(",");
+				for(String c: ccArr) {
+					String[] parts = c.split(" ");
+					String id = parts[1].split("@")[0];
+					String name = parts[0].split("@")[0];
+					
+					MailStatus ms3 = new MailStatus();
+					ms3.setEmType(2);
+					ms3.setReceiverName(name);
+					ms3.setReceiver(id);
+					ms3.setTempSave("Y");
+					
+					list.add(ms3);
+				}
+	      	}
 	
-		System.out.println(result);
+		}
+		//System.out.println(list);
+		int result2 = mService.saveTemporaryMailStatus(list);
 		
-		return new Gson().toJson(result);
+		return new Gson().toJson(result1);
 	}
 	/*
 	 * //임시저장한 메일 번호
@@ -230,26 +290,113 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping("updateTemp.em")
 	public String ajaxUpdateTemporaryMail(Mail m) {
-		
-		System.out.println(m);
-		String receivers = m.getReceivers();
-		receivers = receivers.replaceAll("\"value\":\"", "");
-		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
-		
-		m.setReceivers(receivers);
-		
 		String cc = m.getRefEmail();
-		cc = cc.replaceAll("\"value\":\"", "");
-		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+		String receivers = m.getReceivers();
+		//System.out.println(m);
+		if(m.getReceivers() != null) {
+			receivers = receivers.replaceAll("\"value\":\"", "");
+			receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			
+			m.setReceivers(receivers);
+		}else {
+			m.setReceivers(m.getMemName() +" "+ m.getSender() +"@anyware.com");
+		}
 		
-		m.setRefEmail(cc);
+		if(m.getRefEmail() != null) {
+			cc = cc.replaceAll("\"value\":\"", "");
+			cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			
+			m.setRefEmail(cc);
+		}
+		int result1 = mService.updateTemporaryMail(m);
 		
-		int result = mService.updateTemporaryMail(m);
-		return result>0 ? "success": "fail";
+		ArrayList<MailStatus> list = new ArrayList<>();
+		
+		if(result1>0) {
+			int result2= mService.deleteTemporaryStatus(m.getEmNo());
+			
+			if(result2>0) {
+				// 메일 상태 insert
+				// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+				// ----------- 보낸 메일 ------------
+					MailStatus ms = new MailStatus();
+					ms.setEmType(0);
+					ms.setTempSave("Y");
+				
+					list.add(ms); // ArrayList<MailStatus>에 추가
+
+				
+				//---------- 받은 메일 ---------------
+					//받는사람 이름 배열에 담은후 구분자로 나누기
+					if(!receivers.equals("")) {
+					String[] receiverArr = receivers.split(",");
+					for(String r : receiverArr) {
+					    String[] parts = r.split(" ");
+					    String id = parts[1].split("@")[0];
+					   // System.out.println(id);
+					    String name = parts[0].split("@")[0];
+					   // System.out.println(name);    
+					   
+					    MailStatus ms2 = new MailStatus();
+						ms2.setEmType(1);
+						ms2.setReceiverName(name);
+						ms2.setReceiver(id);
+						ms2.setTempSave("Y");
+						list.add(ms2);
+					}
+					
+				 }
+				//--------- 참조 메일 --------------	
+				if(!cc.equals("")) { // 참조메일이 있을경우 
+					
+					//참조자 이름 배열에  담은후 구분자로 나누기
+					String[] ccArr = cc.split(",");
+					for(String c: ccArr) {
+						String[] parts = c.split(" ");
+						String id = parts[1].split("@")[0];
+						String name = parts[0].split("@")[0];
+						
+						MailStatus ms3 = new MailStatus();
+						ms3.setEmType(2);
+						ms3.setReceiverName(name);
+						ms3.setReceiver(id);
+						ms3.setTempSave("Y");
+						
+						list.add(ms3);
+					}
+		      	}
+				
+			}
+			
+		}
+		
+		
+		int result3 = mService.saveTemporaryMailStatus(list);
+
+		return result1*result3 >0 ? "success": "fail";
 	}
 	
+	
+	
+	//휴지통 조회 
 	@RequestMapping("trash.em")
-	public String trashMailList() {
+	public String trashMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
+
+		//휴지통 갯수조회
+		int listCount = mService.selectTrashMailCount(memId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//휴지통 리스트
+		ArrayList<Mail> list = mService.selectTrashMailList(pi,memId);
+		
+		//System.out.println(listCount);
+		//System.out.println(list);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi",pi);
+		model.addAttribute("count",listCount);
 		return "mail/trashMailBox";
 	}
 	
@@ -562,6 +709,12 @@ public class MailController {
 		return "mail/companyAddressbook";
 	}
 	
+	/**
+	 * @param currentPage
+	 * @param deptName
+	 * @param model
+	 * @return 부서별 주소록 조회 
+	 */
 	@RequestMapping("dept.ad")
 	public String deptAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,String deptName, Model model) {
 		int count = mService.selectdeptAddBookListCount(deptName);

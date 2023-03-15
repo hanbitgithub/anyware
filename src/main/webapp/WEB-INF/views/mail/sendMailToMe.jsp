@@ -1,14 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>   
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<jsp:useBean id="now" class="java.util.Date" />    
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>내게쓰기</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<title>내게쓰기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <style>
+<style>
  
 /*메일*/
 #btn-area a {
@@ -293,16 +295,17 @@
                 <div id="btn-area">
                     <a onclick="return sendToMe();"><img src="resources/images/send-mail.png" width="25px"> 전송</a>
                     <a href=""><img src="resources/images/refresh.png" width="20px"> 취소</a>
-                    <a href=""><img src="resources/images/packing.png" width="25px"> 임시저장</a>
+                    <a onclick="saveTemp2();"><img src="resources/images/packing.png" width="25px"> 임시저장</a>
                     <a href="sendForm.em"><img src="resources/images/exchange.png" width="25px"> 메일쓰기</a>
-                  
+                  	<fmt:formatDate value="${now}" pattern="yyyy-MM-dd HH:mm:ss" var="now" />
+                	<span class="saveMessage" style="display:none;">임시저장완료 <c:out value="${now}" /></span>
                 </div>
                 <br>
                 <div>
                    <form method="post" action="sendToMe.em" id="mailmeForm" enctype="multipart/form-data">
                    	<input type="hidden" name="sender" value="${loginUser.memberId}">
                     <input type="hidden" name="memName" value="${loginUser.name }">
-                
+                	<div id="hidden"></div>
                     <table id="write"style="font-size: 15px;">
                       
                         <tr>
@@ -369,6 +372,88 @@
         	$("#mailmeForm").submit();
         }
         </script>
+        
+        <script>
+				//메일 임시저장 버튼 클릭시 실행하는 함수 
+			    let isSaved = false; // 임시저장 여부를 체크하는 변수
+				let emNo;
+				
+				function saveTemp2(){
+					
+				    let formData = new FormData($("#mailmeForm")[0]);
+		  			    
+					    // 제목이 비어있는 경우에 대한 처리
+					    if ($("#title2").val().trim() == "") {
+					        let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 저장하시겠습니까?");
+					        if (!answer) {
+					            $("#title2").focus();
+					            return false;
+					        }
+					    }
+					   if (!isSaved) {
+						    $.ajax({
+						        url: "save.em",
+						        processData: false,
+						        contentType: false,
+						        type: "POST",
+						        data: formData,
+						        success: function(result) {
+						            if (result > 0) {
+						            	emNo = result;
+						            	
+						            	value="";
+						            	value += "<input type='hidden' name='emNo' value='"
+						            	      + emNo
+						            	      + "'>"
+						            	      
+						                $("#hidden").html(value);
+						            	      
+						            	isSaved = true;
+						                $(".saveMessage").show(); // 저장완료 메시지 보이기
+						                // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
+						                setTimeout(function() {
+						                	  $(".saveMessage").hide();
+						                }, 3000); 
+						                 
+						               
+						            } else {
+						                alert("메일을 임시보관함에 저장하는데 실패했습니다.");
+						            }
+						            console.log("임시저장 ajax 성공");
+						        },
+						        error: function() {
+						            console.log("임시저장 ajax 실패");
+						        }
+						    })
+	
+						  } else {
+							  
+						        $.ajax({
+						          url: "updateTemp.em",
+						          processData: false,
+						          contentType: false,
+						          type: "POST",
+						          data: formData,
+						          success: function(result) {
+						            if (result == "success") {
+						              $(".saveMessage").show(); // 저장완료 메시지 보이기
+						              // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
+						              setTimeout(function() {
+						                $(".saveMessage").hide();
+						              }, 3000); // 3초
+						            } else {
+						              alert("메일을 임시보관함에 저장하는데 실패했습니다.");
+						            }
+						            console.log("임시저장 ajax 성공");
+						          },
+						          error: function() {
+						            console.log("임시저장 ajax 실패");
+						          }
+						        })
+						      }
+					  
+				}
+			</script>
 
 
 
