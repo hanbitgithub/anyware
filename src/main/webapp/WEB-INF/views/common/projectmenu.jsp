@@ -84,19 +84,20 @@
 		
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form action="">
+					<form action="insert.pj">
+						<input type="hidden" name="owner" value="${ loginUser.memberNo }">
 						<div>
 							<b>프로젝트명<span class="essential"> *</span></b>
-							<input type="text" id="name" name="projectName">
+							<input type="text" id="name" name="projectTitle">
 						</div>
 						<br>
 						<div><b>프로젝트 내용</b></div>
-						<textarea name="" id="" cols="53" rows="10" style="resize: none;"></textarea>
+						<textarea name="projectContent" cols="53" rows="10" style="resize: none;"></textarea>
 						<br><br>
 						<b>공개 여부<span class="essential"> *</span></b>&nbsp;
-						<input type="radio" name="public" id="public">
+						<input type="radio" name="publicStatus" id="public" value="Y">
 						<label for="public">공개</label>&nbsp;
-						<input type="radio" name="public" id="private">
+						<input type="radio" name="publicStatus" id="private" value="N">
 						<label for="private">비공개</label>
 
 						<br><br>

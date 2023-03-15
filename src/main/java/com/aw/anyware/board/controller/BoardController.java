@@ -183,13 +183,14 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="rlist.bo", produces="aplication/json; charset=utf-8")
+	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int no) {
 		
 		ArrayList<Reply> list = bService.selectReplyList(no);
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
 	@RequestMapping("rinsert.bo")
 	public String ajaxInsertReply(Reply r) {
 		int result = bService.insertReply(r);
@@ -200,10 +201,84 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
-	public String ajaxSelectMainBoardList() {
-		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
+	public String selectMainBoardList() {
+		ArrayList<Board> list = bService.selectMainBoardList();
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
+	public String selectMainNoticeList() {
+		ArrayList<Board> list = bService.selectMainNoticeList();
+		return new Gson().toJson(list);
+	}
+	
+	@RequestMapping("main.rp")
+	public String reportPage() {
+		return "board/report";
+	}
+	
+	/**
+	 * 신고하기
+	 * @param b
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("insert.rp")
+	public String insertReport(Board b, HttpSession session, Model model) {
+
+
+		int result = bService.insertReport(b);
+		
+		if(result > 0) { 
+			return "redirect:detail.bo?no=" + b.getPostNo();
+		}else {
+			model.addAttribute("errorMsg", "신고접수 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * 신고게시글조회
+	 * @param currentPage
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("list.rp")
+	public String selectReportList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = bService.selectRListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectReportList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+
+		return "board/report";
+		
+	}
+	
+	@RequestMapping("delete.rp")
+	public String deleteReport(int no, String filePath, HttpSession session, Model model) {
+		
+		int result = bService.deleteReport(no);
+		
+		if(result > 0) {
+			if(!filePath.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "게시글이 블라인드처리 되었습니다.");
+			return "redirect:list.rp";
+			
+		}else {
+			model.addAttribute("errorMsg", "게시글 블라인드 실패");
+			return "common/errorPage";
+			
+		}
+	}
 	
 }

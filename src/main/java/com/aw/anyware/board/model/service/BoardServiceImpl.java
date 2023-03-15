@@ -76,15 +76,35 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Board> ajaxSelectMainBoardList() {
-		return bDao.ajaxSelectMainBoardList(sqlSession);
+	public ArrayList<Board> selectMainBoardList() {
+		return bDao.selectMainBoardList(sqlSession);
 	}
 	
 	@Override
-	public ArrayList<Board> SelectMainNoticeList() {
-		return bDao.SelectMainBoardList(sqlSession);
+	public ArrayList<Board> selectMainNoticeList() {
+		return bDao.selectMainNoticeList(sqlSession);
+	}
+	
+	@Override
+	public int insertReport(Board b) {
+		return bDao.insertReport(sqlSession, b);
+	}
+	
+	// 신고조회
+	@Override
+	public ArrayList<Board> selectReportList(PageInfo pi) {
+		return bDao.selectReportList(sqlSession, pi);
 	}
 
+	@Override
+	public int selectRListCount() {
+		return bDao.selectRListCount(sqlSession);
+	}
+
+	@Override
+	public int deleteReport(int postNo) {
+		return bDao.deleteReport(sqlSession, postNo);
+	}
 
 
 

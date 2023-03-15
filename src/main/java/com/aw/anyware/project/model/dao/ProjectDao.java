@@ -23,6 +23,10 @@ public class ProjectDao {
 		
 		return (ArrayList)sqlSession.selectList("projectMapper.selectProjectList", memberNo, rowBounds);
 	}
+
+	public int insertProject(SqlSessionTemplate sqlSession, Project pj) {
+		return sqlSession.insert("projectMapper.insertProject", pj);
+	}
 	
 	
 

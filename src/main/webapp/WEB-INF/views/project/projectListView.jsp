@@ -105,12 +105,11 @@
 		<br><br>
 
 		<div class="project-area">
-		
 			<c:forEach var="l" items="${ list }">
 				<div class="project" onclick="location.href='detail.pj?no=${ l.projectNo }';">
 					<div class="project-name">${ l.projectTitle }</div>
 					<c:choose>
-						<c:when test="${ l.publicStatus } eq 'Y'">
+						<c:when test="${ l.publicStatus eq 'Y' }">
 							<div class="public">🔓</div>
 						</c:when>
 						<c:otherwise>
@@ -120,16 +119,51 @@
 					<div class="project-people">${ l.owner }</div>
 					<c:choose>
 						<c:when test="${ l.like eq '1' }">
-							<div class="favorite">💙</div>
+							<div class="favorite" onclick="clickHeart(this);">💙</div>
+							<input type="hidden" value="${ l.projectNo }">
 						</c:when>
 						<c:otherwise>
-							<div class="favorite">🤍</div>
+							<div class="favorite" onclick="clickHeart(this);">🤍</div>
+							<input type="hidden" value="${ l.projectNo }">
 						</c:otherwise>
 					</c:choose>	
 				</div>
 			</c:forEach>
-			
 		</div>
+
+		<script>
+			function clickHeart(e){
+				event.stopImmediatePropagation();
+				// console.log($(e).next().val())
+				// console.log(e.nextElementSibling)
+
+				if(e.innerHTML == "🤍"){
+					$.ajax({
+						url:"insertLike.ajax",
+						type:"post",
+						data:{no:$(e).next().val()},
+						success:function(result){
+							console.log(result);
+						},
+						error:function(){
+							console.log("즐겨찾기 추가 ajax 통신 실패");
+						}
+					})
+				} else {
+					$.ajax({
+						url:"deleteLike.ajax",
+						type:"post",
+						data:{"no":$(e).next().val()},
+						success:function(){
+
+						},
+						error:function(){
+							console.log("즐겨찾기 해제 ajax 통신 실패");
+						}
+					})
+				}
+			}
+		</script>
 
 		<br><br>
 

@@ -13,6 +13,13 @@
 		<result column="board_content" property="boardContent" />
 		<result column="status" property="status" />
 		<result column="category" property="category" />
+		<result column="name" property="name" />
+		<result column="job_name" property="jobName" />
+		<result column="post_no" property="postNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="report_content" property="reportContent" />
+		<result column="report_date" property="reportDate" />
+		<result column="report_no" property="reportNo" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -22,16 +29,24 @@
 		<result column="reply_content" property="replyContent" />
 		<result column="create_date" property="createDate" />
 		<result column="status" property="status" />
+		<result column="name" property="name" />
+		<result column="job_name" property="jobName" />
 		
 	</resultMap>
-
+	
 	<select id="selectListCount" resultType="_int">
 		select
 		       count(*)
 		  from tb_board
 		 where status = 'Y'
 	</select>
-
+		<select id="selectRListCount" resultType="_int">
+		select
+		       count(*)
+		  from tb_report
+	</select>
+	
+	<!-- 자유게시판 조회 -->
 	<select id="selectList" resultMap="boardResult">
 		select
 		       board_no
@@ -40,6 +55,8 @@
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , count
 		     , category
+		     , m.name
+		     , m.job_name
 		  from tb_board b
 		  join tb_member m on (b.board_writer = m.member_no)
 		 where b.status = 'Y'
@@ -47,36 +64,44 @@
 		 order
 		    by board_no desc
 	</select>
-
+	
+	<!-- 공지사항 조회 -->
 	<select id="selectNoticeList" resultMap="boardResult">
 		select
 		       board_no
 		     , board_title
-		     , board_writer
+		     , b.board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , count
-		  from tb_board
-		 where status = 'Y'
-		 and category = '6'
+		     , m.name
+		     , m.job_name
+		  from tb_board b
+		  join tb_member m on (b.board_writer = m.member_no)
+		 where b.status = 'Y'
+		 and b.category = '6'
 		 order
 		    by board_no desc
 	</select>
 	
+	<!-- 팀별 게시판 조회 -->
 	<select id="selectGroupList" resultMap="boardResult">
 		select
 		       board_no
 		     , board_title
-		     , board_writer
+		     , b.board_writer
 		     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 		     , count
 		     , category
-		  from tb_board
-		 where status = 'Y'
+             , m.name
+             , m.job_name
+		  from tb_board b
+          join tb_member m on (b.board_writer = m.member_no)
+		 where b.status = 'Y'
 		 order
 		    by board_no desc
 	</select>
 	
-	
+	<!-- 게시글 작성하기 -->
 	<insert id="insertBoard">
 		insert
 			into tb_board
@@ -101,6 +126,7 @@
 			)
 	</insert>
 	
+	<!-- 조회수 증가 -->
 	<update id="increaseCount">
 		update
 			tb_board
@@ -109,27 +135,34 @@
 	  	and status = 'Y'			
 	</update>
 	
+	<!-- 게시글 상세조회 -->
 	<select id="selectBoard" resultMap="boardResult">
 		select
 			   board_no
 			 , board_title
-			 , board_writer
+			 , b.board_writer
 			 , board_content
 			 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			 , origin_name
 			 , change_name
 			 , category
-		from tb_board
+			 , m.name
+			 , m.job_name
+		from tb_board b
+		join tb_member m on (b.board_writer = m.member_no)
 		where board_no = #{boardNo}	 	   	
 	</select>
 	
+	<!-- 게시글 삭제하기 -->
 	<update id="deleteBoard">
 		update
 			tb_board
 		  set status = 'N'
 		 where board_no = #{ boardNo} 	
 	</update>
-		<update id="updateBoard">
+	
+	<!-- 게시글 수정하기 -->
+	<update id="updateBoard">
 		update
 		       tb_board
 		   set board_title = #{boardTitle}
@@ -140,12 +173,15 @@
 		 where board_no = #{boardNo}     
 	</update>
 	
+	<!-- 댓글목록 조회 -->
 	<select id="selectReplyList" resultMap="replyResult">
 		select
 				r.member_no
 			  , r.post_no	
 			  , r.reply_no
-			  , reply_content 	
+			  , reply_content 
+			  , m.name	
+			  , m.job_name
 			  , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 			from tb_reply r
 		 inner join tb_member m on (r.member_no = m.member_no) 		
@@ -155,6 +191,7 @@
 		     by r.reply_no desc		  
 	</select>
 	
+	<!-- 댓글작성 -->
 	<insert id="insertReply">
 		insert
 			into tb_reply
@@ -173,28 +210,13 @@
 		  )	
 	</insert>
 	
-	<select id="ajaxSelectMainBoardList" resultMap="boardResult">
+	<!-- 메인화면 자유게시판 -->
+	<select id="selectMainBoardList" resultMap="boardResult">
 		select *
 			from (
 				select			
 				       board_no
 				     , board_title
-				     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
-				  from tb_board
-				 where status = 'Y'
-				 and category = '6'
-				 order
-				    by board_no desc
-			)
-         where rownum between 1 and 8
-	</select>
-		<select id="SelectMainBoardList" resultMap="boardResult">
-		select *
-			from (
-				select			
-				       board_no
-				     , board_title
-				     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
 				  from tb_board
 				 where status = 'Y'
 				 and category = '5'
@@ -203,6 +225,64 @@
 			)
          where rownum between 1 and 8
 	</select>
+	
+	<!-- 메인화면 공지사항 -->
+	<select id="selectMainNoticeList" resultMap="boardResult">
+		select *
+			from (
+				select			
+				       board_no
+				     , board_title
+				  from tb_board
+				 where status = 'Y'
+				 and category = '6'
+				 order
+				    by board_no desc
+			)
+         where rownum between 1 and 8
+	</select>
 
-
+	<!-- 신고하기 -->
+	<insert id="insertReport">
+		insert
+			into tb_report
+			(
+			    report_no
+			  , post_no
+			  , member_no
+			  , report_content
+			)
+			values
+			(
+				SEQ_RENO.nextval
+			  , #{postNo}	
+			  , #{memberNo}	
+			  , #{reportContent}	
+		
+			)
+	</insert>
+	
+	<!-- 신고조회 -->
+		<select id="selectReportList" resultMap="boardResult">
+		select
+		       report_no
+		     , post_no
+		     , r.member_no
+		     , report_content
+		     , r.status
+		     , to_char(report_date, 'YYYY-MM-DD') as "report_date"
+		     , m.name
+		  from tb_report r
+		  join tb_member m on (r.member_no = m.member_no)
+		 order
+		    by report_no desc
+	</select>
+	
+	<!-- 블라인드처리 -->
+	<update id="deleteReport">
+		update
+			tb_report
+		  set status = 'Y'
+		 where report_no = #{ report_no} 	
+	</update>
 </mapper>

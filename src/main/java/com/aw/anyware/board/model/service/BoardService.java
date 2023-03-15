@@ -12,6 +12,9 @@ public interface BoardService {
 	int selectListCount();
 	ArrayList<Board> selectList(PageInfo pi);
 	ArrayList<Board> selectNoticeList(PageInfo pi);
+	ArrayList<Board> selectGroupList(PageInfo pi);
+	ArrayList<Board> selectMainBoardList();
+	ArrayList<Board> selectMainNoticeList();
 	
 	// 작성하기
 	int insertBoard(Board b);
@@ -32,8 +35,15 @@ public interface BoardService {
 	// 댓글 작성
 	int insertReply(Reply r);
 	
-	ArrayList<Board> selectGroupList(PageInfo pi);
+	// 신고하기
+	int insertReport(Board b);
+	
+	// 신고조회
+	int selectRListCount();
+	ArrayList<Board> selectReportList(PageInfo pi);
+	
+	int deleteReport(int postNo);
+	
+	
 
-	ArrayList<Board> ajaxSelectMainBoardList();
-	ArrayList<Board> SelectMainNoticeList();
 }
