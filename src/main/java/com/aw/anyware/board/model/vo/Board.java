@@ -22,4 +22,6 @@ public class Board {
 	private String status;
 	private int category;
 	
+	private String name;
+	private String jobName;
 }

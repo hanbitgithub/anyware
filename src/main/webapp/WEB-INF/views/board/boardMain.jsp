@@ -23,14 +23,14 @@
     flex:1;
     padding: 30px;    
 }
-#ul{
+tbody{
     list-style:none;
     font-size: 15px;
     line-height: 50px;
 }
-#ul > li > a{
-    color: black;
-    
+.a {
+	color: rgb(247, 247, 247);
+
 }
     </style>
 </head>
@@ -43,32 +43,75 @@
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	    <div id="boardList" class="notice" style="display: inline-block"> 
-    		<h3 align="center"><a href="list.bo">자유게시판</a></h3>
-		        <ul id="ul" id="blist">
-
-		        </ul>    
-	
+	    <div class="notice" style="display: inline-block"> 
+    		
+				<table id="noticeList">
+					<thead>
+						<h3 align="center"><a href="nlist.bo">공지사항</a></h3>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 	    </div>
 
     &nbsp;&nbsp;&nbsp;
 
-	    <div id="boardList" class="board" style="display: inline-block">
-	        <h3 align="center"><a href="nlist.bo">공지사항</a></h3>
-	        <ul id="ul">
-
-	        </ul>
+	    <div class="board" style="display: inline-block">
 	        
+				<table id="boardList">
+					<thead>
+						<h3 align="center"><a href="list.bo">자유게시판</a></h3>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
 			</div>
 		</div>
 	
             <script>
             	$(function(){
             		
+            		mainNoticeList();
+            		
+            		$(document).on("click", "#noticeList>tbody>tr", function(){
+            			location.href = 'detail.bo?no=' + $(this).children().eq(0).text();
+            		})
+            	})
+            	
+            	function mainNoticeList(){
+            		$.ajax({
+            			url:"mainList.no",
+            			success:function(list){
+            				console.log(list);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let n = list[i];
+            					value += "<tr>" 
+            							+ '<td class="a">' + n.boardNo + "</td>"
+            							+ "<td>" + "&nbsp;&nbsp;" + n.boardTitle + "</td>" 
+            							+ "</tr>";
+            						
+            					
+            				}
+            				
+            				$("#noticeList tbody").html(value);
+            			},error:function(){
+            				console.log("메인 게시글 조회용 ajax 통신실패");
+            			}
+            			
+            		})
+            	}
+            	
+            </script>
+            
+            <script>
+            	$(function(){
+            		
             		mainBoardList();
             		
-            		$("#boardList > ul > li").click(function(){
-            			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
+            		$(document).on("click", "#boardList>tbody>tr", function(){
+            			location.href = 'detail.bo?no=' + $(this).children().eq(0).text();
             		})
             	})
             	
@@ -81,12 +124,15 @@
             				let value = "";
             				for(let i=0; i<list.length; i++){
             					let b = list[i];
-            					value += "<li>" + '<input type="hidden" class="bno" value="' + b.boardNo + '">' + b.boardTitle + "</li>" ;
+            					value += "<tr>" 
+            							+ '<td class="a">' + b.boardNo + "</td>"
+            							+ "<td>" + "&nbsp;&nbsp;" + b.boardTitle + "</td>" 
+            							+ "</tr>";
             						
             					
             				}
             				
-            				$("#boardList ul").html(value);
+            				$("#boardList tbody").html(value);
             			},error:function(){
             				console.log("메인 게시글 조회용 ajax 통신실패");
             			}

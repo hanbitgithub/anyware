@@ -73,14 +73,20 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply" ,r);
 	}
 
-	public ArrayList<Board> ajaxSelectMainBoardList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
+	public ArrayList<Board> selectMainBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMainBoardList");
 	}
 	
 
-	public ArrayList<Board> SelectMainBoardList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
+	public ArrayList<Board> selectMainNoticeList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMainNoticeList");
 	}
+
+	/*
+	public int insertReport(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertReport", b);
+	}
+	*/
 
 
 

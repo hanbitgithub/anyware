@@ -183,13 +183,14 @@ public class BoardController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="rlist.bo", produces="aplication/json; charset=utf-8")
+	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int no) {
 		
 		ArrayList<Reply> list = bService.selectReplyList(no);
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
 	@RequestMapping("rinsert.bo")
 	public String ajaxInsertReply(Reply r) {
 		int result = bService.insertReply(r);
@@ -200,10 +201,36 @@ public class BoardController {
 	
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
-	public String ajaxSelectMainBoardList() {
-		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
+	public String selectMainBoardList() {
+		ArrayList<Board> list = bService.selectMainBoardList();
 		return new Gson().toJson(list);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
+	public String selectMainNoticeList() {
+		ArrayList<Board> list2 = bService.selectMainNoticeList();
+		return new Gson().toJson(list2);
+	}
 	
+	@RequestMapping("rlist.bo")
+	public String reportPage() {
+		return "board/report";
+	}
+	/*
+	@RequestMapping("insert.rp")
+	public String insertReport(Board b, HttpSession session, Model model) {
+
+
+		int result = bService.insertReport(b);
+		
+		if(result > 0) { 
+			session.setAttribute("alertMsg", "성공적으로 게시글이 등록되었습니다.");
+			return "board/boardMain";
+		}else {
+			model.addAttribute("errorMsg", "게시글 등록 실패");
+			return "common/errorPage";
+		}
+	}
+	*/
 }

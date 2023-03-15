@@ -17,4 +17,6 @@ public class Reply {
 	private String createDate;
 	private String status;
 	
+	private String name;
+	private String jobName;
 }

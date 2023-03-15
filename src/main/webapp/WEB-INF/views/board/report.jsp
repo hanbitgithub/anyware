@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>       
 <!DOCTYPE html>
 <html>
 <head>
@@ -66,7 +66,7 @@ table{
 	color:#fff;
 	border:1px solid #42454c;
 }
-</style>    
+</style>   
 </head>
 <body>
 	<!-- 사이드 바  -->
@@ -77,61 +77,57 @@ table{
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	<p><b>자유게시판</b></p>
+	<p><b>신고관리</b></p>
 	<hr>
-	<div class="container">
-		<form action="">
-            <input type="text" name="keyword" value="제목으로 검색하기" class="button">
-            <button type="submit" class="button">검색</button>
-        </form>
-            <br>
-
-            <table id="boardList" class="table table-hover" align="center">
+	
+	<div class="search-area">
+		<input type="text" value="제목으로 검색하기" class="button">
+           <button type="submit" class="button">검색</button>
+	</div>
+	<br>
+		<table id="boardList" class="table table-hover" align="center">
               <thead>
               <tr>
                   <th>번호</th>
                   <th>제목</th>
+                  <th>신고사유</th>
                   <th>작성자</th>
-                  <th>작성일</th>
-                  <th>조회수</th>
+                  <th>신고접수일</th>
+                  <th>상태</th>
+                  <th>관리</th>
                 </tr>
               </thead>
-              <tbody style="border: white">
-                <c:forEach var="b" items="${ list }">
-                <tr>
-                  <td class="bno">${ b.boardNo }</td>
-                  <td>${ b.boardTitle }</td>
-                  <td>${ b.name } ${ b.jobName }</td>
-                  <td>${ b.createDate }</td>
-                  <td>${ b.count }</td>
-                </tr>
-                </c:forEach>
-              </tbody>
-            </table>
-            
-            <script>
+              <tbody style="border: white"
+              >
+              </tbody> 
+         </table>   
+	
+		    
+		    
+		    <script>
             	$(function(){
             		$("#boardList>tbody>tr").click(function(){
             			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
             		})
             	})
             </script>
-            <br><br><br>
+		
+		            <br><br><br>
 
 			
             <div class="page_wrap">
               <div class="page_nation">
                 <c:choose>
 	              	<c:when test="${pi.currentPage eq 1 }">
-                    <a class="arrow prev" href="#" disabled>이전</a>
+                    <a class="arrow prev disabled" href="#">이전</a>
                   </c:when>
                   <c:otherwise>  
-                    <a class="arrow prev" href="list.bo?cpage=${pi.currentPage-1 }">이전</a>
+                    <a class="arrow prev" href="rlist.bo?cpage=${pi.currentPage-1 }">이전</a>
                   </c:otherwise>
                   </c:choose>
                   
                   <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">    
-                    <a class="" href="list.bo?cpage=${ p }">${ p }</a>
+                    <a class="" href="rlist.bo?cpage=${ p }">${ p }</a>
                   </c:forEach>
                   
                   <c:choose>
@@ -139,13 +135,12 @@ table{
                    <a class="arrow next" href="#">다음</a>
                      </c:when>
                      <c:otherwise>
-                   <a class="arrow next" href="list.bo?cpage=${ pi.currentPage + 1 }">다음</a>
+                   <a class="arrow next" href="rlist.bo?cpage=${ pi.currentPage + 1 }">다음</a>
                       </c:otherwise>
                 </c:choose>   
                 </div>
               </div>
-               
-	
+              
 	</div>
 </body>
 </html>
