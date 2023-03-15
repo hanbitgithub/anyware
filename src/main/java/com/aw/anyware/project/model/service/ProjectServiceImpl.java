@@ -29,4 +29,24 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.selectProjectList(sqlSession, memberNo, pi);
 	}
 
+	@Override
+	public int insertProject(Project pj) {
+		return pDao.insertProject(sqlSession, pj);
+	}
+
+	@Override
+	public ArrayList<Project> selectSearchProject(String keyword) {
+		return null;
+	}
+
+	@Override
+	public int insertLike() {
+		return 0;
+	}
+
+	@Override
+	public int deleteLike() {
+		return 0;
+	}
+
 }
