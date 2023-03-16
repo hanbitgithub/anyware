@@ -17,6 +17,10 @@
 <style>
 	/*Now the CSS*/
 	* {margin: 0; padding: 0;}
+
+	#tree {
+		margin-left: 100px;
+	}
 	
 	#tree ul {
 		padding-top: 20px; position: relative;
@@ -151,11 +155,15 @@
                         <a href="#">Child</a>
                         <ul>
                             <li><a href="">개발팀</a>
+                                <c:forEach var="g" items="${ list }">
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
+                                	<a data-toggle="modal" data-target="#myModal">${g.name } ${g.jobName }</a>
+                                </ul>
+                                </c:forEach>
+                                    
                                         <ul>
                                             <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        </ul>
+                                        
                                 </ul>
                             </li>
                             <li>

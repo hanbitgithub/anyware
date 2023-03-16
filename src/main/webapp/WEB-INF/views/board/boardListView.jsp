@@ -13,8 +13,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 table{
-    text-align: center;
     margin-top: 13px;
+    text-align: center;
 }
 .button {
     border-radius: 5px;
@@ -84,7 +84,6 @@ table{
             <input type="text" name="keyword" value="제목으로 검색하기" class="button">
             <button type="submit" class="button">검색</button>
         </form>
-            <br>
 
             <table id="boardList" class="table table-hover" align="center">
               <thead>
@@ -99,8 +98,13 @@ table{
               <tbody style="border: white">
                 <c:forEach var="b" items="${ list }">
                 <tr>
-                  <td class="bno">${ b.boardNo }</td>
-                  <td>${ b.boardTitle }</td>
+                  <td class="bno" >${ b.boardNo }</td>
+                  <td>
+                  	<c:if test="${ not empty b.originName }">
+	                  📁
+	                </c:if>
+                  	${ b.boardTitle }
+                  </td>
                   <td>${ b.name } ${ b.jobName }</td>
                   <td>${ b.createDate }</td>
                   <td>${ b.count }</td>

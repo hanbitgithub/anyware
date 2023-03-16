@@ -293,7 +293,7 @@ a {
 
                         
                     </div>
-                    <a href="groupmap.bo" class="nav__link">
+                    <a href="list.gr" class="nav__link">
                         <ion-icon name="git-network-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">조직도</span>
                     </a>

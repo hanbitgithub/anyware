@@ -117,11 +117,13 @@ public class BoardController {
 	
 	@RequestMapping("detail.bo")
 	public ModelAndView selectBoard(int no, ModelAndView mv) {
+		
 		int result = bService.increaseCount(no);
 		
 		if(result > 0) {
 			Board b = bService.selectBoard(no);
 			mv.addObject("b", b).setViewName("board/boardDetailView");
+			
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
 		}
@@ -149,12 +151,22 @@ public class BoardController {
 		}
 	}
 	
+
+	
 	@RequestMapping("updateForm.bo")
 	public String updateForm(int no, Model model) {
 		model.addAttribute("b", bService.selectBoard(no));
 		return "board/boardUpdateForm";
 	}
 	
+	/**
+	 * 게시글 수정
+	 * @param b
+	 * @param reupfile
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("update.bo")
 	public String updateBoard(Board b, MultipartFile reupfile, HttpSession session, Model model) {
 		
@@ -182,6 +194,11 @@ public class BoardController {
 		}
 	}
 	
+	/**
+	 * 댓글목록조회
+	 * @param no
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
 	public String ajaxSelectReplyList(int no) {
@@ -190,6 +207,11 @@ public class BoardController {
 		return new Gson().toJson(list);
 	}
 	
+	/**
+	 * 댓글 작성하기
+	 * @param r
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping("rinsert.bo")
 	public String ajaxInsertReply(Reply r) {
@@ -199,6 +221,59 @@ public class BoardController {
 		
 	}
 	
+	/**
+	 * 댓글 수정하기
+	 * @param r
+	 * @param b
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("update.re")
+	public String updateReply(Reply r, Board b, HttpSession session, Model model) {
+		
+
+		int result = bService.updateReply(r);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "댓글 수정이 완료되었습니다.");
+			return "redirect:detail.bo?no=" + b.getBoardNo();
+		}else {
+			model.addAttribute("errorMsg", "댓글 수정 실패");
+			return "common/errorPage";
+		}
+	}
+	/**
+	 * 댓글 삭제하기
+	 * @param no
+	 * @param filePath
+	 * @param session
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("delete.re")
+	public String deleteReply(int no, Board b, HttpSession session, Model model) {
+		
+		int result = bService.deleteReply(no);
+		int result1 = bService.updateBoard(b);
+		
+		if(result > 0) {
+			
+			session.setAttribute("alertMsg", "댓글 삭제가 완료되었습니다.");
+			return "redirect:detail.bo?no=" + b.getBoardNo();
+			
+		}else {
+			model.addAttribute("errorMsg", "댓글 삭제 실패");
+			return "common/errorPage";
+			
+		}
+	}
+	
+	
+	/**
+	 * 메인화면 - 자유게시판
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
 	public String selectMainBoardList() {
@@ -206,16 +281,15 @@ public class BoardController {
 		return new Gson().toJson(list);
 	}
 	
+	/**
+	 * 메인화면 - 공지사항
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
 	public String selectMainNoticeList() {
 		ArrayList<Board> list = bService.selectMainNoticeList();
 		return new Gson().toJson(list);
-	}
-	
-	@RequestMapping("main.rp")
-	public String reportPage() {
-		return "board/report";
 	}
 	
 	/**
@@ -261,15 +335,20 @@ public class BoardController {
 		
 	}
 	
+	/**
+	 * 신고게시글 처리
+	 * @param no
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("delete.rp")
-	public String deleteReport(int no, String filePath, HttpSession session, Model model) {
+	public String deleteReport(int no, int bno, HttpSession session, Model model) {
 		
 		int result = bService.deleteReport(no);
+		int result1 = bService.deleteBoard(bno);
 		
-		if(result > 0) {
-			if(!filePath.equals("")) {
-				new File(session.getServletContext().getRealPath(filePath)).delete();
-			}
+		if(result > 0 && result1 > 0) {
 			
 			session.setAttribute("alertMsg", "게시글이 블라인드처리 되었습니다.");
 			return "redirect:list.rp";
@@ -280,5 +359,5 @@ public class BoardController {
 			
 		}
 	}
-	
+
 }

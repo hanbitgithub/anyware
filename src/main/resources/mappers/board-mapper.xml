@@ -57,6 +57,7 @@
 		     , category
 		     , m.name
 		     , m.job_name
+		     , origin_name
 		  from tb_board b
 		  join tb_member m on (b.board_writer = m.member_no)
 		 where b.status = 'Y'
@@ -210,6 +211,22 @@
 		  )	
 	</insert>
 	
+	<!-- 댓글 삭제하기 -->
+	<update id="deleteReply">
+		update
+			tb_reply
+		  set status = 'N'
+		 where reply_no = #{replyNo} 	
+	</update>
+	
+	<!-- 댓글 수정하기 -->
+	<update id="updateReply">
+		update
+		       tb_reply
+		   set reply_content = #{replyContent}
+		 where reply_no = #{replyNo}     
+	</update>
+	
 	<!-- 메인화면 자유게시판 -->
 	<select id="selectMainBoardList" resultMap="boardResult">
 		select *
@@ -265,15 +282,17 @@
 	<!-- 신고조회 -->
 		<select id="selectReportList" resultMap="boardResult">
 		select
-		       report_no
-		     , post_no
+		       r.report_no
+		     , r.post_no
 		     , r.member_no
 		     , report_content
 		     , r.status
-		     , to_char(report_date, 'YYYY-MM-DD') as "report_date"
+		     , to_char(r.report_date, 'YYYY-MM-DD') as "report_date"
 		     , m.name
-		  from tb_report r
-		  join tb_member m on (r.member_no = m.member_no)
+             , b.board_title
+		  from tb_report r, tb_member m, tb_board b
+		  where r.member_no = m.member_no
+          and r.post_no = b.board_no
 		 order
 		    by report_no desc
 	</select>
@@ -283,6 +302,6 @@
 		update
 			tb_report
 		  set status = 'Y'
-		 where report_no = #{ report_no} 	
+		 where report_no = #{report_no} 	
 	</update>
 </mapper>

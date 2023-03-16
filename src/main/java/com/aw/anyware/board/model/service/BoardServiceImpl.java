@@ -102,8 +102,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int deleteReport(int postNo) {
-		return bDao.deleteReport(sqlSession, postNo);
+	public int deleteReport(int reportNo) {
+		return bDao.deleteReport(sqlSession, reportNo);
+	}
+
+	@Override
+	public int updateReply(Reply r) {
+		return bDao.updateReply(sqlSession, r);
+	}
+
+	@Override
+	public int deleteReply(int replyNo) {
+		return bDao.deleteReply(sqlSession, replyNo);
 	}
 
 

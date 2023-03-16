@@ -30,6 +30,7 @@
 		<typeAlias type="com.aw.anyware.project.model.vo.ListChat" alias="ListChat" />
 		<typeAlias type="com.aw.anyware.project.model.vo.PjSchedule" alias="PjSchedule" />
 		<typeAlias type="com.aw.anyware.project.model.vo.Like" alias="Like" />
+		<typeAlias type="com.aw.anyware.groupMap.model.vo.GroupMap" alias="GroupMap"/>
 		
 	</typeAliases>
 	
@@ -42,6 +43,7 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/project-mapper.xml"/>
+		<mapper resource="/mappers/groupMap-mapper.xml"/>
 	</mappers>
 	
 </configuration>
