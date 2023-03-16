@@ -42,7 +42,13 @@ public interface BoardService {
 	int selectRListCount();
 	ArrayList<Board> selectReportList(PageInfo pi);
 	
-	int deleteReport(int postNo);
+	int deleteReport(int reportNo);
+	
+	// 댓글수정
+	int updateReply(Reply r);
+	
+	// 댓글삭제
+	int deleteReply(int replyNo);
 	
 	
 

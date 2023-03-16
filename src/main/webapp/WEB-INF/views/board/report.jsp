@@ -96,6 +96,7 @@ table{
               <thead>
               <tr>
                   <th>번호</th>
+                  <th>참조번호</th>
                   <th>제목</th>
                   <th>신고사유</th>
                   <th>신고자</th>
@@ -108,32 +109,23 @@ table{
               <c:forEach var="r" items="${ list }">
               	<tr>
               		<td>${r.reportNo}</td>
-              		<td class="bno">${r.postNo}</td>
+              		<td class="pno">${r.postNo }</td>
+              		<td>${r.boardTitle}</td>
               		<td>${r.reportContent}</td>
               		<td>${r.name}</td>
               		<td>${r.reportDate}</td>
               		<td>${r.status}</td>
-              		<td><button id="btn" onclick="postFormSubmit();">블라인드</button></td>
+              		<td><a id="btn" href="delete.rp?bno=${r.postNo}&&no=${r.reportNo}">블라인드</a></th>
               	</tr>
               </c:forEach>
               </tbody> 
-         </table>   
-			
-				<form action="" method="post" id="postForm">
-					<input type="hidden" name="no" value="${r.postNo }">
-					<input type="hidden" name="filePath" value="${b.changeName }">
-				</form>
-			<script>
-				function postFormSubmit(){
-					$("#postForm").attr("action", "delete.bo").submit();
-				}
-			</script>
+         </table> 
 		    
-		    
+
 		    <script>
             	$(function(){
             		$("#boardList>tbody>tr").click(function(){
-            			location.href = 'detail.bo?no=' + $(this).children(".bno").text();
+            			location.href = 'detail.bo?no=' + $(this).children(".pno").text();
             		})
             	})
             </script>

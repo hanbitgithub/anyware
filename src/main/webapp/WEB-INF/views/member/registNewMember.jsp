@@ -11,8 +11,9 @@
     <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/styles.css">
     <!--헤더-->
+     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+    
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -221,7 +222,7 @@ a {
 .profileContent2{margin-left: 30%;}
 #changePwd{margin-left: 90%; width: 120px;}
 #submit{margin-left: 90%; width: 120px;}
- 
+.modal-open{padding-right: 50px;}
     </style>
 </head>
 <body id="body-pd">
@@ -452,7 +453,8 @@ a {
 
 
         <div class="content">
-            <b> xxx님의 정보관리</b>
+            <b> 사원신규등록</b>
+            <span>${ loginUser.name }님이 등록</span>
             <br><br>
             <div class="partLine"></div>
 
@@ -473,27 +475,31 @@ a {
         <form action="insert.me">
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이름</b></div>
-                    <div class="profileContent2"><input type="text" name="" value=홍길동></div>
+                    <div class="profileContent2"><input type="text" name="name" value=""></div>
+                </div>
+                <div id="employProfile-div3">
+                    <div class="profileContent1"><b>주민번호</b></div>
+                    <div class="profileContent2"><input type="text" name="rrn" value=""></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>아이디</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="user01"></div>
+                    <div class="profileContent2"><input type="text" name="memberId" value=""></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>비밀번호</b></div>
-                    <div class="profileContent2"><input type="password" name="" value="pass01"></div>
+                    <div class="profileContent2"><input type="password" name="memberPwd" value=""></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이메일</b></div>
-                    <div class="profileContent2"><input type="email" name="" value="zzz@xxx.com"></div>
+                    <div class="profileContent2"><input type="email" name="email" value=""></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>사원번호</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="0000001"></div>
+                    <div class="profileContent2"><input type="text" name="memberNo" value=""></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>휴대폰</b></div>
-                    <div class="profileContent2"><input type="tel" name="" value="01011112222"></div>
+                    <div class="profileContent2"><input type="tel" name="phone" value=""></div>
                 </div>
                 
                 <br><br>
@@ -501,50 +507,152 @@ a {
                 <br>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>조직</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="qq회사" ></div>
+                    <div class="profileContent2"><input type="text" value="qq회사" ></div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>직급</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="대리" ></div>
+                    <div class="profileContent2">
+                    	<select name="jobName" id="jobName">
+                            	<option value="미정">미정</option>                               
+                                <option value="총무부">사원</option>
+                                <option value="개발부">대리</option>
+                                <option value="디자인부">과장</option>
+                                <option value="디자인부">부장</option>
+                            </select>
+                    </div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>부서/직책</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="인사부/팀원" ></div>
+                    <div class="profileContent2">
+                    	<select name="deptName" id="deptName">
+                            	<option value="미정">미정</option>
+                                <option value="인사부">인사부</option>
+                                <option value="총무부">총무부</option>
+                                <option value="개발부">개발부</option>
+                                <option value="디자인부">디자인부</option>
+                            </select>
+                            <select name="position" id="position">
+                            	<option value="미정">미정</option>
+                                <option value="팀장">팀장</option>
+                                <option value="팀원">팀원</option>                                
+                            </select>
+                    </div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>담당업무</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="직원연차관리" ></div>
+                    <div class="profileContent2"><input type="text" name="duty" value="직원연차관리" ></div>
                 </div>
                 <br><br>
                 <div class="partLine"></div>
                 <br>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>주소</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="서울시"></div>
+                    <div class="profileContent2"><input type="text" name="address" value="서울시"></div>
                 </div>
                 <div id="employProfile-div3">
-                    <button id="changePwd">주소찾기</button>
+                    <button id="findAddressBtn" type="button" data-toggle="modal" data-target="#findAddress">주소찾기</button>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>입사일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="2020-10-01"></div>
+                    <div class="profileContent2"><input type="text" name="enrollDate" value="2020-10-01"></div>
                 </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>생일</b></div>
-                    <div class="profileContent2"><input type="text" name="" value="2020-10-01"></div>
-                </div>
+                
                 <div id="employProfile-div3">
                     <button id="submit" type="submit">사원등록</button>
                 </div>
         </form>
-
-
-            
+        
+                
         </div>    
             
-        
-
-       
+ <div class="modal" id="findAddress">
+     <div class="modal-dialog">
+       <div class="modal-content">
+   
+         <div class="modal-header">
+           <h4 class="modal-title">주소찾기</h4>
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+         </div>
+   
+         <div class="modal-body" align="center">             
+              <table>
+                 <tr>             
+                    <td><input type="text" id="sample6_postcode" placeholder="우편번호"></td>
+                 </tr>
+                 <tr>
+                    <td><input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br></td>
+                 </tr>
+                 <tr>             
+                    <td><input type="text" id="sample6_address" placeholder="주소"><br></td>
+                 </tr>
+                 <tr>
+                    <td><input type="text" id="sample6_detailAddress" placeholder="상세주소"></td>
+                 </tr>
+                 <tr>
+                    <td><input type="text" id="sample6_extraAddress" placeholder="참고항목"></td>
+                 </tr>
+              </table>
+              <br>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="submitAddress">주소 입력</button>
+           
+         </div>
+         
+         <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+			<script>
+			    function sample6_execDaumPostcode() {
+			        new daum.Postcode({
+			            oncomplete: function(data) {
+			                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+			
+			                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
+			                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+			                var addr = ''; // 주소 변수
+			                var extraAddr = ''; // 참고항목 변수
+			
+			                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
+			                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+			                    addr = data.roadAddress;
+			                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+			                    addr = data.jibunAddress;
+			                }
+			
+			                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
+			                if(data.userSelectedType === 'R'){
+			                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+			                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+			                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+			                        extraAddr += data.bname;
+			                    }
+			                    // 건물명이 있고, 공동주택일 경우 추가한다.
+			                    if(data.buildingName !== '' && data.apartment === 'Y'){
+			                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+			                    }
+			                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+			                    if(extraAddr !== ''){
+			                        extraAddr = ' (' + extraAddr + ')';
+			                    }
+			                    // 조합된 참고항목을 해당 필드에 넣는다.
+			                    document.getElementById("sample6_extraAddress").value = extraAddr;
+			                
+			                } else {
+			                    document.getElementById("sample6_extraAddress").value = '';
+			                }
+			
+			                // 우편번호와 주소 정보를 해당 필드에 넣는다.
+			                document.getElementById('sample6_postcode').value = data.zonecode;
+			                document.getElementById("sample6_address").value = addr;
+			                // 커서를 상세주소 필드로 이동한다.
+			                document.getElementById("sample6_detailAddress").focus();
+			            }
+			        }).open();
+			    }
+			</script>
+   
+       </div>
+     </div>
+   </div>
+   
+  
 
 
 

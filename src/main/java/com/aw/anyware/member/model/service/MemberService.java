@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.stereotype.Service;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
 
 
@@ -33,9 +34,13 @@ public interface MemberService {
 	int allMemberUpdate(Member m);
 	
 	//출퇴근
-	//int enrollMember(Member m);
+	int insertCommute(Commute c);
 	
-	//int outMember(Member m);
+	int commuteOut(Commute c);
+	
+	Commute selectCommute(Commute c);
+	
+	
 	
 	//Member selectDayOff(Member m);
 	

@@ -2,6 +2,7 @@ package com.aw.anyware.member.controller;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.member.model.service.MemberService;
+import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
 
 @Controller
@@ -168,9 +170,9 @@ public class MemberController {
 		int result = mService.allMemberUpdate(m);
 		
 		if(result > 0) {
-			System.out.println("m : " + m);
+			
 			Member updateMem = mService.loginMember(m);
-			System.out.println("updateMem : " + updateMem);
+			
 			session.setAttribute("alertMsg", "정보 변경에 성공했습니다");
 			mv.addObject("m", updateMem);
 			mv.setViewName("member/detailAllMember");
@@ -181,11 +183,48 @@ public class MemberController {
 			return mv;
 		}
 	}
-	/*
-	@RequestMapping("enrollMember.me")
-	public String enrollMember(Member m) {
-		LocalDateTime standardTime = LocalDateTime.parse("2023-03-14T09:01:00.000");
+	
+	@RequestMapping("commuteIn.me")
+	public ModelAndView enrollMember(Commute c, ModelAndView mv, HttpSession session) {
+		
+		int result = mService.insertCommute(c);
+		if(result > 0) {
+			Commute cTime = mService.selectCommute(c);
+			System.out.println("cTime : " + cTime);
+			mv.addObject("commute", cTime);
+			mv.addObject("alertMsg", "출근하였습니다");
+			mv.setViewName("main");
+			return mv;
+		}else {
+			mv.addObject("errorMsg", "다시 시도해주십시오");
+			mv.setViewName("main");
+			return mv;
+		}
+		
 	}
-	*/
+	
+	@RequestMapping("commuteOut.me")
+	public ModelAndView commuteOut(Commute c, ModelAndView mv, HttpSession session) {
+		int result = mService.commuteOut(c);
+		if(result > 0) {
+			Commute cTime = mService.selectCommute(c);
+			System.out.println("cTime : " + cTime);
+			mv.addObject("commute", cTime);
+			mv.addObject("alertMsg", "퇴근하였습니다");
+			mv.setViewName("main");
+			return mv;
+		}else {
+			mv.addObject("errorMsg", "다시 시도해주십시오");
+			mv.setViewName("main");
+			return mv;
+		}
+	}
+	
+	@RequestMapping("regist.me")
+	public ModelAndView regist(ModelAndView mv) {
+		mv.setViewName("member/registNewMember");
+		return mv;
+	}
+	
 
 }

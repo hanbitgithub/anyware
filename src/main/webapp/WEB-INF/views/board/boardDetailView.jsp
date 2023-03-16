@@ -188,6 +188,7 @@ textarea {
     				
     				let value = "";
 					for(let i=0; i<list.length; i++){
+    				if('${loginUser.name}' == list[i].name){
 								value += "<tr>"
 								+ "<td>"
 								+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
@@ -195,8 +196,20 @@ textarea {
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
 								+ "<p>" + list[i].replyContent + "</p>"
+								+ "<a style='color:gray;' href='#'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply();'>삭제</a>"
 								+ "</td>"
 								+ "</tr>";
+						}else{
+										value += "<tr>"
+										+ "<td>"
+										+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
+										+ "&nbsp;"
+										+ "<span>" + list[i].createDate + "</span>"
+										+ "<br><br>"
+										+ "<p>" + list[i].replyContent + "</p>"
+										+ "</td>"
+										+ "</tr>";
+						}
 					}
     				
     				$("#replyArea tbody").html(value);
@@ -208,6 +221,7 @@ textarea {
     		})
     	}
 		
+
     </script>
     
            <!-- 신고 모달 -->

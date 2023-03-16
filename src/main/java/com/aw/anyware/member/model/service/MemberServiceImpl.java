@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.dao.MemberDao;
+import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
 
 @Service
@@ -71,25 +72,26 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.allMemberUpdate(sqlSession, m);
 	}
-	/*
+	
 	@Override
-	public int enrollMember(Member m) {
+	public int insertCommute(Commute c) {
 		
-		return mDao.enrollMember(sqlSession, m);
+		return mDao.insertCommute(sqlSession, c);
 	}
 
 	@Override
-	public int outMember(Member m) {
+	public int commuteOut(Commute c) {
 		
-		return 0;
+		return mDao.commuteOut(sqlSession, c);
 	}
 
 	@Override
-	public Member selectDayOff(Member m) {
+	public Commute selectCommute(Commute c) {
 		
-		return mDao.selectDayOff(sqlSession, m);
+		return mDao.selectCommute(sqlSession, c);
 	}
-	*/
+
+	
 	
 
 	

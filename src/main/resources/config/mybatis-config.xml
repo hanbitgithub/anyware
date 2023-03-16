@@ -19,6 +19,7 @@
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.aw.anyware.member.model.vo.Commute" alias="Commute"/>
 		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarVo" alias="CalendarList"/>
 		<typeAlias type="com.aw.anyware.schedule.model.vo.ScheduleModalSave" alias="ScheduleModalSave" />
 		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarModalSave" alias="CalendarModalSave" />
@@ -30,6 +31,7 @@
 		<typeAlias type="com.aw.anyware.project.model.vo.ListChat" alias="ListChat" />
 		<typeAlias type="com.aw.anyware.project.model.vo.PjSchedule" alias="PjSchedule" />
 		<typeAlias type="com.aw.anyware.project.model.vo.Like" alias="Like" />
+		<typeAlias type="com.aw.anyware.groupMap.model.vo.GroupMap" alias="GroupMap"/>
 		
 	</typeAliases>
 	
@@ -42,6 +44,8 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/project-mapper.xml"/>
+		<mapper resource="/mappers/groupMap-mapper.xml"/>
+		<mapper resource="/mappers/chat-mapper.xml"/>
 	</mappers>
 	
 </configuration>
