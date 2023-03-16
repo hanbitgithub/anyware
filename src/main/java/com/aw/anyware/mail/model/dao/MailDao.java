@@ -311,6 +311,11 @@ public class MailDao {
 		return result;
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param atList
+	 * @return 메일쓰기 (첨부파일 upload)
+	 */
 	public int insertMailAttachment(SqlSessionTemplate sqlSession, ArrayList<MailFile> atList) {
 		int result = 0;
 		for(MailFile at : atList) {
@@ -464,6 +469,10 @@ public class MailDao {
 		return sqlSession.delete("mailMapper.deleteTemporaryStatus",emNo);
 	}
 	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int emNo) {
+		return sqlSession.delete("mailMapper.deleteAttachment", emNo);
+	}
+	
 	
 	/**
 	 * @param sqlSession
@@ -501,6 +510,31 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashMailList",memId,rowBounds);
 	}
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 선택한 메일 삭제 
+	 */
+	public int deleteMail(SqlSessionTemplate sqlSession,ArrayList<MailStatus> list) {
+		
+		int result = 0;		
+		for(MailStatus ms : list) {
+			
+			/*if(ms.getReceiver() == null) { // 보낸 메일함
+*/				result += sqlSession.update("mailMapper.deleteMail", ms);	
+			/*} else
+				result += sqlSession.update("mailMapper.deleteReceiveMail", ms);	*/
+			/*} else { // 내게쓴 메일함
+				result += sqlSession.update("mailMapper.deleteSendToMeMail", ms);
+			}*/
+			
+		}
+		return result;
+
+	}
+	
+	
 
 	
 

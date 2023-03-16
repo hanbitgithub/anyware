@@ -183,7 +183,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -224,7 +224,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	

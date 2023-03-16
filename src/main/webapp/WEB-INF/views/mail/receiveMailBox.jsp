@@ -29,8 +29,6 @@
 	
 }
 
-
-
 input[type=checkbox] {
 	transform : scale(1.01);
 
@@ -80,12 +78,25 @@ input[type=checkbox] {
 
                       <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
-                           &nbsp;<input type="checkbox" class="form-check-input">
+                           &nbsp;<input type="checkbox" class="form-check-input" id="chkAll">
                             </a>
                       </li>
-                    	
-            
-                      <li class="nav-item dropdown">
+
+					<script>
+                    $(function(){
+                        $("#chkAll").click(function(){
+                            if($(this).is(":checked")){
+                                $("input[name=check]").attr("checked",true);
+                            }else{
+                                $("input[name=check]").attr("checked",false);
+                            }
+                        })
+                    })
+                    
+                     </script>
+
+
+						<li class="nav-item dropdown">
                           <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            <img src="resources/images/email2.png" width='15px' alt=""> 읽음
                           </a>
@@ -97,10 +108,66 @@ input[type=checkbox] {
                         </li>
                         
                       <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" onclick="deleteMail();">
                             <img src="resources/images/bin.png" width='15px' alt="">
                             삭제</a>
                       </li>
+                      
+                      
+                   <script>
+                 // '삭제'버튼 클릭시 실행하는 함수
+  					function deleteMail(){
+  							 
+  						// 선택한 요소가 있는지 확인
+  						let $checked = $(".emNo:checked");
+  							 
+  						// 선택하지 않은 경우
+  						if( $checked.length < 1){
+  							alert("삭제할 메일을 선택해주세요.");
+  							return false;
+  								 
+  						} else { // 선택한 경우
+  								
+  							 if( confirm("선택한 메일을 삭제하시겠습니까?") ){
+  								 let checkArr = [];
+  								 
+  								 $(".emNo").each(function(){
+  									 
+  									 if($(this).prop("checked")){
+  										 checkArr.push( $(this).val() );
+  									 }
+  								 });
+  								 
+  								const emNoArr = checkArr.toString();
+  								console.log(emNoArr);
+  							
+  								$.ajax({
+  									url : "delete.em",
+  									data : {
+  										receiver: '${loginUser.memberId}',
+  										emType: 1,
+  										emNo : emNoArr
+  									},
+  									success : function(result){
+  										
+  										if(result == 'success'){
+  											alert("성공적으로 메일을 삭제했습니다.");
+  											location.reload();
+  										}
+  									},
+  									error : function(){
+  										alert("메일을 삭제하는데 실패했습니다.\n다시 시도해주세요.");
+  										console.log("실패");
+  									}
+  								 })
+  							   }
+  						    } 
+  						 }
+  					 
+                      
+                      </script>
+
+                      
                       <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/block.png" width='15px' alt="">
@@ -116,7 +183,7 @@ input[type=checkbox] {
                             <img src="resources/images/next.png" width='15px' alt="">
                             전달</a>
                       </li>
-                      <li class="nav-item dropdown">
+                     <!--  <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="resources/images/outbox.png" width='15px' alt="">
                             이동
@@ -124,11 +191,9 @@ input[type=checkbox] {
                         <ul class="dropdown-menu">
                           <li><a class="dropdown-item" href="#">받은메일함</a></li>
                           <li><a class="dropdown-item" href="#">보낸메일함</a></li>
-                          <li><a class="dropdown-item" href="#">임시저장함</a></li>
-                          <li><a class="dropdown-item" href="#">스팸메일함</a></li>
                           <li><a class="dropdown-item" href="#">휴지통</a></li>
                         </ul>
-                      </li>
+                      </li> -->
                       <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="resources/images/filter.png" width='15px' alt="">
@@ -173,7 +238,7 @@ input[type=checkbox] {
                 			<c:choose>
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox"  value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox" name="check" class="emNo" value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -189,7 +254,7 @@ input[type=checkbox] {
 			                			<td width="150">${r.memName }</td>
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
-			                				<c:if test="${not empty r.emfNo}">
+			                				<c:if test="${ r.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                					
 			                				</c:if>
@@ -199,7 +264,7 @@ input[type=checkbox] {
 	                			</c:when>
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox" name="check"  class="emNo" value="${r.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -217,7 +282,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty r.emfNo}">
+			                				<c:if test="${r.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -230,10 +295,7 @@ input[type=checkbox] {
                 	</c:otherwise>
                 </c:choose>
                				
-                
-              
-               
-                
+
             </table>
       
             

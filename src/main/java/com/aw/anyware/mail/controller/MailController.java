@@ -1,6 +1,7 @@
 package com.aw.anyware.mail.controller;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +32,159 @@ public class MailController {
 	
 	@Autowired
 	private MailService mService;
+	
+
+	//---------- 주소록-----------
+	@RequestMapping("personal.ad")
+	public String personalAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session, Model model) {
+		//로그인한 사원번호
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		// 주소록 갯수 조회
+		int listCount = mService.selectAddressListCount(memNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		// 주소록 리스트 조회
+		ArrayList<AddressBook> list = mService.selectAddbookList(pi,memNo);
+		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
+		
+		//System.out.println(glist);
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		model.addAttribute("glist",glist);
+		
+		return "mail/personalAddressbook";
+	}
+	
+	// 주소록 그룹리스트 조회 
+	@ResponseBody
+	@RequestMapping(value="glist.ad", produces="application/json; charset=utf-8")
+	public String ajaxSelectGroupList(int no, HttpSession session) {
+		ArrayList<AddressGroup> list = mService.selectGroupList(no);
+	
+		return new Gson().toJson(list);
+	}
+	
+	//주소록 그룹 추가 
+	@ResponseBody
+	@RequestMapping("insertAddGroup.ad")
+	public String ajaxInsertAddressGroup(AddressGroup ag) {
+		int result = mService.insertAddressGroup(ag);
+	 	return result>0 ? "success": "fail";
+		
+		
+	}
+	
+	//그룹명 수정
+	@ResponseBody
+	@RequestMapping("updateGroup.ad")
+	public String updateGroupName(AddressGroup ag) {
+		int result = mService.updateGroupName(ag);
+		return result>0 ? "success": "fail";
+	}
+	
+	//그룹삭제 
+	@ResponseBody
+	@RequestMapping("deleteGroup.ad")
+	public String deleteGroupName(AddressGroup ag) {
+		int result = mService.deleteGroup(ag);
+		
+		return result >0 ? "success": "fail";
+	}
+
+	//주소록 추가 
+	@RequestMapping("insert.ad")
+	public String InsertAddressBook(AddressBook ab,HttpSession session) {
+		//System.out.println(ab);
+		int result = mService.insertAddressBook(ab);
+		
+		if(result>0) {
+			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			return "redirect:personal.ad";
+			
+		}else {
+			session.setAttribute("alertMsg", "주소록 등록 실패.");
+			return "redirect:personal.ad";
+		}
+		
+	}
+	//주소록 삭제 
+	@ResponseBody
+	@RequestMapping("delete.ad")
+	public String ajaxDeleteAddressBook(String addPerNo) {
+		int result = mService.deleteAddressBook(addPerNo);
+		
+		return result > 0 ? "success" : "fail";
+		
+	}
+	
+	//주소록 정보 조회
+	@ResponseBody
+	@RequestMapping(value="getAddressInfo.ad",  produces="application/json; charset=utf-8")
+	public String ajaxSelectAddressInfo(int addNo) {
+		AddressBook ab = mService.selectAddressInfo(addNo);
+		return new Gson().toJson(ab);
+	}
+	
+	//주소록 수정 
+	@ResponseBody
+	@RequestMapping(value="update.ad")
+	public String ajaxUpdateAddressBook(AddressBook ab) {
+		//System.out.println(ab);
+		int result = mService.updateAddressBook(ab);
+		return result > 0 ? "success" : "fail";
+	}
+
+	// 그룹별 주소록 조회 
+	@RequestMapping("group.ad")
+	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,int groupNo,AddressGroup ag,HttpSession session, Model model){
+		//그룹별 등록된 연락처 수 
+		ag.setGroupNo(groupNo);
+		int listCount = mService.selectGroupAddListCount(ag);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<AddressBook> list = mService.selectGroupAddList(pi,ag);
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		
+		return "mail/personalAddressbook";
+	}
+	
+	//사내 주소록 
+	@RequestMapping("company.ad")
+	public String companyAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
+		//전 사원수 조회
+		int count = mService.selectCompanyListCount();
+		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectCompanyList(pi);
+		
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+		
+		return "mail/companyAddressbook";
+	}
+	
+	/**
+	 * @param currentPage
+	 * @param deptName
+	 * @param model
+	 * @return 부서별 주소록 조회 
+	 */
+	@RequestMapping("dept.ad")
+	public String deptAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,String deptName, Model model) {
+		int count = mService.selectdeptAddBookListCount(deptName);
+		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectdeptAddBookList(pi,deptName);
+
+		model.addAttribute("mlist",mlist);
+		model.addAttribute("pi",pi);
+		
+		return "mail/companyAddressbook";
+	}
+	
+	
+	
 	
 	//메일 메인페이지 (받은메일함)
 	@RequestMapping("receivebox.em")
@@ -193,8 +347,8 @@ public class MailController {
 	//메일 임시저장 
 	@ResponseBody
 	@RequestMapping("save.em")
-	public String ajaxSavetemporaryMail(Mail m) {
-		System.out.println(m);
+	public String ajaxSavetemporaryMail(Mail m,MultipartFile[] upfile,HttpSession session) {
+		//System.out.println(m);
 		String cc = m.getRefEmail();
 		String receivers = m.getReceivers();
 		
@@ -212,6 +366,14 @@ public class MailController {
 		}
 		
 		int result1 = mService.saveTemporaryMail(m);
+		
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//메일상태
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
 
 		
 		ArrayList<MailStatus> list = new ArrayList<>();
@@ -265,11 +427,46 @@ public class MailController {
 					list.add(ms3);
 				}
 	      	}
-	
+
 		}
 		//System.out.println(list);
-		int result2 = mService.saveTemporaryMailStatus(list);
+		 result2 = mService.saveTemporaryMailStatus(list);
 		
+		//-----------------첨부파일 insert--------------
+		
+		for (MultipartFile file : upfile) {
+
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+				// 첨부파일
+				MailFile at = new MailFile();
+
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
+			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 추가된 경우
+				result3 = mService.insertMailAttachment(atList);
+			}
+
+			if (result1 > 0 && result2 > 0 && result3 > 0) {
+				//session.setAttribute("alertMsg", "메일 저장 완료");
+				
+			} else {
+				session.setAttribute("alertMsg", "메일 저장을 실패했습니다.");
+			}
+
+
+		}
+
 		return new Gson().toJson(result1);
 	}
 	/*
@@ -288,7 +485,7 @@ public class MailController {
 	//임시저장 버튼 다시 눌렀을경우 update
 	@ResponseBody
 	@RequestMapping("updateTemp.em")
-	public String ajaxUpdateTemporaryMail(Mail m) {
+	public String ajaxUpdateTemporaryMail(Mail m,MultipartFile[] upfile,HttpSession session) {
 		String cc = m.getRefEmail();
 		String receivers = m.getReceivers();
 		//System.out.println(m);
@@ -309,11 +506,21 @@ public class MailController {
 		}
 		int result1 = mService.updateTemporaryMail(m);
 		
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//메일상태
+		int result3 = 0;
+		// 첨부파일
+		int result5 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
+		
 		ArrayList<MailStatus> list = new ArrayList<>();
 		
 		if(result1>0) {
-			int result2= mService.deleteTemporaryStatus(m.getEmNo());
-			
+			int result2 = mService.deleteTemporaryStatus(m.getEmNo());
+			int result4 = mService.deleteAttachment(m.getEmNo());
+		
 			if(result2>0) {
 				// 메일 상태 insert
 				// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
@@ -370,20 +577,62 @@ public class MailController {
 		}
 		
 		
-		int result3 = mService.saveTemporaryMailStatus(list);
+		 result3 = mService.saveTemporaryMailStatus(list);
+		
+		//-----------------첨부파일 insert--------------
 
-		return result1*result3 >0 ? "success": "fail";
+		for (MultipartFile file : upfile) {
+
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+				// 첨부파일
+				MailFile at = new MailFile();
+
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
+			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 추가된 경우
+				result5 = mService.insertMailAttachment(atList);
+			}
+
+			
+
+		}
+
+
+		return result1*result3*result5 >0 ? "success": "fail";
 	}
 	
+	/**
+	 * @param m
+	 * @return 나에게 쓰기 임시저장
+	 */
 	@ResponseBody
 	@RequestMapping("saveMe.em")
-	public String sendToMeSave(Mail m) {
+	public String sendToMeSave(Mail m,MultipartFile[] upfile,HttpSession session) {
 		 String memName = m.getMemName();
     	 String sender = m.getSender();
 		  m.setReceivers(memName +" "+ sender +"@anyware.com");
 		  
 		  int result1 = mService.saveTemporaryMail(m);
 		 
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//메일상태
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+  
 		  ArrayList<MailStatus> list = new ArrayList<>();
 	    	//메일 상태 insert
 	    	if(result1>0) {
@@ -395,23 +644,102 @@ public class MailController {
 		    	
 		    	list.add(ms);
 	    	}
-	    	int result2 = mService.saveTemporaryMailStatus(list);
-		  
-		  
+	    	 result2 = mService.saveTemporaryMailStatus(list);
+    	
+    	//-----------------첨부파일 insert--------------
+		
+		for (MultipartFile file : upfile) {
+
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+				// 첨부파일
+				MailFile at = new MailFile();
+
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
+			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 추가된 경우
+				result3 = mService.insertMailAttachment(atList);
+			}
+
+			if (result1 > 0 && result2 > 0 && result3 > 0) {
+				//session.setAttribute("alertMsg", "메일 저장 완료");
+				
+			} else {
+				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
+			}
+
+
+		}
+
+
 		  return new Gson().toJson(result1);
 		
 	}
 	
+	/**
+	 * @param m
+	 * @return 나에게쓰기 임시저장 수정 
+	 */
 	@ResponseBody
 	@RequestMapping("updateMeTemp.em")
-	public String sendToMetempUpdate(Mail m) {
+	public String sendToMetempUpdate(Mail m,MultipartFile[] upfile,HttpSession session) {
 		String memName = m.getMemName();
    	 	String sender = m.getSender();
 		  m.setReceivers(memName +" "+ sender +"@anyware.com");
 		  
-		  int result = mService.updateTemporaryMail(m);
+		  int result1 = mService.updateTemporaryMail(m);
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//첨부파일삭제 
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
 		 
-		  return result>0 ? "success": "fail";
+		
+		if(result1>0) {
+			 result2 = mService.deleteAttachment(m.getEmNo());
+			 
+			//-----------------첨부파일 insert--------------
+				
+			for (MultipartFile file : upfile) {
+
+				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+					// 저장 파일 경로!
+					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+					// 첨부파일
+					MailFile at = new MailFile();
+
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(saveFilePath);
+					at.setFileSize((int) file.getSize());
+
+					// at를 attachmentList에 담기
+					atList.add(at);
+				}
+				
+				// 첨부파일 보내기
+				if (atList.size() > 0) { // 첨부파일이 추가된 경우
+					result3 = mService.insertMailAttachment(atList);
+				}
+
+			
+		  }
+		}
+		 
+			return result3 > 0 ? "success": "fail" ;
 	
 	}
 	
@@ -505,14 +833,25 @@ public class MailController {
 	
 	//내게쓰기 insert
     @RequestMapping("sendToMe.em")
-    public String insertSendToMe(Mail m, Model model) {
+    public String insertSendToMe(Mail m,MultipartFile[] upfile ,Model model,HttpSession session) {
     	//메일 테이블 insert
+    	//System.out.println(Arrays.toString(upfile));	
+    	
     	String memName = m.getMemName();
     	String sender = m.getSender();
   
     	m.setReceivers(memName + " " + sender + "@anyware.com");
     	
     	int result1 = mService.insertSendMail(m);
+    	
+    	// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		//메일상태
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
     	
     	model.addAttribute("receivers", memName + " " + sender + "@anyware.com");
     	model.addAttribute("msg","내게 쓴 메일은 [내게쓴메일함]에서 확인할 수 있습니다. ");
@@ -527,11 +866,41 @@ public class MailController {
 	    	
 	    	list.add(ms);
     	}
-    	int result2 = mService.insertMailStatus(list);
+    	  result2 = mService.insertMailStatus(list);
     	
-    	
-    	
-    	return "mail/successSendmail";
+    	//-----------------첨부파일 insert--------------
+		
+		for (MultipartFile file : upfile) {
+
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+				// 첨부파일
+				MailFile at = new MailFile();
+
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
+			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 있는경우 
+				result3 = mService.insertMailAttachment(atList);
+			}
+
+			if (result1 > 0 && result2 > 0 && result3 > 0) {
+				session.setAttribute("alertMsg", "메일 전송 완료");
+			} else {	
+				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
+			}
+
+		}
+    	   return "mail/successSendmail";
     	
     }
 	
@@ -621,203 +990,80 @@ public class MailController {
 			result2 = mService.insertMailStatus(list);
 				
 		 }
-			//-----------------첨부파일 insert--------------
-			
-			for (MultipartFile file : upfile) {
+		//-----------------첨부파일 insert--------------
+		
+		for (MultipartFile file : upfile) {
 
-				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
-	
-					// 저장 파일 경로!
-					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
-	
-					// 첨부파일
-					MailFile at = new MailFile();
-	
-					at.setOriginName(file.getOriginalFilename());
-					at.setChangeName(saveFilePath);
-					at.setFileSize((int) file.getSize());
-	
-					// at를 attachmentList에 담기
-					atList.add(at);
-				}
-				
-				// 첨부파일 보내기
-				if (atList.size() > 0) { // 첨부파일이 추가된 경우
-					result3 = mService.insertMailAttachment(atList);
-				}
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
 
-				if (result1 > 0 && result2 > 0 && result3 > 0) {
-					session.setAttribute("alertIcon", "success");
-					session.setAttribute("alertTitle", "메일 전송 완료");
-					//session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
-				} else {
-					session.setAttribute("alertIcon", "error");
-					session.setAttribute("alertTitle", "메일 전송 실패");
-					session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
-				}
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
 
+				// 첨부파일
+				MailFile at = new MailFile();
 
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
 			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 추가된 경우
+				result3 = mService.insertMailAttachment(atList);
+			}
+
+			if (result1 > 0 && result2 > 0 && result3 > 0) {
+				session.setAttribute("alertIcon", "success");
+				session.setAttribute("alertTitle", "메일 전송 완료");
+				//session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
+			} else {
+				session.setAttribute("alertIcon", "error");
+				session.setAttribute("alertTitle", "메일 전송 실패");
+				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
+			}
+
+		}
 
 	
 		return "mail/successSendmail";
 	}
-	
-	
-	
-	// 주소록
-	@RequestMapping("personal.ad")
-	public String personalAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,HttpSession session, Model model) {
-		//로그인한 사원번호
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		// 주소록 갯수 조회
-		int listCount = mService.selectAddressListCount(memNo);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		
-		// 주소록 리스트 조회
-		ArrayList<AddressBook> list = mService.selectAddbookList(pi,memNo);
-		ArrayList<AddressGroup> glist = mService.selectGroupList(memNo);
-		
-		//System.out.println(glist);
-		model.addAttribute("list",list);
-		model.addAttribute("pi",pi);
-		model.addAttribute("glist",glist);
-		
-		return "mail/personalAddressbook";
-	}
-	
-	// 주소록 그룹리스트 조회 
 	@ResponseBody
-	@RequestMapping(value="glist.ad", produces="application/json; charset=utf-8")
-	public String ajaxSelectGroupList(int no, HttpSession session) {
-		ArrayList<AddressGroup> list = mService.selectGroupList(no);
-	
-		return new Gson().toJson(list);
-	}
-	
-	//주소록 그룹 추가 
-	@ResponseBody
-	@RequestMapping("insertAddGroup.ad")
-	public String ajaxInsertAddressGroup(AddressGroup ag) {
-		int result = mService.insertAddressGroup(ag);
-	 	return result>0 ? "success": "fail";
+	@RequestMapping("delete.em")
+	public String deleteMail(MailStatus ms) {
 		
-		
-	}
+		// 삭제하는 메일 목록을 담을 ArrayList
+		ArrayList<MailStatus> list = new ArrayList<>();
+
+		// 결과값
+		int result = 0;
+
+		String[] mailNo = ms.getEmNo().split(",");
+		for (String m : mailNo) {
+			MailStatus ms2 = new MailStatus();
+			
+			if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+				ms2.setReceiver(null);
+			}
+			ms2.setReceiver(ms.getReceiver());
+			ms2.setEmNo(m);
+			
+			list.add(ms2);
 	
-	//그룹명 수정
-	@ResponseBody
-	@RequestMapping("updateGroup.ad")
-	public String updateGroupName(AddressGroup ag) {
-		int result = mService.updateGroupName(ag);
+		}
+		
+
+	     result = mService.deleteMail(list);
+
+
 		return result>0 ? "success": "fail";
 	}
 	
-	//그룹삭제 
-	@ResponseBody
-	@RequestMapping("deleteGroup.ad")
-	public String deleteGroupName(AddressGroup ag) {
-		int result = mService.deleteGroup(ag);
-		
-		return result >0 ? "success": "fail";
-	}
+	
 
-	//주소록 추가 
-	@RequestMapping("insert.ad")
-	public String InsertAddressBook(AddressBook ab,HttpSession session) {
-		//System.out.println(ab);
-		int result = mService.insertAddressBook(ab);
-		
-		if(result>0) {
-			session.setAttribute("alertMsg", "성공적으로 등록되었습니다.");
-			return "redirect:personal.ad";
-			
-		}else {
-			session.setAttribute("alertMsg", "주소록 등록 실패.");
-			return "redirect:personal.ad";
-		}
-		
-	}
-	//주소록 삭제 
-	@ResponseBody
-	@RequestMapping("delete.ad")
-	public String ajaxDeleteAddressBook(String addPerNo) {
-		int result = mService.deleteAddressBook(addPerNo);
-		
-		return result > 0 ? "success" : "fail";
-		
-	}
 	
-	//주소록 정보 조회
-	@ResponseBody
-	@RequestMapping(value="getAddressInfo.ad",  produces="application/json; charset=utf-8")
-	public String ajaxSelectAddressInfo(int addNo) {
-		AddressBook ab = mService.selectAddressInfo(addNo);
-		return new Gson().toJson(ab);
-	}
-	
-	//주소록 수정 
-	@ResponseBody
-	@RequestMapping(value="update.ad")
-	public String ajaxUpdateAddressBook(AddressBook ab) {
-		//System.out.println(ab);
-		int result = mService.updateAddressBook(ab);
-		return result > 0 ? "success" : "fail";
-	}
-
-	// 그룹별 주소록 조회 
-	@RequestMapping("group.ad")
-	public String selectGroupAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,int groupNo,AddressGroup ag,HttpSession session, Model model){
-		//그룹별 등록된 연락처 수 
-		ag.setGroupNo(groupNo);
-		int listCount = mService.selectGroupAddListCount(ag);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		
-		ArrayList<AddressBook> list = mService.selectGroupAddList(pi,ag);
-		model.addAttribute("list",list);
-		model.addAttribute("pi",pi);
-		
-		return "mail/personalAddressbook";
-	}
-	
-	//사내 주소록 
-	@RequestMapping("company.ad")
-	public String companyAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage, Model model) {
-		//전 사원수 조회
-		int count = mService.selectCompanyListCount();
-		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
-		
-		ArrayList<Member> mlist = mService.selectCompanyList(pi);
-		
-		model.addAttribute("mlist",mlist);
-		model.addAttribute("pi",pi);
-		
-		return "mail/companyAddressbook";
-	}
-	
-	/**
-	 * @param currentPage
-	 * @param deptName
-	 * @param model
-	 * @return 부서별 주소록 조회 
-	 */
-	@RequestMapping("dept.ad")
-	public String deptAddBookList(@RequestParam(value="cpage",defaultValue="1")int currentPage,String deptName, Model model) {
-		int count = mService.selectdeptAddBookListCount(deptName);
-		PageInfo pi = Pagination.getPageInfo(count, currentPage, 5, 10);
-		
-		ArrayList<Member> mlist = mService.selectdeptAddBookList(pi,deptName);
-
-		model.addAttribute("mlist",mlist);
-		model.addAttribute("pi",pi);
-		
-		return "mail/companyAddressbook";
-	}
-	
-	@RequestMapping("test.do")
-	public String test() {
-		return "mail/test";
-	}
 	
 	
 	/*

@@ -73,7 +73,7 @@
 	<result column="spam" property="spam" />
 	<result column="sender" property="sender" />
 	<result column="temp_save" property="tempSave"/>
-
+	<result column="emNoArr" property="emNoArr"/>
 </resultMap>
 
 <resultMap id="mailFileResult" type="MailFile">
@@ -209,7 +209,7 @@
 <!-- 주소록 삭제 -->
 <delete id="deleteAddressBook">
 	delete
-		from tb_addressbook
+	  from tb_addressbook
 	  where add_no in 
 			<foreach item="addPerNo" index="i" collection="array"
 				open="(" separator="," close=")">
@@ -834,6 +834,14 @@ delete
 </delete>
 
 
+<!-- 첨부파일 삭제 -->
+<delete id="deleteAttachment">
+delete 
+  from tb_mail_file
+  where em_no = #{emNo}
+
+</delete>
+
 <!-- 방금임시저장한 메일번호 -->
 <!-- <select id="selectSaveMailGetEmNo" resultType="_int">
 select em_no
@@ -864,6 +872,8 @@ where rownum = 1
 
 </update>
 
+
+<!-- 휴지통 메일 개수 -->
 <select id="selectTrashMailCount" resultType="_int">
 select 
  		count(m. em_no)
@@ -880,6 +890,7 @@ select
 
 </select>
 
+<!-- 휴지통 메일 리스트  -->
 <select id="selectTrashMailList" resultMap="mailResult">
   select 
  		 m. em_no
@@ -912,6 +923,23 @@ select
 
 </select>
 
+<!-- 메일삭제(휴지통) -->
+<update id="deleteMail">
+  update tb_mail_status
+     set trash = 'Y'
+     where em_no = #{emNo}
+     <choose>
+     	<when test="receiver == null">
+     	   and  receiver is null
+     	</when>
+     	<otherwise>
+     		and  receiver = #{receiver}
+     	</otherwise>
+     </choose>
+     
+
+
+</update>
 
 
 </mapper>

@@ -353,8 +353,8 @@
                             삭제</a>
                       </li>
                       
-                      <script>
-                      // '삭제'버튼 클릭시 실행하는 함수
+                     <script>
+                     // '삭제'버튼 클릭시 실행하는 함수
   					function deleteAddress(){
   							 
   						// 선택한 요소가 있는지 확인
@@ -699,58 +699,58 @@
                    </div>
              </div>      
 
-                        
-                        <script>
-                        // 주소록 그룹 '추가'시 실행하는 ajax
-        				function insertAddGroup2(num){
-                  
-        					if ($(".groupName"+num).val().trim() != 0) {
-        						$.ajax({
-        							url : "insertAddGroup.ad",
-        							data : {
-        								memNo : '${loginUser.memberNo}',
-        								groupName : $(".groupName"+num).val()
-        							},
-        							success:function(result) {
-    										console.log(result);
-    										// alert("그룹 추가성공");
-    										
-    										$.ajax({
-    						                    url: 'glist.ad',
-    						                    method: 'GET',
-    						                    data: {no: '${loginUser.memberNo}'},
-    						                    success: function(list) {
-    						                        var selectOptions = '';
-    						                        $.each(list, function() {
-    						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
-    						                        });
-    						                        $('select[name="groupNo"]').html(selectOptions);
-    						                        $(".groupName"+num).val("");
-    						                        selectGroupList();
-    						                    },
-    						                    error: function() {
-    						                        console.log('Error');
-    						                    }
-    						                });
-    										
-    										
-        							},
-        							error: function(){
-        								console.log("주소록 추가 ajax 통신실패");
-        							}
+                    
+                    <script>
+                    // 주소록 그룹 '추가'시 실행하는 ajax
+    				function insertAddGroup2(num){
+              
+    					if ($(".groupName"+num).val().trim() != 0) {
+    						$.ajax({
+    							url : "insertAddGroup.ad",
+    							data : {
+    								memNo : '${loginUser.memberNo}',
+    								groupName : $(".groupName"+num).val()
+    							},
+    							success:function(result) {
+										console.log(result);
+										// alert("그룹 추가성공");
+										
+										$.ajax({
+						                    url: 'glist.ad',
+						                    method: 'GET',
+						                    data: {no: '${loginUser.memberNo}'},
+						                    success: function(list) {
+						                        var selectOptions = '';
+						                        $.each(list, function() {
+						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
+						                        });
+						                        $('select[name="groupNo"]').html(selectOptions);
+						                        $(".groupName"+num).val("");
+						                        selectGroupList();
+						                    },
+						                    error: function() {
+						                        console.log('Error');
+						                    }
+						                });
+										
+										
+    							},
+    							error: function(){
+    								console.log("주소록 추가 ajax 통신실패");
+    							}
 
-        						})
-        					} else {
-        						alert("그룹명을 입력해주세요.");
-        						return false;
-        					}
+    						})
+    					} else {
+    						alert("그룹명을 입력해주세요.");
+    						return false;
+    					}
 
-        				}
+    				}
 
-                        
-                        </script>
+                    
+                    </script>
 
-       
+   
 
 
 

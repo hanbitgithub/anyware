@@ -43,54 +43,23 @@
 /*드래그드롭*/
 .dragAndDropDiv {
 	border: 1px dashed #b1b3b4;
-	width: 1200px;
+	width: 1230px;
 	height: 50px;
 	color: #7c7c7c;
 	text-align: center;
 	vertical-align: middle;
 	padding: 10px 0px 10px 10px;
-	font-size: 20px;
+	font-size: 15px;
 	display: table-cell;
 }
 
-.progressBar {
-	width: 200px;
-	height: 22px;
-	border: 1px solid #ddd;
-	border-radius: 5px;
-	overflow: hidden;
-	display: inline-block;
-	margin: 0px 10px 5px 5px;
-	vertical-align: top;
-}
 
-.progressBar div {
-	height: 100%;
-	color: #fff;
-	text-align: right;
-	line-height: 22px;
-	/* same as #progressBar height if we want text middle aligned */
-	width: 0;
-	background-color: #3b75f5;
-	border-radius: 3px;
-}
-
-.statusbar {
-	border-top: 1px solid #A9CCD1;
-	min-height: 25px;
-	width: 99%;
-	padding: 10px 10px 0px 10px;
-	vertical-align: top;
-}
-
-.statusbar:nth-child(odd) {
-	background: #EBEFF0;
-}
 
 .filename {
 	display: inline-block;
 	vertical-align: top;
-	width: 600px;
+	margin-top: 3px;
+	width: 500px;
 }
 
 .filesize {
@@ -98,8 +67,10 @@
 	vertical-align: top;
 	color: #3d3d3d;
 	width: 100px;
+	margin-top: 3px;
 	margin-left: 10px;
 	margin-right: 5px;
+	font-size: 14px;
 }
 
 .abort {
@@ -107,14 +78,16 @@
 	-moz-border-radius: 4px;
 	-webkit-border-radius: 4px;
 	border-radius: 4px;
+	border: none;
 	display: inline-block;
 	color: #fff;
 	font-family: arial;
 	font-size: 12px;
 	font-weight: normal;
-	padding: 3px 10px;
+	padding: 3px 9px;
 	cursor: pointer;
-	vertical-align: top
+	vertical-align: top;
+	margin-top: 3px;
 }
 </style>
 
@@ -163,8 +136,12 @@
                         <tr>
                             <th height="40px">첨부파일</th>
                             <td>
-                                <div id="fileUpload" class="dragAndDropDiv" onclick="$('#uploadFile').click();">Drag & Drop Files Here or Browse Files</div>
-                                <input type="file" name="fileUpload" id="uploadFile" style="display:none;" multiple/>
+                                <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files</div>
+                                <input type="file" name="upfile" id="upfile" style="display:none;"  onchange="addFile();" multiple/>
+                            	
+								<div class="dropBox file-list">
+									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
+								</div>
                             </td>
                         </tr>
                         
@@ -301,160 +278,113 @@
 						      }
 					  
 				}
+	
+		
+           </script>
+           
+           <script>
+        // ---------------- 첨부 파일 ---------------------
+
+			var fileNo = 0; // 첨부파일 번호
+			var filesArr = new Array(); // 다중 첨부파일 들어갈 파일 배열
+
+			/* 첨부파일 추가 */
+			function addFile() {
+				
+				// 안내문 삭제
+				$(".fileMsg").remove();
+				
+				var maxFileCnt = 5; // 첨부파일 최대 개수
+				var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
+				var remainFileCnt = maxFileCnt - attFileCnt; // 추가로 첨부가능한 개수
+				var files = $('#upfile')[0].files; // 현재 선택된 첨부파일 리스트 FileList
+				
+				// 첨부파일 개수 확인
+				if (files.length > remainFileCnt) {
+					alert("첨부파일은 최대 " + maxFileCnt + "개 까지 첨부 가능합니다.");
+					
+					fileDataTransfer();
+				}else{
+					// 파일 배열에 담기
+					let currFileArr = Array.from(files); // FileList => Array로 변환
+					filesArr = filesArr.concat(currFileArr); // 추가한 fileList에 또 추가할 수 있도록 설정
+					
+					fileDataTransfer();
+				    
+				}
+				renderingFileDiv(); // 추가 및 삭제할 때 마다 호출해서 index번호 초기화
+				
+			}
 			
+			/* 첨부파일 목록 html */
+			function renderingFileDiv(){
 				
-				
-				
-				
-           $(document).ready(function(){
-        	   
+				let htmlData = '';
+				console.log(filesArr);
+				for(let i=0; i<filesArr.length; i++){
+					// i => 삭제할 파일 인덱스 번호
 
-               var objDragAndDrop = $(".dragAndDropDiv");
-               
-               $(document).on("dragenter",".dragAndDropDiv",function(e){
-                   e.stopPropagation();
-                   e.preventDefault();
-                   $(this).css('border', '2px solid #7291f6');
-               });
-               $(document).on("dragover",".dragAndDropDiv",function(e){
-                   e.stopPropagation();
-                   e.preventDefault();
-               });
-               $(document).on("drop",".dragAndDropDiv",function(e){
-                   
-                   $(this).css('border', '1px dashed #7291f6');
-                   e.preventDefault();
-                   var files = e.originalEvent.dataTransfer.files;
-               
-                   handleFileUpload(files,objDragAndDrop);
-               });
-               
-               $(document).on('dragenter', function (e){
-                   e.stopPropagation();
-                   e.preventDefault();
-               });
-               $(document).on('dragover', function (e){
-                 e.stopPropagation();
-                 e.preventDefault();
-                 objDragAndDrop.css('border', '1px dashed #7291f6');
-               });
-               $(document).on('drop', function (e){
-                   e.stopPropagation();
-                   e.preventDefault();
-               });
-               
-              
 
-               $('input[type=file]').on('change', function(e) {
-                   var files = e.originalEvent.target.files;
-                   handleFileUpload(files,objDragAndDrop);
-               });
-               
-               
-               function handleFileUpload(files,obj){ 
+					var fileSize = filesArr[i].size; // 파일 사이즈(단위 :byte)
+                   console.log("fileSize="+fileSize);
 
-                  for (var i = 0; i < files.length; i++) 
-                  {
-                       var fd = new FormData();
-                       fd.append('file', files[i]);
-                
-                       var status = new createStatusbar(obj); //Using this we can set progress.
-                       status.setFileNameSize(files[i].name,files[i].size);
-                       sendFileToServer(fd,status);
-                
-                  }
-               }
-               
-               var rowCount=0;
-               function createStatusbar(obj){
-                       
-                   rowCount++;
-                   var row="odd";
-                   if(rowCount %2 ==0) row ="even";
-                   this.statusbar = $("<div class='statusbar "+row+"'></div>");
-                   this.filename = $("<div class='filename'></div>").appendTo(this.statusbar);
-                   this.size = $("<div class='filesize'></div>").appendTo(this.statusbar);
-                   this.progressBar = $("<div class='progressBar'><div></div></div>").appendTo(this.statusbar);
-                   this.abort = $("<div class='abort'>X</div>").appendTo(this.statusbar);
-                   
-                   obj.after(this.statusbar);
-                
-                   this.setFileNameSize = function(name,size){
-                       var sizeStr="";
-                       var sizeKB = size/1024;
-                       if(parseInt(sizeKB) > 1024){
-                           var sizeMB = sizeKB/1024;
-                           sizeStr = sizeMB.toFixed(2)+" MB";
-                       }else{
-                           sizeStr = sizeKB.toFixed(2)+" KB";
-                       }
-                
-                       this.filename.html(name);
-                       this.size.html(sizeStr);
+                   var sizeStr="";
+                   var sizeKB = fileSize/1024;
+                   if(parseInt(sizeKB) > 1024){
+                       var sizeMB = fileSizeKB/1024;
+                       sizeStr = sizeMB.toFixed(2)+" MB";
+                   }else{
+                       sizeStr = sizeKB.toFixed(2)+" KB";
                    }
-                   
-                   this.setProgress = function(progress){       
-                       var progressBarWidth =progress*this.progressBar.width()/ 100;  
-                       this.progressBar.find('div').animate({ width: progressBarWidth }, 10).html(progress + "% ");
-                       if(parseInt(progress) >= 100)
-                       {
-                         /*  this.abort.hide();*/
-                       }
-                   }
-                   
-                   this.setAbort = function(jqxhr){
-                       var sb = this.statusbar;
-                       this.abort.click(function(){
-                       	sb.remove();
-                       
-                       	/*
-                           jqxhr.abort();
-                           sb.hide();
-                           */
-                       });
-                   }
-               }
-               
-               function sendFileToServer(formData,status)
-               {
-                   var uploadURL = "fileUpload.em"; //Upload URL
-                   var extraData ={}; //Extra Data.
-                   var jqXHR=$.ajax({
-                             xhr: function() {
-                             var xhrobj = $.ajaxSettings.xhr();
-                             if (xhrobj.upload) {
-                                     xhrobj.upload.addEventListener('progress', function(event) {
-                                         var percent = 0;
-                                         var position = event.loaded || event.position;
-                                         var total = event.total;
-                                         if (event.lengthComputable) {
-                                             percent = Math.ceil(position / total * 100);
-                                         }
-                                         //Set progress
-                                         status.setProgress(percent);
-                                     }, false);
-                                 }
-                             return xhrobj;
-                         },
-	                         url: uploadURL,
-	                         type: "POST",
-	                         contentType:false,
-	                         processData: false,
-	                         cache: false,
-	                         data: formData,
-	                         success: function(data){
-	                             status.setProgress(100);
-                  
-                             //$("#status1").append("File upload Done<br>");           
-                         }
-                 }); 
-                
-                   status.setAbort(jqXHR);
-               }
-               
-           });
+            
+					// 목록 추가
+					htmlData += '<div id="file' + i + '" class="filebox">';
+					htmlData += '<span class="name filename">'+ filesArr[i].name + '</span>';
+					htmlData += '<span class="size filesize">'+ sizeStr + '</span>';
+					htmlData += '<button type="button" class="delete abort" onclick="deleteFile('+ i + ');">X</button>';
+					htmlData += '</div>';
+		
+				}
+				
 
-        </script>
+				$(".file-list").html(htmlData); // change가 발생할 때마다 목록 초기화한 뒤 넣어짐
+
+			}
+
+			/* 첨부파일 삭제 */
+			function deleteFile(fileNo) { // 매개변수 : 첨부된 파일 번호(fileNo, i)
+			
+				console.log(fileNo);
+				
+				// class="fileMsg"에 있는 문구 삭제
+				document.querySelector("#file" + fileNo).remove();
+				
+			    filesArr.splice(fileNo, 1);	// 해당되는 index의 파일을 배열에서 제거(1 : 한개만 삭제하겠다 라는 의미)
+				
+			    fileDataTransfer();
+
+			    renderingFileDiv();
+			}
+			
+			
+			/* 첨부파일 담는 배열 */
+			function fileDataTransfer(){
+				
+				const dataTransfer = new DataTransfer();
+
+			    filesArr.forEach(function(file){ 
+			    //남은 배열을 dataTransfer로 처리(Array -> FileList)
+			    	dataTransfer.items.add(file); 
+			    });
+			    
+			    $('#upfile')[0].files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+			}
+							
+		</script>
+           
+           
+           
+           </script>
 			
 
 

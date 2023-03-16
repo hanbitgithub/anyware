@@ -45,14 +45,7 @@
 }
 
 
-.upload-btn {
-            border:none;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: bold;
-}
+
         
 input[type=file] {
             font-size: 100px;

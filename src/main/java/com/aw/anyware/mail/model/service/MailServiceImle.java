@@ -371,6 +371,11 @@ public class MailServiceImle implements MailService {
 	public int deleteTemporaryStatus(int emNo) {
 		return mDao.deleteTemporaryStatus(sqlSession,emNo);
 	}
+	
+	@Override
+	public int deleteAttachment(int emNo) {
+		return mDao.deleteAttachment(sqlSession,emNo);
+	}
 
 	
 	
@@ -390,16 +395,15 @@ public class MailServiceImle implements MailService {
 		return mDao.selectTrashMailList(sqlSession,pi,memId);
 	}
 
+	@Override
+	public int deleteMail(ArrayList<MailStatus> list) {
+		return mDao.deleteMail(sqlSession,list);
+	}
 
 	
-	
+
 
 	
-	/*
-	 * @Override public int selectSaveMailGetEmNo(String memId) { return
-	 * mDao.selectSaveMailGetEmNo(sqlSession,memId); }
-	 */	
-				
 
 		
 	

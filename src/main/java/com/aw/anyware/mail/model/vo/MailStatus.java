@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class MailStatus {	
 
-	private int emNo;
+	private String emNo;
 	private int emType;
 	private String receiverName;
 	private String receiver;
@@ -23,7 +23,9 @@ public class MailStatus {
 	private String trash;
 	private String spam;
 	private String tempSave;
-	
+
+
 	private String sender;
 
+	
 }
