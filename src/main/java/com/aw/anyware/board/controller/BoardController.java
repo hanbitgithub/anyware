@@ -204,11 +204,12 @@ public class BoardController {
 		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
 		return new Gson().toJson(list);
 	}
-	
+	/*
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
 	public String SelectMainBoardList() {
 		ArrayList<Board> list = bService.SelectMainNoticeList();
 		return new Gson().toJson(list);
 	}
+	*/
 }
