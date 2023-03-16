@@ -42,6 +42,7 @@
 		<mapper resource="/mappers/member-mapper.xml"/>
 		<mapper resource="/mappers/schedule-mapper.xml"/>
 		<mapper resource="/mappers/project-mapper.xml"/>
+		<mapper resource="/mappers/chat-mapper.xml"/>
 	</mappers>
 	
 </configuration>
