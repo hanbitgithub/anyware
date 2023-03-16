@@ -21,6 +21,16 @@
 	
 </resultMap>
 
+<resultMap id="commuteResult" type="Commute">
+<id column="commute_no" property="commuteNo"/>
+<result column="name" property="name"/>
+<result column="commute_in" property="commuteIn"/>
+<result column="commute_out" property="commuteOut"/>
+<result column="Commute_date" property="commuteDate"/>
+<result column="member_no" property="memberNo"/>
+<result column="commute_status" property="commuteStatus"/>
+</resultMap>
+
 	<select id="selectListCount" resultType="_int">
 		select
 				count(*)
@@ -141,6 +151,61 @@
   		where member_no = #{memberNo}
   			
   </update>
+  
+  <insert id="insertCommute">
+  	insert
+  			into tb_commute
+  			(
+  				COMMUTE_NO,
+				NAME,
+				COMMUTE_IN,
+				COMMUTE_OUT,
+				COMMUTE_DATE,
+				MEMBER_NO,
+				COMMUTE_STATUS
+  			)
+  			values
+  			(
+  				seq_cmn.nextval,
+  				#{name},
+  				to_char(sysdate, 'HH24:MI'),
+  				null,
+  				TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
+  				#{memberNo},
+  				case when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '지각'
+				 when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '정상근무'
+				 end 
+  				
+  			)
+  </insert>
+  
+  <update id="commuteOut">
+  	update
+  			tb_commute
+  		set commute_out = to_char(sysdate, 'HH24:MI')
+  	where commute_no = (select commute_no
+						        from(select  commute_no
+						                    from tb_commute
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)	
+  </update>
+  
+  <select id="selectCommute" resultMap="commuteResult">
+  	select
+  			commute_in,
+  			commute_out
+  		from tb_commute
+  	   where commute_no = (select commute_no
+						        from(select  commute_no
+						                    from tb_commute
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)
+  		
+  </select>
+  
+  
   
   
 </mapper>

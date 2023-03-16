@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
 
 @Repository
@@ -70,4 +71,22 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectDayOff", m);
 	}
 	*/
+
+	public int insertCommute(SqlSessionTemplate sqlSession, Commute c) {
+		
+		return sqlSession.insert("memberMapper.insertCommute", c);
+		
+	}
+
+	public int commuteOut(SqlSessionTemplate sqlSession, Commute c) {
+		
+		return sqlSession.update("memberMapper.commuteOut", c);
+	}
+
+	public Commute selectCommute(SqlSessionTemplate sqlSession, Commute c) {
+		
+		return sqlSession.selectOne("memberMapper.selectCommute", c);
+	}
+
+	
 }

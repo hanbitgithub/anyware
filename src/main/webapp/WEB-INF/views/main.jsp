@@ -100,31 +100,35 @@
           <img class="profile" src="">
             <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b></p>
           <p> 
-            출근시간 : 09:00 
+            출근시간 : ${ commute.commuteIn } 
             <br>
-            퇴근시간 : -- : --
+            퇴근시간 : ${ commute.commuteOut }
           </p>
           <button class="boutton button1" onclick="enrollAndOut(1);">출근</button>
           <button class="boutton button2" onclick="enrollAndOut(2);">퇴근</button>
         </div>
-        
+       
+       
+        	
         <script>
           function enrollAndOut(num){
-        	const crr = [];  
-        	const cTime = new Date();
-        	const hour = cTime.getHours();
-        	const min = cTime.getMinutes();
-        	const sec = cTime.getSeconds();
-        	
-        	crr[0] = hour;
-        	crr[1] = min;
-        	crr[2] = sec;
         	  
         	  
+        	//const c = new Date();
+        	//const year = c.getFullYear();
+        	//const month = (c.getMonth() + 1);
+        	//const date = c.getDate();
+          	//const hour = c.getHours();
+          	//const min = c.getMinutes();
+          
+          	//const cDate = c.getFullYear() + '-' + (c.getMonth() + 1) + '-' + c.getDate();
+          	//const cTime = c.getHours() + ':' + c.getMinutes();
+          	          	          	          	  
             if(num == 1){
-                    location.href = 'enrollMember.me?memberNo=${loginUser.memberNo}&name=${loginUser.name};
+                    location.href = 'commuteIn.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
+                    				//+'&commuteDate='+cDate + '&commuteIn='+cTime;
             }else{
-                    location.href = 'outMember.me?memberNo='${loginUser.memberNo};
+                    location.href = 'commuteOut.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
             }
           }
         </script>
