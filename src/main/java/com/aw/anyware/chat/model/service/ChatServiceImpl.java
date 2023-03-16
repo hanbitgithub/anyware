@@ -18,14 +18,6 @@ public class ChatServiceImpl implements ChatService {
 	@Autowired
 	private ChatDao cDao;
 
-	@Override
-	public ArrayList<Member> selectDept() {
-		return cDao.selectDept(sqlSession);
-	}
-
-	@Override
-	public ArrayList<Member> selectMember() {
-		return null;
-	}
+	
 
 }
