@@ -68,9 +68,22 @@ input[type=checkbox] {
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 	                    <li class="nav-item">
 	                        <a class="nav-link" aria-current="page" href="#">
-	                           &nbsp;<input type="checkbox" class="form-check-input">
+	                           &nbsp;<input type="checkbox" class="form-check-input" id="chkAll">
 	                            </a>
 	                    </li>
+	                    
+	                    <script>
+	                    $(function(){
+	                        $("#chkAll").click(function(){
+	                            if($(this).is(":checked")){
+	                                $("input[name=check]").attr("checked",true);
+	                            }else{
+	                                $("input[name=check]").attr("checked",false);
+	                            }
+	                        })
+	                    })
+                    
+                       </script>
                     
                         <li class="nav-item dropdown">
                             <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -163,7 +176,7 @@ input[type=checkbox] {
                 			<c:choose>
                 				<c:when test="${i.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;" class="mstatus${i.emNo}"> 
-			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
+			                			<td width="20"><input type="checkbox" name="check" class="emNo"value="${i.emNo }"></td>
 			                			<td width="25">
 			                				<c:choose>
 			                				<c:when test="${i.mailStatus.important eq 'N' }">
@@ -223,7 +236,7 @@ input[type=checkbox] {
 				                					[내게쓴메일함] 
 				                				</c:when>
 				                			</c:choose>
-											&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a>
+											&nbsp; ${i.emTitle }<input type="hidden" name="mailNo" value="${i.emNo }">
 										</td>
 										
 			                			<td width="50">
@@ -237,7 +250,7 @@ input[type=checkbox] {
 	                			</c:when>
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${i.emNo}"> 
-			                			<td width="20"><input type="checkbox" value="${i.emNo }"></td>
+			                			<td width="20"><input type="checkbox" name="check" class="emNo" value="${i.emNo }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.important eq 'N' }">
@@ -275,7 +288,7 @@ input[type=checkbox] {
 			                				</c:otherwise>	
 			                			
 			                			</c:choose>
-			                			<td width="700">
+			                			<td width="700" class="mail-title">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.emType eq '0'}">
 			                					<c:choose>
@@ -297,7 +310,7 @@ input[type=checkbox] {
 			                			</c:choose>
 			                			
 			                			
-			                			&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a></td>
+			                			&nbsp; ${i.emTitle }<input type="hidden" name="mailNo" value="${i.emNo }"></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${i.mailFile.atcount > 0}">
@@ -314,7 +327,27 @@ input[type=checkbox] {
                 </c:choose>
                 
             </table>
-            
+             
+            <form id="mailDetail" action="" method="post">
+			<input type="hidden" name="emType" id="emType">
+			<input type="hidden" name="emNo" id="detailNo">
+			<input type="hidden" name="sender" value="${loginUser.memberId}">
+			<input type="hidden" name="receiver" value="${loginUser.memberId}">
+			</form>
+			
+			<script>
+			// '메일 조회'시 실행하는 함수
+			$(function(){
+				$(".mail-title").click(function(){
+					
+					let emNo = $(this).children('input[type=hidden]').val();
+					console.log(emNo);
+					$("#detailNo").val(emNo);
+					$("#mailDetail").attr("action", 'mail.em').submit();
+
+				})
+			})	
+			</script>
           
               <script>
               
@@ -338,6 +371,7 @@ input[type=checkbox] {
  		   					success:function(result){
  		   						//console.log(result);
  		   					 	$button.attr("src",star);
+ 		   					 	
  		   						 
  		   					},error:function(){
  		   						console.log("좋아요실패");
@@ -356,6 +390,8 @@ input[type=checkbox] {
                  		success:function(result){
                  			//console.log(result);
                  			$button.attr("src",award);
+                 			$(".mstatus"+emNo ).hide();
+                 			
                  		
                  		},error: function(){
                  			console.log("좋아요 취소 실패");

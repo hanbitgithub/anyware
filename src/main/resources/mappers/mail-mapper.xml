@@ -59,6 +59,24 @@
 	
 	<association property="mailStatus" resultMap="mailStatusResult" />
 	<association property="mailFile" resultMap="mailFileResult" />
+	
+</resultMap>
+
+
+<resultMap id="mailResult2" type="Mail">
+	<id column="em_no" property="emNo" />
+	<result column="em_title" property="emTitle"/>
+	<result column="em_content" property="emContent" />
+	<result column="mem_name" property="memName" />
+	<result column="sender" property="sender" />
+	<result column="receiver" property="receivers" />
+	<result column="ref_email" property="refEmail" />
+	<result column="send_date" property="sendDate" />
+	<result column="temp_stock" property="tempStock" />
+	<result column="temp_date" property="tempDate" />
+	<result column="atcount" property="atcount" />
+	<association property="mailStatus" resultMap="mailStatusResult" />
+	<collection property="fileList" resultMap="mailFileResult" />
 </resultMap>
 
 <resultMap id="mailStatusResult" type="MailStatus">	
@@ -942,7 +960,7 @@ select
 
 
 <!-- 메일상세페이지 -->
-<select id="selectMailDetail" resultMap="mailResult">
+<select id="selectMailDetail" resultMap="mailResult2">
 select 
  		 m. em_no
         , sender
@@ -952,8 +970,8 @@ select
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
-	    , m.receiver "receivers"
-        , s.receiver 
+	    , m.receiver
+        , ref_email
 	    , read
 	    , important
 	    , ( select count(emf_no)
@@ -967,7 +985,7 @@ select
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
-    where (sender= #{receiver} and s.receiver is null
+    where (sender= #{sender} and s.receiver is null
 	 or s.receiver = #{receiver})
      and s.em_no = #{emNo}
    

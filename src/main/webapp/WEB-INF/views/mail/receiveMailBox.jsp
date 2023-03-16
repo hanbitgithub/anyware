@@ -511,7 +511,7 @@ input[type=checkbox] {
   									success : function(result){
   										
   										if(result == 'success'){
-  											alert("성공적으로 메일을 삭제했습니다.");
+  											alert("삭제한 메일은 휴지통으로 이동됩니다.");
   											location.reload();
   										}
   									},

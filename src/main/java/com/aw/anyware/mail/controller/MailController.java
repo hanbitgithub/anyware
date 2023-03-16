@@ -774,7 +774,7 @@ public class MailController {
 		}
 		int read = mService.checkReadMail(ms); 
 		
-		System.out.println(read);
+		//System.out.println(read);
 		//ArrayList<MailFile> atList = mService.selectAttachment(emNo); 한번에 
 
 		int emType = ms.getEmType();
@@ -784,19 +784,25 @@ public class MailController {
 		Mail detail = new Mail(); // 메일 상세조회
 		
 		if(read>0) {
-		   switch(emType) {
-		  
+		   
+			switch(emType) {
+		   //보낸메일
+		   case 0 : 
+			   title = "보낸 메일함";
+			   detail = mService.selectMailDetail(ms);
+			   break;
 			//받은메일
 		   case 1 : 
 			   title = "받은 메일함";
 			   detail = mService.selectMailDetail(ms);
 			   break;
-			
+			//중요메일 
+			   
 		   }
 		
 		
 		}
-		
+		//System.out.println(detail);
 		
 		model.addAttribute("title", title);
 		model.addAttribute("m",detail);
