@@ -13,6 +13,7 @@ import com.aw.anyware.mail.model.dao.MailDao;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
@@ -257,6 +258,11 @@ public class MailServiceImle implements MailService {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
 	
+	@Override
+	public int insertMailAttachment(ArrayList<MailFile> atList) {
+		return mDao.insertMailAttachment(sqlSession, atList);
+	}
+
 
 	
 
@@ -347,6 +353,11 @@ public class MailServiceImle implements MailService {
 	public int saveTemporaryMail(Mail m) {
 		return mDao.saveTemporaryMail(sqlSession, m);
 	}
+	@Override
+	public int saveTemporaryMailStatus(ArrayList<MailStatus> list) {
+		return mDao.saveTemporaryMailStatus(sqlSession, list);
+	}
+
 	
 	/**
 	 * 임시저장 메일 수정 
@@ -357,11 +368,42 @@ public class MailServiceImle implements MailService {
 	}
 
 	@Override
-	public int selectSaveMailGetEmNo(String memId) {
-		return mDao.selectSaveMailGetEmNo(sqlSession,memId);
-	}	
-				
-				
+	public int deleteTemporaryStatus(int emNo) {
+		return mDao.deleteTemporaryStatus(sqlSession,emNo);
+	}
+	
+	@Override
+	public int deleteAttachment(int emNo) {
+		return mDao.deleteAttachment(sqlSession,emNo);
+	}
+
+	
+	
+	/**
+	 * 휴지통 메일개수 조회 
+	 */
+	@Override
+	public int selectTrashMailCount(String memId) {
+		return mDao.selectTrashMailCount(sqlSession, memId);
+	}
+
+	/**
+	 * 휴지통 메일 리스트 
+	 */
+	@Override
+	public ArrayList<Mail> selectTrashMailList(PageInfo pi, String memId) {
+		return mDao.selectTrashMailList(sqlSession,pi,memId);
+	}
+
+	@Override
+	public int deleteMail(ArrayList<MailStatus> list) {
+		return mDao.deleteMail(sqlSession,list);
+	}
+
+	
+
+
+	
 
 		
 	

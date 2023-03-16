@@ -200,7 +200,7 @@ public class BoardController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value="rlist.bo", produces="application/json; charset=utf-8")
+	@RequestMapping(value="rlist.bo", produces="aplication/json; charset=utf-8")
 	public String ajaxSelectReplyList(int no) {
 		
 		ArrayList<Reply> list = bService.selectReplyList(no);
@@ -276,8 +276,8 @@ public class BoardController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
-	public String selectMainBoardList() {
-		ArrayList<Board> list = bService.selectMainBoardList();
+	public String ajaxSelectMainBoardList() {
+		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
 		return new Gson().toJson(list);
 	}
 	
@@ -285,10 +285,11 @@ public class BoardController {
 	 * 메인화면 - 공지사항
 	 * @return
 	 */
+	/*
 	@ResponseBody
-	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
-	public String selectMainNoticeList() {
-		ArrayList<Board> list = bService.selectMainNoticeList();
+	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
+	public String SelectMainBoardList() {
+		ArrayList<Board> list = bService.SelectMainNoticeList();
 		return new Gson().toJson(list);
 	}
 	
@@ -360,4 +361,5 @@ public class BoardController {
 		}
 	}
 
+	*/
 }

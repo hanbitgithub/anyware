@@ -56,9 +56,10 @@
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
 	<result column="temp_date" property="tempDate" />
+	<result column="temp_read" property="tempRead" />
 	
 	<association property="mailStatus" resultMap="mailStatusResult" />
-	<collection property="fileList" resultMap="mailFileResult" />
+	<association property="mailFile" resultMap="mailFileResult" />
 </resultMap>
 
 <resultMap id="mailStatusResult" type="MailStatus">	
@@ -71,16 +72,16 @@
 	<result column="trash" property="trash" />
 	<result column="spam" property="spam" />
 	<result column="sender" property="sender" />
-
+	<result column="temp_save" property="tempSave"/>
+	<result column="emNoArr" property="emNoArr"/>
 </resultMap>
 
 <resultMap id="mailFileResult" type="MailFile">
 	<id column="emf_no" property="emfNo" />
 	<result column="origin_name" property="originName" />
 	<result column="change_name" property="changeName" />
-	<result column="file_path" property="filePath" />
 	<result column="file_size" property="fileSize" />
-
+	<result column="atcount" property="atcount"/>
 </resultMap>
 
 
@@ -208,7 +209,7 @@
 <!-- 주소록 삭제 -->
 <delete id="deleteAddressBook">
 	delete
-		from tb_addressbook
+	  from tb_addressbook
 	  where add_no in 
 			<foreach item="addPerNo" index="i" collection="array"
 				open="(" separator="," close=")">
@@ -349,6 +350,7 @@
 	 and s.receiver = #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_save = 'N'
 
 </select>
 <!-- 받은메일 리스트  -->
@@ -366,7 +368,9 @@
 	     , s.important
 	     , trash
 	     , spam
-	     , f.emf_no
+	     , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	 from tb_mail m
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
 	 left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -374,6 +378,7 @@
 	 and s.receiver = #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_save = 'N'
      order by m.em_no desc
 
 </select>
@@ -387,6 +392,7 @@
 	and receiver = #{memId}
 	and trash = 'N'
 	and spam = 'N'
+	and temp_save = 'N'
 
 
 </select>
@@ -466,7 +472,9 @@
 	    , ref_email
 	    , read
 	    , important
-	    , emf_no
+	    ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -527,7 +535,28 @@
 	
 </insert>
 
+<!-- 메일쓰기 첨부파일 insert -->
+<insert id="insertMailAttachment">
+	insert
+  		  into tb_mail_file
+  		  (
+  		  	emf_no
+  		  , em_no
+  		  , origin_name
+  		  , change_name
+  		  , file_size
+  		  )
+  		  values
+  		  (
+  		  	seq_matno.nextval
+  		  , seq_emno.currval
+  		  , #{originName}
+  		  , #{changeName}
+  		  , #{fileSize}
+  		  )
 
+
+</insert>
 
 
 <!-- 중요메일 개수 -->
@@ -562,7 +591,10 @@
         , s.receiver
 	    , read
 	    , important
-	    , emf_no
+	    , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	    , temp_save
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -656,6 +688,7 @@ select
      and s.receiver = #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_save = 'N'
    order by m.em_no desc
 
 
@@ -674,7 +707,9 @@ select
 	    , m.receiver
 	    , read
 	    , important
-	    , emf_no
+	    , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
@@ -683,6 +718,7 @@ select
      and s.receiver = #{memId}
 	 and trash = 'N'
 	 and spam = 'N'
+	 and temp_save = 'N'
    order by m.em_no desc
 
 </select>
@@ -694,10 +730,12 @@ select
  		count(m. em_no)
 	  
 	from tb_mail m
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
-	where sender= #{memId}
+    left join tb_mail_status s on (m.em_no=s.em_no)
+	left join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId} and s.receiver is null
      and temp_stock = 'Y'
    order by m.em_no desc
+
 
 </select>
 
@@ -711,19 +749,27 @@ select
         , mem_name
         , sender
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
-	    , receiver
+	    , m.receiver
         , ref_email
 	    , emf_no
 	    , to_char(temp_date,'YYYY-MM-DD(DY) HH24:MI:SS') "temp_date"
+	    , read
+        , important
+        , trash
+        , temp_save
+        , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
 	from tb_mail m
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
-	where sender= #{memId}
+    left join tb_mail_status s on (m.em_no=s.em_no)
+	left join tb_mail_file f on (m.em_no = f.em_no)
+	where sender= #{memId} and s.receiver is null
      and temp_stock = 'Y'
    order by m.em_no desc
 
-
 </select>
 
+<!--메일 임시저장 -->
 <insert id="saveTemporaryMail"  parameterType="Mail">
   insert 
 	  into tb_mail
@@ -753,7 +799,48 @@ select
 <selectKey keyProperty="emNo" resultType="_int" order="AFTER">
 SELECT SEQ_emno.CURRVAL AS em_no FROM DUAL
 </selectKey>
+
+<!--임시메일 상태저장  -->
 </insert>
+<insert id="saveTemporaryMailStatus">
+	 insert
+	   into tb_mail_status
+	   (
+	    em_no
+	   ,em_type
+	   ,receiver_name
+	   ,receiver
+	   ,temp_save
+	   )
+	   values
+	   (
+	   seq_emno.currval
+	   ,#{emType}
+	   ,#{receiverName}
+	   ,#{receiver}
+	   ,#{tempSave}
+	   
+	   )
+	
+</insert>
+
+<!--임시저장 수정시 상태 삭제  -->
+<delete id="deleteTemporaryStatus">
+delete 
+  from tb_mail_status
+  where temp_save = 'Y'
+   and em_no = #{emNo}
+
+</delete>
+
+
+<!-- 첨부파일 삭제 -->
+<delete id="deleteAttachment">
+delete 
+  from tb_mail_file
+  where em_no = #{emNo}
+
+</delete>
 
 <!-- 방금임시저장한 메일번호 -->
 <!-- <select id="selectSaveMailGetEmNo" resultType="_int">
@@ -766,8 +853,7 @@ from
       order by em_no desc )
 where rownum = 1       
 
- 
- SELECT SEQ_emno.CURRVAL FROM tb_mail
+
 </select> -->
 
 
@@ -783,16 +869,77 @@ where rownum = 1
 	    ,temp_date = SYSDATE
 	 where em_no = #{emNo}   
 	  and temp_stock = 'Y'
-	
 
 </update>
 
 
+<!-- 휴지통 메일 개수 -->
+<select id="selectTrashMailCount" resultType="_int">
+select 
+ 		count(m. em_no)
+        
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where (sender= #{memId} and s.receiver is null
+	 or s.receiver = #{memId})
+	 and trash = 'Y'
+	 and spam = 'N'
+   order by m.em_no desc
 
 
+</select>
+
+<!-- 휴지통 메일 리스트  -->
+<select id="selectTrashMailList" resultMap="mailResult">
+  select 
+ 		 m. em_no
+        , sender
+        , mem_name
+        , em_type
+	    , em_title
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+        , s.receiver
+	    , read
+	    , important
+	    , emf_no
+	    , temp_save
+        , trash
+        ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	where (sender= #{memId} and s.receiver is null
+	 or s.receiver = #{memId})
+	 and trash = 'Y'
+	 and spam = 'N'
+   order by m.em_no desc
 
 
+</select>
 
+<!-- 메일삭제(휴지통) -->
+<update id="deleteMail">
+  update tb_mail_status
+     set trash = 'Y'
+     where em_no = #{emNo}
+     <choose>
+     	<when test="receiver == null">
+     	   and  receiver is null
+     	</when>
+     	<otherwise>
+     		and  receiver = #{receiver}
+     	</otherwise>
+     </choose>
+     
+
+
+</update>
 
 
 </mapper>

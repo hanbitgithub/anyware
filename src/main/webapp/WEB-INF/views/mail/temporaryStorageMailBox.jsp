@@ -26,9 +26,6 @@
 input[type=checkbox] {
 	transform : scale(1.01);
 }
-#search{ 
-	width:250px;
-}
 
 
 /*페이징*/
@@ -124,7 +121,7 @@ input[type=checkbox] {
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" name="keyword" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -156,15 +153,14 @@ input[type=checkbox] {
 			                		<tr style="font-size: 14px;" class="mstatus${s.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25">
-			                				<c:choose>
-			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
-			                				</c:when>
-			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
-			                				</c:otherwise>	
-			                			</c:choose>
-			                			
+											<c:choose>
+				                				<c:when test="${s.mailStatus.important eq 'N' }">
+				                					<img src="resources/images/award.png" width="18" class="star" data-emtype="${s.mailStatus.emType }"data-emNo="${s.emNo }">
+				                				</c:when>
+				                				<c:otherwise>
+				                					<img src="resources/images/star.png" width="18" class="star" data-emtype="${s.mailStatus.emType }"data-emNo="${s.emNo }">
+				                				</c:otherwise>	
+			                				</c:choose>
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
@@ -187,7 +183,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -198,14 +194,15 @@ input[type=checkbox] {
 	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${s.emNo}"> 
 			                			<td width="20"><input type="checkbox" value="${s.emNo }"></td>
 			                			<td width="25">
-			                			<c:choose>
-			                				<c:when test="${s.mailStatus.important eq 'N' }">
-			                					<img src="resources/images/award.png" width="18" class="star" data-emNo="${s.emNo }">
-			                				</c:when>
-			                				<c:otherwise>
-			                					<img src="resources/images/star.png" width="18" class="star" data-emNo="${s.emNo }">
-			                				</c:otherwise>	
-			                			</c:choose>
+			                				<c:choose>
+				                				<c:when test="${s.mailStatus.important eq 'N' }">
+				                					<img src="resources/images/award.png" width="18" class="star" data-emtype="${s.mailStatus.emType }"data-emNo="${s.emNo }">
+				                				</c:when>
+				                				<c:otherwise>
+				                					<img src="resources/images/star.png" width="18" class="star" data-emtype="${s.mailStatus.emType }"data-emNo="${s.emNo }">
+				                				</c:otherwise>	
+			                				</c:choose>
+			                			
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
 			                			<td width="150">
@@ -227,7 +224,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -242,56 +239,59 @@ input[type=checkbox] {
                 
             </table>
             
-            
-            
-            <script>
-           
-      		 $(".star").click(function(){
-				 var star = "resources/images/star.png"
-		         var award = "resources/images/award.png"
-		         var emNo = $(this).data("emno");
-				 var $button = $(this);
-				 
-           	  if($button.attr("src") != star){  
-           			$.ajax({
-		   					url:"like.em",
-		   					data:{
-		   						emNo : emNo,
-		   						emType: 0,
-		   						sender : '${loginUser.memberId}'
-		   					},
-		   					success:function(result){
-		   						//console.log(result);
-		   					 	$button.attr("src",star);
-		   						 
-		   					},error:function(){
-		   						console.log("좋아요실패");
-		   					}
-           			})
+              <script>
+              
+       		 $(".star").click(function(){
+ 				 var star = "resources/images/star.png"
+ 		         var award = "resources/images/award.png"
+ 		         var emNo = $(this).data("emno");
+ 				 var emType = $(this).data("emtype");
+ 				 var $button = $(this);
+ 				 
+            	  if($button.attr("src") != star){  
+            			$.ajax({
+ 		   					url:"like.em",
+ 		   					data:{
+ 		   						emNo : emNo,
+ 		   						emType:emType,				
+ 		   						receiver : '${loginUser.memberId}',
+ 		   					    sender: '${loginUser.memberId}'
+ 		   						
+ 		   					},
+ 		   					success:function(result){
+ 		   						//console.log(result);
+ 		   					 	$button.attr("src",star);
+ 		   						 
+ 		   					},error:function(){
+ 		   						console.log("좋아요실패");
+ 		   					}
+            			})
 
-               }else{
-                	$.ajax({
-                		url:"dislike.em",
-                		data:{
-                			emNo : emNo,
-                			emType: 0,
-                			sender : '${loginUser.memberId}'
-                		},
-                		success:function(result){
-                			//console.log(result);
-                			$button.attr("src",award);
-                		
-                		},error: function(){
-                			console.log("좋아요 취소 실패");
-                		}
-                	}) 
-               	
-               }
+                }else{
+                 	$.ajax({
+                 		url:"dislike.em",
+                 		data:{
+                 			emNo : emNo,
+                 			emType:emType ,
+                 			receiver : '${loginUser.memberId}',
+                 			sender: '${loginUser.memberId}'
+                 		},
+                 		success:function(result){
+                 			//console.log(result);
+                 			$button.attr("src",award);
+                 		
+                 		},error: function(){
+                 			console.log("좋아요 취소 실패");
+                 		}
+                 	}) 
+                	
+                }
 
-           })
-            
+            })
+             
             </script>
             
+ 
             
             <script>
         	 $(".envelope").click(function(){
@@ -305,9 +305,9 @@ input[type=checkbox] {
                 	 $.ajax({
                 		 url: "read.em",
                 		 data: {
-                			 emNo : emNo,
+                			 emNo : emNo,  	
                 			 emType : 0,
-                			 sender : '${loginUser.memberId}'
+                			 sender:'${loginUser.memberId}'
 
                 		 },
                 		 success:function(result){
@@ -327,7 +327,7 @@ input[type=checkbox] {
                 		 url: "unread.em",
                 		 data: {
                 			 emNo : emNo,
-                			 emType : 0,
+                			 emType: 0,
                 			 sender : '${loginUser.memberId}'
 
                 		 },

@@ -41,7 +41,7 @@
         <div id="list-area">
 	        <ul>
 	            <li><a href="detail.pj">LIST</a></li> <br>
-	            <li><a href="">인원 관리</a></li> <br>
+	            <li><a href="participants.pj">인원 관리</a></li> <br>
 	            <li><a href="">일정 관리</a></li> <br>
 	        </ul>
         </div>

@@ -12,6 +12,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.mail.model.vo.AddressBook;
 import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.mail.model.vo.Mail;
+import com.aw.anyware.mail.model.vo.MailFile;
 import com.aw.anyware.mail.model.vo.MailStatus;
 import com.aw.anyware.member.model.vo.Member;
 
@@ -310,6 +311,20 @@ public class MailDao {
 		return result;
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param atList
+	 * @return 메일쓰기 (첨부파일 upload)
+	 */
+	public int insertMailAttachment(SqlSessionTemplate sqlSession, ArrayList<MailFile> atList) {
+		int result = 0;
+		for(MailFile at : atList) {
+			result += sqlSession.insert("mailMapper.insertMailAttachment", at);
+		}
+		return result;
+	}
+	
+	
 	
 	/**
 	 * @param sqlSession
@@ -440,14 +455,33 @@ public class MailDao {
 		   return emNo;
 	}
 	
+	
+	public int saveTemporaryMailStatus(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;
+		for(MailStatus ms : list) {
+			result += sqlSession.insert("mailMapper.saveTemporaryMailStatus", ms);
+		}
+		
+		return result;
+	}
+	
+	public int deleteTemporaryStatus(SqlSessionTemplate sqlSession, int emNo) {
+		return sqlSession.delete("mailMapper.deleteTemporaryStatus",emNo);
+	}
+	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, int emNo) {
+		return sqlSession.delete("mailMapper.deleteAttachment", emNo);
+	}
+	
+	
 	/**
 	 * @param sqlSession
 	 * @param memId
 	 * @return 임시저장 메일번호 
 	 */
-	public int selectSaveMailGetEmNo(SqlSessionTemplate sqlSession, String memId) {
-		return sqlSession.selectOne("mailMapper.selectSaveMailGetEmNo",memId);
-	}
+	//public int selectSaveMailGetEmNo(SqlSessionTemplate sqlSession, String memId) {
+	//	return sqlSession.selectOne("mailMapper.selectSaveMailGetEmNo",memId);
+	//}
 	
 	
 	/**
@@ -459,6 +493,49 @@ public class MailDao {
 		return sqlSession.update("mailMapper.updateTemporaryMail",m);
 	}
 	
+
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 휴지통 메일개수 조회 
+	 */
+	public int selectTrashMailCount(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.selectOne("mailMapper.selectTrashMailCount",memId);
+	}
+	
+	public ArrayList<Mail> selectTrashMailList(SqlSessionTemplate sqlSession,PageInfo pi, String memId) {
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectTrashMailList",memId,rowBounds);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 선택한 메일 삭제 
+	 */
+	public int deleteMail(SqlSessionTemplate sqlSession,ArrayList<MailStatus> list) {
+		
+		int result = 0;		
+		for(MailStatus ms : list) {
+			
+			/*if(ms.getReceiver() == null) { // 보낸 메일함
+*/				result += sqlSession.update("mailMapper.deleteMail", ms);	
+			/*} else
+				result += sqlSession.update("mailMapper.deleteReceiveMail", ms);	*/
+			/*} else { // 내게쓴 메일함
+				result += sqlSession.update("mailMapper.deleteSendToMeMail", ms);
+			}*/
+			
+		}
+		return result;
+
+	}
+	
+	
+
 	
 
 }

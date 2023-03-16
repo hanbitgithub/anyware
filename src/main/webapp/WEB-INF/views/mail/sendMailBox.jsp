@@ -29,9 +29,7 @@
 	text-decoration:none;
 	
 }
-#search{ 
-	width:250px;
-}
+
 input[type=checkbox] {
 	transform : scale(1.01);
 }
@@ -136,7 +134,7 @@ input[type=checkbox] {
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" name="keyword" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -197,8 +195,7 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
-			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${ s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -238,7 +235,7 @@ input[type=checkbox] {
 			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty s.emfNo}">
+			                				<c:if test="${s.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	

@@ -19,7 +19,8 @@ public class MailFile {
 	private String changeName;
 	private String filePath;
 	private String status;
-	private String fileSize;
+	private int fileSize;
+	private int atcount;
 	
 
 }

@@ -25,8 +25,11 @@ public class Mail {
 	private String sendDate;
 	private String tempStock;	
 	private String tempDate;
+	private String tempRead;
 	private String emfNo;
+	
 	
 	private MailStatus mailStatus;
 	private ArrayList<MailFile> fileList;
+	private MailFile mailFile;
 }
