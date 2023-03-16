@@ -156,11 +156,12 @@
                         <ul>
                             <li><a href="">개발팀</a>
                                 <c:forEach var="g" items="${ list }">
+                                <c:if test="${g.deptName eq '개발팀' }">
                                 <ul>
                                 	<a data-toggle="modal" data-target="#myModal">${g.name } ${g.jobName }</a>
                                 </ul>
+                                </c:if>    
                                 </c:forEach>
-                                    
                                         <ul>
                                             <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
                                         

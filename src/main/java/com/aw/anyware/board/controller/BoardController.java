@@ -277,7 +277,7 @@ public class BoardController {
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
 	public String ajaxSelectMainBoardList() {
-		ArrayList<Board> list = bService.ajaxSelectMainBoardList();
+		ArrayList<Board> list = bService.selectMainBoardList();
 		return new Gson().toJson(list);
 	}
 	
@@ -342,7 +342,7 @@ public class BoardController {
 	 * @param session
 	 * @param model
 	 * @return
-	 */
+	 
 	@RequestMapping("delete.rp")
 	public String deleteReport(int no, int bno, HttpSession session, Model model) {
 		
@@ -360,6 +360,6 @@ public class BoardController {
 			
 		}
 	}
-
-	*/
+*/
+	
 }
