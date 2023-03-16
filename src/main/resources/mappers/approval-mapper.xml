@@ -373,5 +373,25 @@
  		 where appro_no = #{approNo}   	
  	</update>
    
+	<!-- ======================================================================================== -->
+	
+	<resultMap id="tplResult" type="ApproTpl">
+		<id column="tpl_No" property="tplNo"/>
+		<result column="tpl_Title" property="tplTitle"/>
+		<result column="tpl_Content" property="tplContent"/>
+	</resultMap>
+   
+	<select id="listTpl" resultMap="tplResult">
+		select tpl_No
+			 , tpl_Title
+		  from tb_app_tpl 	 
+	</select>
+	
+	<select id="selectTpl" resultType="String">
+		select tpl_content
+		  from tb_app_tpl 	 
+		 where tpl_title = #{tplTitle} 
+	</select>
+   
    
 </mapper>

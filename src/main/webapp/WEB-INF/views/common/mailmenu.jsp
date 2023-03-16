@@ -103,6 +103,7 @@ a{
     color:black;
     cursor: pointer;
     margin-right:10px;
+    
 }
 
 #adbook-area input[type=text]{
@@ -115,7 +116,7 @@ a{
     display:none;
 }
 
-.insertAddress, .updateAddress{
+.insertAddress, .update-addBtn{
  	/*  display:flex; */
  	text-align:right;
 } 
@@ -239,9 +240,8 @@ a{
 					<span><input type="text" name="addName" id="addName"></span>
 
 					<div class="update-addBtn">
-						<a id="insertAddIndiv" onclick="insertAddGroup();"><i
-							class="fas fa-check"></i></a> <a onclick="dismissInsertAdd();"><i
-							class="fas fa-times"></i></a>
+						<a id="insertAddIndiv" onclick="insertAddGroup();"><iclass="fas fa-check"></i></a>
+						 <a onclick="dismissInsertAdd();"><iclass="fas fa-times"></i></a>
 					</div>
 				</div>
 			</div>
@@ -251,11 +251,11 @@ a{
 				style="color: rgb(139, 139, 139)">+ 그룹 추가</div>
 
 
-			<script>
+			<!-- <script>
 	            	function postFormSubmit(url){
 	            		$("#post").attr("action", url).submit();
 	            	}
-	        </script>
+	        </script> -->
 
 			<script>
                	 $(function(){

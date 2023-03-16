@@ -73,13 +73,37 @@ public class BoardDao {
 		return sqlSession.insert("boardMapper.insertReply" ,r);
 	}
 
-	public ArrayList<Board> ajaxSelectMainBoardList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
+	public ArrayList<Board> selectMainBoardList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMainBoardList");
 	}
 	
 
-	public ArrayList<Board> SelectMainBoardList(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("boardMapper.ajaxSelectMainBoardList");
+	public ArrayList<Board> selectMainNoticeList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMainNoticeList");
+	}
+
+	
+	public int insertReport(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.insertReport", b);
+	}
+	
+	// 신고조회
+
+	public ArrayList<Board> selectReportList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectReportList", null, rowBounds);
+	}
+
+	public int selectRListCount(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("boardMapper.selectRListCount");
+	}
+
+	public int deleteReport(SqlSessionTemplate sqlSession, int postNo) {
+		return sqlSession.update("boardMapper.deleteReport", postNo);
 	}
 
 

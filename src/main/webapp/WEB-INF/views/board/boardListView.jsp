@@ -101,7 +101,7 @@ table{
                 <tr>
                   <td class="bno">${ b.boardNo }</td>
                   <td>${ b.boardTitle }</td>
-                  <td>${ b.boardWriter }</td>
+                  <td>${ b.name } ${ b.jobName }</td>
                   <td>${ b.createDate }</td>
                   <td>${ b.count }</td>
                 </tr>

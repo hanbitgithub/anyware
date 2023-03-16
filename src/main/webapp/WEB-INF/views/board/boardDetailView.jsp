@@ -6,6 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <style>
 #img {
     width: 30px;
@@ -66,8 +70,8 @@ textarea {
 		    <li>
 		        
 		        <span>
-		            <b>${b.boardWriter }</b> 
-		            대표이사
+		            <b>${ b.name }</b> 
+		            ${ b.jobName }
 		        </span>
 		        <span style="color: rgb(170, 170, 170);">${b.createDate }</span>
 		    </li>
@@ -142,6 +146,7 @@ textarea {
 	</div>
 	
 	 <script>
+		// 댓글작성
     	$(function(){
     		selectReplyList();
     	})
@@ -173,6 +178,7 @@ textarea {
     			
     	}
     	
+		// 댓글리스트조회
     	function selectReplyList(){
     		$.ajax({
     			url:"rlist.bo",
@@ -182,9 +188,9 @@ textarea {
     				
     				let value = "";
 					for(let i=0; i<list.length; i++){
-						value += "<tr>"
+								value += "<tr>"
 								+ "<td>"
-								+ "<span>" + "<b>" + list[i].memberNo + "</b>" + "</span>"
+								+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
 								+ "&nbsp;"
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
@@ -201,9 +207,10 @@ textarea {
     			}
     		})
     	}
+		
     </script>
     
-            <!-- 모달 -->
+           <!-- 신고 모달 -->
         <div class="modal" id="myModal" style="color:rgb(50, 50, 50);">
             <div class="modal-dialog">
                 <div class="modal-content" style="padding:30px 20px;">
@@ -214,9 +221,10 @@ textarea {
                     </div>
         
                     <!-- Modal body -->
-        			<form action="" method="post">
+        			<form id="insertReport" action="insert.rp" method="post">
                     <div class="modal-body" style="color:gray; font-size:13px;">
-                   	<input type="hidden" name="postNo" value="">
+                   	<input type="hidden" name="postNo" value="${b.boardNo }">
+                   	<input type="hidden" name="memberNo" value="${loginUser.memberNo }">
                     
                     	
                         <br>
@@ -239,7 +247,7 @@ textarea {
                         <div style="margin-bottom:10px;">
                             <input type="radio" style="margin-right:10px; vertical-align:middle;" id="report3" name="reportContent" value="불법정보를 포함하고 있습니다.">
                             <label for="report3">
-                                <b style="color:rgb(50, 50, 50)">불법정보를 포함하고 있습니다.</b>
+                               <b style="color:rgb(50, 50, 50)">불법정보를 포함하고 있습니다.</b>
                             </label>
                         </div>
                         <div style="margin-bottom:10px;">
@@ -269,7 +277,7 @@ textarea {
         <script>
             $(function(){
                 $("#myModal button").click(function(){
-                    alert("제출되었습니다.");
+                    alert("신고가 접수되었습니다.");
                 })
             })
         </script>

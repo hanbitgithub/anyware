@@ -10,7 +10,7 @@
 		<result column="public_status"  property="publicStatus" />
 		<result column="create_date"  property="createDate" />
 		<result column="status"  property="status" />
-		<result column="likecount" property="like" />
+		<result column="like" property="like" />
 	</resultMap>
 	
 	<resultMap type="Like" id="likeResult">
@@ -32,18 +32,32 @@
 		     , name owner
 		     , project_title
 		     , public_status
-		     , nvl2(like_date, 1, 0) likecount
+		     , (select count(*) from tb_like l where l.member_no = 1 and project_no = p.project_no) "like"
 		  from tb_project p
-		  join tb_member on (owner_no = member_no)
-		  full outer join (select
-		                           member_no
-		                         , project_no
-		                         , like_date
-		                      from tb_like
-		                     where member_no = 1) using (project_no)
+		  join tb_member m on (owner_no = member_no)
 		 where p.status = 'Y'
 		 order
-		    by project_no desc
+		    by p.project_no desc
 	</select>
+	
+	<insert id="insertProject">
+		insert
+		  into tb_project
+		  (
+		  	project_no
+		  , owner_no
+		  , project_title
+		  , project_content
+		  , public_status
+		  ) 
+		  values
+		  (
+		  	seq_pjno.nextval
+		  , #{owner}
+		  , #{projectTitle}
+		  , #{projectContent}
+		  , #{publicStatus}
+		  )
+	</insert>
 
 </mapper>

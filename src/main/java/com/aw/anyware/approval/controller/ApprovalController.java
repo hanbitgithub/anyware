@@ -9,8 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.aw.anyware.approval.service.ApprovalService;
+import com.aw.anyware.approval.vo.ApproTpl;
 import com.aw.anyware.approval.vo.Approval;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
@@ -180,7 +182,11 @@ public class ApprovalController {
 			
 	
 	@RequestMapping("enroll.appro")
-	public String enrollAppro() {
+	public String enrollAppro(Model model) {
+		
+		ArrayList<ApproTpl> tplList = aService.listTpl();
+		
+		model.addAttribute("tplList", tplList);
 		return "approval/approEnrollForm";
 	}
 	
@@ -226,4 +232,16 @@ public class ApprovalController {
 		}
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "selectTpl.appro", produces="text/html; charset=UTF-8")
+	public String selectTpl(String tplTitle) {
+		
+		String result = aService.selectTpl(tplTitle);
+		
+		return result;
+	}
+	
+	
+	
 }

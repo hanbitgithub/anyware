@@ -207,7 +207,14 @@ input[type=checkbox] {
 			                			<td width="700">
 											<c:choose>
 				                				<c:when test="${i.mailStatus.emType eq '0'}">
-				                				  	[보낸메일함] 
+				                					<c:choose>
+						                				<c:when test="${i.mailStatus.tempSave eq 'Y'}">
+					                						[임시보관함]
+					                					</c:when>
+					                					<c:otherwise>
+					                						[보낸메일함] 
+					                					</c:otherwise>
+				                				  	</c:choose>
 				                				</c:when>
 				                				<c:when test="${i.mailStatus.emType eq '1' or i.mailStatus.emType eq '2' }">
 				                					[받은메일함] 
@@ -221,7 +228,7 @@ input[type=checkbox] {
 										
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty i.emfNo}">
+			                				<c:if test="${i.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
@@ -271,9 +278,16 @@ input[type=checkbox] {
 			                			<td width="700">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.emType eq '0'}">
-			                				  	[보낸메일함] 
+			                					<c:choose>
+						                				<c:when test="${i.mailStatus.tempSave eq 'Y'}">
+					                						[임시보관함]
+					                					</c:when>
+					                					<c:otherwise>
+					                						[보낸메일함] 
+					                					</c:otherwise>
+				                				  	</c:choose>
 			                				</c:when>
-			                				<c:when test="${i.mailStatus.emType eq '1' }">
+			                				<c:when test="${i.mailStatus.emType eq '1' or i.mailStatus.emType eq '2'}">
 			                					[받은메일함] 
 			                				</c:when>
 			                				<c:when test="${i.mailStatus.emType eq '3' }">
@@ -286,7 +300,7 @@ input[type=checkbox] {
 			                			&nbsp;<a href="mail.em?no=${i.emNo}">${i.emTitle }</a></td>
 			                			<td width="50">
 			                				
-			                				<c:if test="${not empty i.emfNo}">
+			                				<c:if test="${i.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
