@@ -1,13 +1,16 @@
 package com.aw.anyware.project.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.dao.ProjectDao;
+import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.Project;
 
 @Service
@@ -33,20 +36,35 @@ public class ProjectServiceImpl implements ProjectService {
 	public int insertProject(Project pj) {
 		return pDao.insertProject(sqlSession, pj);
 	}
+	
+	@Override
+	public int selectSearchListCount(HashMap<String, Object> map) {
+		return pDao.selectSearchListCount(sqlSession, map);
+	}
 
 	@Override
-	public ArrayList<Project> selectSearchProject(String keyword) {
+	public ArrayList<Project> searchProject(HashMap<String, Object> map) {
+		return pDao.searchProject(sqlSession, map);
+	}
+
+	@Override
+	public int insertLike(Like like) {
+		return pDao.insertLike(sqlSession, like);
+	}
+
+	@Override
+	public int deleteLike(Like like) {
+		return pDao.deleteLike(sqlSession, like);
+	}
+	
+	@Override
+	public ArrayList<Member> selectDept() {
+		return pDao.selectDept(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectMember() {
 		return null;
-	}
-
-	@Override
-	public int insertLike() {
-		return 0;
-	}
-
-	@Override
-	public int deleteLike() {
-		return 0;
 	}
 
 }

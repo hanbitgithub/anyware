@@ -10,8 +10,4 @@ import com.aw.anyware.member.model.vo.Member;
 @Repository
 public class ChatDao {
 
-	public ArrayList<Member> selectDept(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("");
-	}
-
 }

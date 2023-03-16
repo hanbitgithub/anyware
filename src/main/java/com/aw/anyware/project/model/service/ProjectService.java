@@ -1,8 +1,11 @@
 package com.aw.anyware.project.model.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.member.model.vo.Member;
+import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.Project;
 
 public interface ProjectService {
@@ -15,13 +18,18 @@ public interface ProjectService {
 	int insertProject(Project pj);
 	
 	// 프로젝트 검색 서비스(select)
-	ArrayList<Project> selectSearchProject(String keyword);
+	int selectSearchListCount(HashMap<String, Object> map);
+	ArrayList<Project> searchProject(HashMap<String, Object> map);
 	
 	// 즐겨찾기 추가 서비스(insert)
-	int insertLike();
+	int insertLike(Like like);
 	
 	// 즐겨찾기 해제 서비스(delete)
-	int deleteLike();
+	int deleteLike(Like like);
+	
+	// 사원 조회용 서비스(select)
+	ArrayList<Member> selectDept();
+	ArrayList<Member> selectMember();
 	
 	
 }
