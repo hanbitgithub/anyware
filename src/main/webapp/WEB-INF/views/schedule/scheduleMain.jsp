@@ -273,10 +273,14 @@
 
     .myCalendars img {position:absolute; right:0px;}
 
+    /* #mm {color:rgb(255, 206, 214);} */
+
 </style>
 
 </head>
 <body>
+
+    <!-- <div id="mm"></div> -->
 
     <!-- 사이드 바  -->
     <jsp:include page="../common/sidebar.jsp"></jsp:include>
@@ -433,6 +437,8 @@
             </script>
         </div>
     </div>
+
+    <!------------------------------------------------ 모달 ------------------------------------------ -->
 
     <!-- 새 일정 추가 모달 -->
     <div class="modal" id="AddScheduleModal">
@@ -851,7 +857,7 @@
 	            url: "addScheduleModal.sc",
 	            data: reqData,
 	            success: function (resData) {
-	                // console.log(resData)
+	                console.log(resData)
 	
 	                if (resData == "success") {
 	                    alert("새 일정을 등록했습니다.")  ;
@@ -885,51 +891,51 @@
 
         // 내 캘린더 추가 ajax
         function AddCalendarModal() {
-        // console.log("내 캘린더 추가")
-        const myCalendar = document.querySelector("#myCalendar").value
-        const scColor = $('input[name=scColor]:checked').val();
-        
-        if (myCalendar == undefined || myCalendar == null || myCalendar == '') {
-            alert("내 캘린더 이름을 입력해주세요.")
-            return false;
-        }
-
-        if (scColor == undefined || scColor == null || scColor == '') {
-            alert("내 캘린더 색상을 선택해 주세요.")
-            return false;
-        }
-        
-        const reqData = {
-            scColor: scColor,
-            myCalendar: myCalendar
-        }
-
-        // console.log(reqData);
-
-        $.ajax({
-            url: "addCalendarModal.sc",
-            data: reqData,
-            success: function (resData) {
-                // console.log(resData)
-                if (resData == "success") {
-                    calendarList();
-                    $("#AddCalendarModal input").val("");
-                    $("#AddCalendarModal input[type=checkbox]").each(function(){
-                        $(this).prop("checked", false);
-                        $(".ck").removeClass("ck");
-                    })
-					alert("내 캘린더를 추가했습니다.");
-                } else {
-                    alert("내 캘린더 추가를 실패했습니다.");
-                }
-            },
-            error: function () {
-                 console.log("내 캘린더 추가 실패");
+            // console.log("내 캘린더 추가")
+            const myCalendar = document.querySelector("#myCalendar").value
+            const scColor = $('input[name=scColor]:checked').val();
+            
+            if (myCalendar == undefined || myCalendar == null || myCalendar == '') {
+                alert("내 캘린더 이름을 입력해주세요.")
+                return false;
             }
 
-        })
+            if (scColor == undefined || scColor == null || scColor == '') {
+                alert("내 캘린더 색상을 선택해 주세요.")
+                return false;
+            }
+            
+            const reqData = {
+                scColor: scColor,
+                myCalendar: myCalendar
+            }
 
-    }
+            // console.log(reqData);
+
+            $.ajax({
+                url: "addCalendarModal.sc",
+                data: reqData,
+                success: function (resData) {
+                    // console.log(resData)
+                    if (resData == "success") {
+                        calendarList();
+                        $("#AddCalendarModal input").val("");
+                        $("#AddCalendarModal input[type=checkbox]").each(function(){
+                            $(this).prop("checked", false);
+                            $(".ck").removeClass("ck");
+                        })
+                        alert("내 캘린더를 추가했습니다.");
+                    } else {
+                        alert("내 캘린더 추가를 실패했습니다.");
+                    }
+                },
+                error: function () {
+                    console.log("내 캘린더 추가 실패");
+                }
+
+            })
+
+        }
 
         // 내 캘린더 목록 / 일정 추가 카테고리 ajax
         function calendarList() {
@@ -950,14 +956,17 @@
 
                         for (let i = 0; i<resData.length; i++) {
                             console.log(resData[i].scColor)
-                            html += '<div class="cName"><input type="checkbox" name="scColor" class="scColor ' + resData[i].calendarNo + '" style="background:' + resData[i].scColor + '">'
-                                + '&nbsp;&nbsp;&nbsp;' + resData[i].myCalendar + '</div>'
-                                + '<button type="button" style="background-color:transparent; border:none;" data-toggle="modal" data-target="#myCalendarModifyModal" onclick="calendarModifyModal('+resData[i].calendarNo+');"><img src="resources/images/modification.png" style="width:17px; height:17px;"></button><br>';
-                            html2 += '<option value="' + resData[i].scColor + '">' + resData[i].myCalendar + '</option>'
+                            html += '<div class="cName"><input type="checkbox" name="scColor" class="scColor" style="background:' + resData[i].scColor + '">'
+                                 + '&nbsp;&nbsp;&nbsp;' + resData[i].myCalendar + '</div>'
+                                 + '<button type="button" style="background-color:transparent; border:none;" data-toggle="modal" data-target="#myCalendarModifyModal" onclick="calendarModifyModal();"><img src="resources/images/modification.png" style="width:17px; height:17px;"></button><br>';
+                            html2 += '<option value="' + resData[i].calendarNo + '">' + resData[i].myCalendar + '</option>'
                             }
+
+                        
 
                         $("#myCalendars").append(html);
                         $("#calendarNo").html(html2);
+                        
 
                     }
                 },
@@ -968,11 +977,7 @@
 
         }
 
-        
-
-
-        
-
+    
 
 
 
