@@ -43,15 +43,15 @@
 	<!-- 세부 내용 -->
 	
       <div class="content">
-          <b style="font-size: 18px;">받은메일함</b>
-          <br><br>
+          <b style="font-size: 18px;">${title }</b>
+          <br><br> 
 
             <div id="send-area">
                 <div id="btn-area">
                     <a href=""><img src="resources/images/send (1).png"width="20"> 답장</a>
                     <a href=""><img src="resources/images/next.png"width="20"> 전달</a>
                     <a href=""><img src="resources/images/delete.png"width="20"> 휴지통</a>
-                    <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a>
+              <!--       <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a> -->
                     <a href=""><img src="resources/images/back.png"width="20"> 목록으로</a>
                     
                 </div>
@@ -59,8 +59,16 @@
                 <div>
                     <table id="send"style="font-size: 15px;" >
                         <tr>
-                            <th colspan="2" height="40px" style="font-size: large;"><span>⭐</span> 
-                            견적서 요청드립니다. </th>
+                            <th colspan="2" height="40px" style="font-size: large;">
+                            <c:choose>
+                				<c:when test="${m.mailStatus.important eq 'N' }">
+                					<img src="resources/images/award.png" width="20" class="star" data-emNo="${r.emNo }">    					
+                				</c:when>
+                				<c:otherwise>
+                					<img src="resources/images/star.png" width="20" class="star" data-emNo="${r.emNo }">
+                				</c:otherwise>	
+                			</c:choose>
+                            ${m.emTitle} </th>
                             
                         </tr>
                         <tr>
@@ -74,13 +82,13 @@
                             <th  width="120" height="40px">받는사람</th>
                             <td>김강순(kim@naver.com)</td>
                         </tr>
-                    <!--<c:if test="참조가 있을때만 보임">
+                        <c:if test="참조가 있을때만 보임">
                          <tr>
                             <th  width="120" height="35px">참조</th>
                             <td>김강순(kim@naver.com)</td>
                         </tr>
                         </c:if>
-						--> 
+						
                         <tr>
                             <th height="40px">첨부파일</th>
                             <td>

@@ -534,6 +534,37 @@ public class MailDao {
 
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 체크한 메일 읽음표시 
+	 */
+	public int checkReadMail(SqlSessionTemplate sqlSession,ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.update("mailMapper.checkReadMail", ms);
+		}
+		
+		return result;
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 체크한 메일 안읽음으로표시 
+	 */
+	public int checkUnReadMail(SqlSessionTemplate sqlSession,ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.update("mailMapper.uncheckReadMail", ms);
+		}
+		
+		return result;
+	}
+	
+	public Mail selectMailDetail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.selectMailDetail",ms);
+	}
 	
 
 	

@@ -33,6 +33,7 @@ public class MailController {
 	@Autowired
 	private MailService mService;
 	
+	
 
 	//---------- 주소록-----------
 	@RequestMapping("personal.ad")
@@ -182,7 +183,6 @@ public class MailController {
 		
 		return "mail/companyAddressbook";
 	}
-	
 	
 	
 	
@@ -746,7 +746,7 @@ public class MailController {
 	//휴지통 조회 
 	@RequestMapping("trash.em")
 	public String trashMailList(@RequestParam(value="cpage",defaultValue="1") int currentPage, HttpSession session, Model model) {
-		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		
 		String memId = ((Member)session.getAttribute("loginUser")).getMemberId();
 
 		//휴지통 갯수조회
@@ -767,7 +767,40 @@ public class MailController {
 	
 	//메일 상세페이지 
 	@RequestMapping("mail.em")
-	public String selectMailDetail() {
+	public String selectMailDetail(MailStatus ms,HttpSession session,Model model) {
+		// 상세페이지로 들어가는 순간 읽음으로표시
+		if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+			ms.setReceiver(null);
+		}
+		int read = mService.checkReadMail(ms); 
+		
+		System.out.println(read);
+		//ArrayList<MailFile> atList = mService.selectAttachment(emNo); 한번에 
+
+		int emType = ms.getEmType();
+		
+		
+		String title = "";
+		Mail detail = new Mail(); // 메일 상세조회
+		
+		if(read>0) {
+		   switch(emType) {
+		  
+			//받은메일
+		   case 1 : 
+			   title = "받은 메일함";
+			   detail = mService.selectMailDetail(ms);
+			   break;
+			
+		   }
+		
+		
+		}
+		
+		
+		model.addAttribute("title", title);
+		model.addAttribute("m",detail);
+		
 		return "mail/mailDetailView";
 	}
 	
@@ -1053,28 +1086,73 @@ public class MailController {
 			list.add(ms2);
 	
 		}
-		
-
 	     result = mService.deleteMail(list);
 
 
 		return result>0 ? "success": "fail";
 	}
 	
+	@ResponseBody
+	@RequestMapping("checkRead.em")
+	public String checkReadMail(MailStatus ms) {
+		
+		 //System.out.println(ms);
+		// 읽음표시하는 메일 목록을 담을 ArrayList
+			ArrayList<MailStatus> list = new ArrayList<>();
+
+			// 결과값
+			int result = 0;
+			String[] mailNo = ms.getEmNo().split(",");
+		
+			for (String m : mailNo) {
+				MailStatus ms2 = new MailStatus();
+				
+				if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+					ms2.setReceiver(null);
+				}
+				ms2.setReceiver(ms.getReceiver());
+				ms2.setEmNo(m);
+				
+				list.add(ms2);
+			
+			}
+			result = mService.checkReadMail(list);
+			
+			return result>0 ? "success": "fail";
+		
+	}
+	@ResponseBody
+	@RequestMapping("checkUnRead.em")
+	public String checkUnReadMail(MailStatus ms) {
+		
+		 	//System.out.println(ms);
+		// 읽음표시하는 메일 목록을 담을 ArrayList
+			ArrayList<MailStatus> list = new ArrayList<>();
+
+			// 결과값
+			int result = 0;
+			String[] mailNo = ms.getEmNo().split(",");
+		
+			for (String m : mailNo) {
+				MailStatus ms2 = new MailStatus();
+				
+				if(ms.getEmType() ==0) { // 보낸메일일 경우 받는이 null
+					ms2.setReceiver(null);
+				}
+				ms2.setReceiver(ms.getReceiver());
+				ms2.setEmNo(m);
+				
+				list.add(ms2);
+			
+			}
+			result = mService.checkUnReadMail(list);
+			
+			return result>0 ? "success": "fail";
+		
+	}
+	
 	
 
-	
-	
-	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @RequestMapping(value = "publicMailAddress.ad", produces =
-	 * "application/json; charset=UTF-8") public String ajaxSelectPublicAddresss() {
-	 * ArrayList<Member> pAdd = mService.selectPublicAddress();
-	 * System.out.println(pAdd); return new Gson().toJson(pAdd); }
-	 */
-	
 	
 	
 

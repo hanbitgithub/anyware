@@ -395,9 +395,36 @@ public class MailServiceImle implements MailService {
 		return mDao.selectTrashMailList(sqlSession,pi,memId);
 	}
 
+	/**
+	 * 체크 메일 삭제 
+	 */
 	@Override
 	public int deleteMail(ArrayList<MailStatus> list) {
 		return mDao.deleteMail(sqlSession,list);
+	}
+
+	/**
+	 * 체크메일 읽음표시
+	 */
+	@Override
+	public int checkReadMail(ArrayList<MailStatus> list) {
+		return mDao.checkReadMail(sqlSession,list);
+	}
+
+	/**
+	 * 체크메일 안읽음 표시 
+	 */
+	@Override
+	public int checkUnReadMail(ArrayList<MailStatus> list) {
+		return mDao.checkUnReadMail(sqlSession,list);
+	}
+
+	/**
+	 * 메일 상세페이지 조회 
+	 */
+	@Override
+	public Mail selectMailDetail(MailStatus ms) {
+		return mDao.selectMailDetail(sqlSession,ms);
 	}
 
 	

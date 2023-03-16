@@ -202,10 +202,10 @@ a{
                    		    	if(count != 0 ){
                    		    		value = count;
                    		    	}else{
-                   		    		value = 0;
+                   		    		$(".count").html("0");
+                   		    		
                    		    	}
                    		            
-                   		         
                    		          $(".count").html(value);
                    		       
                    		    	
