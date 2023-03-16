@@ -19,13 +19,7 @@
 		<typeAlias type="com.aw.anyware.mail.model.vo.AddressGroup" alias="AddressGroup"/>
 		<typeAlias type="com.aw.anyware.board.model.vo.Board" alias="Board"/>
 		<typeAlias type="com.aw.anyware.member.model.vo.Member" alias="Member"/>
-<<<<<<< Updated upstream
 		<typeAlias type="com.aw.anyware.member.model.vo.Commute" alias="Commute"/>
-		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarVo" alias="CalendarList"/>
-		<typeAlias type="com.aw.anyware.schedule.model.vo.ScheduleModalSave" alias="ScheduleModalSave" />
-		<typeAlias type="com.aw.anyware.schedule.model.vo.CalendarModalSave" alias="CalendarModalSave" />
-=======
->>>>>>> Stashed changes
 		<typeAlias type="com.aw.anyware.board.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.aw.anyware.project.model.vo.Project" alias="Project" />
 		<typeAlias type="com.aw.anyware.project.model.vo.ProjectMember" alias="ProjectMember" />
@@ -34,13 +28,10 @@
 		<typeAlias type="com.aw.anyware.project.model.vo.ListChat" alias="ListChat" />
 		<typeAlias type="com.aw.anyware.project.model.vo.PjSchedule" alias="PjSchedule" />
 		<typeAlias type="com.aw.anyware.project.model.vo.Like" alias="Like" />
-<<<<<<< Updated upstream
 		<typeAlias type="com.aw.anyware.groupMap.model.vo.GroupMap" alias="GroupMap"/>
-		
-=======
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Calendar" alias="Calendar" />
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Schedule" alias="Schedule" />
->>>>>>> Stashed changes
+
 	</typeAliases>
 	
 	
