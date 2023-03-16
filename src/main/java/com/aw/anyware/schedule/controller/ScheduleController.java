@@ -1,94 +1,60 @@
 package com.aw.anyware.schedule.controller;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.aw.anyware.mail.model.vo.AddressGroup;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.schedule.model.service.ScheduleService;
-import com.aw.anyware.schedule.model.vo.CalendarModalSave;
-import com.aw.anyware.schedule.model.vo.CalendarVo;
-import com.aw.anyware.schedule.model.vo.ScheduleModalSave;
+import com.aw.anyware.schedule.model.vo.Calendar;
+import com.aw.anyware.schedule.model.vo.Schedule;
 
 @Controller
 public class ScheduleController {
 	
-	@Autowired
-	private ScheduleService scheduleService;
+	@Autowired(required=true)
+	private ScheduleService scService;
 	
-	// 메인 화면
-	@RequestMapping("main.sc")
-	public String main(HttpSession session, Model model) {
+	// 일정 메인페이지
+	@RequestMapping("schedule.sc")
+	public String scheduleMain(HttpSession session) {
+		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		return "schedule/scheduleMain";
 	}
 	
-	// 검색리스트 화면
-	@RequestMapping("searchList.sc")
-	public String scheduleSearchList() {
-		return "schedule/scheduleSearchList";
-	}
-	
-	//--------------------------------------------------------------------------------
-	
-	// 카테고리 조회
-	//@RequestMapping("")
-	
-	
-	
-	
 	// 새 일정 추가
-	@RequestMapping("scheduleModalSave.sc")
 	@ResponseBody
-	public int scheduleModalSave(ScheduleModalSave scheduleModalSave) {
-		return scheduleService.scheduleModalSave(scheduleModalSave);
+	@RequestMapping("addScheduleModal.sc")
+	public String ajaxAddScheduleModal(Schedule s, HttpSession session) {
+		s.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = scService.addScheduleModal(s);
+		return result > 0 ? "success" : "fail";
 	}
-	
-	// 새 일정 조회
-//	@RequestMapping("scheduleDetail.sc")
-//	@ResponseBody
-//	public ArrayList<ScheduleModalSave>
 	
 	// 내 캘린더 추가
-//	@RequestMapping("calendarModalSave.sc")
-//	@ResponseBody
-//	public int calendarModalSave(CalendarModalSave calendarModalSave) {
-//		return scheduleService.calendarModalSave(calendarModalSave);
-//	}
+	@ResponseBody
+	@RequestMapping("addCalendarModal.sc")
+	public String ajaxAddScheduleModal(Calendar c, HttpSession session) {
+		c.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = scService.addCalendarModal(c);
+		return result > 0 ? "success" : "fail";
+	}
 	
 	// 내 캘린더 목록
 	@RequestMapping("calendarList.sc")
 	@ResponseBody
-	public String calendarList(HttpSession session) {
+	public ArrayList<Calendar> calendarList(HttpSession session) {
 		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		List<CalendarVo> list = scheduleService.calendarList(memberNo);
-		return "schedule/scheduleMain";
-		//return scheduleService.calendarList(memberNo);
+		ArrayList<Calendar> list = scService.calendarList(memberNo);
+		return list;
 	}
 	
-	// 내 캘린더 수정 화면
-	@RequestMapping("selectCalendar.sc")
-	@ResponseBody
-	public CalendarVo calendarModify(CalendarVo calendarVo ,HttpSession session) {
-		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		calendarVo.setMemberNo(memberNo);
-		return scheduleService.calendarModify(calendarVo);
-	}
-
-	// 내 캘린더 수정
-	@RequestMapping("updateCalendar.sc")
-	@ResponseBody
-	public int updateCalendar(CalendarVo calendarVo ,HttpSession session) {
-		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
-		calendarVo.setMemberNo(memberNo);
-		return scheduleService.updateCalendar(calendarVo);
-	}
+	
+	
 	
 }
