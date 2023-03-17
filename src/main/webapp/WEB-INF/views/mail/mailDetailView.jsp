@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>  
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,18 +21,23 @@
  text-decoration: none;
 }
 
-#send textarea{
-    width: 1200px;
-    border: 1px solid rgb(202, 202, 201);
-    border-radius: 5px;
-    padding: 20px 30px;
-}
 
 #send-area{
     margin-left: 50px;
 }
+.emContent{
+	width: 1200px;
+	/* height: 500px; */
+    /* border: 1px solid rgb(202, 202, 201);
+    border-radius: 5px; */
+    padding: 20px 30px;
+}
 
+/* #fileArea{
+ 	background-color :rgb(239, 239, 239);
+}
 
+ */
 </style>
 </head>
 <body>
@@ -43,15 +50,15 @@
 	<!-- 세부 내용 -->
 	
       <div class="content">
-          <b style="font-size: 18px;">받은메일함</b>
-          <br><br>
+          <b style="font-size: 18px;">${title }</b>
+          <br><br> 
 
             <div id="send-area">
                 <div id="btn-area">
                     <a href=""><img src="resources/images/send (1).png"width="20"> 답장</a>
                     <a href=""><img src="resources/images/next.png"width="20"> 전달</a>
                     <a href=""><img src="resources/images/delete.png"width="20"> 휴지통</a>
-                    <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a>
+              <!--       <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a> -->
                     <a href=""><img src="resources/images/back.png"width="20"> 목록으로</a>
                     
                 </div>
@@ -59,42 +66,91 @@
                 <div>
                     <table id="send"style="font-size: 15px;" >
                         <tr>
-                            <th colspan="2" height="40px" style="font-size: large;"><span>⭐</span> 
-                            견적서 요청드립니다. </th>
+                            <th colspan="2" height="40px" style="font-size: large;">
+                            <c:choose>
+                				<c:when test="${m.mailStatus.important eq 'N' }">
+                					<img src="resources/images/award.png" width="20" class="star" data-emNo="${r.emNo }">    					
+                				</c:when>
+                				<c:otherwise>
+                					<img src="resources/images/star.png" width="20" class="star" data-emNo="${r.emNo }">
+                				</c:otherwise>	
+                			</c:choose>
+                            &nbsp;${m.emTitle} </th>
                             
                         </tr>
                         <tr>
-                            <td colspan="2"  height="30px" style="font-size: 13px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2023-02-23 14:12:30</td>
+                            <td colspan="2"  height="30px" style="font-size: 13px;">
+                            ${m.sendDate }</td>
                         </tr>
                         <tr>
-                            <th width="120" height="40px">보낸사람</th>
-                            <td>유한빛(hanbit@naver.com)</td>
+                            <th width="120" height="35px">보낸사람</th>
+                            <td>
+                            <c:choose>
+	                            <c:when test="${m.sender eq loginUser.memberId }">
+	                            	${m.memName }
+	                            </c:when>
+	                            <c:otherwise>
+	                           		 ${m.memName} ${m.sender }@anyware.com </td>
+	                            </c:otherwise>
+                            </c:choose>
                         </tr>
                         <tr>
-                            <th  width="120" height="40px">받는사람</th>
-                            <td>김강순(kim@naver.com)</td>
+                            <th  width="120" height="35px">받는사람</th>
+                            <td> ${m.receivers}</td>
                         </tr>
-                    <!--<c:if test="참조가 있을때만 보임">
+                        <c:if test="${not empty m.refEmail  }">
                          <tr>
                             <th  width="120" height="35px">참조</th>
-                            <td>김강순(kim@naver.com)</td>
+                            <td>${m.refEmail }</td>
                         </tr>
                         </c:if>
-						--> 
+						
                         <tr>
-                            <th height="40px">첨부파일</th>
+                           <%--  <th height="40px">보낸날짜</th>
                             <td>
-                                첨부파일이 없습니다. 
-                            </td>
+                            	
+                            	<c:choose>
+	                                <c:when test="${m.mailFile.atcount >0 }">
+	                                	<c:forEach var="a" items="${m.fileList}">
+	                                		 <a href="${a.changeName }" download="${a.originName }">${a.originName}</a>
+	                                	</c:forEach>
+	                                </c:when>
+	                                <c:otherwise>
+	                                첨부파일이 없습니다.
+	                                </c:otherwise>
+                                </c:choose>
+                            </td> --%>
                           
                         </tr>
                         
                         <tr>
                             <td colspan="2">
-                                <hr>
-                                <textarea rows="20">안녕하세요.  김강순대리님 ㅡㅡ
-견적서 빨랑주세요 
-                                </textarea>
+                            
+                            <hr>
+                          		
+                            	<c:choose>    
+	                                <c:when test="${m.atcount>0 }">	           		 
+	                                	첨부파일 : ${fn:length(m.fileList) }개 
+	                                	<br>
+	                                	<div id="fileArea">
+	                                	<c:forEach var="a" items="${m.fileList }">
+	                                		<img src="${a.changeName}" width="20px"> &nbsp;<a href="${a.changeName }" download="${a.originName}">${a.originName} </a>&nbsp;&nbsp;
+	                                		<c:set var="fileSizeInKB" value="${a.fileSize div 1024}"/>
+	                                		 (<fmt:formatNumber value="${a.fileSize div 1024}" pattern="#,##0.00"/> KB)
+
+	                                		<br>
+	                                	</c:forEach>
+	                                	</div>
+	                                	<hr>
+	                                </c:when>
+	                                
+	                                <c:otherwise>
+	                               <!--  첨부파일이 없습니다. -->
+	                                </c:otherwise>
+                                </c:choose>
+                               
+                                <div class="emContent">${m.emContent }
+                                </div>
                             </td>
                         </tr>
                         

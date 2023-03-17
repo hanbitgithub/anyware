@@ -44,18 +44,15 @@
 	margin-left: 30px;
 }
 
-
-
-        
-input[type=file] {
-            font-size: 100px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            opacity: 0;
+  
+ input[type=file] {
+      font-size: 11px;
+      position: absolute;
+      left: 0;
+      top: 0;
+      opacity: 0;
  }
-
-
+ 
 
 /*모달*/
 .nav-tabs> .nav-item>.active{
@@ -118,15 +115,16 @@ input[type=file] {
 	font-size: 15px;
 	display: table-cell;
 }
-
-
-
+.file-list{
+	text-align: left;
+	
+}
 
 .filename {
 	display: inline-block;
 	vertical-align: top;
 	margin-top: 3px;
-	width: 500px;
+	width: 300px;
 }
 
 .filesize {
@@ -141,17 +139,15 @@ input[type=file] {
 }
 
 .abort {
-	background-color:#c0443bd1;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	background-color:gray;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 50%;
 	border: none;
 	display: inline-block;
 	color: #fff;
-	font-family: arial;
 	font-size: 12px;
-	font-weight: normal;
-	padding: 3px 9px;
+	font-weight: border;
 	cursor: pointer;
 	vertical-align: top;
 	margin-top: 3px;
@@ -398,12 +394,16 @@ input[type=file] {
                         <tr>
                             <th height="40px">첨부파일</th>
                             <td>
-                          	   <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files</div>
-                               <input type="file" name="upfile" id="upfile" style="display:none;"  onchange="addFile();" multiple/>
-                            	
-								<div class="dropBox file-list">
+                          	   <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files
+                          	   <div class="dropBox file-list">
+									
+								</div> 
+                          	   </div>
+                               <input type="file" name="upfile" id="upfile"   onchange="addFile();" multiple/>
+                            	<span class="fileMsg" style="font-size:13px">※ 첨부파일은 최대 5개까지 가능합니다.</span>
+							    <!-- <div class="dropBox file-list">
 									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-								</div>
+								</div>  -->
                             	
                             </td>
                         </tr>
@@ -497,12 +497,11 @@ input[type=file] {
 					htmlData += '<div id="file' + i + '" class="filebox">';
 					htmlData += '<span class="name filename">'+ filesArr[i].name + '</span>';
 					htmlData += '<span class="size filesize">'+ sizeStr + '</span>';
-					htmlData += '<button type="button" class="delete abort" onclick="deleteFile('+ i + ');">X</button>';
+					htmlData += '<button type="button" class="delete abort" onclick="deleteFile('+ i + ');">x</button>';
 					htmlData += '</div>';
 		
 				}
-				
-
+				$(".dragAndDropDiv").removeAttr("onclick")
 				$(".file-list").html(htmlData); // change가 발생할 때마다 목록 초기화한 뒤 넣어짐
 
 			}

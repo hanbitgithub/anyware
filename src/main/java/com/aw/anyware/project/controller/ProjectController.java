@@ -1,8 +1,10 @@
 package com.aw.anyware.project.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,11 +12,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.service.ProjectService;
+import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.Project;
 
 @Controller
@@ -49,6 +53,46 @@ public class ProjectController {
 		return "redirect:list.pj";
 	}
 	
+	@RequestMapping("search.pj")
+	public String searchProject(String condition, String keyword, @RequestParam(value="cpage", defaultValue="1")int currentPage, 
+								HttpServletRequest request, RedirectAttributes re) {
+		
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		map.put("memberNo", ((Member)request.getSession().getAttribute("loginUser")).getMemberNo());
+		
+		int listCount = pService.selectSearchListCount(map);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Project> list = pService.searchProject(map);
+		
+		map.put("list", list);
+		map.put("pi", pi);
+		
+		re.addFlashAttribute(map);
+		
+		return "redirect:list.pj";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertLike.ajax")
+	public String insertLike(Like like, HttpSession session) {
+		like.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = pService.insertLike(like);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deleteLike.ajax")
+	public String deleteLike(Like like, HttpSession session) {
+		like.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = pService.deleteLike(like);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
 	@RequestMapping("detail.pj")
 	public String projectDetailView() {
 		return "project/projectDetailView";
@@ -59,10 +103,10 @@ public class ProjectController {
 		return "project/listDetailView";
 	}
 	
-	@ResponseBody
-	@RequestMapping(value="insertLike.ajax",  produces="text/html; charset=UTF-8")
-	public String insertLike(int no) {
-		return "성공";
+	@RequestMapping("participants.pj")
+	public String participantsManage() {
+		ArrayList<Member> dlist = pService.selectDept();
+		return "project/participantsManageView";
 	}
 
 }

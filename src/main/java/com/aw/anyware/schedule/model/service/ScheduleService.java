@@ -1,25 +1,19 @@
 package com.aw.anyware.schedule.model.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
-import com.aw.anyware.schedule.model.vo.CalendarModalSave;
-import com.aw.anyware.schedule.model.vo.CalendarVo;
-import com.aw.anyware.schedule.model.vo.ScheduleModalSave;
+import com.aw.anyware.schedule.model.vo.Calendar;
+import com.aw.anyware.schedule.model.vo.Schedule;
 
 public interface ScheduleService {
-
+	
 	// 새 일정 추가
-	int scheduleModalSave(ScheduleModalSave scheduleModalSave);
+	int addScheduleModal(Schedule s);
 
 	// 내 캘린더 추가
-	int calendarModalSave(CalendarModalSave calendarModalSave);
-
+	int addCalendarModal(Calendar c);
+	
 	// 내 캘린더 목록
-	List<CalendarVo> calendarList(int menberNo);
-
-	// 내 캘린더 수정 화면
-	CalendarVo calendarModify(CalendarVo calendarVo);
-
-	// 내 캘린더 수정
-	int updateCalendar(CalendarVo calendarVo);
+	ArrayList<Calendar> calendarList(int memberNo);
+	
 }

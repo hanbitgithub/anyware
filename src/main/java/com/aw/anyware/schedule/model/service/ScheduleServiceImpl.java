@@ -1,53 +1,45 @@
 package com.aw.anyware.schedule.model.service;
 
-import java.util.List;
+import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.aw.anyware.schedule.model.dao.ScheduleDao;
-import com.aw.anyware.schedule.model.vo.CalendarModalSave;
-import com.aw.anyware.schedule.model.vo.CalendarVo;
-import com.aw.anyware.schedule.model.vo.ScheduleModalSave;
-
+import com.aw.anyware.schedule.model.vo.Calendar;
+import com.aw.anyware.schedule.model.vo.Schedule;
 
 @Service
 public class ScheduleServiceImpl implements ScheduleService {
-	
-	@Autowired
+
+	@Autowired(required = true)
 	private SqlSessionTemplate sqlSession;
+
+	@Autowired(required = true)
+	private ScheduleDao scDao;
+
+	/**
+	 * 새 일정 추가
+	 */
+	@Override
+	public int addScheduleModal(Schedule s) {
+		return scDao.addScheduleModal(sqlSession, s);
+	}
+
+	/**
+	 * 내 캘린더 추가
+	 */
+	@Override
+	public int addCalendarModal(Calendar c) {
+		return scDao.addCalendarModal(sqlSession, c);
+	}
+
 	
-	@Autowired
-	private ScheduleDao scheduleDao;
-
-	// 새 일정 추가
-	@Override
-	public int scheduleModalSave(ScheduleModalSave scheduleModalSave) {
-		return scheduleDao.scheduleModalSave(sqlSession, scheduleModalSave);
+	@Override public ArrayList<Calendar> calendarList(int memberNo) {
+		return scDao.calendarList(sqlSession, memberNo); 
 	}
-
-	// 내 캘린더 추가
-	@Override
-	public int calendarModalSave(CalendarModalSave calendarModalSave) {
-		return scheduleDao.calendarModalSave(sqlSession, calendarModalSave);
-	}
-
-	// 내 캘린더 목록
-	@Override
-	public List<CalendarVo> calendarList(int memberNo) {
-		return scheduleDao.calendarList(sqlSession, memberNo);
-	}
+	 
 	
-	// 내 캘린더 수정 화면
-	@Override
-	public CalendarVo calendarModify(CalendarVo calendarVo) {
-		return scheduleDao.calendarModify(sqlSession, calendarVo);
-	}
-
-	@Override
-	public int updateCalendar(CalendarVo calendarVo) {
-		return scheduleDao.updateCalendar(sqlSession, calendarVo);
-	}
 
 }

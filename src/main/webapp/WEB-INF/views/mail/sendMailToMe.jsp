@@ -136,8 +136,8 @@
                         <tr>
                             <th height="40px">첨부파일</th>
                             <td>
-                                <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files</div>
-                                <input type="file" name="upfile" id="upfile" style="display:none;"  onchange="addFile();" multiple/>
+                                <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile2').click();">Drag & Drop Files Here or Browse Files</div>
+                                <input type="file" name="upfile" id="upfile2" style="display:none;"  onchange="addFile2();" multiple/>
                             	
 								<div class="dropBox file-list">
 									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
@@ -289,7 +289,7 @@
 			var filesArr = new Array(); // 다중 첨부파일 들어갈 파일 배열
 
 			/* 첨부파일 추가 */
-			function addFile() {
+			function addFile2() {
 				
 				// 안내문 삭제
 				$(".fileMsg").remove();
@@ -297,7 +297,7 @@
 				var maxFileCnt = 5; // 첨부파일 최대 개수
 				var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
 				var remainFileCnt = maxFileCnt - attFileCnt; // 추가로 첨부가능한 개수
-				var files = $('#upfile')[0].files; // 현재 선택된 첨부파일 리스트 FileList
+				var files = $('#upfile2')[0].files; // 현재 선택된 첨부파일 리스트 FileList
 				
 				// 첨부파일 개수 확인
 				if (files.length > remainFileCnt) {
@@ -377,7 +377,7 @@
 			    	dataTransfer.items.add(file); 
 			    });
 			    
-			    $('#upfile')[0].files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
+			    $('#upfile2')[0].files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
 			}
 							
 		</script>

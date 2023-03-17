@@ -2,10 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd">
 <mapper namespace="scheduleMapper">
 
-	<!-- 새 일정 등록 -->
-	<insert id="scheduleModalSave" parameterType="ScheduleModalSave">
+	<resultMap id="scheduleResult" type="Schedule">
+		<id column="schedule_no" property="scheduleNo" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="sc_title" property="scTitle" />
+		<result column="sc_content" property="scContent" />
+		<result column="status" property="status" />
+		<result column="write_date" property="writeDate" />
+		<result column="member_no" property="memberNo" />
+		<result column="calendar_no" property="calendarNo" />
+		<result column="allday" property="allday" />
+	</resultMap>
+	
+	<resultMap id="CalendarResult" type="Calendar">
+		<id column="CALENDAR_NO" property="calendarNo" />
+		<result column="MY_CALENDAR" property="myCalendar" />
+		<result column="SC_COLOR" property="scColor" />
+		<result column="MEMBER_NO" property="memberNo" />
+	</resultMap>
+	
+	<!-- 새 일정 추가 -->
+	<insert id="addScheduleModal" parameterType="Schedule">
 		insert 
-		  into TB_M_SCHEDULE
+		  into tb_m_schedule
 			 (
 			   schedule_no
 			 , start_date
@@ -29,16 +51,16 @@
 			, #{endTime}
 			, #{scTitle}
 			, #{scContent}
-			, #{status}
-			, #{writeDate}
-			, #{loginUser}
+			, 'Y'
+			, SYSDATE
+			, #{memberNo}
 			, #{calendarNo}
 			, #{allday}
 		    )
 	</insert>
 	
-	<!-- 새 캘린더 추가 -->
-	<insert id="calendarModalSave" parameterType="CalendarModalSave">
+	<!-- 내 캘린더 추가 -->
+	<insert id="addCalendarModal" parameterType="Calendar">
 		insert 
 	      into tb_category
 	         (
@@ -52,19 +74,12 @@
 			   seq_cno.nextval
 			 , #{myCalendar}
 			 , #{scColor}
-			 , 1
+			 , #{memberNo}
 			 )
 	</insert>
 	
-	<resultMap id="calendars" type="CalendarList">
-		<id column="CALENDAR_NO" property="calendarNo" />
-		<result column="MY_CALENDAR" property="myCalendar" />
-		<result column="SC_COLOR" property="scColor" />
-		<result column="MEMBER_NO" property="memberNo" />
-	</resultMap>
-	
-	<!-- 캘린더 목록 -->
-	<select id="calendarList" resultMap="calendars">
+	<!-- 내 캘린더 목록 -->
+	<select id="calendarList" resultMap="CalendarResult">
 		select 
 		       calendar_no
 		     , my_calendar
@@ -75,28 +90,15 @@
 		   and member_no = #{memberNo}
 	</select>
 	
-	<!-- 내 캘린더 수정 화면 -->
-	<select id="calendarModify" resultMap="calendars">
-		select
-			   calendar_no
-			 , my_calendar
-			 , sc_color
-			 , member_no
-		  from tb_category
-		 where 1=1
-		   and calendar_no = #{calendarNo}
-		   and member_no = #{memberNo}
-	</select>
-
-	<!-- 내 캘린더 수정 -->
-	<update id="updateCalendar">
-		update tb_category
-		   set
-			   my_calendar = #{myCalendar},
-			   sc_color = #{scColor}
-		 where 1=1
-		   and calendar_no = #{calendarNo}
-		   and member_no = #{memberNo}
-	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>

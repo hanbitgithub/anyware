@@ -87,6 +87,14 @@
 		transition: 0.3s;
 		cursor: pointer;
 		}
+	#condition{
+		height: 29px;
+		text-align: center;
+	}
+	#searchbtn{
+		height: 30px;
+		line-height: 15px;
+	}
 </style>
 </head>
 <body>
@@ -100,8 +108,22 @@
 
 		<h1>전체 프로젝트</h1>
 		<br>
+		
+		<div class="search-area">
+			<form action="search.pj">
+				<select name="condition" id="condition">
+					<option value="title">프로젝트명</option>
+					<option value="participant">참여자</option>
+				</select>
+				<input type="search" placeholder="Search Project" id="search-project" name="keyword">
+				<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
+			</form>
+		</div>
 
-		<input type="search" placeholder="Search Project" id="search-project">
+		<script>
+        	document.querySelector(".search-area option[value=${ condition }]").selected = true;
+        </script>
+
 		<br><br>
 
 		<div class="project-area">
@@ -141,9 +163,11 @@
 					$.ajax({
 						url:"insertLike.ajax",
 						type:"post",
-						data:{no:$(e).next().val()},
+						data:{projectNo:$(e).next().val()},
 						success:function(result){
-							console.log(result);
+							if(result == "success"){
+								$(e).text("💙");
+							}
 						},
 						error:function(){
 							console.log("즐겨찾기 추가 ajax 통신 실패");
@@ -153,9 +177,11 @@
 					$.ajax({
 						url:"deleteLike.ajax",
 						type:"post",
-						data:{"no":$(e).next().val()},
-						success:function(){
-
+						data:{projectNo:$(e).next().val()},
+						success:function(result){
+							if(result == "success"){
+								$(e).text("🤍");
+							}
 						},
 						error:function(){
 							console.log("즐겨찾기 해제 ajax 통신 실패");
@@ -168,27 +194,39 @@
 		<br><br>
 
 		<div class="page-area">
-			<c:choose>
-				<c:when test="{ pi.currentPage eq 1 }">
-					<a class="pagebtn" href="">&lt;</a>
-				</c:when>
-				<c:otherwise>
-					<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
-				</c:otherwise>
-			</c:choose>
+			<c:if test="{ pi.currentPage ne 1 }">
+				<c:choose>
+					<c:when test="${ empty condition }">
+						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
+					</c:when>
+					<c:otherwise>
+						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 			
 			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-				<a class="pagebtn" href="list.pj?cpage=${ p }">${ p }</a>
+				<c:choose>
+					<c:when test="${ empty condition }">
+						<a class="pagebtn" href="list.pj?cpage=${ p }">${ p }</a>
+					</c:when>
+					<c:otherwise>
+						<a class="pagebtn" href="search.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }">${ p }</a>
+					</c:otherwise>
+				</c:choose>
+				
 			</c:forEach>
-			
-			<c:choose>
-				<c:when test="${ pi.currentPage eq pi.maxPage }">
-					<a class="pagebtn" href="">&gt;</a>
-				</c:when>
-				<c:otherwise>
-					<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&gt;</a>
-				</c:otherwise>
-			</c:choose>
+
+			<c:if test="{ pi.currentPage ne pi.maxPage }">
+				<c:choose>
+					<c:when test="${ empty condition }">
+						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&gt;</a>
+					</c:when>
+					<c:otherwise>
+						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage - 1 }">&gt;</a>
+					</c:otherwise>
+				</c:choose>
+			</c:if>
 		</div>
 	</div>
 

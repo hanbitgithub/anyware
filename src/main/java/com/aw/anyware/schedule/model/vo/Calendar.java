@@ -6,18 +6,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * 내 캘린더 추가
- * */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
-public class CalendarModalSave {
+public class Calendar {
 	
+	private int calendarNo;
 	private String myCalendar;
 	private String scColor;
-	private String memberNo;
+	private int memberNo;
+
 }

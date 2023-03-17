@@ -6,25 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-/**
- * 새 일정 추가
- * */
-
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
 @Getter
 @ToString
-public class ScheduleModalSave {
+public class Schedule {
 	
-	private String calendarNo;
+	private int scheduleNo;
 	private String startDate;
-	private String startTime;
 	private String endDate;
+	private String startTime;
 	private String endTime;
-	private String allday;
 	private String scTitle;
 	private String scContent;
-	private String writeDate;	// 등록날짜
+	private String status;
+	private String writeDate;
+	private int memberNo;
+	private int calendarNo;
+	private String allday;
 
 }

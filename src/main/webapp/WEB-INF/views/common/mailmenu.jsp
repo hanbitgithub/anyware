@@ -161,13 +161,13 @@ a{
 <body>
 	 <div class="menu">
             <span style="font-weight: 600; font-size: 19px;">메일</span><br><br>
-            <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 100px;">메일쓰기</a>
+            <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 120px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
               <!--  <a href="test.do">테스트</a> -->
             <ul>
                 <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary"></span></li>
-                <li><a href="sendbox.em">보낸메일함</a></li>
+                <li><a href="sendbox.em">보낸메일함</a> <!-- <button class="btn2">수신확인</button> --> </li> 
                 <li><a href="important.em">중요메일함</a></li>         
                 <li><a href="sendToMebox.em">내게쓴메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>
@@ -202,10 +202,10 @@ a{
                    		    	if(count != 0 ){
                    		    		value = count;
                    		    	}else{
-                   		    		value = 0;
+                   		    		$(".count").html("0");
+                   		    		
                    		    	}
                    		            
-                   		         
                    		          $(".count").html(value);
                    		       
                    		    	

@@ -56,10 +56,27 @@
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
 	<result column="temp_date" property="tempDate" />
-	<result column="temp_read" property="tempRead" />
 	
 	<association property="mailStatus" resultMap="mailStatusResult" />
 	<association property="mailFile" resultMap="mailFileResult" />
+	
+</resultMap>
+
+
+<resultMap id="mailResult2" type="Mail">
+	<id column="em_no" property="emNo" />
+	<result column="em_title" property="emTitle"/>
+	<result column="em_content" property="emContent" />
+	<result column="mem_name" property="memName" />
+	<result column="sender" property="sender" />
+	<result column="receiver" property="receivers" />
+	<result column="ref_email" property="refEmail" />
+	<result column="send_date" property="sendDate" />
+	<result column="temp_stock" property="tempStock" />
+	<result column="temp_date" property="tempDate" />
+	<result column="atcount" property="atcount" />
+	<association property="mailStatus" resultMap="mailStatusResult" />
+	<collection property="fileList" resultMap="mailFileResult" />
 </resultMap>
 
 <resultMap id="mailStatusResult" type="MailStatus">	
@@ -73,7 +90,7 @@
 	<result column="spam" property="spam" />
 	<result column="sender" property="sender" />
 	<result column="temp_save" property="tempSave"/>
-	<result column="emNoArr" property="emNoArr"/>
+	<result column="emTypes" property="emTypes"/>
 </resultMap>
 
 <resultMap id="mailFileResult" type="MailFile">
@@ -472,6 +489,7 @@
 	    , ref_email
 	    , read
 	    , important
+	    , em_type
 	    ,( select count(emf_no)
               from tb_mail_file  f
               where f.em_no = m.em_no) "atcount"
@@ -648,6 +666,7 @@
 	update tb_mail_status
 	   set read = 'Y'
 	 where em_no = #{emNo}
+	  and em_type = #{emType}
 	<choose>
 	     <when test="receiver == null">
 	     		 and  receiver is null
@@ -656,6 +675,7 @@
 	     		and  receiver = #{receiver}
 	     	</otherwise>
       </choose>
+     
 
 </update>
 
@@ -665,6 +685,7 @@
 	update tb_mail_status
 	   set read = 'N'
 	 where em_no = #{emNo}
+	 and em_type = #{emType}
 	 <choose>
 	     <when test="receiver == null">
 	     		 and  receiver is null
@@ -673,7 +694,7 @@
 	     		and  receiver = #{receiver}
 	     	</otherwise>
       </choose>
-
+      
 </update>
 
 <!-- 내게쓴메일 개수 -->
@@ -707,6 +728,7 @@ select
 	    , m.receiver
 	    , read
 	    , important
+	    , em_type
 	    , ( select count(emf_no)
               from tb_mail_file  f
               where f.em_no = m.em_no) "atcount"
@@ -940,6 +962,53 @@ select
 
 
 </update>
+
+
+<!-- 메일상세페이지 -->
+<select id="selectMailDetail" resultMap="mailResult2">
+select 
+ 		 m. em_no
+        , sender
+        , mem_name
+        , em_type
+	    , em_title
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+        , ref_email
+	    , read
+	    , important
+	    , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	    , temp_save
+        , emf_no
+        , origin_name
+        , change_name
+        , file_size
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)
+	left outer join tb_mail_file f on (m.em_no = f.em_no)
+    where (sender= #{sender} and s.receiver is null
+	 or s.receiver = #{receiver})
+     and s.em_no = #{emNo}
+     <choose>
+     <when test="important != null" >
+      and important = 'Y'
+     </when>
+     <when test ="trash != null">
+     and trash = 'Y'
+     </when>
+     <when test="tempSave != null">
+     and temp_save = 'Y'
+     </when>
+     </choose>
+
+
+
+</select>
+
 
 
 </mapper>

@@ -127,8 +127,16 @@ public interface MailService {
 	int selectTrashMailCount(String memId);
 	ArrayList<Mail> selectTrashMailList(PageInfo pi, String memId);
 	
-	//메일삭제
+	//체크메일삭제
 	int deleteMail(ArrayList<MailStatus> list);
 	
+	//체크메일읽음/ 안읽음
+	int checkReadMail(ArrayList<MailStatus> list);
+	int checkUnReadMail(ArrayList<MailStatus> list);
+	
+	
+	//메일상세조회 
+	Mail selectMailDetail(MailStatus ms);
+
 	
 }
