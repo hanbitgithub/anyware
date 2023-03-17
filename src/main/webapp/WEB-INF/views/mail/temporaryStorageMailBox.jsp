@@ -180,7 +180,8 @@ input[type=checkbox] {
 									        </c:when>
 									    </c:choose>    
 			                			</td>
-			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
+			                			<td width="700" class="mail-title">
+			                			${s.emTitle }<input type="hidden" name="mailNo" value="${s.emNo }"><input type="hidden" name="emType" value="${s.mailStatus.emType }"></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${s.mailFile.atcount > 0}">
@@ -221,7 +222,9 @@ input[type=checkbox] {
 											    </c:forEach>
 									        </c:when>
 									    </c:choose>    
-			                			<td width="700"><a href="mail.em?no=${s.emNo}">${s.emTitle }</a></td>
+			                			<td width="700" class="mail-title">
+			                			<input type="hidden" name="mailNo" value="${s.emNo }"><input type="hidden" name="emType" value="${s.mailStatus.emType }">
+			                			${s.emTitle }</a></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${s.mailFile.atcount > 0}">
@@ -238,6 +241,36 @@ input[type=checkbox] {
                 </c:choose>
                 
             </table>
+            
+            <form id="mailDetail" action="" method="post">
+			<input type="hidden" name="box" value="4">
+			<input type="hidden" name="emType" id="emType">
+			<input type="hidden" name="emNo" id="detailNo">
+			<input type="hidden" name="sender" value="${loginUser.memberId}">
+			<input type="hidden" name="receiver" value="${loginUser.memberId}">
+			<input type="hidden" name="tempSave" value="Y">
+			
+			</form>
+			
+			<script>
+			// '메일 조회'시 실행하는 함수
+			$(function(){
+				$(".mail-title").click(function(){
+					var $tr = $(this).closest("tr");
+					let emNo = $(this).children('input[type=hidden]').val();
+					let emType = $(this).children('input[name=emType]').val();
+					//console.log(emType);
+					//console.log(emNo);
+					$("#detailNo").val(emNo);
+					$("#emType").val(emType);
+					
+					$(".mstatus"+emNo ).css("font-weight","300");
+					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
+					$("#mailDetail").attr("action", 'mail.em').submit();
+
+				})
+			})	
+			</script>
             
               <script>
               

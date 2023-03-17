@@ -489,6 +489,7 @@
 	    , ref_email
 	    , read
 	    , important
+	    , em_type
 	    ,( select count(emf_no)
               from tb_mail_file  f
               where f.em_no = m.em_no) "atcount"
@@ -665,6 +666,7 @@
 	update tb_mail_status
 	   set read = 'Y'
 	 where em_no = #{emNo}
+	  and em_type = #{emType}
 	<choose>
 	     <when test="receiver == null">
 	     		 and  receiver is null
@@ -673,6 +675,7 @@
 	     		and  receiver = #{receiver}
 	     	</otherwise>
       </choose>
+     
 
 </update>
 
@@ -682,6 +685,7 @@
 	update tb_mail_status
 	   set read = 'N'
 	 where em_no = #{emNo}
+	 and em_type = #{emType}
 	 <choose>
 	     <when test="receiver == null">
 	     		 and  receiver is null
@@ -690,7 +694,7 @@
 	     		and  receiver = #{receiver}
 	     	</otherwise>
       </choose>
-
+      
 </update>
 
 <!-- 내게쓴메일 개수 -->
@@ -724,6 +728,7 @@ select
 	    , m.receiver
 	    , read
 	    , important
+	    , em_type
 	    , ( select count(emf_no)
               from tb_mail_file  f
               where f.em_no = m.em_no) "atcount"
@@ -988,7 +993,17 @@ select
     where (sender= #{sender} and s.receiver is null
 	 or s.receiver = #{receiver})
      and s.em_no = #{emNo}
-   
+     <choose>
+     <when test="important != null" >
+      and important = 'Y'
+     </when>
+     <when test ="trash != null">
+     and trash = 'Y'
+     </when>
+     <when test="tempSave != null">
+     and temp_save = 'Y'
+     </when>
+     </choose>
 
 
 
