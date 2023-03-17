@@ -31,7 +31,6 @@ public class GroupMap {
 	private int leaveOff; // 총연차개수
 	private String profileUrl; // 프로필 사진 수정본 경로
 	
-	private String updatePwd; // 사용자가 변경하려고 입력한 비밀번호
-	private String encPwd; // 비밀번호 변경 기능을 통해 암호화된 비밀번호
+	
 
 }

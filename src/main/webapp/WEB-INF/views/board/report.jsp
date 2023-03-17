@@ -115,7 +115,7 @@ table{
               		<td>${r.name}</td>
               		<td>${r.reportDate}</td>
               		<td>${r.status}</td>
-              		<td><a id="btn" href="delete.rp?bno=${r.postNo}&&no=${r.reportNo}">블라인드</a></th>
+              		<td><a id="btn" href="delete.rp?bno=${r.postNo}&&no=${r.reportNo}">블라인드</a></td>
               	</tr>
               </c:forEach>
               </tbody> 

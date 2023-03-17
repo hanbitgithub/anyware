@@ -42,4 +42,30 @@
     		
   </select>
   
+    <select id="ajaxSelectMemberList" resultMap="groupMapResult">
+    select
+    		member_no,
+    		dept_name,
+    		job_name,
+    		position,
+    		duty,
+    		name,
+    		member_id,
+    		member_pwd,
+    		RPAD(SUBSTR(rrn, 1, 8), 14, '*') as "rrn",
+    		email,
+    		phone,
+    		address,
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
+    		leave_off,
+    		profile_url
+    	from tb_member
+       where status = 'Y' 
+       and member_no = ${memberNo}
+       
+    		
+  </select>
+  
+  
+  
 </mapper>

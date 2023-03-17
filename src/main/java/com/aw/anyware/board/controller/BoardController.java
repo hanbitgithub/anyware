@@ -276,7 +276,7 @@ public class BoardController {
 	 */
 	@ResponseBody
 	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
-	public String ajaxSelectMainBoardList() {
+	public String selectMainBoardList() {
 		ArrayList<Board> list = bService.selectMainBoardList();
 		return new Gson().toJson(list);
 	}
@@ -285,11 +285,10 @@ public class BoardController {
 	 * 메인화면 - 공지사항
 	 * @return
 	 */
-	/*
 	@ResponseBody
-	@RequestMapping(value="mainList.bo", produces="application/json; charset=utf-8")
-	public String SelectMainBoardList() {
-		ArrayList<Board> list = bService.SelectMainNoticeList();
+	@RequestMapping(value="mainList.no", produces="application/json; charset=utf-8")
+	public String selectMainNoticeList() {
+		ArrayList<Board> list = bService.selectMainNoticeList();
 		return new Gson().toJson(list);
 	}
 	
@@ -342,7 +341,7 @@ public class BoardController {
 	 * @param session
 	 * @param model
 	 * @return
-	 
+	 */
 	@RequestMapping("delete.rp")
 	public String deleteReport(int no, int bno, HttpSession session, Model model) {
 		
@@ -360,6 +359,6 @@ public class BoardController {
 			
 		}
 	}
-*/
+
 	
 }

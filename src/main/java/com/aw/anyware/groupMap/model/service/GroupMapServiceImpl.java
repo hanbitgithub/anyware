@@ -22,4 +22,9 @@ public class GroupMapServiceImpl implements GroupMapService {
 	public ArrayList<GroupMap> selectMemberList() {
 		return gDao.selectMemberList(sqlSession);
 	}
+
+	@Override
+	public ArrayList<GroupMap> ajaxSelectMemberList(int memberNo) {
+		return gDao.ajaxSelectMemberList(sqlSession, memberNo);
+	}
 }

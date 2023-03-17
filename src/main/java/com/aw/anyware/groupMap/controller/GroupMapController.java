@@ -48,4 +48,12 @@ public class GroupMapController {
 		ArrayList<GroupMap> list = gService.selectMemberList();
 		return new Gson().toJson(list);
 	}*/
+
+	@ResponseBody
+	@RequestMapping(value="modallist.gr", produces="aplication/json; charset=utf-8")
+	public String ajaxSelectMemberList(int no) {
+		
+		ArrayList<GroupMap> list = gService.ajaxSelectMemberList(no);
+		return new Gson().toJson(list);
+	}
 }

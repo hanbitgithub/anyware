@@ -44,15 +44,36 @@
         <form id="enrollForm" method="post" action="insert.bo" enctype="multipart/form-data">
         <input type="hidden" name="boardWriter" value="${loginUser.memberNo }">
 		         
-        <select id="category" name="category">
-            <option value="5">자유게시판</option>
-            <option value="6">공지사항</option>
-            <option value="1">인사팀</option>
-            <option value="2">총무팀</option>
-            <option value="3">개발팀</option>
-            <option value="4">디자인팀</option>
-        </select>
-        
+		<c:choose>
+			<c:when test="${loginUser.deptName eq '인사부' }">
+				  <select id="category" name="category">
+			           <option value="5">자유게시판</option>
+			           <option value="6">공지사항</option>
+			           <option value="1">인사팀</option>
+			       </select>
+			</c:when>
+			<c:when test="${loginUser.deptName eq '총무부' }">
+			       <select id="category" name="category">
+			           <option value="5">자유게시판</option>
+			           <option value="6">공지사항</option>
+			           <option value="2">총무팀</option>
+			       </select>
+			</c:when>
+			<c:when test="${loginUser.deptName eq '디자인부' }">
+			       <select id="category" name="category">
+			           <option value="5">자유게시판</option>
+			           <option value="6">공지사항</option>
+			           <option value="4">디자인팀</option>
+		        	</select>
+			</c:when>
+			<c:when test="${loginUser.deptName eq '개발부' }">
+			        <select id="category" name="category">
+			            <option value="5">자유게시판</option>
+			            <option value="6">공지사항</option>
+			            <option value="3">개발팀</option>
+			        </select>
+			</c:when>
+		</c:choose>		         
 	    <input type="text" id="boardTitle" name="boardTitle"
     style="border:1px solid rgb(220, 220, 220); border-right:none; border-left:none; height:50px; width: 100%;"
     placeholder="제목을 입력해주세요" required>

@@ -34,7 +34,7 @@
 		float: left; text-align: center;
 		list-style-type: none;
 		position: relative;
-		padding: 20px 5px 0 5px;
+		padding: 20px 50px 0 50px;
 		
 		transition: all 0.5s;
 		-webkit-transition: all 0.5s;
@@ -95,9 +95,9 @@
 		text-decoration: none;
 		color: #666;
 		font-family: arial, verdana, tahoma;
-		font-size: 11px;
+		font-size: 13px;
 		display: inline-block;
-		
+		 
 		border-radius: 5px;
 		-webkit-border-radius: 5px;
 		-moz-border-radius: 5px;
@@ -125,8 +125,28 @@
     font-size: 14px;
     margin-top: 13px;
 }
+#user{
+	display: inline-block;
+	background-color: rgb(247, 247, 247);
+    width: 55%;
+    height: 300px;
+	float: right;
+	padding-top: 35px; 
+	padding-left: 15px;
+}
+#user1{
+	width: 45%;
+    height: 300px;
+	display: inline-block;
+	text-align: center;
+	padding-top: 60px; 
+	padding-left: 15px;
+}
+#name1{
+	font-size: small;
+	color: #afafaf;
+}
 
-	
 </style>    
 </head>
 <body>
@@ -148,52 +168,66 @@
 	<div id="tree">
         <ul>
             <li>
-                <a href="#">CEO</a>
+                <a href="#">대표이사</a>
                 <ul>
 					
                     <li>
-                        <a href="#">Child</a>
+                        <a href="#">사장</a>
                         <ul>
-                            <li><a href="">개발팀</a>
+                            <li>
+                            	<a href="">개발팀</a>
                                 <c:forEach var="g" items="${ list }">
-                                <c:if test="${g.deptName eq '개발팀' }">
+                                <c:if test="${ g.deptName eq '개발부' }">
                                 <ul>
-                                	<a data-toggle="modal" data-target="#myModal">${g.name } ${g.jobName }</a>
+                                	<a data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                                	<input type="hidden" name="memberNo" value="${g.memberNo }">
+                                	${g.name } ${g.jobName }
+                                	</a>
                                 </ul>
                                 </c:if>    
                                 </c:forEach>
-                                        <ul>
-                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        
-                                </ul>
                             </li>
+                            
                             <li>
                                 <a href="">인사팀</a>
-                                
+								<c:forEach var="g" items="${ list }">
+                                <c:if test="${ g.deptName eq '인사부' }">
                                 <ul>
-                                    <li>
-                                        <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                    </li>
+                                	<a data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                                	<input type="hidden" name="memberNo" value="${g.memberNo }">
+                                	${g.name } ${g.jobName }
+                                	</a>
                                 </ul>
-                                
+                                </c:if>    
+                                </c:forEach>
                             </li>
+                            
                             <li>
                                 <a href="">총무팀</a>
+								<c:forEach var="g" items="${ list }">
+                                <c:if test="${ g.deptName eq '총무부' }">
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        <ul>
-                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        </ul>
+                                	<a data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                                	<input type="hidden" name="memberNo" value="${g.memberNo }">
+                                	${g.name } ${g.jobName }
+                                	</a>
                                 </ul>
+                                </c:if>    
+                                </c:forEach>
                             </li>
+                            
                             <li>
                                 <a>디자인팀</a>
+								<c:forEach var="g" items="${ list }">
+                                <c:if test="${ g.deptName eq '디자인부' }">
                                 <ul>
-                                    <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        <ul>
-                                            <a data-toggle="modal" data-target="#myModal">이배추 과장</a>
-                                        </ul>
+                                	<a data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                                	<input type="hidden" name="memberNo" value="${g.memberNo }">
+                                	${g.name } ${g.jobName }
+                                	</a>
                                 </ul>
+                                </c:if>    
+                                </c:forEach>
                             </li>
                         </ul>
                     </li>
@@ -202,7 +236,41 @@
         </ul>
         
     </div>    
-	
+    
+	  <script>
+  	function selectList(memberNo){
+		$.ajax({
+			url:"modallist.gr",
+			data:{no:memberNo},
+			success:function(list){
+					console.log(list);
+
+				
+				let value="";
+				for(let i=0; i<list.length; i++){
+					let m = list[i];
+					value += "<div id='user1'>"	
+							+ m.profileUrl + "<br><br><br>"
+							+ "<b>" + m.name + "</b>" + "&nbsp;" + m.jobName + "<br>"
+							+ "<p id='name1'>" + m.deptName + "&nbsp;" + m.position + "</p>"
+							+ "</div>"
+							+ "<div id='user'>"
+							+ "<b>부서</b>" + "&nbsp;&nbsp;" + m.deptName + "<br><br>"	
+							+ "<b>전화번호</b>" + "&nbsp;&nbsp;" + m.phone + "<br><br>"
+							+ "<b>이메일</b>" + "&nbsp;&nbsp;" + m.email + "<br><br>"
+							+ "<b>주소</b>" + "&nbsp;&nbsp;" + m.address + "<br><br>"
+							+ "<b>입사일</b>" + "&nbsp;&nbsp;" + m.enrollDate + "<br><br>"
+							+ "</div>";
+				}
+				$("#modal").html(value);
+				
+				
+			},error:function(){
+				console.log("댓글리스트 조회용 ajax 통신 실패");
+			}
+		})
+	}
+	  </script>	
 	
 	
 </div>
@@ -213,23 +281,22 @@
 	  
 		<!-- The Modal -->
 		<div class="modal" id="myModal">
-		  <div class="modal-dialog">
+		  <div class="modal-dialog modal-lg">
 			<div class="modal-content">
 			
 			  <!-- Modal Header -->
 			  <div class="modal-header">
-				<h4 class="modal-title">Modal Heading</h4>
+				<h4 class="modal-title">사원정보</h4>
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 			  </div>
 			  
 			  <!-- Modal body -->
-			  <div class="modal-body">
-				Modal body..
+			  <div class="modal-body" id="modal">
 			  </div>
 			  
 			  <!-- Modal footer -->
 			  <div class="modal-footer">
-				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+				<button type="button" class="btn" data-dismiss="modal">Close</button>
 			  </div>
 			  
 			</div>
@@ -237,6 +304,10 @@
 		</div>
 		
 	  </div>
+	  
+
+
+	  
 	
 </body>
 </html>

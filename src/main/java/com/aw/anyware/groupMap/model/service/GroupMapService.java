@@ -8,4 +8,6 @@ public interface GroupMapService {
 
 	ArrayList<GroupMap> selectMemberList();
 
+	ArrayList<GroupMap> ajaxSelectMemberList(int memberNo);
+
 }
