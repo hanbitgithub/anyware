@@ -564,8 +564,34 @@ public class MailDao {
 		return result;
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 메일 상세페이지 조회 
+	 */
 	public Mail selectMailDetail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.selectOne("mailMapper.selectMailDetail",ms);
+	}
+	
+	
+	public int deleteTrashMail(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.delete("mailMapper.deleteTrashMail", ms);
+
+		}
+		
+		return result;
+	}
+	
+	public int restoreTrashMail(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.update("mailMapper.restoreTrashMail", ms);
+
+		}
+		
+		return result;
 	}
 	
 

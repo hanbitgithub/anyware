@@ -1119,11 +1119,48 @@ public class MailController {
 	    
 	}
 	
+	//체크한 메일 읽음 처리 
 	@ResponseBody
 	@RequestMapping("checkRead.em")
 	public String checkReadMail(MailStatus ms) {
 		
 		    //System.out.println(ms);
+		// 읽음표시하는 메일 목록을 담을 ArrayList
+			ArrayList<MailStatus> list = new ArrayList<>();
+
+			// 결과값
+			int result = 0;
+			String[] mailNo = ms.getEmNo().split(",");
+			String[] mailType = ms.getEmType().split(",");
+			
+			for(int i=0; i<mailNo.length; i++) {
+				MailStatus ms2 = new MailStatus();
+				ms2.setSender(ms.getSender());
+				ms2.setEmNo(mailNo[i]);
+				ms2.setEmType(mailType[i]);
+				if(mailType[i].equals("0")) {
+					ms2.setReceiver(null);
+				}else {
+					ms2.setReceiver(ms.getReceiver());
+				}
+
+				
+				list.add(ms2);
+			}
+			
+			//System.out.println(list);
+			
+			result = mService.checkReadMail(list);
+			
+			return result > 0 ? "success": "fail";
+		
+	}
+	
+	//체크한 메일 안읽음 처리 
+	@ResponseBody
+	@RequestMapping("checkUnRead.em")
+	public String checkUnReadMail(MailStatus ms) {
+	    
 		// 읽음표시하는 메일 목록을 담을 ArrayList
 			ArrayList<MailStatus> list = new ArrayList<>();
 
@@ -1150,48 +1187,75 @@ public class MailController {
 			
 			//System.out.println(list);
 			
-			result = mService.checkReadMail(list);
+			result = mService.checkUnReadMail(list);
 			
 			return result > 0 ? "success": "fail";
-		
+
 	}
+	
+	
+	//선택 메일 완전삭제 
 	@ResponseBody
-	@RequestMapping("checkUnRead.em")
-	public String checkUnReadMail(MailStatus ms) {
-	    
-			// 읽음표시하는 메일 목록을 담을 ArrayList
-				ArrayList<MailStatus> list = new ArrayList<>();
+	@RequestMapping("empty.em")
+	public String deleteTrashMail(MailStatus ms) {
+		ArrayList<MailStatus> list = new ArrayList<>();
 
-				// 결과값
-				int result = 0;
-				String[] mailNo = ms.getEmNo().split(",");
-				String[] mailType = ms.getEmType().split(",");
-				
-				for(int i=0; i<mailNo.length; i++) {
-					MailStatus ms2 = new MailStatus();
-					ms2.setSender(ms.getSender());
-					ms2.setEmNo(mailNo[i]);
-					ms2.setEmType(mailType[i]);
-					if(mailType[i].equals("0")) {
-						ms2.setReceiver(null);
-					}else {
-						ms2.setReceiver(ms.getReceiver());
-					}
-					
-						
-					
-					list.add(ms2);
-				}
-				
-				//System.out.println(list);
-				
-				result = mService.checkUnReadMail(list);
-				
-				return result > 0 ? "success": "fail";
-	
+		// 결과값
+		int result = 0;
+		String[] mailNo = ms.getEmNo().split(",");
+		String[] mailType = ms.getEmType().split(",");
+		
+		for(int i=0; i<mailNo.length; i++) {
+			MailStatus ms2 = new MailStatus();
+			ms2.setSender(ms.getSender());
+			ms2.setEmNo(mailNo[i]);
+			ms2.setEmType(mailType[i]);
+			if(mailType[i].equals("0")) {
+				ms2.setReceiver(null);
+			}else {
+				ms2.setReceiver(ms.getReceiver());
+			}
+
+			list.add(ms2);
+		}
+		
+		//System.out.println(list);
+		
+		
+		result = mService.deleteTrashMail(list);
+		return result > 0 ? "success": "fail";
 	}
 
-	
+	@ResponseBody
+	@RequestMapping("restore.em")
+	public String restoreTrashMail(MailStatus ms) {
+		ArrayList<MailStatus> list = new ArrayList<>();
+
+		// 결과값
+		int result = 0;
+		String[] mailNo = ms.getEmNo().split(",");
+		String[] mailType = ms.getEmType().split(",");
+		
+		for(int i=0; i<mailNo.length; i++) {
+			MailStatus ms2 = new MailStatus();
+			ms2.setSender(ms.getSender());
+			ms2.setEmNo(mailNo[i]);
+			ms2.setEmType(mailType[i]);
+			if(mailType[i].equals("0")) {
+				ms2.setReceiver(null);
+			}else {
+				ms2.setReceiver(ms.getReceiver());
+			}
+
+			list.add(ms2);
+		}
+		
+		//System.out.println(list);
+		
+		result = mService.restoreTrashMail(list);
+		
+		return result > 0 ? "success": "fail";
+	}
 	
 
 }

@@ -80,24 +80,36 @@ input[type=checkbox] {
 
                       <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
-                           &nbsp;<input type="checkbox" class="form-check-input">
+                           &nbsp;<input type="checkbox" class="form-check-input"  id="chkAll">
                             </a>
                       </li>
-                    	
+                    
+					<script>
+					 $(function(){
+	                        $("#chkAll").click(function(){
+	                            if($(this).is(":checked")){
+	                                $("input[name=check]").attr("checked",true);
+	                            }else{
+	                                $("input[name=check]").attr("checked",false);
+	                            }
+	                        })
+	                    })
+
+					</script>                    
             
                       <li class="nav-item dropdown">
                           <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            <img src="resources/images/email2.png" width='15px' alt=""> 읽음
                           </a>
                           <ul class="dropdown-menu" style="font-size: 12px;">
-                            <li><a class="dropdown-item" href="#">읽음으로 표시</a></li>
-                            <li><a class="dropdown-item" href="#">안읽음으 로표시</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="readMail();">읽음으로표시</a></li>
+                            <li><a class="dropdown-item" href="#" onclick="unreadMail();">안읽음으로표시</a></li>
                             
                           </ul>
                         </li>
                         
                       <li class="nav-item">
-                        <a class="nav-link" aria-current="page" href="#">
+                        <a class="nav-link" aria-current="page" href="#"  onclick="deleteMail();">
                             <img src="resources/images/bin.png" width='15px' alt="">
                             삭제</a>
                       </li>
@@ -165,7 +177,7 @@ input[type=checkbox] {
                 			<c:choose>
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox"  value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox" name="check" class="emNo" value="${r.emNo }" data-emtype="${r.mailStatus.emType }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -191,7 +203,7 @@ input[type=checkbox] {
 	                			</c:when>
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox" value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox"name="check" class="emNo" value="${r.emNo }" data-emtype="${r.mailStatus.emType }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -353,6 +365,183 @@ input[type=checkbox] {
               })
 
             </script>
+            
+            
+             <script>
+				 var read= "resources/images/envelope.png"
+	             var nonRead = "resources/images/envelope2.png" 
+	             var $checked = $(".emNo:checked");		
+	             var tr = $checked.closest('tr');
+	             var img = tr.find('img.envelope');
+	           
+				
+	            //읽음버튼 클릭시 
+	            function readMail(){
+	            	 var $checked = $(".emNo:checked");		
+	 	             var tr = $checked.closest('tr');
+	 	             var img = tr.find('img.envelope');
+	 	             var emNo = img.attr("data-emno");
+	 	             var emType;
+	 	            
+	            	if($checked.length<1){
+	            		alert("선택된 메일이 없습니다.");
+	            		return false;
+	            	}else{
+            		
+						 let checkArr = [];
+						 let typeArr = [];
+						 
+						 $(".emNo").each(function(){
+							 if($(this).prop("checked")){
+								 checkArr.push( $(this).val() );
+
+								 var emType = $(this).data("emtype");
+								  typeArr.push(emType);
+								 }
+							
+						   });
+						 
+						 const emNoArr = checkArr.toString();
+						 const emTypeArr = typeArr.toString();
+						 
+						 console.log(emTypeArr);
+
+						 $.ajax({
+								url : "checkRead.em",
+								data : {
+									receiver: '${loginUser.memberId}',
+									emType: emTypeArr,
+									emNo : emNoArr
+								},
+								success : function(result){
+									if(result == 'success'){
+									     img.attr("src",read);
+			                			 tr.css("font-weight","300");
+			                			 unreadCount();
+									}
+								},
+								error : function(){
+									alert("읽음처리 실패했습니다.\n다시 시도해주세요.");
+									console.log("실패");
+								}
+							 })
+						   }
+					    } 
+				 
+				  function unreadMail(){
+					  var $checked = $(".emNo:checked");		
+			          var tr = $checked.closest('tr');
+			          var img = tr.find('img.envelope');
+			          var emNo = img.attr("data-emno");
+			          
+					 if($checked.length<1){
+		            		alert("선택된 메일이 없습니다.");
+		            		return false;
+		            	}else{
+	            		
+							 let checkArr = [];
+							 let typeArr = [];
+							 
+							 $(".emNo").each(function(){
+								 if($(this).prop("checked")){
+									 checkArr.push( $(this).val() );
+
+									 var emType = $(this).data("emtype");
+									  typeArr.push(emType);
+									 }
+								
+							   });
+							 
+							 const emNoArr = checkArr.toString();
+							 const emTypeArr = typeArr.toString();
+							 console.log(emTypeArr);
+
+							 $.ajax({
+									url : "checkUnRead.em",
+									data : {
+										receiver: '${loginUser.memberId}',
+										emType: emTypeArr,
+										emNo : emNoArr
+									},
+									success : function(result){
+										if(result == 'success'){
+										     img.attr("src",nonRead);
+				                			 tr.css("font-weight","bold");
+				                			 unreadCount();
+										}
+									},
+									error : function(){
+										alert("읽음처리 실패했습니다.\n다시 시도해주세요.");
+										console.log("실패");
+									}
+								 })
+		            	}
+					} 
+				 
+			
+	            </script>
+	            
+	            <script>
+                 // '삭제'버튼 클릭시 실행하는 함수
+                 function deleteMail(){
+  							 
+  						// 선택한 요소가 있는지 확인
+  						let $checked = $(".emNo:checked");
+  							 
+  						// 선택하지 않은 경우
+  						if( $checked.length < 1){
+  							alert("삭제할 메일을 선택해주세요.");
+  							return false;
+  								 
+  						} else { // 선택한 경우
+  								
+  							 if( confirm("선택한 메일을 삭제하시겠습니까?") ){
+  								 let checkArr = [];
+  								 let typeArr = [];
+  								 
+  								 $(".emNo").each(function(){
+  									 
+  									 if($(this).prop("checked")){
+  										 checkArr.push( $(this).val() );
+
+  										 var emType = $(this).data("emtype");
+  										  typeArr.push(emType);
+  									 }
+  								 });
+  								 
+  								const emNoArr = checkArr.toString();
+  								const emTypeArr = typeArr.toString();
+  								//console.log(emNoArr);
+  							
+  								$.ajax({
+  									url : "delete.em",
+  									data : {
+  										receiver : '${loginUser.memberId}',
+  										emType: emTypeArr,
+  										emNo : emNoArr
+  									},
+  									success : function(result){
+  										
+  										if(result == 'success'){
+  											alert("삭제한 메일은 휴지통에서 확인가능합니다.");
+  											location.reload();
+  										}
+  									},
+  									error : function(){
+  										alert("메일을 삭제하는데 실패했습니다.\n다시 시도해주세요.");
+  										console.log("실패");
+  									}
+  								 })
+  							   }
+  						    } 
+  						 }
+  					 
+                      
+                      </script>
+            
+               
+	   				
+			
                
 
      <!--페이징 영역-->

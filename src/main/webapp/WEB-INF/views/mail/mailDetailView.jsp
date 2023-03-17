@@ -59,8 +59,12 @@
                     <a href=""><img src="resources/images/next.png"width="20"> 전달</a>
                     <a href=""><img src="resources/images/delete.png"width="20"> 휴지통</a>
               <!--       <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a> -->
-                    <a href=""><img src="resources/images/back.png"width="20"> 목록으로</a>
-                    
+                    <a onclick="goBack();"><img src="resources/images/back.png"width="20"> 목록으로</a>
+                   <script>
+					function goBack() {
+					  history.back();
+					}
+					</script>
                 </div>
                 <br>
                 <div>
