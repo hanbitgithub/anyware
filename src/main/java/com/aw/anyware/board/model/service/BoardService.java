@@ -45,7 +45,7 @@ public interface BoardService {
 	int deleteReport(int reportNo);
 	
 	// 댓글수정
-	int updateReply(Reply r);
+	int updateReply(int replyNo);
 	
 	// 댓글삭제
 	int deleteReply(int replyNo);

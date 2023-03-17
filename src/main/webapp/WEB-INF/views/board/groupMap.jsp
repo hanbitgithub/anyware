@@ -19,7 +19,7 @@
 	* {margin: 0; padding: 0;}
 
 	#tree {
-		margin-left: 100px;
+		margin-left: 150px;
 	}
 	
 	#tree ul {
@@ -34,7 +34,7 @@
 		float: left; text-align: center;
 		list-style-type: none;
 		position: relative;
-		padding: 20px 50px 0 50px;
+		padding: 20px 60px 0 60px;
 		
 		transition: all 0.5s;
 		-webkit-transition: all 0.5s;
@@ -119,7 +119,7 @@
 	#tree li a:hover+ul ul::before{
 		border-color:  #94a0b4;
 	}
-	#button {
+#button {
     border-radius: 5px;
     border: 1px solid rgb(221, 221, 221);
     font-size: 14px;
@@ -161,7 +161,7 @@
 	<p><b>조직도</b></p> 
 	<hr>
 		<form action="">
-            <input type="text" name="keyword" value="제목으로 검색하기" id="button">
+            <input type="text" name="keyword" id="button" placeholder="이름으로 검색">
             <button type="submit" id="button">검색</button>
         </form>
 	<br>
@@ -281,7 +281,7 @@
 	  
 		<!-- The Modal -->
 		<div class="modal" id="myModal">
-		  <div class="modal-dialog modal-lg">
+		  <div class="modal-dialog modal-lg modal-dialog-centered">
 			<div class="modal-content">
 			
 			  <!-- Modal Header -->

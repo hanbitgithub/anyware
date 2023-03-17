@@ -230,11 +230,12 @@ public class BoardController {
 	 * @return
 	 */
 	@RequestMapping("update.re")
-	public String updateReply(Reply r, Board b, HttpSession session, Model model) {
+	public String updateReply(int no, Board b, HttpSession session, Model model) {
 		
 
-		int result = bService.updateReply(r);
+		int result = bService.updateReply(no);
 		
+		/*
 		if(result > 0) {
 			session.setAttribute("alertMsg", "댓글 수정이 완료되었습니다.");
 			return "redirect:detail.bo?no=" + b.getBoardNo();
@@ -242,6 +243,8 @@ public class BoardController {
 			model.addAttribute("errorMsg", "댓글 수정 실패");
 			return "common/errorPage";
 		}
+		*/
+		return new Gson().toJson(result);
 	}
 	/**
 	 * 댓글 삭제하기
@@ -251,12 +254,14 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("delete.re")
 	public String deleteReply(int no, Board b, HttpSession session, Model model) {
 		
 		int result = bService.deleteReply(no);
 		int result1 = bService.updateBoard(b);
 		
+		/*
 		if(result > 0) {
 			
 			session.setAttribute("alertMsg", "댓글 삭제가 완료되었습니다.");
@@ -266,7 +271,8 @@ public class BoardController {
 			model.addAttribute("errorMsg", "댓글 삭제 실패");
 			return "common/errorPage";
 			
-		}
+		}*/
+		return new Gson().toJson(result);
 	}
 	
 	

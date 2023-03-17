@@ -13,6 +13,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 table{
+    width: 100%;
     text-align: center;
     margin-top: 13px;
 }
@@ -79,8 +80,8 @@ table{
 	<div class="content">
 	<p><b>공지사항</b></p>
 	<hr>
-	<div class="container">
-            <input type="text" value="제목으로 검색하기" class="button">
+	<div class="">
+            <input type="text" placeholder="제목으로 검색하기" class="button">
             <button type="submit" class="button">검색</button>
             <br>
 

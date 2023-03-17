@@ -196,7 +196,7 @@ textarea {
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
 								+ "<p>" + list[i].replyContent + "</p>"
-								+ "<a style='color:gray;' href='#'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply();'>삭제</a>"
+								+ "<a style='color:gray;' onclick='updateReply(" + list[i].replyNo + ");' >수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
 								+ "</td>"
 								+ "</tr>";
 						}else{
@@ -220,8 +220,32 @@ textarea {
     			}
     		})
     	}
-		
+    </script>
 
+    <script>
+	$(function(){
+		selectReplyList();
+	})
+	function deleteReply(replyNo){
+		$.ajax({
+			url:"delete.re",
+			data:{no:replyNo},
+			success:function(result){
+				
+				console.log(result);
+				
+				if(result>0){	
+					selectReplyList();
+					alert("성공적으로 삭제되었습니다.");
+				} else {			
+					alert("댓글 삭제 실패");
+				}
+				
+			},error:function(){
+				console.log("ajax 댓글 삭제 실패")
+			}
+		})
+	}
     </script>
     
            <!-- 신고 모달 -->

@@ -21,7 +21,7 @@
 </resultMap>
 
   <select id="selectMemberList" resultMap="groupMapResult">
-    select
+   select
     		member_no,
     		dept_name,
     		job_name,
@@ -39,6 +39,14 @@
     		profile_url
     	from tb_member
        where status = 'Y'
+       order by (
+            case job_name
+                when '부장' then 1
+                when '과장' then 2
+                when '대리' then 3
+                else 4
+                end
+                )asc
     		
   </select>
   
@@ -62,6 +70,7 @@
     	from tb_member
        where status = 'Y' 
        and member_no = ${memberNo}
+       
        
     		
   </select>

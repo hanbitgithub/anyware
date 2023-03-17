@@ -107,8 +107,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int updateReply(Reply r) {
-		return bDao.updateReply(sqlSession, r);
+	public int updateReply(int replyNo) {
+		return bDao.updateReply(sqlSession, replyNo);
 	}
 
 	@Override

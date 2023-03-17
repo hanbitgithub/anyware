@@ -106,8 +106,8 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.deleteReport", reportNo);
 	}
 
-	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
-		return sqlSession.update("boardMapper.updateReply", r);
+	public int updateReply(SqlSessionTemplate sqlSession, int replyNo) {
+		return sqlSession.update("boardMapper.updateReply", replyNo);
 	}
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {

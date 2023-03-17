@@ -21,6 +21,7 @@ table{
     border: 1px solid rgb(221, 221, 221);
     font-size: 14px;
     margin-top: 13px;
+	height: 25px;
 }
 .page_wrap {
 	text-align:center;
@@ -93,8 +94,13 @@ table{
 	</c:choose>
 	
 	<hr>
-	<div class="container">
-            <input type="text" value="제목으로 검색하기" class="button">
+	<div class="">
+			<select name="" id="" class="button">
+				<option value="전체">전체</option>
+				<option value="제목">제목</option>
+				<option value="작성자">작성자</option>
+			</select>
+            <input type="text" placeholder="제목으로 검색하기" class="button" style="display: inline-block;">
             <button type="submit" class="button">검색</button>
             <br>
 
