@@ -547,7 +547,10 @@ a {
                 <br>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>주소</b></div>
-                    <div class="profileContent2"><input type="text" name="address" value="서울시"></div>
+                    <div class="profileContent2">
+                    	<input type="text" name="address" value="서울시">
+                    	<input type="text" name="detailAddress" value="서울시">
+                    </div>
                 </div>
                 <div id="employProfile-div3">
                     <button id="findAddressBtn" type="button" data-toggle="modal" data-target="#findAddress">주소찾기</button>

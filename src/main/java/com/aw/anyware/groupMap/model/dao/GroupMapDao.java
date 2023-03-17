@@ -14,6 +14,10 @@ public class GroupMapDao {
 		return (ArrayList)sqlSession.selectList("groupMapMapper.selectMemberList");
 	}
 
+	public ArrayList<GroupMap> ajaxSelectMemberList(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("groupMapMapper.ajaxSelectMemberList", memberNo);
+	}
+
 	
 	
 }

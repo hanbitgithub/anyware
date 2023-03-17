@@ -543,6 +543,7 @@ public class MailDao {
 		int result = 0;		
 		for(MailStatus ms : list) {		
 				result += sqlSession.update("mailMapper.checkReadMail", ms);
+
 		}
 		
 		return result;
@@ -557,6 +558,7 @@ public class MailDao {
 		int result = 0;		
 		for(MailStatus ms : list) {		
 				result += sqlSession.update("mailMapper.uncheckReadMail", ms);
+
 		}
 		
 		return result;

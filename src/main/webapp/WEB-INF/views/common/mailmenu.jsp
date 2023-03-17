@@ -167,7 +167,7 @@ a{
               <!--  <a href="test.do">테스트</a> -->
             <ul>
                 <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary"></span></li>
-                <li><a href="sendbox.em">보낸메일함</a> <!-- <button class="btn2 btn-primary">수신확인</button> --></li> 
+                <li><a href="sendbox.em">보낸메일함</a> <!-- <button class="btn2">수신확인</button> --> </li> 
                 <li><a href="important.em">중요메일함</a></li>         
                 <li><a href="sendToMebox.em">내게쓴메일함</a></li>
                 <li><a href="storage.em">임시보관함</a></li>

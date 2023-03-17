@@ -14,7 +14,7 @@ import lombok.ToString;
 public class MailStatus {	
 
 	private String emNo;
-	private int emType;
+	private String emType;
 	private String receiverName;
 	private String receiver;
 	private String read;
@@ -25,6 +25,7 @@ public class MailStatus {
 	private String tempSave;
 	private String emTypes;
 
+	private String box;
 	private String sender;
 
 	

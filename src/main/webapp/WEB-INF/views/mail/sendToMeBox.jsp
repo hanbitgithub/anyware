@@ -179,7 +179,7 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
-			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
+			                			<td width="700"class="mail-title">${r.emTitle }<input type="hidden" name="mailNo" value="${r.emNo }"></td>
 			                			<td width="50">
 			                				<c:if test="${r.mailFile.atcount > 0}">
 			                					<img src="resources/images/paper-clip.png" width="16">
@@ -206,7 +206,7 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
-			                			<td width="700"><a href="mail.em?no=${r.emNo}">${r.emTitle }</a></td>
+			                			<td width="700" class="mail-title">${r.emTitle }<input type="hidden" name="mailNo" value="${r.emNo }"></td>
 			                			<td width="50">
 			                				
 			                				<c:if test="${r.mailFile.atcount > 0}">
@@ -223,7 +223,31 @@ input[type=checkbox] {
                 </c:choose>
              
             </table>
-      
+      		
+      		<form id="mailDetail" action="" method="post">
+			<input type="hidden" name="box" value="3">
+			<input type="hidden" name="emType" value="3">
+			<input type="hidden" name="emNo" id="detailNo">
+			<input type="hidden" name="receiver" value="${loginUser.memberId}">
+			</form>
+			
+			<script>
+			// '메일 조회'시 실행하는 함수
+			$(function(){
+				$(".mail-title").click(function(){
+					var $tr = $(this).closest("tr");
+					
+					let emNo = $(this).children('input[type=hidden]').val();
+					//console.log(emNo);
+					$("#detailNo").val(emNo);
+				
+					$(".mstatus"+emNo ).css("font-weight","300");
+					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
+					$("#mailDetail").attr("action", 'mail.em').submit();
+
+				})
+			})	
+			</script>
             
             
             <script>

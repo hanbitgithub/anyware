@@ -29,6 +29,7 @@ public class Member {
 	private String email;
 	private String phone;
 	private String address;
+	private String detailAddress; // 신규사원 등록시 필요한 항목
 	private String status;
 	private String enrollDate;
 	private String outDate;

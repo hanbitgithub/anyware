@@ -187,7 +187,7 @@ input[type=checkbox] {
                 			<c:choose>
                 				<c:when test="${r.mailStatus.read eq 'Y' }">
 			                		<tr style="font-size: 14px;" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox" name="check" class="emNo" value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox" name="check" class="emNo" value="${r.emNo }" data-emtype="${r.mailStatus.emType }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -214,7 +214,7 @@ input[type=checkbox] {
 	                			</c:when>
 	                			<c:otherwise>
 	                				<tr style="font-size: 14px; font-weight: bold" class="mstatus${r.emNo}"> 
-			                			<td width="25"><input type="checkbox" name="check"  class="emNo" value="${r.emNo }"></td>
+			                			<td width="25"><input type="checkbox" name="check"  class="emNo" value="${r.emNo }"data-emtype="${r.mailStatus.emType }"></td>
 			                			<td width="25">
 			                			<c:choose>
 			                				<c:when test="${r.mailStatus.important eq 'N' }">
@@ -251,6 +251,7 @@ input[type=checkbox] {
             </table>
             
             <form id="mailDetail" action="" method="post">
+            <input type="hidden" name="box" value="1">
 			<input type="hidden" name="emType" value="1">
 			<input type="hidden" name="emNo" id="detailNo">
 			<input type="hidden" name="receiver" value="${loginUser.memberId}">
@@ -260,10 +261,13 @@ input[type=checkbox] {
 			// '메일 조회'시 실행하는 함수
 			$(function(){
 				$(".mail-title").click(function(){
-					
+					var $tr = $(this).closest("tr");
 					let emNo = $(this).children('input[type=hidden]').val();
 					//console.log(emNo);
 					$("#detailNo").val(emNo);
+					
+					$(".mstatus"+emNo ).css("font-weight","300");
+					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
 					$("#mailDetail").attr("action", 'mail.em').submit();
 
 				})
@@ -389,27 +393,35 @@ input[type=checkbox] {
 	 	             var tr = $checked.closest('tr');
 	 	             var img = tr.find('img.envelope');
 	 	             var emNo = img.attr("data-emno");
+	 	            var emType;
+	 	             
 	            	if($checked.length<1){
 	            		alert("선택된 메일이 없습니다.");
 	            		return false;
 	            	}else{
             		
 						 let checkArr = [];
+						 let typeArr = [];
 						 
 						 $(".emNo").each(function(){
 							 if($(this).prop("checked")){
 								 checkArr.push( $(this).val() );
+								 var emType = $(this).data("emtype");
+								  typeArr.push(emType);
 								 }
 							
 						   });
 						 
 						 const emNoArr = checkArr.toString();
+						 const emTypeArr = typeArr.toString();
+						 console.log(emNoArr);
+						 console.log(emTypeArr);
 
 						 $.ajax({
 								url : "checkRead.em",
 								data : {
 									receiver: '${loginUser.memberId}',
-									emType: 1,
+									emType: emTypeArr,
 									emNo : emNoArr
 								},
 								success : function(result){
@@ -438,21 +450,25 @@ input[type=checkbox] {
 		            	}else{
 	            		
 							 let checkArr = [];
+							 let typeArr = [];
 							 
 							 $(".emNo").each(function(){
 								 if($(this).prop("checked")){
 									 checkArr.push( $(this).val() );
+									 var emType = $(this).data("emtype");
+									  typeArr.push(emType);
 									 }
 								
 							   });
 							 
 							 const emNoArr = checkArr.toString();
+							 const emTypeArr = typeArr.toString();
 
 							 $.ajax({
 									url : "checkUnRead.em",
 									data : {
 										receiver: '${loginUser.memberId}',
-										emType: 1,
+										emType: emTypeArr,
 										emNo : emNoArr
 									},
 									success : function(result){
@@ -490,22 +506,26 @@ input[type=checkbox] {
   								
   							 if( confirm("선택한 메일을 삭제하시겠습니까?") ){
   								 let checkArr = [];
+  							     let typeArr = [];
   								 
   								 $(".emNo").each(function(){
   									 
   									 if($(this).prop("checked")){
   										 checkArr.push( $(this).val() );
+  										 var emType = $(this).data("emtype");
+  										  typeArr.push(emType);
   									 }
   								 });
   								 
   								const emNoArr = checkArr.toString();
-  								console.log(emNoArr);
+  								const emTypeArr = typeArr.toString();
+  								//console.log(emNoArr);
   							
   								$.ajax({
   									url : "delete.em",
   									data : {
   										receiver: '${loginUser.memberId}',
-  										emType: 1,
+  										emType: emTypeArr,
   										emNo : emNoArr
   									},
   									success : function(result){
