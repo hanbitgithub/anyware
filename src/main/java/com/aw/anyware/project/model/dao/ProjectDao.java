@@ -45,13 +45,26 @@ public class ProjectDao {
 	}
 
 	public ArrayList<Project> searchProject(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		PageInfo pi = (PageInfo)map.get("pi");
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		
+		return (ArrayList)sqlSession.selectList("projectMapper.searchProject", map, rowBounds);
+	}
+
+	public int selectMyListCount(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.selectOne("projectMapper.selectMyListCount", memberNo);
+	}
+
+	public ArrayList<Project> selectMyProjectList(SqlSessionTemplate sqlSession, int memberNo, PageInfo pi) {
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.searchProject", map);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectMyProjectList", memberNo, rowBounds);
 	}
 	
-	public ArrayList<Member> selectDept(SqlSessionTemplate sqlSession) {
-		return (ArrayList)sqlSession.selectList("projectMapper.selectDept");
-	}
+	
 	
 }

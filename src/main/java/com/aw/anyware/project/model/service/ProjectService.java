@@ -27,9 +27,9 @@ public interface ProjectService {
 	// 즐겨찾기 해제 서비스(delete)
 	int deleteLike(Like like);
 	
-	// 사원 조회용 서비스(select)
-	ArrayList<Member> selectDept();
-	ArrayList<Member> selectMember();
+	// 참여중인 프로젝트 리스트 조회 서비스(select)
+	int selectMyListCount(int memberNo);
+	ArrayList<Project> selectMyProjectList(int memberNo, PageInfo pi);
 	
 	
 }

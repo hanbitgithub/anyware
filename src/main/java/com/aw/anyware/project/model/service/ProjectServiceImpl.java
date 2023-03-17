@@ -56,15 +56,15 @@ public class ProjectServiceImpl implements ProjectService {
 	public int deleteLike(Like like) {
 		return pDao.deleteLike(sqlSession, like);
 	}
-	
+
 	@Override
-	public ArrayList<Member> selectDept() {
-		return pDao.selectDept(sqlSession);
+	public int selectMyListCount(int memberNo) {
+		return pDao.selectMyListCount(sqlSession, memberNo);
 	}
 
 	@Override
-	public ArrayList<Member> selectMember() {
-		return null;
+	public ArrayList<Project> selectMyProjectList(int memberNo, PageInfo pi) {
+		return pDao.selectMyProjectList(sqlSession, memberNo, pi);
 	}
 
 }

@@ -778,6 +778,7 @@ select
 	    , read
         , important
         , trash
+        , em_type
         , temp_save
         , ( select count(emf_no)
               from tb_mail_file  f
@@ -787,6 +788,7 @@ select
 	left join tb_mail_file f on (m.em_no = f.em_no)
 	where sender= #{memId} and s.receiver is null
      and temp_stock = 'Y'
+     and trash = 'N'
    order by m.em_no desc
 
 </select>
@@ -958,8 +960,6 @@ select
      		and  receiver = #{receiver}
      	</otherwise>
      </choose>
-     
-
 
 </update>
 
@@ -1005,10 +1005,43 @@ select
      </when>
      </choose>
 
-
-
 </select>
 
+
+<delete id="deleteTrashMail">
+delete 
+  from tb_mail_status
+  where trash = 'Y'
+  and em_no = #{emNo}
+  and em_type = #{emType}
+  <choose>
+     	<when test="receiver == null">
+     	   and  receiver is null
+     	</when>
+     	<otherwise>
+     		and  receiver = #{receiver}
+     	</otherwise>
+     </choose>
+
+
+
+</delete>
+
+<!-- 휴지통 메일 복구  -->
+<update id="restoreTrashMail">
+update tb_mail_status
+     set trash = 'N'
+     where em_no = #{emNo}
+     <choose>
+     	<when test="receiver == null">
+     	   and  receiver is null
+     	</when>
+     	<otherwise>
+     		and  receiver = #{receiver}
+     	</otherwise>
+     </choose> 
+
+</update>
 
 
 </mapper>

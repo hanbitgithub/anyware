@@ -105,8 +105,8 @@ input[type=checkbox] {
                            <img src="resources/images/email2.png" width='15px' alt=""> 읽음
                           </a>
                           <ul class="dropdown-menu" style="font-size: 12px;">
-                            <li><a class="dropdown-item" onclick="readMail();">읽음으로 표시</a></li>
-                            <li><a class="dropdown-item" onclick="unreadMail();">안읽음으 로표시</a></li>
+                            <li><a class="dropdown-item" onclick="readMail();">읽음으로표시</a></li>
+                            <li><a class="dropdown-item" onclick="unreadMail();">안읽음으로표시</a></li>
                             
                           </ul>
                         </li>

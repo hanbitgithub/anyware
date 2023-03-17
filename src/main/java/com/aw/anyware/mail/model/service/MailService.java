@@ -137,6 +137,12 @@ public interface MailService {
 	
 	//메일상세조회 
 	Mail selectMailDetail(MailStatus ms);
+	
+	//선택메일 완전삭제
+	int deleteTrashMail(ArrayList<MailStatus> list);
+	
+	//선택메일 복구
+	int restoreTrashMail(ArrayList<MailStatus> list);
 
 	
 }
