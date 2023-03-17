@@ -1,5 +1,7 @@
 package com.aw.anyware.project.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,5 +24,7 @@ public class Project {
 	private String status;
 	
 	private String like;
+	private int count;
+	private String participant;
 
 }

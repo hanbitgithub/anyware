@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
@@ -55,7 +54,7 @@ public class ProjectController {
 	
 	@RequestMapping("search.pj")
 	public String searchProject(String condition, String keyword, @RequestParam(value="cpage", defaultValue="1")int currentPage, 
-								HttpServletRequest request, RedirectAttributes re) {
+								HttpServletRequest request, Model model) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("condition", condition);
@@ -65,14 +64,16 @@ public class ProjectController {
 		int listCount = pService.selectSearchListCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
-		ArrayList<Project> list = pService.searchProject(map);
-		
-		map.put("list", list);
 		map.put("pi", pi);
 		
-		re.addFlashAttribute(map);
+		ArrayList<Project> list = pService.searchProject(map);
 		
-		return "redirect:list.pj";
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
+		return "project/projectListView";
 	}
 	
 	@ResponseBody
@@ -93,6 +94,21 @@ public class ProjectController {
 		return result > 0 ? "success" : "fail";
 	}
 	
+	@RequestMapping("mylist.pj")
+	public String myProjectListView(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpServletRequest request, Model model ) {
+		
+		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		int listCount = pService.selectMyListCount(memberNo);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		ArrayList<Project> list = pService.selectMyProjectList(memberNo, pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		return "project/myProjectListView";
+	}
+	
 	@RequestMapping("detail.pj")
 	public String projectDetailView() {
 		return "project/projectDetailView";
@@ -101,12 +117,6 @@ public class ProjectController {
 	@RequestMapping("detail.li")
 	public String listDetailView() {
 		return "project/listDetailView";
-	}
-	
-	@RequestMapping("participants.pj")
-	public String participantsManage() {
-		ArrayList<Member> dlist = pService.selectDept();
-		return "project/participantsManageView";
 	}
 
 }

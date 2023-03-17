@@ -7,8 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-	/* div{border: 1px solid black;} */
-	#search-project{
+    #search-project{
 		width: 300px;
 	}
 
@@ -107,19 +106,19 @@
 </style>
 </head>
 <body>
-	
-	<!-- 사이드 바  -->
+
+    <!-- 사이드 바  -->
 	<jsp:include page="../common/sidebar.jsp"></jsp:include>
 	<!-- 세부 메뉴 -->
 	<jsp:include page="../common/projectmenu.jsp"></jsp:include>
 
-	<div class="content">
+    <div class="content">
 
-		<div class="title">전체 프로젝트</div>
+		<div class="title">참여한 프로젝트</div>
 		<br>
 		
 		<div class="search-area">
-			<form action="search.pj">
+			<form action="searchmy.pj">
 				<select name="condition" id="condition">
 					<option value="title">프로젝트명</option>
 					<option value="participant">참여자</option>
@@ -151,15 +150,8 @@
 						<c:otherwise>
 							<div class="public">🔒</div>
 						</c:otherwise>
-					</c:choose>
-					<c:choose>
-						<c:when test="${ l.count ne 0 }">
-							<div class="project-people">${ l.owner } 외 ${ l.count }</div>
-						</c:when>
-						<c:otherwise>
-							<div class="project-people">${ l.owner }</div>
-						</c:otherwise>
-					</c:choose>
+					</c:choose>	
+					<div class="project-people">${ l.owner }</div>
 					<c:choose>
 						<c:when test="${ l.like eq '1' }">
 							<div class="favorite" onclick="clickHeart(this);">💙</div>
@@ -218,10 +210,10 @@
 			<c:if test="${ pi.currentPage ne 1 }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
+						<a class="pagebtn" href="mylist.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }">&lt;</a>
+						<a class="pagebtn" href="searchmy.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -229,10 +221,10 @@
 			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ p }">${ p }</a>
+						<a class="pagebtn" href="mylist.pj?cpage=${ p }">${ p }</a>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }">${ p }</a>
+						<a class="pagebtn" href="searchmy.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }">${ p }</a>
 					</c:otherwise>
 				</c:choose>
 				
@@ -241,10 +233,10 @@
 			<c:if test="${ pi.maxPage ne 0 and pi.currentPage ne pi.maxPage }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }">&gt;</a>
+						<a class="pagebtn" href="mylist.pj?cpage=${ pi.currentPage + 1 }">&gt;</a>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }">&gt;</a>
+						<a class="pagebtn" href="searchmy.pj?cpage=${ pi.currentPage + 1 }">&gt;</a>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
