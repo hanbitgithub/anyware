@@ -240,8 +240,8 @@ a{
 					<span><input type="text" name="addName" id="addName"></span>
 
 					<div class="update-addBtn">
-						<a id="insertAddIndiv" onclick="insertAddGroup();"><iclass="fas fa-check"></i></a>
-						 <a onclick="dismissInsertAdd();"><iclass="fas fa-times"></i></a>
+						<a id="insertAddIndiv" onclick="insertAddGroup();"><i class="fas fa-check"></i></a>
+						 <a onclick="dismissInsertAdd();"><i class="fas fa-times"></i></a>
 					</div>
 				</div>
 			</div>

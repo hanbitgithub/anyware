@@ -373,7 +373,7 @@
 <!-- 받은메일 리스트  -->
 <select id="selectReceiveMailList" resultMap="mailResult">
 	select m.em_no
-	     , em_title
+	     , NVL(em_title,'제목없음') "em_title"
 	     , em_content
 	     , mem_name
 	     , sender
@@ -481,7 +481,7 @@
  select 
  		 m. em_no
         , sender
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
@@ -601,7 +601,7 @@
         , sender
         , mem_name
         , em_type
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
@@ -721,7 +721,7 @@ select
  		 m. em_no
  		, mem_name 
         , sender
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
@@ -754,7 +754,7 @@ select
 	from tb_mail m
     left join tb_mail_status s on (m.em_no=s.em_no)
 	left join tb_mail_file f on (m.em_no = f.em_no)
-	where sender= #{memId} and s.receiver is null
+	where sender= #{memId} and (s.receiver is null or s.receiver = #{memId})
      and temp_stock = 'Y'
    order by m.em_no desc
 
@@ -766,7 +766,7 @@ select
 <select id="selectTempStorageMailList" resultMap="mailResult">
 select 
  		 m. em_no
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
         , mem_name
         , sender
@@ -786,7 +786,7 @@ select
 	from tb_mail m
     left join tb_mail_status s on (m.em_no=s.em_no)
 	left join tb_mail_file f on (m.em_no = f.em_no)
-	where sender= #{memId} and s.receiver is null
+	where sender= #{memId} and (s.receiver is null or s.receiver = #{memId})
      and temp_stock = 'Y'
      and trash = 'N'
    order by m.em_no desc
@@ -921,7 +921,7 @@ select
         , sender
         , mem_name
         , em_type
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
@@ -971,7 +971,7 @@ select
         , sender
         , mem_name
         , em_type
-	    , em_title
+	    , NVL(em_title,'제목없음') "em_title"
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name

@@ -33,6 +33,9 @@
 input[type=checkbox] {
 	transform : scale(1.01);
 }
+#search{
+ 	width:250px;
+ }
 .btn2{
 	border:1px solid  rgb(201, 201, 201);
 	border-radius:5px;
@@ -118,11 +121,11 @@ input[type=checkbox] {
                             <img src="resources/images/next.png" width='15px' alt="">
                             전달</a>
                       </li>
-                       <li class="nav-item">
+                       <!-- <li class="nav-item">
                         <a class="nav-link" href="#">
                             <img src="resources/images/cancel.png" width='18px' alt="">
                             회수</a>
-                      </li>
+                      </li> -->
                       <!-- <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <img src="resources/images/outbox.png" width='15px' alt="">
@@ -151,7 +154,7 @@ input[type=checkbox] {
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" name="keyword" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search" name="keyword" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>

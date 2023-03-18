@@ -637,7 +637,7 @@ public class MailController {
 	    	//메일 상태 insert
 	    	if(result1>0) {
 	    		MailStatus ms = new MailStatus();
-		    	ms.setEmType("0");
+		    	ms.setEmType("3");
 		    	ms.setReceiverName(memName);
 		    	ms.setReceiver(sender);
 		    	ms.setTempSave("Y");
@@ -804,7 +804,7 @@ public class MailController {
 		   case "3" : 
 			   title = "내게쓴메일함";
 			   detail = mService.selectMailDetail(ms);
-		   
+			   break;
 		   case "4" : 
 			   title = "임시보관함";
 			   detail = mService.selectMailDetail(ms);
@@ -1226,6 +1226,7 @@ public class MailController {
 		return result > 0 ? "success": "fail";
 	}
 
+	//휴지통 메일 복구 
 	@ResponseBody
 	@RequestMapping("restore.em")
 	public String restoreTrashMail(MailStatus ms) {
@@ -1256,6 +1257,17 @@ public class MailController {
 		
 		return result > 0 ? "success": "fail";
 	}
+	
+	
+	@RequestMapping("replyMail.em")
+	public String replyMailForm(MailStatus ms) {
+		
+		return "mail/replyMailForm";
+	}
+	
+
+	
+	
 	
 
 }
