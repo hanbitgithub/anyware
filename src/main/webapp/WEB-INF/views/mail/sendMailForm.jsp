@@ -192,34 +192,10 @@
                 
                 <script>
 
-				// 메일 '전송'시 실행하는 함수
-				function sendMail() {
-					if ($("#receivers").val().trim() == 0) {
-						// 받는 사람 주소 없는 경우
-						alert("받는 사람을 입력해 주세요.");
-					} else {
-						if ($("#title").val().trim() == 0) {
-							// 메일 제목이 없는 경우
-							let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
-							if (answer) {
-								$("#mailForm").submit(); // 메일 전송
-							} else {
-								$("#title").focus();
-								return false; // 메일 전송 안됨
-							}
-						}
-						// 제목이 입력된 경우
-						// 메일 전송
-						$("#mailForm").submit();
-					}
-				}
-				
-				</script>
-				<script>
 				//메일 임시저장 버튼 클릭시 실행하는 함수 
 			    let isSaved = false; // 임시저장 여부를 체크하는 변수
 				let emNo;
-				
+
 				function saveTemp(){
 					
 				    let formData = new FormData($("#mailForm")[0]);
@@ -295,6 +271,33 @@
 						      }
 					  
 				}
+				
+				</script>
+				<script>
+				
+				// 메일 '전송'시 실행하는 함수
+				function sendMail() {
+					if ($("#receivers").val().trim() == 0) {
+						// 받는 사람 주소 없는 경우
+						alert("받는 사람을 입력해 주세요.");
+					} else {
+						if ($("#title").val().trim() == 0) {
+							// 메일 제목이 없는 경우
+							let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 보내시겠습니까?");
+							if (answer) {								
+								  	$("#mailForm").submit(); // 메일 전송
+								
+							} else {
+								$("#title").focus();
+								return false; // 메일 전송 안됨
+							}
+						}
+						// 제목이 입력된 경우
+						// 메일 전송
+						$("#mailForm").submit();
+					}
+				}
+				
 			</script>
     
             <div>
@@ -395,15 +398,16 @@
                             <th height="40px">첨부파일</th>
                             <td>
                           	   <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files
-                          	   <div class="dropBox file-list">
+                          	   <div class="dropBox">
 									
 								</div> 
                           	   </div>
                                <input type="file" name="upfile" id="upfile"   onchange="addFile();" multiple/>
-                            	<span class="fileMsg" style="font-size:13px">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-							    <!-- <div class="dropBox file-list">
+                            	<span class="fileMsg" style="font-size:13px"></span>
+							    <div class="dropBox file-list">
+
 									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-								</div>  -->
+								</div>  
                             	
                             </td>
                         </tr>
@@ -501,7 +505,7 @@
 					htmlData += '</div>';
 		
 				}
-				$(".dragAndDropDiv").removeAttr("onclick")
+				//$(".dragAndDropDiv").removeAttr("onclick")
 				$(".file-list").html(htmlData); // change가 발생할 때마다 목록 초기화한 뒤 넣어짐
 
 			}

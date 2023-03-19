@@ -69,7 +69,7 @@
 	<result column="em_content" property="emContent" />
 	<result column="mem_name" property="memName" />
 	<result column="sender" property="sender" />
-	<result column="receiver" property="receivers" />
+	<result column="receivers" property="receivers" />
 	<result column="ref_email" property="refEmail" />
 	<result column="send_date" property="sendDate" />
 	<result column="temp_stock" property="tempStock" />
@@ -664,7 +664,8 @@
 <!-- 메일 읽음으로 표시 -->
 <update id="checkReadMail">
 	update tb_mail_status
-	   set read = 'Y'
+	   set read = 'Y',
+	       read_time = SYSDATE
 	 where em_no = #{emNo}
 	  and em_type = #{emType}
 	<choose>
@@ -975,7 +976,8 @@ select
 	    , em_content
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , receiver_name
-	    , m.receiver
+	    , m.receiver "receivers"
+	    , s.receiver
         , ref_email
 	    , read
 	    , important
@@ -1007,7 +1009,7 @@ select
 
 </select>
 
-
+<!-- 휴지통메일 완전삭제  -->
 <delete id="deleteTrashMail">
 delete 
   from tb_mail_status
@@ -1042,6 +1044,22 @@ update tb_mail_status
      </choose> 
 
 </update>
+
+<!-- 답장 메일 조회  -->
+<select id="selectReplyMail" resultMap="mailResult">
+ select 
+        em_no
+       ,NVL(em_title,'제목없음') "em_title"
+       ,em_content
+       ,mem_name
+       ,sender
+       ,receiver 
+       ,ref_email
+       ,to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+  from tb_mail
+  where em_no = #{emNo}     
+
+</select>
 
 
 </mapper>

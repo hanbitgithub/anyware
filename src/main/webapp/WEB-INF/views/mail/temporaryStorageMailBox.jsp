@@ -100,11 +100,11 @@ input[type=checkbox] {
                             <img src="resources/images/next.png" width='15px' alt="">
                             전달</a>
                       </li>
-                      <li class="nav-item">
+                      <!-- <li class="nav-item">
                         <a class="nav-link" aria-current="page" href="#">
                             <img src="resources/images/refresh2.png" width='15px' alt="">
                             이어쓰기</a>
-                      </li>
+                      </li> -->
                        
                       <!-- <li class="nav-item dropdown">
                         <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -279,7 +279,7 @@ input[type=checkbox] {
 					
 					$(".mstatus"+emNo ).css("font-weight","300");
 					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
-					$("#mailDetail").attr("action", 'mail.em').submit();
+					$("#mailDetail").attr("action", 'tempMail.em').submit();
 
 				})
 			})	

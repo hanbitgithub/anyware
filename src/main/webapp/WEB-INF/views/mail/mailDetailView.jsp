@@ -55,9 +55,18 @@
 
             <div id="send-area">
                 <div id="btn-area">
-                    <a href=""><img src="resources/images/send (1).png"width="20"> 답장</a>
-                    <a href=""><img src="resources/images/next.png"width="20"> 전달</a>
-                    <a href=""><img src="resources/images/delete.png"width="20"> 휴지통</a>
+                    <a onclick="replyEm();"><img src="resources/images/send (1).png"width="20"> 답장</a>
+                    <a onclick="forwardEm();"><img src="resources/images/next.png"width="20"> 전달</a>
+                    
+                    <c:choose>
+                    <c:when test="${box eq 5}">
+                    	<a onclick="deleteEm();"><img src="resources/images/delete.png"width="20"> 영구삭제</a>
+                    </c:when>
+                    <c:otherwise>
+                    	 <a onclick="deleteEm();"><img src="resources/images/delete.png"width="20"> 휴지통</a>
+                    </c:otherwise>
+                    </c:choose>
+                   
               <!--       <a href=""><img src="resources/images/no-spam.png"width="20"> 스팸차단</a> -->
                     <a onclick="goBack();"><img src="resources/images/back.png"width="20"> 목록으로</a>
                    <script>
@@ -161,8 +170,103 @@
                        
 
                     </table>
-                   
                     
+                    <form id="mailDetail" action="" method="post">
+						<input type="hidden" name="emNo" id="detailNo" value="${m.emNo }">
+						<input type="hidden" name="emType" value="${m.mailStatus.emType}">
+						<input type="hidden" name="receiver" value="${m.mailStatus.receiver}">
+					    <input type="hidden" name="sender" value="${m.sender }">
+					    <input type="hidden" name="box" value="${box }">
+					</form>
+                   
+                   
+                    <script>
+                    //메일 답장하기 버튼 클릭시 
+                    function replyEm(){
+       					$("#mailDetail").attr("action", 'reply.em').submit();
+
+                    }
+                    
+                    
+                    
+                    </script>
+                    <script>
+                    $(function(){
+                    	console.log("emNo:"+ $("input[name=emNo]").val());
+                    	console.log("emType:"+ $("input[name=emType]").val());
+                    	console.log("receiver :"+$("input[name=receiver]").val());
+                    	console.log("sender :"+ $("input[name=sender]").val());
+                    	console.log("box:" +$("input[name=box]").val());
+                    })
+                    </script>
+                    
+                    
+                <script>
+                //메일 삭제 클릭시 
+                function deleteEm(){
+
+				let emNo = $("input[name=emNo]").val();
+				let emType =  $("input[name=emType]").val();
+				let box = '${box}';
+				
+				// --------- 휴지통에서 삭제하는 경우 -----------
+				if(box == '5'){
+					
+					if(confirm("휴지통의 메일을 지우면 지워진 메일들은 복구할 수 없습니다.\n 메일을 삭제하시겠습니까?")){
+					$.ajax({
+						url : "removeMail.em",
+						data : {
+							sender : '${loginUser.memberId}',
+							receiver : '${loginUser.memberId}',
+							emNo : emNo,
+							emType : emType
+						},
+						success : function(result){
+							console.log(result);
+							if(result == 'success'){
+								 location.href="trash.em";
+							}		
+						},
+						error : function(){
+							console.log("메일 삭제 실패");
+						}
+					})	
+				}
+
+				} else {
+				// --------- 휴지통 외에서 삭제하는 경우 -----------
+					$.ajax({
+						url : "deleteMail.em",
+						data : {
+							sender : '${loginUser.memberId}',
+							receiver : '${loginUser.memberId}',
+							emNo : emNo,
+							emType : emType
+						},
+						success : function(result){
+							console.log(result);
+							if(result == 'success'){
+								switch(box){
+								case "0" : location.href="sendbox.em"; break; 
+								case "1" : location.href="receivebox.em"; break;
+								case "2" : location.href="important.em"; break;
+								case "3" : location.href="sendToMebox.em"; break;
+								case "4" : location.href="storage.em"; break;
+								
+								}
+								
+								alert("메일이 휴지통으로 이동되었습니다.");
+							}	
+						},
+						error : function(){
+							console.log("메일 삭제 실패");
+						}
+					})
+				}
+			}
+                    
+                    
+                    </script>
 
                 </div>
 

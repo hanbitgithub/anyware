@@ -762,6 +762,7 @@ public class MailController {
 		model.addAttribute("list", list);
 		model.addAttribute("pi",pi);
 		model.addAttribute("count",listCount);
+		
 		return "mail/trashMailBox";
 	}
 	
@@ -823,16 +824,12 @@ public class MailController {
 		
 		model.addAttribute("title", title);
 		model.addAttribute("m",detail);
+		model.addAttribute("box", box);
 		
 		return "mail/mailDetailView";
 	}
 	
 	
-	
-	@RequestMapping("detail.em")
-	public String receiveMailDetail() {
-		return "mail/receiveMailDetail";
-	}
 	
 	//메일 작성폼 
 	@RequestMapping("sendForm.em")
@@ -1086,6 +1083,8 @@ public class MailController {
 	
 		return "mail/successSendmail";
 	}
+	
+	// 선택메일 삭제 (휴지통)
 	@ResponseBody
 	@RequestMapping("delete.em")
 	public String deleteMail(MailStatus ms) {
@@ -1259,15 +1258,125 @@ public class MailController {
 	}
 	
 	
+	//답장하기 페이지 
 	@RequestMapping("replyMail.em")
-	public String replyMailForm(MailStatus ms) {
+	public String replyMailForm(MailStatus ms,Model model) {
+		// 
+			if(ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
+				ms.setReceiver(null);
+			}
+			 
+
+			String box = ms.getBox();
+			
+			String title = "";
+			Mail detail = new Mail(); // 메일 상세조회
+	
+				switch(box) {
+			   //보낸메일
+			   case "0" : 
+				   title = "보낸메일함";
+				   detail = mService.selectMailDetail(ms);
+				   break;
+				
+			   case "1" : 
+				   title = "받은메일함";
+				   detail = mService.selectMailDetail(ms);
+				   break;
+				
+			   case "2" :
+				  title = "중요메일함";
+				  detail = mService.selectMailDetail(ms);
+				  break; 
+				/*
+				 * case "3" : title = "내게쓴메일함"; detail = mService.selectMailDetail(ms); break;
+				 * case "4" : title = "임시보관함"; detail = mService.selectMailDetail(ms); break;
+				 * 
+				 * case "5" : title = "휴지통"; detail = mService.selectMailDetail(ms); break;
+				 */
+			   }
+			
+			
+			//System.out.println(detail);
+			
+			model.addAttribute("title", title);
+			model.addAttribute("m",detail);
+	    
+			return "mail/replyMailForm";
+	}
+	
+	//답장메일 내용조회 
+	@RequestMapping("reply.em")
+	public String ReplyMail(int emNo, Model model) {
+		Mail m = mService.selectReplyMail(emNo);
+		
+		model.addAttribute("m",m);
 		
 		return "mail/replyMailForm";
 	}
 	
+	//메일 삭제 (상세페이지에서 삭제시 )
+	@ResponseBody
+	@RequestMapping("deleteMail.em")
+	public String deleteDetailMail(MailStatus ms) {
+		if(ms.getEmType().equals("0")){
+			ms.setReceiver(null);
+		}
+		
+		int result = mService.deleteDetailMail(ms);
+		return result >0 ? "success" : "fail";
+	}
+	
 
 	
+	//메일 영구삭제 (휴지통 상세페이지에서 삭제시)
+	@ResponseBody
+	@RequestMapping("removeMail.em")
+	public String removeDetailMail(MailStatus ms) {
+		if(ms.getEmType().equals("0")){
+			ms.setReceiver(null);
+		}
+		
+		int result = mService.removeDetailMail(ms);
+		return result >0 ? "success" : "fail";
+	}
 	
 	
+	//임시저장 상세페이지 (이어쓰기)
+	@RequestMapping("tempMail.em")
+	public String temporaryMailWrite(MailStatus ms,Model model) {
+		// 상세페이지로 들어가는 순간 읽음으로표시
+			if(ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
+				ms.setReceiver(null);
+			}
+			int read = mService.checkReadMail(ms); 
+			
+			
+			String box = ms.getBox();
+			
+			String title = "";
+			Mail detail = new Mail(); // 메일 상세조회
+			
+			if(read>0) {
+			   
+			switch(box) {
+			   case "4" : 
+				   title = "임시보관함";
+				   detail = mService.selectMailDetail(ms);
+				   break;
+			
+			   }
+			
+			
+			}
+			//System.out.println(detail);
+			
+			model.addAttribute("title", title);
+			model.addAttribute("m",detail);
+			model.addAttribute("box", box);
+			
+			return "mail/tempMailForm";
+			
+	}
 
 }

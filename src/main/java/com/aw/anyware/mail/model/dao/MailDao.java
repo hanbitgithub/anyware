@@ -574,6 +574,11 @@ public class MailDao {
 	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 선택 메일 완전 삭제 
+	 */
 	public int deleteTrashMail(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
 		int result = 0;		
 		for(MailStatus ms : list) {		
@@ -584,6 +589,11 @@ public class MailDao {
 		return result;
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 선택메일 복구 
+	 */
 	public int restoreTrashMail(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
 		int result = 0;		
 		for(MailStatus ms : list) {		
@@ -595,6 +605,30 @@ public class MailDao {
 	}
 	
 
+	/**
+	 * @param sqlSession
+	 * @param emNo
+	 * @return 메일 답장상세조회 
+	 */
+	public Mail selectReplyMail(SqlSessionTemplate sqlSession, int emNo) {
+		return sqlSession.selectOne("mailMapper.selectReplyMail", emNo);
+	}
+	
+	
+	public int removeDetailMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.delete("mailMapper.deleteTrashMail",ms);
+	}
+	
+	public int deleteDetailMail(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.update("mailMapper.deleteMail",ms);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

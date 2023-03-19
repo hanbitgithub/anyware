@@ -192,7 +192,7 @@
                 
                 <script>
 
-				// 메일 '전송'시 실행하는 함수
+				// 메일 '전송'시 실행하는 함수 (임시저장 -> 전송으로 업데이트)
 				function sendMail() {
 					if ($("#receivers").val().trim() == 0) {
 						// 받는 사람 주소 없는 경우
@@ -232,44 +232,7 @@
 					            return false;
 					        }
 					    }
-					   if (!isSaved) {
-						    $.ajax({
-						        url: "save.em",
-						        processData: false,
-						        contentType: false,
-						        type: "POST",
-						        data: formData,
-						        success: function(result) {
-						            if (result > 0) {
-						            	emNo = result;
-						            	
-						            	value="";
-						            	value += "<input type='hidden' name='emNo' value='"
-						            	      + emNo
-						            	      + "'>"
-						            	      
-						                $("#input").html(value);
-						            	      
-						            	isSaved = true;
-						                $("#saveMessage").show(); // 저장완료 메시지 보이기
-						                // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
-						                setTimeout(function() {
-						                	  $("#saveMessage").hide();
-						                }, 3000); 
-						                 
-						               
-						            } else {
-						                alert("메일을 임시보관함에 저장하는데 실패했습니다.");
-						            }
-						            console.log("임시저장 ajax 성공");
-						        },
-						        error: function() {
-						            console.log("임시저장 ajax 실패");
-						        }
-						    })
-	
-						  } else {
-							  
+					   
 						        $.ajax({
 						          url: "updateTemp.em",
 						          processData: false,
@@ -298,7 +261,7 @@
 			</script>
     
             <div>
-               <form method="post" action="sendMail.em" id="mailForm" enctype="multipart/form-data">
+               <form method="post" action="=save.em" id="mailForm" enctype="multipart/form-data">
                    	<input type="hidden" name="sender" value="${loginUser.memberId }">
                     <input type="hidden" name="memName" value="${loginUser.name }">
                     <div id="input"></div>
@@ -312,7 +275,7 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input type="text" placeholder="" name="receivers" class="email" id="receivers" value="${m.memName } ${m.sender}@anyware.com ">
+                                <input type="text" placeholder="" name="receivers" class="email" id="receivers" value="${m.receivers }">
                                 <button class="btn btn-primary btn-sm" style="font-weight: bold;" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 
                             </td>
@@ -321,7 +284,7 @@
                             <th  width="120" height="40px">참조</th>
                             <td>
                              
-                                <input type="text" placeholder="" name="refEmail"  class="email" id="cc" >
+                                <input type="text" placeholder="" name="refEmail"  class="email" id="cc" value="${m.refEmail }">
                                 <button class="btn btn-primary btn-sm" type="button"style="font-weight: bold;" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                               
                             </td>
@@ -389,35 +352,40 @@
                         
                         <tr>
                             <th  width="120" height="40px">제목</th>
-                            <td><input type="text" name="emTitle" id="title" class="form-control" value="RE: ${m.emTitle }"></td>
+                            <td><input type="text" name="emTitle" id="title" class="form-control" value="${m.emTitle }"></td>
                         </tr>
                         <tr>
                             <th height="40px">첨부파일</th>
                             <td>
                           	   <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files
-                          	   <div class="dropBox file-list">
+                          	   <div class="dropBox">
 									
 								</div> 
                           	   </div>
                                <input type="file" name="upfile" id="upfile"   onchange="addFile();" multiple/>
-                            	<span class="fileMsg" style="font-size:13px">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-							    <!-- <div class="dropBox file-list">
-									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-								</div>  -->
+                            	<span class="fileMsg" style="font-size:13px"></span>
+							   <div class="dropBox file-list">
+									
+									 <c:forEach var="f" items="${m.fileList }" varStatus="status">
+								    <div id="file<c:out value="${status.index}" />" class="filebox">
+									<span class="name filename"> ${f.originName } </span>
+									<span class="size filesize">
+									<c:set var="fileSizeInKB" value="${f.fileSize div 1024}"/>
+		                             (<fmt:formatNumber value="${f.fileSize div 1024}" pattern="#,##0.00"/> KB)
+									 </span>
+									<button type="button" class="delete abort" onclick="deleteFile(<c:out value="${status.index}" />);">x</button>
+									</div>
+								    </c:forEach>	
+								    
+								    <!-- <span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span> -->
+								</div>  
                             	
                             </td>
                         </tr>
                         
                         <tr>
                             <td colspan="2">
-                                <textarea id="summernote" name="emContent">
-                                <br><br><br><br><br><br>
-							---------- Original Message ---------- <br>
-							<b>From : </b>${m.memName } ${m.sender }@anyware.com <br>
-							<b>To : </b> ${m.receivers} <br>
-							<b>Cc : </b> ${m.refEmail} <br>
-							<b>Sent : </b> ${m.sendDate } <br>
-							<b>Subject : </b> 	${m.emTitle }<br><br>
+                                <textarea id="summernote" name="emContent"> 
                                 ${m.emContent }
                                 
                                 
@@ -512,7 +480,7 @@
 					htmlData += '</div>';
 		
 				}
-				$(".dragAndDropDiv").removeAttr("onclick")
+				//$(".dragAndDropDiv").removeAttr("onclick")
 				$(".file-list").html(htmlData); // change가 발생할 때마다 목록 초기화한 뒤 넣어짐
 
 			}
@@ -545,6 +513,10 @@
 			    
 			    $('#upfile')[0].files = dataTransfer.files;	//제거 처리된 FileList를 돌려줌
 			}
+			
+			
+			
+			
 							
 		</script>
             

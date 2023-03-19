@@ -143,6 +143,13 @@ public interface MailService {
 	
 	//선택메일 복구
 	int restoreTrashMail(ArrayList<MailStatus> list);
-
+	
+	//답장 메일내용조회
+	Mail selectReplyMail(int emNo);
+	
+	//휴지통상세페이지 영구삭제
+	int removeDetailMail(MailStatus ms);
+	//상세페이지 삭제
+	int deleteDetailMail(MailStatus ms);
 	
 }

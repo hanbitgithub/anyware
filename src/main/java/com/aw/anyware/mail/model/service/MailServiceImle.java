@@ -442,6 +442,30 @@ public class MailServiceImle implements MailService {
 	public int restoreTrashMail(ArrayList<MailStatus> list) {
 		return mDao.restoreTrashMail(sqlSession, list);
 	}
+
+	/**
+	 * 답장메일 내용 조회
+	 */
+	@Override
+	public Mail selectReplyMail(int emNo) {
+		return mDao.selectReplyMail(sqlSession, emNo);
+	}
+
+	/**
+	 * 휴지통 메일 완전삭제 (메일 상세페이지)
+	 */
+	@Override
+	public int removeDetailMail(MailStatus ms) {
+		return mDao.removeDetailMail(sqlSession,ms);
+	}
+
+	/**
+	 * 메일 휴지통으로 이동 (메일 상세페이지)
+	 */
+	@Override
+	public int deleteDetailMail(MailStatus ms) {
+		return mDao.deleteDetailMail(sqlSession, ms);
+	}
 	
 	
 	

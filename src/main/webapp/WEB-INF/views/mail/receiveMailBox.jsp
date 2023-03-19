@@ -301,13 +301,7 @@ input[type=checkbox] {
             	
             }
             
-           
 
-			
-			
-			
-			
-			
 			</script>
 
 
