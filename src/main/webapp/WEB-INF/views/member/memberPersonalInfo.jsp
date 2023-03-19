@@ -554,7 +554,7 @@ a {
 				<script>
 					$(function(){
 						$("#submit").click(function(){
-							$("#updateForm").attr("action", "memberPersonalUpdate").submit();
+							$("#updateForm").attr("action", "memberPersonalUpdate.me").submit();
 						})
 					})
 				</script>

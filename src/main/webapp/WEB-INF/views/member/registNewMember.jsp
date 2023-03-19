@@ -472,7 +472,7 @@ a {
                 <br><br>
                 <div class="partLine"></div>
                 <br>
-        <form action="insert.me">
+        <form action="" id="submitForm">
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이름</b></div>
                     <div class="profileContent2"><input type="text" name="name" value=""></div>
@@ -493,10 +493,7 @@ a {
                     <div class="profileContent1"><b>이메일</b></div>
                     <div class="profileContent2"><input type="email" name="email" value=""></div>
                 </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>사원번호</b></div>
-                    <div class="profileContent2"><input type="text" name="memberNo" value=""></div>
-                </div>
+                
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>휴대폰</b></div>
                     <div class="profileContent2"><input type="tel" name="phone" value=""></div>
@@ -548,8 +545,9 @@ a {
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>주소</b></div>
                     <div class="profileContent2">
-                    	<input type="text" name="address" value="서울시">
-                    	<input type="text" name="detailAddress" value="서울시">
+                    	<input type="text" id="address" name="address" value="">
+                    	<input type="text" id="detailAddress" name="detailAddress" value="">
+                    	<input type="text" id="extraAddress" name="extraAddress" value="">
                     </div>
                 </div>
                 <div id="employProfile-div3">
@@ -566,7 +564,15 @@ a {
         </form>
         
                 
-        </div>    
+        </div> 
+        
+        <script>
+        	$(function(){
+        		$("#submit").click(function(){
+        			$("#submitForm").attr("action", "insert.me").submit();
+        		})
+        	})
+        </script>   
             
  <div class="modal" id="findAddress">
      <div class="modal-dialog">
@@ -596,9 +602,17 @@ a {
                  </tr>
               </table>
               <br>
-              <button type="button" class="btn btn-sm btn-secondary" onclick="submitAddress">주소 입력</button>
+              <button type="button" class="btn btn-sm btn-secondary" onclick="submitAddress()">주소 입력</button>
            
          </div>
+         
+         <script>
+         	function submitAddress(){
+         		$("#address").val($("#sample6_address").val());
+         		$("#detailAddress").val($("#sample6_detailAddress").val());
+         		$("#extraAddress").val($("#sample6_extraAddress").val());
+         	}
+         </script>
          
          <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 			<script>

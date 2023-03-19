@@ -91,6 +91,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectCommute(sqlSession, c);
 	}
 
+	@Override
+	public int insertMember(Member m) {
+		
+		return mDao.insertMember(sqlSession, m);
+	}
+
 	
 	
 

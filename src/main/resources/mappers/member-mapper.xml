@@ -205,7 +205,42 @@
   		
   </select>
   
-  
+ <insert id="insertMember">
+ 	insert
+ 			into tb_member
+ 			(
+ 				member_no,
+ 				dept_name,
+ 				job_name,
+ 				position,
+ 				duty,
+ 				name,
+ 				rrn,
+ 				member_id,
+ 				member_pwd,
+ 				email,
+ 				phone,
+ 				address,
+ 				enroll_date
+ 			)
+ 			values
+ 			(
+ 				seq_mbn.nextval,
+ 				#{deptName},
+ 				#{jobName},
+ 				#{position},
+ 				#{duty},
+ 				#{name},
+ 				#{rrn},
+ 				#{memberId},
+ 				#{memberPwd},
+ 				#{email},
+ 				#{phone},
+ 				concat(#{address}, (#{detailAddress}||#{extraAddress})) as "address",
+ 				#{enrollDate} 				
+ 			)
+ </insert> 
+ 
   
   
 </mapper>

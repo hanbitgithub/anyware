@@ -40,6 +40,10 @@ public interface MemberService {
 	
 	Commute selectCommute(Commute c);
 	
+	//신규 사원 등록
+	
+	int insertMember(Member m);
+	
 	
 	
 	//Member selectDayOff(Member m);

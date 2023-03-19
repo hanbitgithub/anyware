@@ -88,5 +88,10 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectCommute", c);
 	}
 
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
 	
 }

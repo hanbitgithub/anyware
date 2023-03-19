@@ -147,7 +147,7 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("memberPersonalUpdate")
+	@RequestMapping("memberPersonalUpdate.me")
 	public String memberPersonalUpdate(Member m, Model model, HttpSession session) {
 		int result = mService.memberPersonalUpdate(m);
 		
@@ -190,7 +190,7 @@ public class MemberController {
 		int result = mService.insertCommute(c);
 		if(result > 0) {
 			Commute cTime = mService.selectCommute(c);
-			System.out.println("cTime : " + cTime);
+			
 			mv.addObject("commute", cTime);
 			mv.addObject("alertMsg", "출근하였습니다");
 			mv.setViewName("main");
@@ -208,7 +208,7 @@ public class MemberController {
 		int result = mService.commuteOut(c);
 		if(result > 0) {
 			Commute cTime = mService.selectCommute(c);
-			System.out.println("cTime : " + cTime);
+			
 			mv.addObject("commute", cTime);
 			mv.addObject("alertMsg", "퇴근하였습니다");
 			mv.setViewName("main");
@@ -224,6 +224,20 @@ public class MemberController {
 	public ModelAndView regist(ModelAndView mv) {
 		mv.setViewName("member/registNewMember");
 		return mv;
+	}
+	
+	@RequestMapping("insert.me")
+	public ModelAndView insertMember(Member m, ModelAndView mv) {
+		int result = mService.insertMember(m);
+		if(result > 0) {
+			mv.addObject("alertMsg", "신규 사원을 추가하였습니다");
+			mv.setViewName("member/selectAllMember");
+			return mv;
+		}else {
+			mv.addObject("errorMsg", "다시 시도해주십시오");
+			mv.setViewName("member/selectAllMember");
+			return mv;
+		}
 	}
 	
 
