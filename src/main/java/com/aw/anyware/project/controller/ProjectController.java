@@ -27,53 +27,46 @@ public class ProjectController {
 	private ProjectService pService;
 	
 	@RequestMapping("list.pj")
-	public String projectListView(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, HttpServletRequest request) {
+	public String selectProjectList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
+									String category, String condition, String keyword, Model model, 
+									HttpServletRequest request) {
 		
-		int listCount = pService.selectListCount();
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("category", category);
+		map.put("condition", condition);
+		map.put("keyword", keyword);
+		
+		int listCount = pService.selectListCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
 		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-		ArrayList<Project> list = pService.selectProjectList(memberNo, pi);
+		map.put("memberNo", memberNo);
+		
+		ArrayList<Project> list = pService.selectProjectList(map, pi);
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		model.addAttribute("category", category);
+		model.addAttribute("condition", condition);
+		model.addAttribute("keyword", keyword);
+		
 		return "project/projectListView";
 	}
 	
 	@RequestMapping("insert.pj")
-	public String insertProject(Project pj, Model model) {
+	public String insertProject(Project pj, int memberNo, Model model) {
 		
-		int result = pService.insertProject(pj);
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("pj", pj);
+		map.put("memberNo", memberNo);
+		
+		int result = pService.insertProject(map);
 		
 		if(result == 0) {
 			model.addAttribute("alertMsg", "프로젝트 생성에 실패했습니다.");
 		}
 		
-		return "redirect:list.pj";
-	}
-	
-	@RequestMapping("search.pj")
-	public String searchProject(String condition, String keyword, @RequestParam(value="cpage", defaultValue="1")int currentPage, 
-								HttpServletRequest request, Model model) {
-		
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("condition", condition);
-		map.put("keyword", keyword);
-		map.put("memberNo", ((Member)request.getSession().getAttribute("loginUser")).getMemberNo());
-		
-		int listCount = pService.selectSearchListCount(map);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		
-		map.put("pi", pi);
-		
-		ArrayList<Project> list = pService.searchProject(map);
-		
-		model.addAttribute("list", list);
-		model.addAttribute("pi", pi);
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);
-		
-		return "project/projectListView";
+		return "redirect:detail.pj?no=" + result; // 상세페이지로 이동
 	}
 	
 	@ResponseBody
@@ -94,23 +87,8 @@ public class ProjectController {
 		return result > 0 ? "success" : "fail";
 	}
 	
-	@RequestMapping("mylist.pj")
-	public String myProjectListView(@RequestParam(value="cpage", defaultValue="1") int currentPage, HttpServletRequest request, Model model ) {
-		
-		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
-		int listCount = pService.selectMyListCount(memberNo);
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
-		
-		ArrayList<Project> list = pService.selectMyProjectList(memberNo, pi);
-		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		
-		return "project/myProjectListView";
-	}
-	
 	@RequestMapping("detail.pj")
-	public String projectDetailView() {
+	public String projectDetailView(int no) {
 		return "project/projectDetailView";
 	}
 	

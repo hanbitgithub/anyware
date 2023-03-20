@@ -15,20 +15,32 @@ import com.aw.anyware.project.model.vo.Project;
 @Repository
 public class ProjectDao {
 
-	public int selectListCount(SqlSessionTemplate sqlSession) {
-		return sqlSession.selectOne("projectMapper.selectListCount");
+	public int selectListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("projectMapper.selectListCount", map);
 	}
 
-	public ArrayList<Project> selectProjectList(SqlSessionTemplate sqlSession, int memberNo, PageInfo pi) {
+	public ArrayList<Project> selectProjectList(SqlSessionTemplate sqlSession, HashMap<String, Object> map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectProjectList", memberNo, rowBounds);
+		return (ArrayList)sqlSession.selectList("projectMapper.selectProjectList", map, rowBounds);
 	}
 
 	public int insertProject(SqlSessionTemplate sqlSession, Project pj) {
 		return sqlSession.insert("projectMapper.insertProject", pj);
+	}
+	
+	public int insertProjectMember(SqlSessionTemplate sqlSession, int memberNo) {
+		return sqlSession.insert("projectMapper.insertProjectMember", memberNo);
+	}
+	
+	public int deleteProject(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("projectMapper.deleteProject");
+	}
+	
+	public int selectNewProject(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectOne("projectMapper.selectNewProject");
 	}
 
 	public int insertLike(SqlSessionTemplate sqlSession, Like like) {
@@ -38,32 +50,7 @@ public class ProjectDao {
 	public int deleteLike(SqlSessionTemplate sqlSession, Like like) {
 		return sqlSession.delete("projectMapper.deleteLike", like);
 	}
-	
-	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		
-		return sqlSession.selectOne("projectMapper.selectSearchListCount", map);
-	}
 
-	public ArrayList<Project> searchProject(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
-		PageInfo pi = (PageInfo)map.get("pi");
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("projectMapper.searchProject", map, rowBounds);
-	}
-
-	public int selectMyListCount(SqlSessionTemplate sqlSession, int memberNo) {
-		return sqlSession.selectOne("projectMapper.selectMyListCount", memberNo);
-	}
-
-	public ArrayList<Project> selectMyProjectList(SqlSessionTemplate sqlSession, int memberNo, PageInfo pi) {
-		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
-		int limit = pi.getBoardLimit();
-		RowBounds rowBounds = new RowBounds(offset, limit);
-		
-		return (ArrayList)sqlSession.selectList("projectMapper.selectMyProjectList", memberNo, rowBounds);
-	}
 	
 	
 	

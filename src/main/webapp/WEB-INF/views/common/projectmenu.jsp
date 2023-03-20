@@ -63,9 +63,9 @@
         <br><br>
         <div id="project-area">
 	        <ul>
-	            <li><a href="list.pj">전체 프로젝트</a></li> <br>
-	            <li><a href="mylist.pj">참여한 프로젝트</a></li> <br>
-	            <li><a href="">즐겨찾기</a></li> <br>
+	            <li><a href="list.pj?category=all">전체 프로젝트</a></li> <br>
+	            <li><a href="list.pj?category=my">참여한 프로젝트</a></li> <br>
+	            <li><a href="list.pj?category=like">즐겨찾기</a></li> <br>
 	        </ul>
         </div>
 	
@@ -85,7 +85,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<form action="insert.pj">
-						<input type="hidden" name="owner" value="${ loginUser.memberNo }">
+						<input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
 						<div>
 							<b>프로젝트명<span class="essential"> *</span></b>
 							<input type="text" id="name" name="projectTitle" required>

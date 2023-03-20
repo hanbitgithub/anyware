@@ -114,17 +114,37 @@
 	<jsp:include page="../common/projectmenu.jsp"></jsp:include>
 
 	<div class="content">
-
-		<div class="title">전체 프로젝트</div>
+		<c:choose>
+			<c:when test="${ category eq 'all' || category eq 'all-search' }">
+				<div class="title">전체 프로젝트</div>
+			</c:when>
+			<c:when test="${ category eq 'my' || category eq 'my-search' }">
+				<div class="title">참여중인 프로젝트</div>
+			</c:when>
+			<c:when test="${ category eq 'like' || category eq 'like-search' }">
+				<div class="title">즐겨찾기</div>
+			</c:when>
+		</c:choose>
 		<br>
 		
 		<div class="search-area">
-			<form action="search.pj">
+			<form action="list.pj">
+				<c:choose>
+					<c:when test="${ category eq 'all' || category eq 'all-search' }">
+						<input type="hidden" name="category" value="all-search">
+					</c:when>
+					<c:when test="${ category eq 'my' || category eq 'my-search' }">
+						<input type="hidden" name="category" value="my-search">
+					</c:when>
+					<c:when test="${ category eq 'like' || category eq 'like-search' }">
+						<input type="hidden" name="category" value="like-search">
+					</c:when>
+				</c:choose>
 				<select name="condition" id="condition">
 					<option value="title">프로젝트명</option>
 					<option value="participant">참여자</option>
 				</select>
-				<input type="search" placeholder="Search Project" id="search-project" name="keyword">
+				<input type="search" placeholder="Search Project" id="search-project" name="keyword" required>
 				<button type="submit" class="btn btn-primary" id="searchbtn">검색</button>
 			</form>
 		</div>
@@ -153,8 +173,8 @@
 						</c:otherwise>
 					</c:choose>
 					<c:choose>
-						<c:when test="${ l.count ne 0 }">
-							<div class="project-people">${ l.owner } 외 ${ l.count }</div>
+						<c:when test="${ l.count ne 1 }">
+							<div class="project-people">${ l.owner } 외 ${ l.count - 1 }명</div>
 						</c:when>
 						<c:otherwise>
 							<div class="project-people">${ l.owner }</div>
@@ -218,10 +238,30 @@
 			<c:if test="${ pi.currentPage ne 1 }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }">&lt;</a>
+						<c:choose>
+							<c:when test="${ category == 'all' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&category=all">&lt;</a>
+							</c:when>
+							<c:when test="${ category == 'my' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&category=my">&lt;</a>
+							</c:when>
+							<c:when test="${ category == 'like' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&category=like">&lt;</a>
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }">&lt;</a>
+						<c:choose>
+							<c:when test="${ category == 'all-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }&category=all-search">&lt;</a>
+							</c:when>
+							<c:when test="${ category == 'my-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }&category=my-search">&lt;</a>
+							</c:when>
+							<c:when test="${ category == 'like-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }&category=like-search">&lt;</a>
+							</c:when>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
@@ -229,10 +269,30 @@
 			<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ p }">${ p }</a>
+						<c:choose>
+							<c:when test="${ category == 'all' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&category=all">${ p }</a>
+							</c:when>
+							<c:when test="${ category == 'my' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&category=my">${ p }</a>
+							</c:when>
+							<c:when test="${ category == 'like' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&category=like">${ p }</a>
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }">${ p }</a>
+						<c:choose>
+							<c:when test="${ category == 'all-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }&category=all-search">${ p }</a>
+							</c:when>
+							<c:when test="${ category == 'my-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }&category=my-search">${ p }</a>
+							</c:when>
+							<c:when test="${ category == 'like-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ p }&condition=${ condition }&keyword=${ keyword }&category=like-search">${ p }</a>
+							</c:when>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 				
@@ -241,14 +301,35 @@
 			<c:if test="${ pi.maxPage ne 0 and pi.currentPage ne pi.maxPage }">
 				<c:choose>
 					<c:when test="${ empty condition }">
-						<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }">&gt;</a>
+						<c:choose>
+							<c:when test="${ category == 'all' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&category=all">&gt;</a>
+							</c:when>
+							<c:when test="${ category == 'my' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&category=my">&gt;</a>
+							</c:when>
+							<c:when test="${ category == 'like' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&category=like">&gt;</a>
+							</c:when>
+						</c:choose>
 					</c:when>
 					<c:otherwise>
-						<a class="pagebtn" href="search.pj?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }">&gt;</a>
+						<c:choose>
+							<c:when test="${ category == 'all-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }&category=all-search">&gt;</a>
+							</c:when>
+							<c:when test="${ category == 'my-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }&category=my-search">&gt;</a>
+							</c:when>
+							<c:when test="${ category == 'like-search' }">
+								<a class="pagebtn" href="list.pj?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }&category=like-search">&gt;</a>
+							</c:when>
+						</c:choose>
 					</c:otherwise>
 				</c:choose>
 			</c:if>
 		</div>
+
 	</div>
 
 	<script>

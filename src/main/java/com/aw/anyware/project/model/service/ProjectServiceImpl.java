@@ -12,6 +12,7 @@ import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.dao.ProjectDao;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.Project;
+import com.aw.anyware.project.model.vo.ProjectMember;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -23,30 +24,32 @@ public class ProjectServiceImpl implements ProjectService {
 	private SqlSessionTemplate sqlSession;
 	
 	@Override
-	public int selectListCount() {
-		return pDao.selectListCount(sqlSession);
+	public int selectListCount(HashMap<String, Object> map) {
+		return pDao.selectListCount(sqlSession, map);
 	}
 
 	@Override
-	public ArrayList<Project> selectProjectList(int memberNo, PageInfo pi) {
-		return pDao.selectProjectList(sqlSession, memberNo, pi);
+	public ArrayList<Project> selectProjectList(HashMap<String, Object> map, PageInfo pi) {
+		return pDao.selectProjectList(sqlSession, map, pi);
 	}
 
 	@Override
-	public int insertProject(Project pj) {
-		return pDao.insertProject(sqlSession, pj);
+	public int insertProject(HashMap<String, Object> map) {
+		
+		int result1 = pDao.insertProject(sqlSession, (Project)map.get("pj"));
+		
+		int result2 = 0;
+		int no = 0;
+		if(result1 > 0) {
+			result2 = pDao.insertProjectMember(sqlSession, (int)map.get("memberNo"));
+			no = pDao.selectNewProject(sqlSession);
+		} else {
+			int result3 = pDao.deleteProject(sqlSession);
+		}
+		
+		return no;
 	}
 	
-	@Override
-	public int selectSearchListCount(HashMap<String, Object> map) {
-		return pDao.selectSearchListCount(sqlSession, map);
-	}
-
-	@Override
-	public ArrayList<Project> searchProject(HashMap<String, Object> map) {
-		return pDao.searchProject(sqlSession, map);
-	}
-
 	@Override
 	public int insertLike(Like like) {
 		return pDao.insertLike(sqlSession, like);
@@ -55,16 +58,6 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int deleteLike(Like like) {
 		return pDao.deleteLike(sqlSession, like);
-	}
-
-	@Override
-	public int selectMyListCount(int memberNo) {
-		return pDao.selectMyListCount(sqlSession, memberNo);
-	}
-
-	@Override
-	public ArrayList<Project> selectMyProjectList(int memberNo, PageInfo pi) {
-		return pDao.selectMyProjectList(sqlSession, memberNo, pi);
 	}
 
 }

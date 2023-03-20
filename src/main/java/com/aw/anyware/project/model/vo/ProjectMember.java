@@ -17,5 +17,6 @@ public class ProjectMember {
 	private int memberNo;
 	private String status;
 	private String enrollDate;
+	private String ownerStatus;
 
 }

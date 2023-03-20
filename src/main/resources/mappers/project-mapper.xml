@@ -4,7 +4,6 @@
 
 	<resultMap type="Project" id="projectResult">
 		<id column="project_no"  property="projectNo" />
-		<result column="owner"  property="owner" />
 		<result column="project_title"  property="projectTitle" />
 		<result column="project_content"  property="projectContent" />
 		<result column="public_status"  property="publicStatus" />
@@ -12,7 +11,8 @@
 		<result column="status"  property="status" />
 		<result column="like" property="like" />
 		<result column="count" property="count" />
-		<result column="participant" property="participant" />
+		<result column="owner" property="owner" />
+		<result column="category" property="category" />
 	</resultMap>
 	
 	<resultMap type="Like" id="likeResult">
@@ -20,35 +20,133 @@
 		<result column="project_No" property="projectNo" />
 		<result column="like_date" property="likeDate" />
 	</resultMap>
+	
+	<resultMap type="ProjectMember" id="pjmemberResult">
+		<result column="project_no" property="projectNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="status" property="status" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="owner_status" property="ownerStatus" />
+	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 		select
-			   count(*)
-		  from tb_project
-		 where status = 'Y'
+		       count(*)
+		  from (select distinct
+		               p.project_no
+		          from tb_project p
+		          <choose>
+				  	<when test="category == 'all-searhch' || category == 'my' || category == 'my-search'">
+				  	  join tb_projectmember pm on (pm.project_no = p.project_no)
+				      join tb_member m on (pm.member_no = m.member_no)
+				  	</when>
+				  	<when test="category == 'like' || category == 'like-search'">
+				  	  join tb_like l on (l.project_no = p.project_no)
+		    		  join tb_member m on (l.member_no = m.member_no)
+				  	</when>
+				  </choose>
+		         where p.status = 'Y'
+		            <choose>
+		                <when test="category == 'my'">
+		                    and pm.member_No = #{memberNo}
+		                </when>
+		                <when test="category == 'like'">
+				 			and l.member_no = #{memberNo}
+				 		</when>
+		                <when test="category == 'all-search' || category == 'my-search' || category == 'like-search'">
+				 			<choose>
+				 				<when test="condition == 'title'">
+				 					and project_title
+				 				</when>
+				 				<otherwise>
+				 					and name
+				 				</otherwise>
+				 			</choose>
+				 				like '%' || #{keyword} || '%'
+				 			<if test="category == 'my-search'">
+				 				and p.project_no in (select
+							                            project_no
+							                       from tb_projectmember
+							                      where member_no = #{memberNo})
+				 			</if>
+				 			<if test="category == 'like-search'">
+				 				and p.project_no in (select
+							                                project_no
+							                           from tb_like
+							                          where member_no = #{memberNo})
+							</if>
+				 		</when>
+				    </choose>
+		        )
 	</select>
 	
 	<select id="selectProjectList" resultMap="projectResult">
-		select
-		       project_no
-		     , name owner
+		select distinct
+		       p.project_no
 		     , project_title
 		     , public_status
 		     , (select 
 		               count(*) 
 		          from tb_like l 
-		         where l.member_no = 1
+		         where l.member_no = #{memberNo}
 		           and project_no = p.project_no) "LIKE"
 		     , (select
 		               count(*)
 		          from tb_projectmember pm
 		         where pm.status = 1
 		           and project_no = p.project_no) "COUNT"
+		     , (select
+		                name
+		          from tb_projectmember pm
+		          join tb_member using (member_no)
+		         where pm.status = 1
+		           and project_no = p.project_no
+		           and owner_status = 'Y') "OWNER"
 		  from tb_project p
-		  join tb_member on (owner_no = member_no)
+		  <choose>
+		  	<when test="category == 'all-searhch' || category == 'my' || category == 'my-search'">
+		  	  join tb_projectmember pm on (pm.project_no = p.project_no)
+		      join tb_member m on (pm.member_no = m.member_no)
+		  	</when>
+		  	<when test="category == 'like' || category == 'like-search'">
+		  	  join tb_like l on (l.project_no = p.project_no)
+    		  join tb_member m on (l.member_no = m.member_no)
+		  	</when>
+		  </choose>
 		 where p.status = 'Y'
+		 	<choose>
+		 		<when test="category == 'my'">
+		 			and pm.member_no = #{memberNo}
+		 		</when>
+		 		<when test="category == 'like'">
+		 			and l.member_no = #{memberNo}
+		 		</when>
+		 		<when test="category == 'all-search' || category == 'my-search' || category == 'like-search'">
+		 			<choose>
+		 				<when test="condition == 'title'">
+		 					and project_title
+		 				</when>
+		 				<otherwise>
+		 					and name
+		 				</otherwise>
+		 			</choose>
+		 				like '%' || #{keyword} || '%'
+		 			<if test="category == 'my-search'">
+		 				and p.project_no in (select
+					                            project_no
+					                       from tb_projectmember
+					                      where member_no = #{memberNo})
+		 			</if>
+		 			<if test="category == 'like-search'">
+		 				and p.project_no in (select
+					                                project_no
+					                           from tb_like
+					                          where member_no = #{memberNo})
+					</if>
+		 		</when>
+		 	</choose>
 		 order
-		    by p.project_no desc
+		 	by p.project_no desc
 	</select>
 	
 	<insert id="insertProject">
@@ -56,7 +154,6 @@
 		  into tb_project
 		  (
 		  	project_no
-		  , owner_no
 		  , project_title
 		  , project_content
 		  , public_status
@@ -64,12 +161,39 @@
 		  values
 		  (
 		  	seq_pjno.nextval
-		  , #{owner}
 		  , #{projectTitle}
 		  , #{projectContent}
 		  , #{publicStatus}
 		  )
 	</insert>
+	
+	<insert id="insertProjectMember">
+		insert
+		  into tb_projectmember
+		  (
+		  	project_no
+		  , member_no
+		  , owner_status
+		  )
+		  values
+		  (
+		  	seq_pjno.currval
+		  , #{memberNo}
+		  , 'Y'
+		  )
+	</insert>
+	
+	<delete id="deleteProject">
+		delete 
+		  from tb_project
+		 where project_no = seq_pjno.currval
+	</delete>
+	
+	<select id="selectNewProject" resultType="_int">
+		select
+			   seq_pjno.currval
+		  from dual
+	</select>
 	
 	<insert id="insertLike">
 		insert
@@ -94,108 +218,5 @@
 		   and project_no = #{projectNo}
 	</delete>
 	
-	<select id="selectSearchListCount" resultType="_int">
-		select
-			   count(*)
-		  from tb_project p
-		  join tb_member on (owner_no = member_no)
-		 where p.status = 'Y'
-		 	<if test="condition == 'title'">
-		 		and project_title
-		 	</if>
-		 	<if test="condition == 'participant'">
-		 		and name
-		 	</if>
-		 		like '%' || #{keyword} || '%'
-	</select>
 	
-	<select id="searchProject" resultMap="projectResult">
-		select distinct
-		       p.project_no
-		     , mm.name owner
-		     , project_title
-		     , public_status
-		     , (select 
-		               count(*) 
-		          from tb_like l 
-		         where l.member_no = #{memberNo}
-		           and project_no = p.project_no) "LIKE"
-		     , (select
-		               count(*)
-		          from tb_projectmember pm
-		         where pm.status = 1
-		           and project_no = p.project_no) "COUNT"
-		  from tb_projectmember pm
-		  join tb_member m on (pm.member_no = m.member_no)
-		  right join tb_project p on (p.project_no = pm.project_no)
-		  join tb_member mm on (owner_no = mm.member_no)
-		 where p.status = 'Y'
-		 	<if test="condition == 'title'">
-		 		and project_title
-		 	</if>
-		 	<if test="condition == 'participant'">
-		 		and mm.name like '%' || #{keyword} || '%'
-		    	or m.name
-		 	</if>
-		 		like '%' || #{keyword} || '%'
-		 order
-		    by p.project_no desc
-	</select>
-	
-	<select id="selectMyListCount" resultType="_int">
-		select
-		       count(*)
-		  from (select distinct
-		           p.project_no
-		      from tb_project p
-		      left join tb_projectmember pm on (p.project_no = pm.project_no)
-		     where owner_no = #{memberNo}
-		        or member_no = #{memberNo}
-		       and p.status = 'Y')
-	</select>
-	
-	<select id="selectMyProjectList" resultMap="projectResult">
-		select distinct
-		       p.project_no
-		     , name owner
-		     , project_title
-		     , public_status
-		     , (select 
-		               count(*) 
-		          from tb_like l 
-		         where l.member_no = 1
-		           and project_no = p.project_no) "LIKE"
-		     , (select
-		               count(*)
-		          from tb_projectmember pm
-		         where pm.status = 1
-		           and project_no = p.project_no) "COUNT"
-		  from tb_project p
-		  left join tb_projectmember pm on (p.project_no = pm.project_no)
-		  join tb_member m on (p.owner_no = m.member_no)
-		 where p.status = 'Y'
-		   and p.owner_no = #{memberNo}
-		    or pm.member_no = #{memberNo}
-		 order
-		    by p.project_no desc
-	</select>
-	
-	<select id="searchMyProjectList">
-		select distinct
-		       project_no, owner
-		  from (
-		        select distinct
-		               project_no, mm.name owner, m.name participant
-		          from tb_projectmember pm
-		          join tb_member m on (pm.member_no = m.member_no)
-		          join tb_project p using (project_no)
-		          join tb_member mm on (owner_no = mm.member_no)
-		         where p.status = 'Y'
-		           and owner_no = #{memberNo}
-		            or pm.member_no = #{memberNo}
-		        )
-		  where participant like '%' || #{keyword} || '%'
-		    or owner like '%' || #{keyword} || '%'
-	</select>
-
 </mapper>

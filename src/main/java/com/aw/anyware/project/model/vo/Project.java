@@ -16,7 +16,6 @@ import lombok.ToString;
 public class Project {
 	
 	private int projectNo;
-	private String owner;
 	private String projectTitle;
 	private String projectContent;
 	private String publicStatus;
@@ -25,6 +24,7 @@ public class Project {
 	
 	private String like;
 	private int count;
-	private String participant;
+	private String owner;
+	private String category;
 
 }
