@@ -116,13 +116,17 @@ public interface MailService {
 	//메일 임시보관
 	int saveTemporaryMail(Mail m);
 	int saveTemporaryMailStatus(ArrayList<MailStatus> list);
+	int saveTemporaryMailStatus2(ArrayList<MailStatus> list);
 	
 	//메일 임시보관 업데이트
 	int updateTemporaryMail(Mail m);
 	int deleteTemporaryStatus(int emNo);
 	int deleteAttachment(int emNo);
 	
-	
+	//임시보관메일 전송
+	int sendTemporaryMail(Mail m);
+	int insertTempMailAttachment(ArrayList<MailFile> atList);
+
 	//휴지통 개수, 리스트조회
 	int selectTrashMailCount(String memId);
 	ArrayList<Mail> selectTrashMailList(PageInfo pi, String memId);
@@ -151,5 +155,7 @@ public interface MailService {
 	int removeDetailMail(MailStatus ms);
 	//상세페이지 삭제
 	int deleteDetailMail(MailStatus ms);
+	
+
 	
 }

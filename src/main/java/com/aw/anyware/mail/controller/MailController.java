@@ -1,5 +1,6 @@
 package com.aw.anyware.mail.controller;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -488,6 +489,7 @@ public class MailController {
 	public String ajaxUpdateTemporaryMail(Mail m,MultipartFile[] upfile,HttpSession session) {
 		String cc = m.getRefEmail();
 		String receivers = m.getReceivers();
+		int emNo = m.getEmNo();
 		//System.out.println(m);
 		if(m.getReceivers() != null) {
 			receivers = receivers.replaceAll("\"value\":\"", "");
@@ -521,7 +523,7 @@ public class MailController {
 			int result2 = mService.deleteTemporaryStatus(m.getEmNo());
 			int result4 = mService.deleteAttachment(m.getEmNo());
 		
-			if(result2>0) {
+			if(result2*result4>0) {
 				// 메일 상태 insert
 				// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
 				// ----------- 보낸 메일 ------------
@@ -594,6 +596,7 @@ public class MailController {
 				at.setOriginName(file.getOriginalFilename());
 				at.setChangeName(saveFilePath);
 				at.setFileSize((int) file.getSize());
+				at.setEmNo(emNo);
 
 				// at를 attachmentList에 담기
 				atList.add(at);
@@ -601,7 +604,7 @@ public class MailController {
 			
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
-				result5 = mService.insertMailAttachment(atList);
+				result5 = mService.insertTempMailAttachment(atList);
 			}
 
 			
@@ -611,6 +614,142 @@ public class MailController {
 
 		return result1*result3*result5 >0 ? "success": "fail";
 	}
+	
+	//임시보관함에서 수정시 
+		@ResponseBody
+		@RequestMapping("tempUpdate.em")
+		public String ajaxTemporaryMailUpdate(Mail m,MultipartFile[] upfile,HttpSession session) {
+			String cc = m.getRefEmail();
+			String receivers = m.getReceivers();
+			
+			if(m.getReceivers() != null) {
+				receivers = receivers.replaceAll("\"value\":\"", "");
+				receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+				
+				m.setReceivers(receivers);
+			}else {
+				m.setReceivers(m.getMemName() +" "+ m.getSender() +"@anyware.com");
+			}
+			
+			if(m.getRefEmail() != null) {
+				cc = cc.replaceAll("\"value\":\"", "");
+				cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+				
+				m.setRefEmail(cc);
+			}
+			
+			//메일테이블 수정 
+			int result1 = mService.updateTemporaryMail(m);
+			
+			// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+			ArrayList<MailFile> atList = new ArrayList<>();
+
+			//메일상태
+			int result3 = 0;
+			// 첨부파일
+			int result5 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
+			//메일 상태를 담을 리스트 
+			ArrayList<MailStatus> list = new ArrayList<>();
+			
+			if(result1>0) {
+				int result2 = mService.deleteTemporaryStatus(m.getEmNo());
+				int result4 = mService.deleteAttachment(m.getEmNo());
+			
+				if(result2>0) {
+					// 메일 상태 insert
+					// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+					// ----------- 보낸 메일 ------------
+						MailStatus ms = new MailStatus();
+						ms.setEmType("0");
+						ms.setTempSave("Y");
+						ms.setEmNo(String.valueOf(m.getEmNo()));
+					
+						list.add(ms); // ArrayList<MailStatus>에 추가
+
+					
+					//---------- 받은 메일 ---------------
+						//받는사람 이름 배열에 담은후 구분자로 나누기
+						if(!receivers.equals("")) {
+						String[] receiverArr = receivers.split(",");
+						for(String r : receiverArr) {
+						    String[] parts = r.split(" ");
+						    String id = parts[1].split("@")[0];
+						   // System.out.println(id);
+						    String name = parts[0].split("@")[0];
+						   // System.out.println(name);    
+						   
+						    MailStatus ms2 = new MailStatus();
+							ms2.setEmType("1");
+							ms2.setReceiverName(name);
+							ms2.setReceiver(id);
+							ms2.setTempSave("Y");
+							ms2.setEmNo(String.valueOf(m.getEmNo()));
+							list.add(ms2);
+						}
+						
+					 }
+					//--------- 참조 메일 --------------	
+					if(!cc.equals("")) { // 참조메일이 있을경우 
+						
+						//참조자 이름 배열에  담은후 구분자로 나누기
+						String[] ccArr = cc.split(",");
+						for(String c: ccArr) {
+							String[] parts = c.split(" ");
+							String id = parts[1].split("@")[0];
+							String name = parts[0].split("@")[0];
+							
+							MailStatus ms3 = new MailStatus();
+							ms3.setEmType("2");
+							ms3.setReceiverName(name);
+							ms3.setReceiver(id);
+							ms3.setTempSave("Y");
+							ms3.setEmNo(String.valueOf(m.getEmNo()));
+							list.add(ms3);
+						}
+			      	}
+					
+				}
+				
+			}
+			
+			
+			 result3 = mService.saveTemporaryMailStatus2(list);
+			
+			//-----------------첨부파일 insert--------------
+
+			for (MultipartFile file : upfile) {
+
+				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+
+					// 저장 파일 경로!
+					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+					// 첨부파일
+					MailFile at = new MailFile();
+
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(saveFilePath);
+					at.setFileSize((int) file.getSize());
+					at.setEmNo(m.getEmNo());
+
+					// at를 attachmentList에 담기
+					atList.add(at);
+				}
+				
+				// 첨부파일 보내기
+				if (atList.size() > 0) { // 첨부파일이 추가된 경우
+					result5 = mService.insertTempMailAttachment(atList);
+				}
+
+				
+
+			}
+
+
+			return result1*result3*result5 >0 ? "success": "fail";
+	}
+		
 	
 	/**
 	 * @param m
@@ -725,6 +864,7 @@ public class MailController {
 					at.setOriginName(file.getOriginalFilename());
 					at.setChangeName(saveFilePath);
 					at.setFileSize((int) file.getSize());
+					at.setEmNo(m.getEmNo());
 
 					// at를 attachmentList에 담기
 					atList.add(at);
@@ -732,7 +872,7 @@ public class MailController {
 				
 				// 첨부파일 보내기
 				if (atList.size() > 0) { // 첨부파일이 추가된 경우
-					result3 = mService.insertMailAttachment(atList);
+					result3 = mService.insertTempMailAttachment(atList);
 				}
 
 			
@@ -962,8 +1102,7 @@ public class MailController {
 	@RequestMapping("sendMail.em")
 	public String insertSendMail(Mail m,MultipartFile[] upfile, HttpSession session,Model model) {
 		//System.out.println(Arrays.toString(fileUpload));	
-		
-		
+
 		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
 		ArrayList<MailFile> atList = new ArrayList<>();
 
@@ -1342,13 +1481,13 @@ public class MailController {
 	}
 	
 	
-	//임시저장 상세페이지 (이어쓰기)
+	//임시보관에함에서 임시저장메일 이어쓰기 
 	@RequestMapping("tempMail.em")
 	public String temporaryMailWrite(MailStatus ms,Model model) {
 		// 상세페이지로 들어가는 순간 읽음으로표시
-			if(ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
+		if(ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
 				ms.setReceiver(null);
-			}
+		}
 			int read = mService.checkReadMail(ms); 
 			
 			
@@ -1358,7 +1497,6 @@ public class MailController {
 			Mail detail = new Mail(); // 메일 상세조회
 			
 			if(read>0) {
-			   
 			switch(box) {
 			   case "4" : 
 				   title = "임시보관함";
@@ -1366,8 +1504,6 @@ public class MailController {
 				   break;
 			
 			   }
-			
-			
 			}
 			//System.out.println(detail);
 			
@@ -1378,5 +1514,168 @@ public class MailController {
 			return "mail/tempMailForm";
 			
 	}
+	
+	// 임시저장메일 전송하기 
+	@RequestMapping("sendTemp.em")
+	public String sendTemporaryMail(Mail m,MultipartFile[] upfile, HttpSession session,Model model) {
+		//System.out.println(m);
+		String cc = m.getRefEmail();
+		String receivers = m.getReceivers();
+		
+		if(m.getReceivers() != null) {
+			receivers = receivers.replaceAll("\"value\":\"", "");
+			receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			
+			m.setReceivers(receivers);
+		}else {
+			m.setReceivers(m.getMemName() +" "+ m.getSender() +"@anyware.com");
+		}
+		
+		if(m.getRefEmail() != null) {
+			cc = cc.replaceAll("\"value\":\"", "");
+			cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+			
+			m.setRefEmail(cc);
+		}
+		
+		
+		//메일테이블 수정 
+		int result1 = mService.sendTemporaryMail(m);
+		
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
 
+		//메일상태
+		int result3 = 0;
+		// 첨부파일
+		int result5 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
+		//메일 상태를 담을 리스트 
+		ArrayList<MailStatus> list = new ArrayList<>();
+		
+		if(result1>0) {
+			int result2 = mService.deleteTemporaryStatus(m.getEmNo());
+			//int result4 = mService.deleteAttachment(m.getEmNo());
+			
+			//System.out.println("result2:"+result2);
+		
+		
+			if(result2>0) {
+				// 메일 상태 insert
+				// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+				// ----------- 보낸 메일 ------------
+					MailStatus ms = new MailStatus();
+					ms.setEmType("0");
+					ms.setTempSave("N");
+					ms.setEmNo(String.valueOf(m.getEmNo()));
+				
+					list.add(ms); // ArrayList<MailStatus>에 추가
+
+				
+				//---------- 받은 메일 ---------------
+					//받는사람 이름 배열에 담은후 구분자로 나누기
+					if(!receivers.equals("")) {
+					String[] receiverArr = receivers.split(",");
+					for(String r : receiverArr) {
+					    String[] parts = r.split(" ");
+					    String id = parts[1].split("@")[0];
+					   // System.out.println(id);
+					    String name = parts[0].split("@")[0];
+					   // System.out.println(name);    
+					   
+					    MailStatus ms2 = new MailStatus();
+						ms2.setEmType("1");
+						ms2.setReceiverName(name);
+						ms2.setReceiver(id);
+						ms2.setTempSave("N");
+						ms2.setEmNo(String.valueOf(m.getEmNo()));
+						list.add(ms2);
+					}
+					
+				 }
+				//--------- 참조 메일 --------------	
+				if(!cc.equals("")) { // 참조메일이 있을경우 
+					
+					//참조자 이름 배열에  담은후 구분자로 나누기
+					String[] ccArr = cc.split(",");
+					for(String c: ccArr) {
+						String[] parts = c.split(" ");
+						String id = parts[1].split("@")[0];
+						String name = parts[0].split("@")[0];
+						
+						MailStatus ms3 = new MailStatus();
+						ms3.setEmType("2");
+						ms3.setReceiverName(name);
+						ms3.setReceiver(id);
+						ms3.setTempSave("N");
+						ms3.setEmNo(String.valueOf(m.getEmNo()));
+						list.add(ms3);
+					}
+		      	}
+				
+			}
+			
+		}
+		
+		
+		 result3 = mService.saveTemporaryMailStatus2(list);
+		
+		//-----------------첨부파일 insert--------------
+
+		for (MultipartFile file : upfile) {
+			System.out.println(file);
+			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+				
+				if(m.getEmfNo() != null) {
+				//이전첨부파일을 삭제 
+					int result4 = mService.deleteAttachment(m.getEmNo());
+				}
+				// 저장 파일 경로!
+				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+				// 첨부파일
+				MailFile at = new MailFile();
+
+				at.setOriginName(file.getOriginalFilename());
+				at.setChangeName(saveFilePath);
+				at.setFileSize((int) file.getSize());
+				at.setEmNo(m.getEmNo());
+
+				// at를 attachmentList에 담기
+				atList.add(at);
+			}
+			
+			// 첨부파일 보내기
+			if (atList.size() > 0) { // 첨부파일이 추가된 경우
+				result5 = mService.insertTempMailAttachment(atList);
+			}
+
+		}
+		
+		//System.out.println("result1:"+ result1);
+		//System.out.println("result3:"+result3);
+		//System.out.println("result5:"+result5);
+		
+		
+		
+			if (result1 > 0 && result3 > 0 && result5 > 0) {
+				session.setAttribute("alert", "메일 전송 완료");
+				
+				model.addAttribute("receivers",receivers);
+				model.addAttribute("cc",cc);
+				
+				return "mail/successSendmail";
+				//session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
+			} else {
+				session.setAttribute("alert", "메일 전송을 실패했습니다.");
+				
+				return "error";
+			}
+			
+			
+	}
+	
+	
+	
+	
 }

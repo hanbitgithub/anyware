@@ -222,8 +222,8 @@
 				
 				function saveTemp(){
 					
-				    let formData = new FormData($("#mailForm")[0]);
-		  			    
+				   let formData = new FormData($("#mailForm")[0]);
+
 					    // 제목이 비어있는 경우에 대한 처리
 					    if ($("#title").val().trim() == "") {
 					        let answer = confirm("제목이 지정되지 않았습니다. 제목 없이 메일을 저장하시겠습니까?");
@@ -232,38 +232,39 @@
 					            return false;
 					        }
 					    }
-					   
-						        $.ajax({
-						          url: "updateTemp.em",
-						          processData: false,
-						          contentType: false,
-						          type: "POST",
-						          data: formData,
-						          success: function(result) {
-						            if (result == "success") {
-						              $("#saveMessage").show(); // 저장완료 메시지 보이기
-						              // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
-						              setTimeout(function() {
-						                $("#saveMessage").hide();
-						              }, 3000); // 3초
-						            } else {
-						              alert("메일을 임시보관함에 저장하는데 실패했습니다.");
-						            }
-						            console.log("임시저장 ajax 성공");
-						          },
-						          error: function() {
-						            console.log("임시저장 ajax 실패");
-						          }
-						        })
-						      }
+					
+					        $.ajax({
+					          url: "tempUpdate.em",
+					          processData: false,
+					          contentType: false,
+					          type: "POST",
+					          data: formData,
+					          success: function(result) {
+					            if (result == "success") {
+					              $("#saveMessage").show(); // 저장완료 메시지 보이기
+					              // 몇 초 뒤에 저장완료 메시지를 자동으로 숨기기
+					              setTimeout(function() {
+					                $("#saveMessage").hide();
+					              }, 3000); // 3초
+					            } else {
+					              alert("메일을 임시보관함에 저장하는데 실패했습니다.");
+					            }
+					            console.log("임시저장 ajax 성공");
+					          },
+					          error: function() {
+					            console.log("임시저장 ajax 실패");
+					          }
+					        })
+					      
 					  
 				}
 			</script>
     
             <div>
-               <form method="post" action="=save.em" id="mailForm" enctype="multipart/form-data">
+               <form method="post" action="sendTemp.em" id="mailForm" enctype="multipart/form-data">
                    	<input type="hidden" name="sender" value="${loginUser.memberId }">
                     <input type="hidden" name="memName" value="${loginUser.name }">
+                    <input type="hidden" name="emNo" value="${m.emNo }">
                     <div id="input"></div>
                     <table id="write"style="font-size: 15px;">
                         <tr>
@@ -365,18 +366,23 @@
                                <input type="file" name="upfile" id="upfile"   onchange="addFile();" multiple/>
                             	<span class="fileMsg" style="font-size:13px"></span>
 							   <div class="dropBox file-list">
-									
-									 <c:forEach var="f" items="${m.fileList }" varStatus="status">
-								    <div id="file<c:out value="${status.index}" />" class="filebox">
-									<span class="name filename"> ${f.originName } </span>
-									<span class="size filesize">
-									<c:set var="fileSizeInKB" value="${f.fileSize div 1024}"/>
-		                             (<fmt:formatNumber value="${f.fileSize div 1024}" pattern="#,##0.00"/> KB)
-									 </span>
-									<button type="button" class="delete abort" onclick="deleteFile(<c:out value="${status.index}" />);">x</button>
-									</div>
-								    </c:forEach>	
-								    
+									<c:if test="${m.atcount>0 }">
+										 <c:forEach var="f" items="${m.fileList }" varStatus="status" >
+										    <div id="file${status.index}" class="filebox">
+												<span class="name filename"> ${f.originName } </span>
+												<span class="size filesize">
+												<c:set var="fileSizeInKB" value="${f.fileSize div 1024}"/>
+					                             (<fmt:formatNumber value="${f.fileSize div 1024}" pattern="#,##0.00"/> KB)
+												 </span>
+												<button type="button" class="delete abort" name='file-delete'>x</button>
+												
+												<input type="hidden" name="emfNo"  value="${f.emfNo}">
+												<input type="hidden" name="originName"  value="${f.originName}">
+												<input type="hidden" name="changeName"  value="${f.changeName}">
+											</div>
+
+									    </c:forEach>	
+								    </c:if>
 								    <!-- <span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span> -->
 								</div>  
                             	
@@ -490,7 +496,6 @@
 			
 				console.log(fileNo);
 				
-				// class="fileMsg"에 있는 문구 삭제
 				document.querySelector("#file" + fileNo).remove();
 				
 			    filesArr.splice(fileNo, 1);	// 해당되는 index의 파일을 배열에서 제거(1 : 한개만 삭제하겠다 라는 의미)
@@ -500,6 +505,17 @@
 			    renderingFileDiv();
 			}
 			
+			
+			$(document).ready(function() {
+		        $("button[name='file-delete']").on("click", function(e) {
+		            e.preventDefault();
+		            deleteFile2($(this));
+		        });
+		    })
+
+			function deleteFile2(obj) {
+       				 obj.parent().remove();
+    		}
 			
 			/* 첨부파일 담는 배열 */
 			function fileDataTransfer(){
