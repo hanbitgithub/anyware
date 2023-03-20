@@ -180,7 +180,7 @@ a{
                 </li> -->
                 <li>
                     <a href="trash.em">휴지통 </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <a href="" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
+                    <a onclick="trashEmpty();" title="비우기" data-toggle="popover" data-trigger="hover" data-content="Some content">
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
@@ -217,6 +217,27 @@ a{
             	}
             
             
+            </script>
+            
+            <script>
+           		 function trashEmpty(){
+            		if(confirm("휴지통을 비우시겠습니까? \n휴지통의 모든 메일은 영구 삭제되어 복구할 수 없습니다.")){
+            		
+            			$.ajax({
+            				url:"trashEmpty.em",
+            				data:{
+         							sender: '${loginUser.memberId}',
+         							receiver : '${loginUser.memberId}'
+         					  },
+            				success:function(result){
+            					alert("휴지통 비우기가 완료되었습니다. ");
+            				},
+            				error: function(){
+            					console.log("ajax 휴지통비우기 실패")
+            				}
+            			})
+             	}
+            }
             </script>
 
             </div>

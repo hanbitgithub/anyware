@@ -131,7 +131,7 @@ input[type=checkbox] {
                             답장</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="#" onclick="forwardMail();">
                             <img src="resources/images/next.png" width='15px' alt="">
                             전달</a>
                       </li>
@@ -300,6 +300,29 @@ input[type=checkbox] {
               	  
             	
             }
+			
+			   function forwardMail(){
+	            	 // 선택한 요소가 있는지 확인
+	                let $checked = $(".emNo:checked");
+	                // 선택하지 않은 경우
+	                if( $checked.length < 1){
+	                    alert("전달할 메일을 선택해주세요.");
+	                    return false;
+
+	                } else if($checked.length>=2){ // 선택한 경우
+	                    alert("한개의 메일만 선택해주세요.");
+	                    return false;
+
+	                }else{
+	              	  const emNo = $(".emNo:checked").val();
+	              	  $("#detailNo").val(emNo);
+	              	
+	                  $("#mailDetail").attr("action", 'forward.em').submit();
+						}
+					
+	              	  
+	            	
+	            }
             
 
 			</script>

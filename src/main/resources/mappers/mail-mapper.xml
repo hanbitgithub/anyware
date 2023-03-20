@@ -362,7 +362,7 @@
 	select count(m.em_no) "count"
 	 from tb_mail m
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
-	 left outer join tb_mail_file f on (m.em_no = f.em_no)
+	
 	 where em_type in (1,2)
 	 and s.receiver = #{memId}
 	 and trash = 'N'
@@ -390,7 +390,7 @@
               where f.em_no = m.em_no) "atcount"
 	 from tb_mail m
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
-	 left outer join tb_mail_file f on (m.em_no = f.em_no)
+	
 	 where em_type in (1,2)
 	 and s.receiver = #{memId}
 	 and trash = 'N'
@@ -468,7 +468,7 @@
 	   
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+
 	where  em_type = 0
 	 and sender=#{memId}
 	 and trash = 'N'
@@ -495,7 +495,7 @@
               where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	
 	where em_type = 0
 	 and sender= #{memId}
 	 and trash = 'N'
@@ -583,7 +583,7 @@
  		 count(m. em_no) "count"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+
 	where (sender= #{memId} and s.receiver is null
 	 or s.receiver = #{memId})
 	 and trash = 'N'
@@ -615,7 +615,7 @@
 	    , temp_save
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+
 	where (sender= #{memId} and s.receiver is null
 	 or s.receiver = #{memId})
 	 and trash = 'N'
@@ -704,7 +704,7 @@ select
  		 count(m. em_no) "count"    
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+
 	where em_type = 3
 	 and sender = #{memId}
      and s.receiver = #{memId}
@@ -735,7 +735,7 @@ select
               where f.em_no = m.em_no) "atcount"
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+
 	where em_type = 3
 	 and sender = #{memId}
      and s.receiver = #{memId}
@@ -754,7 +754,6 @@ select
 	  
 	from tb_mail m
     left join tb_mail_status s on (m.em_no=s.em_no)
-	left join tb_mail_file f on (m.em_no = f.em_no)
 	where sender= #{memId} and (s.receiver is null or s.receiver = #{memId})
      and temp_stock = 'Y'
    order by m.em_no desc
@@ -774,7 +773,6 @@ select
 	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
 	    , m.receiver
         , ref_email
-	    , emf_no
 	    , to_char(temp_date,'YYYY-MM-DD(DY) HH24:MI:SS') "temp_date"
 	    , read
         , important
@@ -786,7 +784,7 @@ select
               where f.em_no = m.em_no) "atcount"
 	from tb_mail m
     left join tb_mail_status s on (m.em_no=s.em_no)
-	left join tb_mail_file f on (m.em_no = f.em_no)
+
 	where sender= #{memId} and (s.receiver is null or s.receiver = #{memId})
      and temp_stock = 'Y'
      and trash = 'N'
@@ -926,9 +924,8 @@ where rownum = 1
 select 
  		count(m. em_no)
         
-	from tb_mail m
-	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	from tb_mail_status s 
+	join tb_mail m on (m.em_no = s.em_no)
 	where (sender= #{memId} and s.receiver is null
 	 or s.receiver = #{memId})
 	 and trash = 'Y'
@@ -953,15 +950,13 @@ select
         , s.receiver
 	    , read
 	    , important
-	    , emf_no
 	    , temp_save
         , trash
         ,( select count(emf_no)
               from tb_mail_file  f
               where f.em_no = m.em_no) "atcount"
-	from tb_mail m
-	join tb_mail_status s on (m.em_no = s.em_no)
-	left outer join tb_mail_file f on (m.em_no = f.em_no)
+	from tb_mail_status s
+	 join tb_mail m on (m.em_no = s.em_no)
 	where (sender= #{memId} and s.receiver is null
 	 or s.receiver = #{memId})
 	 and trash = 'Y'
@@ -976,6 +971,7 @@ select
   update tb_mail_status
      set trash = 'Y'
      where em_no = #{emNo}
+      and em_type = #{emType}
      <choose>
      	<when test="receiver == null">
      	   and  receiver is null
@@ -1124,6 +1120,37 @@ update tb_mail_status
 
 </insert>
 
+<select id="selectReceiverData" resultMap="mailStatusResult">
+ select 
+ 	    em_no
+ 	   ,receiver_name
+ 	   ,receiver
+ 	   ,decode(read,'Y','수신완료','안읽음') "read"
+ 	   ,read_time 
+ 	   ,em_type
+  from tb_mail_status
+  where em_type in ('1','2')
+   and em_no = #{emNo}
+
+</select>
+
+<delete id="emptyTrashMailBox">
+ delete 
+  from tb_mail_status
+  where em_no in 
+  (
+  select 
+ 		 m. em_no
+	from tb_mail_status s
+	join tb_mail m on (m.em_no = s.em_no)
+	where (sender= #{sender} and s.receiver is null
+	 or s.receiver = #{receiver})
+	 and trash = 'Y'
+	 and spam = 'N'
+ 
+)
+   
+</delete>
 
 
 

@@ -156,6 +156,9 @@ public interface MailService {
 	//상세페이지 삭제
 	int deleteDetailMail(MailStatus ms);
 	
+	//수신확인용 리스트 조회
+	ArrayList<MailStatus> selectReceiverData(String emNo);
 
-	
+	//휴지통 비우기
+	int emptyTrashMailBox(MailStatus ms);
 }

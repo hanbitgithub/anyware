@@ -312,7 +312,7 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input type="text" placeholder="" name="receivers" class="email" id="receivers" value="${m.memName } ${m.sender}@anyware.com ">
+                                <input type="text" placeholder="" name="receivers" class="email" id="receivers" >
                                 <button class="btn btn-primary btn-sm" style="font-weight: bold;" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 
                             </td>
@@ -389,7 +389,7 @@
                         
                         <tr>
                             <th  width="120" height="40px">제목</th>
-                            <td><input type="text" name="emTitle" id="title" class="form-control" value="RE: ${m.emTitle }"></td>
+                            <td><input type="text" name="emTitle" id="title" class="form-control" value="FW: ${m.emTitle }"></td>
                         </tr>
                         <tr>
                             <th height="40px">첨부파일</th>

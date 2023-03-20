@@ -112,13 +112,13 @@ input[type=checkbox] {
                       </li>
                      
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <img src="resources/images/send (1).png" width='15px' alt="">
+                        <a class="nav-link" href="#" onclick="replyMail();">
+                            <img src="resources/images/send (1).png" width='15px'>
                             답장</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <img src="resources/images/next.png" width='15px' alt="">
+                        <a class="nav-link" href="#" onclick="forwardMail();">
+                            <img src="resources/images/next.png" width='15px' alt="" >
                             전달</a>
                       </li>
                        <!-- <li class="nav-item">
@@ -222,7 +222,7 @@ input[type=checkbox] {
 			                				</c:if>
 			                			</td>	
 			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2" data-bs-toggle="modal" data-bs-target="#receipt">수신확인</button></td>
+			                			<td><button class="btn2" data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -265,7 +265,7 @@ input[type=checkbox] {
 			                				</c:if>
 			                			</td>	
 			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2"  data-bs-toggle="modal" data-bs-target="#receipt">수신확인</button></td>
+			                			<td><button class="btn2"  data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>
@@ -297,10 +297,62 @@ input[type=checkbox] {
 					
 					$(".mstatus"+emNo ).css("font-weight","300");
 					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
+					
 					$("#mailDetail").attr("action", 'mail.em').submit();
 
 				})
 			})	
+			
+			
+				  function replyMail(){
+	           	 // 선택한 요소가 있는지 확인
+	               let $checked = $(".emNo:checked");
+	               // 선택하지 않은 경우
+	               if( $checked.length < 1){
+	                   alert("답장할 메일을 선택해주세요.");
+	                   return false;
+	
+	               } else if($checked.length>=2){ // 선택한 경우
+	                   alert("한개의 메일만 선택해주세요.");
+	                   return false;
+	
+	               }else{
+	             	  const emNo = $(".emNo:checked").val();
+	             	  $("#detailNo").val(emNo);
+	             	
+	                 $("#mailDetail").attr("action", 'replyMail.em').submit();
+						}
+					
+	             	  
+	           	
+	           }
+			
+			   function forwardMail(){
+	            	 // 선택한 요소가 있는지 확인
+	                let $checked = $(".emNo:checked");
+	                // 선택하지 않은 경우
+	                if( $checked.length < 1){
+	                    alert("전달할 메일을 선택해주세요.");
+	                    return false;
+
+	                } else if($checked.length>=2){ // 선택한 경우
+	                    alert("한개의 메일만 선택해주세요.");
+	                    return false;
+
+	                }else{
+	              	  const emNo = $(".emNo:checked").val();
+	              	  $("#detailNo").val(emNo);
+	              	
+	                  $("#mailDetail").attr("action", 'forward.em').submit();
+						}
+					
+	              	  
+	            	
+	            }
+           
+			
+			
+			
 			</script>
 			
 			
@@ -590,60 +642,99 @@ input[type=checkbox] {
 	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
 	                       <div class="modal-content">
 	                           <div class="modal-header">
-	                           <b>주소록 추가</b>
+	                           <b>수신확인</b>
 	                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	                           </div>
-	                           <div class="modal-body addAddress">
-	                           
-	                           <form action="insert.ad" method="post" id="addForm">
-	                               <table style="text-align: center;">
+	                           <div class="modal-body receiptCheck">
+								<span style="font-size:13px"> ※ 수신완료 된 메일은 발송취소를 할 수 없습니다.</span><br>
+	                               <table id="receiverTb" class="table">
 	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
+	                               	<thead>
 	                                   <tr>
-	                                       <th width="100">이름 </th>
-	                                       <td><input type="text" name="name" required class="required"  data-name="이름"></td>
+	                                   	   <th width="20"><input type="checkbox" id="selectAll"></th>
+	                                       <th width="70">수신인</th>
+	                                       <th width="120">이메일</th>
+	                                       <th width="100">상태</th>
+	                                       <th width="80">수신일</th>
 	                                   </tr>
-	                                   <tr>
-	                                       <th>이메일</th>
-	                                       <td><input type="text" name="email" required class="required" data-name="이메일"></td>
-	                                   </tr>
-	                                   <tr>
-	                                       <th>연락처</th>
-	                                       <td><input type="text" name="phone" required class="required" data-name="연락처"></td>
-	                                   </tr>
-	                                   <tr>
-	                                       <th>회사명</th>
-	                                       <td><input type="text" name="bizName"></td>
-	                                   </tr>
-	                                   <tr>
-	                                       <th>부서</th>
-	                                       <td><input type="text" name="deptName"></td>
-	                                   </tr>
-	                                   <tr>
-	                                       <th>직급</th>
-	                                       <td><input type="text" name="jobName"></td>
-	                                   </tr>
-	                                   <tr>
-	                                       <th>그룹 </th> 
-	                                       <td>
-	                                           <select name="groupNo">
-	                                           
-	                                           </select>
-
-	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
-	                                       </td>
-	                                   </tr>
-
+	                                </thead>  
+	                                <tbody>
+	                                
+	                                </tbody> 
 	                               </table>
 	                              
 	                           </div>
 	                           <div class="modal-footer">
-	                           <button type="submit" class="btn btn-primary btn-sm sub">저장</button>
-	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
+	                           <button type=button" class="btn btn-primary btn-sm sub">발송취소</button>
+	                           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">취소</button>
 	                           </div>
-	                         </form>
+	                         
 	                       </div>
 	                   </div>
 	               </div>
+
+	               <script>
+	      
+	               $(".btn2").click(function(){
+	            	   var emNo = $(this).data("emno");
+	            	   
+	            	   $.ajax({
+	            		   url: "receiverData.em",
+	            		   data:{emNo : emNo},
+	            		   success:function(list){
+	            			   console.log(list);
+	            			   
+	            			   value = "";
+	            			   for(let i = 0; i < list.length; i++){
+	            				   
+	            				   let readStatus = list[i].read;
+	            				   let disableCheckbox = (readStatus === '수신완료') ? 'disabled' : '';
+	            				   
+	            				   value += "<tr>"
+	            				         + "<td><input type='checkbox' name='receiver' class='checkR' "+ disableCheckbox + "></td>"
+	            				         + "<td>" + list[i].receiverName + "</td>"
+	            				         + "<td>" + list[i].receiver +"@anyware.com"+ "</td>"
+	            				         + "<td>" + list[i].read + "</td>"
+	            				         + "<td>" 
+
+	            				         if(list[i].readTime != null){
+	            				        	 value += list[i].readTime 
+	            				         }
+	            				   value += "</td>"
+ 									
+	            				   if( list[i].read =='수신완료' ){
+	            					   $(".checkR").eq(i).attr('disabled', true);
+	            					   
+	            					   
+	            				   }
+	            			   }
+	            			   
+	            		     $("#receiverTb tbody").html(value);
+	            		   },error:function(){
+	            			   console.log("ajax 수신확인 리스트 조회실패");
+	            			   
+	            		   }
+	            	
+	            	   })
+	            	   
+	               })
+	               
+	               </script>
+	               
+	               
+	             <script>
+	              
+                   $(function(){
+                       $("#selectAll").click(function(){
+                           if($(this).is(":checked")){
+                               $("input[name=receiver]").attr("checked",true);
+                           }else{
+                               $("input[name=receiver]").attr("checked",false);
+                           }
+                       })
+                   })
+	               
+	               </script>
    
 
        <!--페이징 영역-->

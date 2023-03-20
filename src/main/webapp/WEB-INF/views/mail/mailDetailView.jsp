@@ -19,6 +19,7 @@
 #btn-area a:hover{
  color: #7c7c7c;
  text-decoration: none;
+ cursor:pointer;
 }
 
 
@@ -56,7 +57,8 @@
             <div id="send-area">
                 <div id="btn-area">
                     <a onclick="replyEm();"><img src="resources/images/send (1).png"width="20"> 답장</a>
-                    <a onclick="forwardEm();"><img src="resources/images/next.png"width="20"> 전달</a>
+                  
+                    <a id="forward"><img src="resources/images/next.png"width="20"> 전달</a>
                     
                     <c:choose>
                     <c:when test="${box eq 5}">
@@ -147,7 +149,7 @@
 	                                	<br>
 	                                	<div id="fileArea">
 	                                	<c:forEach var="a" items="${m.fileList }">
-	                                		<img src="${a.changeName}" width="20px"> &nbsp;<a href="${a.changeName }" download="${a.originName}">${a.originName} </a>&nbsp;&nbsp;
+	                                		<img src="${a.changeName}" width="20px" onerror="this.src='resources/images/docs.png';" this.alt='PDF 아이콘'"> &nbsp;<a href="${a.changeName }" download="${a.originName}">${a.originName} </a>&nbsp;&nbsp;
 	                                		<c:set var="fileSizeInKB" value="${a.fileSize div 1024}"/>
 	                                		 (<fmt:formatNumber value="${a.fileSize div 1024}" pattern="#,##0.00"/> KB)
 
@@ -185,11 +187,18 @@
                     function replyEm(){
        					$("#mailDetail").attr("action", 'reply.em').submit();
 
-                    }
-                    
-                    
-                    
+                    }     
                     </script>
+                    
+                    <script>
+                    $("#forward").click(function(){
+                    	$("#mailDetail").attr("action", 'forward.em').submit();
+                    })
+
+                    </script>
+                    
+                   
+                    
                     <script>
                     $(function(){
                     	console.log("emNo:"+ $("input[name=emNo]").val());

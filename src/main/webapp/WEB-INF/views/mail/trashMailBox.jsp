@@ -107,7 +107,18 @@ input[type=checkbox] {
                             <img src="resources/images/restore.png" width='20px' alt="">
                             복구</a>
                       </li>
-                      
+                       <li class="nav-item dropdown">
+                        <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="resources/images/filter.png" width='15px' alt="">
+                            필터
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="#">안읽은메일</a></li>
+                          <li><a class="dropdown-item" href="#">중요메일</a></li>
+                          <li><a class="dropdown-item" href="#">첨부메일</a></li>
+                        
+                        </ul>
+                      </li>
                      
                       
                     </ul>

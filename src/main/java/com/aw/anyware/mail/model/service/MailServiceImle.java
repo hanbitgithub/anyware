@@ -484,8 +484,24 @@ public class MailServiceImle implements MailService {
 	}
 	
 	
+	/**
+	 * 임시저장 첨부파일 저장
+	 */
 	public int insertTempMailAttachment(ArrayList<MailFile> atList) {
 		return mDao.insertTempMailAttachment(sqlSession, atList);
+	}
+
+	/**
+	 * 수신확인용 리스트 조회
+	 */
+	@Override
+	public ArrayList<MailStatus> selectReceiverData(String emNo) {
+		return mDao.selectReceiverData(sqlSession,emNo);
+	}
+
+	@Override
+	public int emptyTrashMailBox(MailStatus ms) {
+		return mDao.emptyTrashMailBox(sqlSession);
 	}
 	
 	

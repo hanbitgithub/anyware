@@ -670,8 +670,18 @@ public class MailDao {
 		return result;
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param emNo
+	 * @return 수신확인 데이터 조회 
+	 */
+	public ArrayList<MailStatus> selectReceiverData(SqlSessionTemplate sqlSession, String emNo) {
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverData",emNo);
+	}
 	
-	
+	public int emptyTrashMailBox(SqlSessionTemplate sqlSession) {
+		return sqlSession.delete("mailMapper.emptyTrashMailBox");
+	}
 	
 
 }
