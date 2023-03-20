@@ -226,8 +226,8 @@ a{
             			$.ajax({
             				url:"trashEmpty.em",
             				data:{
-         							sender: '${loginUser.memberId}',
-         							receiver : '${loginUser.memberId}'
+         							memId: '${loginUser.memberId}',
+         							
          					  },
             				success:function(result){
             					alert("휴지통 비우기가 완료되었습니다. ");

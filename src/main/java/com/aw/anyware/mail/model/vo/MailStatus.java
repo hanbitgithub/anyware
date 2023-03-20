@@ -25,8 +25,10 @@ public class MailStatus {
 	private String tempSave;
 	private String emTypes;
 
+	
 	private String box;
 	private String sender;
 
+	
 	
 }

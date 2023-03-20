@@ -381,6 +381,8 @@ public class MailController {
 			MailStatus ms = new MailStatus();
 			ms.setEmType("0");
 			ms.setTempSave("Y");
+			ms.setSender(m.getSender());
+		
 
 			list.add(ms); // ArrayList<MailStatus>에 추가
 
@@ -400,6 +402,7 @@ public class MailController {
 					ms2.setReceiverName(name);
 					ms2.setReceiver(id);
 					ms2.setTempSave("Y");
+					ms2.setSender(m.getSender());
 					list.add(ms2);
 				}
 
@@ -419,6 +422,7 @@ public class MailController {
 					ms3.setReceiverName(name);
 					ms3.setReceiver(id);
 					ms3.setTempSave("Y");
+					ms3.setSender(m.getSender());
 
 					list.add(ms3);
 				}
@@ -523,6 +527,7 @@ public class MailController {
 				MailStatus ms = new MailStatus();
 				ms.setEmType("0");
 				ms.setTempSave("Y");
+				ms.setSender(m.getSender());
 
 				list.add(ms); // ArrayList<MailStatus>에 추가
 
@@ -542,6 +547,7 @@ public class MailController {
 						ms2.setReceiverName(name);
 						ms2.setReceiver(id);
 						ms2.setTempSave("Y");
+						ms2.setSender(m.getSender());
 						list.add(ms2);
 					}
 
@@ -561,6 +567,7 @@ public class MailController {
 						ms3.setReceiverName(name);
 						ms3.setReceiver(id);
 						ms3.setTempSave("Y");
+						ms3.setSender(m.getSender());
 
 						list.add(ms3);
 					}
@@ -652,6 +659,7 @@ public class MailController {
 				ms.setEmType("0");
 				ms.setTempSave("Y");
 				ms.setEmNo(String.valueOf(m.getEmNo()));
+				ms.setSender(m.getSender());
 
 				list.add(ms); // ArrayList<MailStatus>에 추가
 
@@ -672,6 +680,7 @@ public class MailController {
 						ms2.setReceiver(id);
 						ms2.setTempSave("Y");
 						ms2.setEmNo(String.valueOf(m.getEmNo()));
+						ms2.setSender(m.getSender());
 						list.add(ms2);
 					}
 
@@ -692,6 +701,7 @@ public class MailController {
 						ms3.setReceiver(id);
 						ms3.setTempSave("Y");
 						ms3.setEmNo(String.valueOf(m.getEmNo()));
+						ms3.setSender(m.getSender());
 						list.add(ms3);
 					}
 				}
@@ -762,6 +772,7 @@ public class MailController {
 			ms.setReceiverName(memName);
 			ms.setReceiver(sender);
 			ms.setTempSave("Y");
+			ms.setSender(m.getSender());
 
 			list.add(ms);
 		}
@@ -876,7 +887,7 @@ public class MailController {
 		ArrayList<Mail> list = mService.selectTrashMailList(pi, memId);
 
 		// System.out.println(listCount);
-		 System.out.println(list);
+		// System.out.println(list);
 
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
@@ -1033,6 +1044,7 @@ public class MailController {
 			ms.setEmType("3");
 			ms.setReceiverName(memName);
 			ms.setReceiver(sender);
+			ms.setSender(m.getSender());
 
 			list.add(ms);
 		}
@@ -1112,6 +1124,7 @@ public class MailController {
 			// ----------- 보낸 메일 ------------
 			MailStatus ms = new MailStatus();
 			ms.setEmType("0");
+			ms.setSender(m.getSender());
 
 			list.add(ms); // ArrayList<MailStatus>에 추가
 
@@ -1129,6 +1142,7 @@ public class MailController {
 				ms2.setEmType("1");
 				ms2.setReceiverName(name);
 				ms2.setReceiver(id);
+				ms2.setSender(m.getSender());
 
 				list.add(ms2);
 			}
@@ -1147,6 +1161,7 @@ public class MailController {
 					ms3.setEmType("2");
 					ms3.setReceiverName(name);
 					ms3.setReceiver(id);
+					ms3.setSender(m.getSender());
 
 					list.add(ms3);
 				}
@@ -1537,6 +1552,7 @@ public class MailController {
 				ms.setEmType("0");
 				ms.setTempSave("N");
 				ms.setEmNo(String.valueOf(m.getEmNo()));
+				ms.setSender(m.getSender());
 
 				list.add(ms); // ArrayList<MailStatus>에 추가
 
@@ -1557,6 +1573,8 @@ public class MailController {
 						ms2.setReceiver(id);
 						ms2.setTempSave("N");
 						ms2.setEmNo(String.valueOf(m.getEmNo()));
+						ms2.setSender(m.getSender());
+						
 						list.add(ms2);
 					}
 
@@ -1577,6 +1595,7 @@ public class MailController {
 						ms3.setReceiver(id);
 						ms3.setTempSave("N");
 						ms3.setEmNo(String.valueOf(m.getEmNo()));
+						ms3.setSender(m.getSender());
 						list.add(ms3);
 					}
 				}
@@ -1654,8 +1673,10 @@ public class MailController {
 	//휴지통 비우기
 	@ResponseBody
 	@RequestMapping("trashEmpty.em")
-	public String emptyTrashMailBox(MailStatus ms) {
-		int result = mService.emptyTrashMailBox(ms);
+	public String emptyTrashMailBox(String memId ) {
+		int result = mService.emptyTrashMailBox(memId);
+		
+		//System.out.println("result " + result);
 		return result>0 ? "success" : "fail";
 	}
 	

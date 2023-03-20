@@ -541,6 +541,7 @@
 	   ,em_type
 	   ,receiver_name
 	   ,receiver
+	   ,send_id
 	   )
 	   values
 	   (
@@ -548,6 +549,7 @@
 	   ,#{emType}
 	   ,#{receiverName}
 	   ,#{receiver}
+	   ,#{sender}
 	   
 	   )
 	
@@ -835,6 +837,7 @@ SELECT SEQ_emno.CURRVAL AS em_no FROM DUAL
 	   ,receiver_name
 	   ,receiver
 	   ,temp_save
+	   ,send_id
 	   )
 	   values
 	   (
@@ -843,6 +846,7 @@ SELECT SEQ_emno.CURRVAL AS em_no FROM DUAL
 	   ,#{receiverName}
 	   ,#{receiver}
 	   ,#{tempSave}
+	   ,#{sender}
 	   
 	   )
 	
@@ -906,6 +910,7 @@ where rownum = 1
 	   ,receiver_name
 	   ,receiver
 	   ,temp_save
+	   ,send_id
 	   )
 	   values
 	   (
@@ -914,7 +919,7 @@ where rownum = 1
 	   ,#{receiverName}
 	   ,#{receiver}
 	   ,#{tempSave}
-	   
+	   ,#{sender}
 	   )
 	
 </insert>
@@ -1136,20 +1141,11 @@ update tb_mail_status
 
 <delete id="emptyTrashMailBox">
  delete 
-  from tb_mail_status
-  where em_no in 
-  (
-  select 
- 		 m. em_no
-	from tb_mail_status s
-	join tb_mail m on (m.em_no = s.em_no)
-	where (sender= #{sender} and s.receiver is null
-	 or s.receiver = #{receiver})
-	 and trash = 'Y'
-	 and spam = 'N'
- 
-)
-   
+ from tb_mail_status
+where (send_id= #{memId} and receiver is null
+	 or receiver = #{memId}) 
+and trash = 'Y'   
+
 </delete>
 
 

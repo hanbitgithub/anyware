@@ -500,8 +500,8 @@ public class MailServiceImle implements MailService {
 	}
 
 	@Override
-	public int emptyTrashMailBox(MailStatus ms) {
-		return mDao.emptyTrashMailBox(sqlSession);
+	public int emptyTrashMailBox(String memId) {
+		return mDao.emptyTrashMailBox(sqlSession, memId);
 	}
 	
 	

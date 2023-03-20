@@ -644,6 +644,7 @@ public class MailDao {
 				result += sqlSession.insert("mailMapper.saveTemporaryMailStatus2",ms);
 		}
 		
+		
 		return result;
 
 	}
@@ -679,8 +680,8 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverData",emNo);
 	}
 	
-	public int emptyTrashMailBox(SqlSessionTemplate sqlSession) {
-		return sqlSession.delete("mailMapper.emptyTrashMailBox");
+	public int emptyTrashMailBox(SqlSessionTemplate sqlSession, String memId) {
+		return sqlSession.delete("mailMapper.emptyTrashMailBox", memId);
 	}
 	
 

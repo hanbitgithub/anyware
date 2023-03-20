@@ -160,5 +160,5 @@ public interface MailService {
 	ArrayList<MailStatus> selectReceiverData(String emNo);
 
 	//휴지통 비우기
-	int emptyTrashMailBox(MailStatus ms);
+	int emptyTrashMailBox(String memId);
 }
