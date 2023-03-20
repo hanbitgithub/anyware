@@ -615,17 +615,60 @@ public class MailDao {
 	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 휴지통 상세페이지에서 메일삭제
+	 */
 	public int removeDetailMail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.delete("mailMapper.deleteTrashMail",ms);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 메일상세페이지에서 메일삭제 
+	 */
 	public int deleteDetailMail(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.update("mailMapper.deleteMail",ms);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param list
+	 * @return 임시보관함에서 수정시 
+	 */
+	public int saveTemporaryMailStatus2(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.insert("mailMapper.saveTemporaryMailStatus2",ms);
+		}
+		
+		return result;
+
+	}
 	
+	/**
+	 * @param sqlSession
+	 * @param m
+	 * @return 임시보관함 메일 전송 
+	 */
+	public int sendTemporaryMail(SqlSessionTemplate sqlSession, Mail m) {
+		return sqlSession.update("mailMapper.sendTemporaryMail",m);
+	}
 	
-	
+	/**
+	 * @param sqlSession
+	 * @param atList
+	 * @return 임시보관 첨부파일 
+	 */
+	public int insertTempMailAttachment(SqlSessionTemplate sqlSession, ArrayList<MailFile> atList) {
+		int result = 0;
+		for(MailFile at : atList) {
+			result += sqlSession.insert("mailMapper.insertTempMailAttachment", at);
+		}
+		return result;
+	}
 	
 	
 	

@@ -473,6 +473,8 @@ a {
                 <div class="partLine"></div>
                 <br>
         <form action="" id="submitForm">
+        	<input type="hidden" name="profileUrl" value="resources/images/images-for-member/defaultProfile.png">
+        	
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>이름</b></div>
                     <div class="profileContent2"><input type="text" name="name" value=""></div>
@@ -511,10 +513,10 @@ a {
                     <div class="profileContent2">
                     	<select name="jobName" id="jobName">
                             	<option value="미정">미정</option>                               
-                                <option value="총무부">사원</option>
-                                <option value="개발부">대리</option>
-                                <option value="디자인부">과장</option>
-                                <option value="디자인부">부장</option>
+                                <option value="사원">사원</option>
+                                <option value="대리">대리</option>
+                                <option value="과장">과장</option>
+                                <option value="부장">부장</option>
                             </select>
                     </div>
                 </div>
@@ -537,7 +539,7 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>담당업무</b></div>
-                    <div class="profileContent2"><input type="text" name="duty" value="직원연차관리" ></div>
+                    <div class="profileContent2"><input type="text" name="duty" value="" ></div>
                 </div>
                 <br><br>
                 <div class="partLine"></div>
@@ -555,7 +557,7 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>입사일</b></div>
-                    <div class="profileContent2"><input type="text" name="enrollDate" value="2020-10-01"></div>
+                    <div class="profileContent2"><input type="text" name="enrollDate" value="" placeholder="YYYY-MM-DD 형식으로 입력"></div>
                 </div>
                 
                 <div id="employProfile-div3">

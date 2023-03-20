@@ -222,7 +222,7 @@ input[type=checkbox] {
 			                				</c:if>
 			                			</td>	
 			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2">수신확인</button></td>
+			                			<td><button class="btn2" data-bs-toggle="modal" data-bs-target="#receipt">수신확인</button></td>
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -265,7 +265,7 @@ input[type=checkbox] {
 			                				</c:if>
 			                			</td>	
 			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2">수신확인</button></td>
+			                			<td><button class="btn2"  data-bs-toggle="modal" data-bs-target="#receipt">수신확인</button></td>
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>
@@ -273,6 +273,8 @@ input[type=checkbox] {
               
                 	</c:otherwise>
                 </c:choose>
+                
+                
                 
             </table>
             
@@ -580,6 +582,68 @@ input[type=checkbox] {
   					 
                       
                       </script>
+                      
+                      
+                      
+               <!-- Modal -->
+	              <div class="modal fade" id="receipt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	                       <div class="modal-content">
+	                           <div class="modal-header">
+	                           <b>주소록 추가</b>
+	                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+	                           </div>
+	                           <div class="modal-body addAddress">
+	                           
+	                           <form action="insert.ad" method="post" id="addForm">
+	                               <table style="text-align: center;">
+	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
+	                                   <tr>
+	                                       <th width="100">이름 </th>
+	                                       <td><input type="text" name="name" required class="required"  data-name="이름"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>이메일</th>
+	                                       <td><input type="text" name="email" required class="required" data-name="이메일"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>연락처</th>
+	                                       <td><input type="text" name="phone" required class="required" data-name="연락처"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>회사명</th>
+	                                       <td><input type="text" name="bizName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>부서</th>
+	                                       <td><input type="text" name="deptName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>직급</th>
+	                                       <td><input type="text" name="jobName"></td>
+	                                   </tr>
+	                                   <tr>
+	                                       <th>그룹 </th> 
+	                                       <td>
+	                                           <select name="groupNo">
+	                                           
+	                                           </select>
+
+	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd">+</button>
+	                                       </td>
+	                                   </tr>
+
+	                               </table>
+	                              
+	                           </div>
+	                           <div class="modal-footer">
+	                           <button type="submit" class="btn btn-primary btn-sm sub">저장</button>
+	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
+	                           </div>
+	                         </form>
+	                       </div>
+	                   </div>
+	               </div>
    
 
        <!--페이징 영역-->

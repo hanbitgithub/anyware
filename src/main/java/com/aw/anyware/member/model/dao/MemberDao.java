@@ -39,6 +39,7 @@ public class MemberDao {
 	}
 	
 	public int changePwd(SqlSessionTemplate sqlSession, Member m) {
+		
 		return sqlSession.update("memberMapper.changePwd", m);
 	}
 
@@ -92,6 +93,8 @@ public class MemberDao {
 		
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
+
+	
 
 	
 }

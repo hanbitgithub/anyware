@@ -466,8 +466,27 @@ public class MailServiceImle implements MailService {
 	public int deleteDetailMail(MailStatus ms) {
 		return mDao.deleteDetailMail(sqlSession, ms);
 	}
+
+	/**
+	 * 임시보관함에서 보관메일 수정시 
+	 */
+	@Override
+	public int saveTemporaryMailStatus2(ArrayList<MailStatus> list) {
+		return mDao.saveTemporaryMailStatus2(sqlSession,list);
+	}
+
+	/**
+	 * 임시보관함 메일 전송 
+	 */
+	@Override
+	public int sendTemporaryMail(Mail m) {
+		return mDao.sendTemporaryMail(sqlSession, m);
+	}
 	
 	
+	public int insertTempMailAttachment(ArrayList<MailFile> atList) {
+		return mDao.insertTempMailAttachment(sqlSession, atList);
+	}
 	
 	
 
