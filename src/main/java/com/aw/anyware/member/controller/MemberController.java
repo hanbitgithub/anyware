@@ -74,14 +74,38 @@ public class MemberController {
 			mv.setViewName("common/errorPage");
 			
 		}else {
+			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			session.setAttribute("loginUser", loginUser);
+			
 			mv.setViewName("main");
+		}else {
+			mv.addObject("errorMsg", "아이디 또는 비밀번호를 확인해주세요");
+			mv.setViewName("common/errorPage");
 		}
-				
-		
+			}									
 		return mv;
 	}
 	
+	/*
+	@RequestMapping("login.me")
+	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
+		
+		Member loginUser = mService.loginMember(m);
+		
+		if(loginUser == null) {
+			mv.addObject("errorMsg", "로그인에 실패하였습니다");
+			mv.setViewName("common/errorPage");
+			
+		}else {
+			
+			session.setAttribute("loginUser", loginUser);
+			mv.setViewName("main");
+		
+		
+			}									
+		return mv;
+	}
+	*/
 	@RequestMapping("logout.me")
 	public String logoutMember(HttpSession session) {
 		session.invalidate();
@@ -93,7 +117,7 @@ public class MemberController {
 		mv.setViewName("member/memberPersonalInfo");
 		return mv;
 	}
-	
+	/*
 	@RequestMapping("changePwd.me") //성공시 알람 필요, 비밀번호 변경 후 재변경 기능 추가?
 	public String changePwd(Member m, Model model, HttpSession session) {
 		System.out.println(m);
@@ -106,7 +130,7 @@ public class MemberController {
 			m.setEncPwd(encPwd);
 			int result = mService.changePwd(m);
 			System.out.println("왔나?");
-			*/
+			
 			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
 			m.setEncPwd(encPwd);
 			int result = mService.changePwd(m);
@@ -123,6 +147,31 @@ public class MemberController {
 			return "common/errorPage";
 		}
 		
+	}
+	*/
+	
+	@RequestMapping("changePwd.me")
+	public String changePwd2(Member m, Model model, HttpSession session) {
+		String mPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();
+		System.out.println("mPwd : " + mPwd);
+		if(mPwd != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), mPwd)) {
+			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
+			System.out.println("encPwd : " + encPwd);
+			m.setEncPwd(encPwd);
+			System.out.println("m : " + m);
+			int result = mService.changePwd(m);
+			
+			if(result > 0) {
+				model.addAttribute("alertMsg", "비밀번호 변경에 성공하였습니다");
+				return "member/memberPersonalInfo";
+			}else {
+				model.addAttribute("errorMsg", "비밀번호 변경에 실패했습니다");
+				return "common/errorPage";
+			}
+		}else {
+			model.addAttribute("errorMsg", "비밀번호를 정확히 입력해주세요");
+			return "common/errorPage";
+		}
 	}
 	
 	@RequestMapping("detailAllMember.me")
@@ -228,6 +277,9 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public ModelAndView insertMember(Member m, ModelAndView mv) {
+		System.out.println(m);
+		
+		
 		int result = mService.insertMember(m);
 		if(result > 0) {
 			mv.addObject("alertMsg", "신규 사원을 추가하였습니다");
@@ -238,6 +290,12 @@ public class MemberController {
 			mv.setViewName("member/selectAllMember");
 			return mv;
 		}
+	}
+	
+	@RequestMapping("leaveOff.me")
+	public ModelAndView leaveOff(ModelAndView mv) {
+		mv.setViewName("member/leaveOff");
+		return mv;
 	}
 	
 

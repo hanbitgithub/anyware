@@ -55,6 +55,8 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectPwd(sqlSession, m);
 	}
 
+	
+	
 	@Override
 	public int changePwd(Member m) {
 		
@@ -96,6 +98,8 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.insertMember(sqlSession, m);
 	}
+
+	
 
 	
 	

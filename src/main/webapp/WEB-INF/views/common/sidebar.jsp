@@ -367,7 +367,7 @@ a {
             <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
-              <a class="dropdown-item" href="#">일정관리</a>
+              <a class="dropdown-item" href="leaveOff.me">일정관리</a>
               <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
           </div>

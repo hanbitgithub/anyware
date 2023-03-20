@@ -121,7 +121,9 @@
   	   where member_pwd = #{memberPwd}
   </select>
   
-  <update id="changePwd">
+ 
+  
+   <update id="changePwd">
   	update
   			tb_member
   		set member_pwd = #{encPwd}
@@ -221,7 +223,11 @@
  				email,
  				phone,
  				address,
- 				enroll_date
+ 				status,
+ 				enroll_date,
+ 				out_date,
+ 				leave_off,
+ 				profile_url
  			)
  			values
  			(
@@ -237,7 +243,11 @@
  				#{email},
  				#{phone},
  				concat(#{address}, (#{detailAddress}||#{extraAddress})) as "address",
- 				#{enrollDate} 				
+ 				'Y',
+ 				to_date(#{enrollDate}, 'YY/MM/DD') as "enroll_date", 
+ 				null,
+ 				12,
+ 				#{profileUrl}				
  			)
  </insert> 
  
