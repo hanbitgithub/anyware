@@ -40,6 +40,7 @@ public class Member {
 	private String updatePwd; // 사용자가 변경하려고 입력한 비밀번호
 	private String encPwd; // 비밀번호 변경 기능을 통해 암호화된 비밀번호
 	private String enrollTime; // 사용자가 출근한 시간
+	private String birthday;
 
 }
 

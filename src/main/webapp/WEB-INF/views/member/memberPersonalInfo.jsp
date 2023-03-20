@@ -361,10 +361,10 @@ a {
           
             </img>
             <div class="dropdown-menu" style="font-size: 12px;">
-              <a class="dropdown-item" href="#">정보수정</a>
+              <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
-              <a class="dropdown-item" href="#">일정관리</a>
-              <a class="dropdown-item" href="#">로그아웃</a>
+              <a class="dropdown-item" href="leaveOff.me">일정관리</a>
+              <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
           </div>
 
@@ -544,7 +544,7 @@ a {
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>생일</b></div> <!-- 우선 주민번호로, 추후에 sql문 수정 필요 -->
-                    <div class="profileContent2"><input type="text" name="birthday" value="${ loginUser.rrn }"></div>
+                    <div class="profileContent2">${ loginUser.rrn }"</div>
                 </div>
                 <div id="employProfile-div3">
                     <button id="submit" type="submit">정보변경</button>

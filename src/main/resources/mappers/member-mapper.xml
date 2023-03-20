@@ -19,6 +19,7 @@
 	<result column="leave_off" property="leaveOff"/>
 	<result column="profile_url" property="profileUrl"/>
 	
+	
 </resultMap>
 
 <resultMap id="commuteResult" type="Commute">
@@ -70,7 +71,7 @@
     		name,
     		member_id,
     		member_pwd,
-    		RPAD(SUBSTR(rrn, 1, 8), 14, '*') as "rrn",
+    		TO_CHAR(to_date(substr(rrn,1,6),'RRMMDD'), 'YY"년" MM"월" DD"일"') as "rrn",
     		email,
     		phone,
     		address,
@@ -100,7 +101,7 @@
     		name,
     		member_id,
     		member_pwd,
-    		rrn,
+    		TO_CHAR(to_date(substr(rrn,1,6),'RRMMDD'), 'YY"년" MM"월" DD"일"') as "rrn",
     		email,
     		phone,
     		address,

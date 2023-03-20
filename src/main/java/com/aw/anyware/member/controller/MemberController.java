@@ -179,18 +179,14 @@ public class MemberController {
 		
 		Member m = mService.detailAllMember(memberNo);
 		
-		int loginMemberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		
-		if(memberNo == loginMemberNo) {
-			Member loginUserRrn = mService.loginUserRrn(memberNo);
-			
-			m.setRrn(loginUserRrn.getRrn());
-			
+		
+		if(m != null) {												
 			mv.addObject("m", m).setViewName("member/detailAllMember");
 			
 			return mv;
 		}else {
-			mv.addObject("m", m).setViewName("member/detailAllMember");
+			mv.addObject("errorMsg", "조회 실패").setViewName("main");
 			
 			return mv;
 		}
