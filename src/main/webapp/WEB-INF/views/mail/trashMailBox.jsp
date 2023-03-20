@@ -26,7 +26,7 @@
 input[type=checkbox] {
 	transform : scale(1.01);
 }
-.search{ 
+#search{ 
 	width:250px;
 }
 
@@ -123,7 +123,7 @@ input[type=checkbox] {
                       
                     </ul>
                     <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2 search" type="search" name="keyword" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input class="form-control form-control-sm me-2" id="search" type="search" name="keyword" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>

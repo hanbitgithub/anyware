@@ -639,7 +639,7 @@ input[type=checkbox] {
                       
                <!-- Modal -->
 	              <div class="modal fade" id="receipt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" >
-	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+	                   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
 	                       <div class="modal-content">
 	                           <div class="modal-header">
 	                           <b>수신확인</b>
@@ -647,15 +647,15 @@ input[type=checkbox] {
 	                           </div>
 	                           <div class="modal-body receiptCheck">
 								<span style="font-size:13px"> ※ 수신완료 된 메일은 발송취소를 할 수 없습니다.</span><br>
-	                               <table id="receiverTb" class="table">
+	                               <table id="receiverTb" class="table" style="font-size : 14px;">
 	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
 	                               	<thead>
 	                                   <tr>
 	                                   	   <th width="20"><input type="checkbox" id="selectAll"></th>
 	                                       <th width="70">수신인</th>
 	                                       <th width="120">이메일</th>
-	                                       <th width="100">상태</th>
-	                                       <th width="80">수신일</th>
+	                                       <th width="60">상태</th>
+	                                       <th width="120">수신일</th>
 	                                   </tr>
 	                                </thead>  
 	                                <tbody>
@@ -727,9 +727,17 @@ input[type=checkbox] {
                    $(function(){
                        $("#selectAll").click(function(){
                            if($(this).is(":checked")){
-                               $("input[name=receiver]").attr("checked",true);
+                        	   
+                        	   $("input[name=receiver]").each(function(){
+                        		  var opt = $(this).prop("disabled");
+                        		  
+                        		  if(!opt){
+                        			  $(this).prop("checked",true);
+                        		  }
+                        	   })
+                              
                            }else{
-                               $("input[name=receiver]").attr("checked",false);
+                        	   $("input[name=receiver]").prop("checked",false);
                            }
                        })
                    })

@@ -185,7 +185,19 @@ public class MailController {
 
 		return "mail/companyAddressbook";
 	}
-
+	
+	//주소록 메일보내기 
+	@RequestMapping("sendCheckMail.ad")
+	public String sendCheckMail(Mail m, Model model) {
+		model.addAttribute("m", m);
+		
+		return "mail/sendMailForm";
+	}
+	
+	
+	
+	
+	//------------------------- 메일 --------------------------------
 	// 메일 메인페이지 (받은메일함)
 	@RequestMapping("receivebox.em")
 	public String receiveMailList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage,
@@ -1679,6 +1691,8 @@ public class MailController {
 		//System.out.println("result " + result);
 		return result>0 ? "success" : "fail";
 	}
+	
+	
 	
 
 }

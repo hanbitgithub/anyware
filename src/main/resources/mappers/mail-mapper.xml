@@ -1125,13 +1125,14 @@ update tb_mail_status
 
 </insert>
 
+<!-- 수신확인 리스트  -->
 <select id="selectReceiverData" resultMap="mailStatusResult">
  select 
  	    em_no
  	   ,receiver_name
  	   ,receiver
  	   ,decode(read,'Y','수신완료','안읽음') "read"
- 	   ,read_time 
+ 	   ,to_char(read_time,'YYYY-MM-DD(DY) HH24:MI:SS') "read_time" 
  	   ,em_type
   from tb_mail_status
   where em_type in ('1','2')
@@ -1139,6 +1140,8 @@ update tb_mail_status
 
 </select>
 
+
+<!-- 휴지통 비우기  -->
 <delete id="emptyTrashMailBox">
  delete 
  from tb_mail_status

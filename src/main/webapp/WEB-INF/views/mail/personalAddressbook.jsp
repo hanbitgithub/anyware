@@ -353,7 +353,7 @@
                             삭제</a>
                       </li>
                       
-                     <script>
+                    <script>
                      // '삭제'버튼 클릭시 실행하는 함수
   					function deleteAddress(){
   							 
@@ -407,7 +407,7 @@
                       
                       
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="#" onclick="sendMail();">
                             <img src="resources/images/send (1).png" width="18px">
                             메일전송</a>
                       </li>
@@ -453,6 +453,9 @@
                             </div>
                         </div>
                       </li>
+                      
+                      
+                      
                       <script>
                       function deleteGroup(){
                     	  
@@ -532,7 +535,9 @@
                 	<c:forEach var="ad" items="${list}">
                 	
 	                    <tr style="font-size: 14px;">
-	                        <td width="10"><input type="checkbox" name="check" class="addNo" value="${ad.addNo }"></td>
+	                        <td width="10"><input type="checkbox" name="check" class="addNo" value="${ad.addNo }">
+	                        <input type="hidden" name="adMail" class="adMail" value="${ad.email }">
+	                        </td>
 	                        <td width="50">${ad.name }</td>
 	                        <td width="150">${ad.email }</td>
 	                        <td width="100">${ad.phone }</td>
@@ -546,20 +551,60 @@
                 
             </table>
             
+            
+            <form id="mail" action="" method="post">
+			<input type="hidden" name="receivers" id="receivers" >
+			<input type="hidden" name="sender" value="${loginUser.memberId}">
+			</form>
+            
             <script>
-                    $(function(){
-                        $("#chkAll").click(function(){
-                            if($(this).is(":checked")){
-                                $("input[name=check]").attr("checked",true);
-                            }else{
-                                $("input[name=check]").attr("checked",false);
-                            }
-                        })
+                $(function(){
+                    $("#chkAll").click(function(){
+                        if($(this).is(":checked")){
+                            $("input[name=check]").attr("checked",true);
+                        }else{
+                            $("input[name=check]").attr("checked",false);
+                        }
                     })
-                    
-                    
-                    
-                </script>
+                })
+
+          </script>
+          
+          <script>
+          function sendMail(){
+					// 선택한 요소가 있는지 확인
+					let $checked = $(".addNo:checked");
+						 
+					// 선택하지 않은 경우
+					if( $checked.length < 1){
+						alert("선택된 연락처가 없습니다.");
+						return false;
+							 
+					} else { // 선택한 경우
+
+							 let checkArr = [];
+							 $(".addNo").each(function(){
+								 if($(this).prop("checked")){
+									 checkArr.push( $(this).siblings().val() );
+								 }
+							 });
+							 
+						const receivers = checkArr.toString();
+						
+						console.log(receivers);
+
+		              	 $("#receivers").val(receivers);
+		                 $("#mail").attr("action", 'sendCheckMail.ad').submit();
+						
+						
+							
+						 }
+				
+              }
+          
+          
+          
+          </script>
 
 
 

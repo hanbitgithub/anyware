@@ -78,7 +78,7 @@
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                        
                       <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="#" onclick="sendMail();">
                             <img src="resources/images/send (1).png" width="18px">
                             메일전송</a>
                       </li>
@@ -111,7 +111,7 @@
                 	<c:when test="${not empty mlist}">
                 		<c:forEach var="m" items="${mlist}">
 		                    <tr style="font-size: 14px;">
-		                        <td width="10"><input type="checkbox" name="check"></td>
+		                        <td width="10"><input type="checkbox" name="check" class="memId" value="${m.name } ${m.memberId}@anyware.com"></td>
 		                        <td width="50">${m.name }</td>
 		                        <td width="150">${m.email }</td>
 		                        <td width="100">${m.phone }</td>
@@ -130,6 +130,12 @@
                 
             </table>
             
+            
+            <form id="mail" action="" method="post">
+			<input type="hidden" name="receivers" id="receivers" >
+			<input type="hidden" name="sender" value="${loginUser.memberId}">
+			</form>
+            
             <script>
                     $(function(){
                         $("#chkAll").click(function(){
@@ -140,7 +146,45 @@
                             }
                         })
                     })
-                </script>
+            </script>
+            
+            <script>
+            // '메일전송'버튼 클릭시 실행하는 함수
+				function sendMail(){
+						 
+					// 선택한 요소가 있는지 확인
+					let $checked = $(".memId:checked");
+						 
+					// 선택하지 않은 경우
+					if( $checked.length < 1){
+						alert("선택된 연락처가 없습니다.");
+						return false;
+							 
+					} else { // 선택한 경우
+
+							 let checkArr = [];
+							 $(".memId").each(function(){
+								 
+								 if($(this).prop("checked")){
+									 checkArr.push( $(this).val() );
+								 }
+							 });
+							 
+						const receivers = checkArr.toString();
+						
+						//console.log(receivers);
+		              	 $("#receivers").val(receivers);	            	
+		                 $("#mail").attr("action", 'sendCheckMail.ad').submit();
+
+						 }
+					     
+					 }
+				 
+            
+            
+            
+            
+            </script>
        
             
 

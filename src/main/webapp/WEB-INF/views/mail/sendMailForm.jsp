@@ -315,7 +315,7 @@
                                 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
                                 
                                
-                                <input type="text" placeholder="" name="receivers" class="email" id="receivers">
+                                <input type="text" placeholder="" name="receivers" class="email" id="receivers" value="${m.receivers}">
                                 <button class="btn btn-primary btn-sm" style="font-weight: bold;" type="button" data-bs-toggle="modal" data-bs-target="#addressbook">+</button>
                                 
                             </td>
