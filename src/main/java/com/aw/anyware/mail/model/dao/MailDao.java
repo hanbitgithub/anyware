@@ -204,8 +204,44 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectdeptAddBookList",deptName,rowBounds);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param keyword
+	 * @return 사내 주소록 검색 
+	 */
+	public int selectEmpSearchCount(SqlSessionTemplate sqlSession,String keyword) {
+		return sqlSession.selectOne("mailMapper.selectEmpSearchCount",keyword);
+	}
 	
-	//메일
+	public ArrayList<Member> selectEmpSearchList(SqlSessionTemplate sqlSession,String keyword, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("mailMapper.selectEmpSearchList",keyword,rowBounds);
+		
+	}
+	
+	
+	/**
+	 * @param sqlSession
+	 * @param keyword
+	 * @return 개인주소록 검색 
+	 */
+	public int selectPerSearchCount(SqlSessionTemplate sqlSession,AddressBook ad) {
+		return sqlSession.selectOne("mailMapper.selectPerSearchCount",ad);
+	}
+	
+	public ArrayList<Member> selectPerSearchList(SqlSessionTemplate sqlSession,AddressBook ad, PageInfo pi){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		return (ArrayList)sqlSession.selectList("mailMapper.selectPerSearchList",ad,rowBounds);
+		
+	}
+	
+	
+	
+	//-------------------------------메일--------------------------------------
 	
 	/**
 	 * @param sqlSession
@@ -680,9 +716,26 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverData",emNo);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 휴지통 메일 비우기 
+	 */
 	public int emptyTrashMailBox(SqlSessionTemplate sqlSession, String memId) {
 		return sqlSession.delete("mailMapper.emptyTrashMailBox", memId);
 	}
 	
+	/**
+	 * @param sqlSession
+	 * @param memId
+	 * @return 메인페이지 리스트 조회 
+	 */
+	public ArrayList<Mail> selectReceiveMail(SqlSessionTemplate sqlSession, String memId){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiveMail",memId);
+	}
+	
+	public ArrayList<Mail> selectSendMail(SqlSessionTemplate sqlSession, String memId){
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSendMail",memId);
+	}
 
 }

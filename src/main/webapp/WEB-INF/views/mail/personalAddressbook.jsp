@@ -502,8 +502,9 @@
                      
                       
                     </ul>
-                    <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                    <form class="d-flex" role="search" action="searchPer.ad">
+                      <input class="form-control form-control-sm me-2" id="search" type="search"name="keyword" value="${keyword}" placeholder="검색어를 입력하세요" aria-label="Search">
+                      <input type="hidden" name="memNo" value="${loginUser.memberNo }">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -623,7 +624,7 @@
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+								onclick="location.href='searchPer.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -635,7 +636,7 @@
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='personal.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
+							onclick="location.href='searchPer.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -652,7 +653,7 @@
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='personal.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+								onclick="location.href='searchPer.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

@@ -353,10 +353,75 @@
 	   and dept_name = #{deptName}
 	  order by name asc
 </select>
+
+<!-- 사내주소록 검색 -->
+<select id="selectEmpSearchCount" resultType="_int">
+ select 
+	  		count(*)
+	   from tb_member
+	   where status = 'Y'
+       and dept_name || job_name || name || email || phone  like '%' || #{keyword} || '%'
+	  order by name asc  
+</select>
+
+<select id="selectEmpSearchList" resultMap="memberResult">
+select 
+	  		 member_no
+	  		,dept_name
+	  		,job_name
+	  		,name
+	  		,member_id
+	  		,email
+	  		,phone
+	  		,email
+	  		,address
+	  		,enroll_date
+	  		,profile_url
+	   from tb_member
+	   where status = 'Y'
+       and dept_name || job_name || name || email || phone like '%' || #{keyword} || '%'
+	  order by name asc   
+
+</select>
+
+<!-- 개인주소록 검색 -->
+<select id="selectPerSearchCount" resultType="_int">
+select 
+	       count(*)
+	from tb_addressbook b
+	join tb_addressgroup g on (b.group_no = g.group_no)
+	where b.status = 'Y' 
+	  and mem_no = #{memNo}
+      and  dept_name || job_name || name || email || phone || biz_name || group_name like '%' || #{keyword} || '%'
+	 order by add_no desc
+
+
+</select>
+
 	
+<select id="selectPerSearchList" resultMap="addressResult">
+select 
+	        add_no
+	       , name
+	       , dept_name
+	       , job_name
+	       , email
+	       , phone
+	       , biz_name
+	       , b.group_no
+	       , group_name
+	       , mem_no
+	from tb_addressbook b
+	join tb_addressgroup g on (b.group_no = g.group_no)
+	where b.status = 'Y' 
+	  and mem_no =  #{memNo}
+      and  dept_name || job_name || name || email || phone || biz_name || group_name like '%' || #{keyword} || '%'
+	 order by add_no desc
 
 
-<!--메일리스트-->
+</select>
+
+<!--*********** 메일 *************-->
 <!-- 받은메일 개수조회 -->
 <select id="selectReceiveMailListCount" resultType="_int">
 	select count(m.em_no) "count"
@@ -1150,6 +1215,76 @@ where (send_id= #{memId} and receiver is null
 and trash = 'Y'   
 
 </delete>
+
+
+<!-- 메인페이 받은메일, 보낸메일 조회 -->
+<select id="selectReceiveMail" resultMap="mailResult">
+select *
+from
+	(select m.em_no
+	     , NVL(em_title,'제목없음') "em_title"
+	     , em_content
+	     , mem_name
+	     , sender
+	     , to_char(send_date,'YYYY-MM-DD') "send_date"
+	     , em_type
+	     , receiver_name
+	     , s.receiver
+	     , s.read
+	     , s.important
+	     , trash
+	     , spam
+	     , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	 from tb_mail m
+	 join  tb_mail_status  s on (m.em_no = s.em_no)	
+	 where em_type in (1,2)
+	 and s.receiver = #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+	 and temp_save = 'N'
+     order by m.em_no desc
+  )
+  where rownum  between 1 and 5  
+</select>
+
+
+
+
+<select id="selectSendMail" resultMap="mailResult">
+ 
+ select *
+ from 
+ (
+   select 
+ 		 m. em_no
+        , sender
+	    , NVL(em_title,'제목없음') "em_title"
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD') "send_date"
+	    , receiver_name
+	    , m.receiver
+	    , ref_email
+	    , read
+	    , important
+	    , em_type
+	    ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)	
+	where em_type = 0
+	 and sender= #{memId}
+	 and trash = 'N'
+	 and spam = 'N'
+	 and temp_stock = 'N'
+   order by m.em_no desc
+ )
+ where rownum  between 1 and 5   
+</select>
+
+
 
 
 

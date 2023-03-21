@@ -166,12 +166,7 @@ public class MailController {
 		return "mail/companyAddressbook";
 	}
 
-	/**
-	 * @param currentPage
-	 * @param deptName
-	 * @param model
-	 * @return 부서별 주소록 조회
-	 */
+	// 부서별 주소록 
 	@RequestMapping("dept.ad")
 	public String deptAddBookList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, String deptName,
 			Model model) {
@@ -195,6 +190,46 @@ public class MailController {
 	}
 	
 	
+	//사내주소록 검색  
+	@RequestMapping("searchEmp.ad")
+	public String searchCompanyAddressBook(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, String keyword,Model model) {	
+		//페이징처리
+		// 게시글 갯수 조회
+		int searchCount = mService.selectEmpSearchCount(keyword);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		
+		ArrayList<Member> mlist = mService.selectEmpSearchList(keyword,pi);
+		
+		model.addAttribute("mlist", mlist);
+		model.addAttribute("pi", pi);
+		model.addAttribute("keyword", keyword);
+
+		
+		return "mail/companyAddressbook";
+	}
+	
+	//개인주소록 검색
+	@RequestMapping("searchPer.ad")
+	public String searchPersonalAddressBook(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, AddressBook ad,Model model) {
+		
+		//페이징처리
+		// 게시글 갯수 조회
+		int searchCount = mService.selectPerSearchCount(ad);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
+		
+		ArrayList<Member> list = mService.selectPerSearchList(ad,pi);
+		
+		
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		model.addAttribute("keyword", ad.getKeyword());
+
+		
+		return "mail/personalAddressbook";
+	}
+	
+
 	
 	
 	//------------------------- 메일 --------------------------------
@@ -226,6 +261,7 @@ public class MailController {
 
 		return "mail/receiveMailBox";
 	}
+	
 
 	// 안읽은 메일 수 조회 ajax
 	@ResponseBody
@@ -260,6 +296,33 @@ public class MailController {
 
 		return "mail/sendMailBox";
 	}
+	
+	
+	//받은메일, 보낸메일 메인페이지 리스트조회
+	@ResponseBody
+	@RequestMapping(value="receiveList.em", produces = "application/json; charset=utf-8")
+	public String receiveMailMain(HttpSession session) {
+		// 로그인한 사원번호
+		String memId = ((Member) session.getAttribute("loginUser")).getMemberId();
+		// 받은 메일 리스트 조회
+		ArrayList<Mail> list = mService.selectReceiveMail(memId);
+
+	
+		return new Gson().toJson(list);
+	}
+	@ResponseBody
+	@RequestMapping(value="sendList.em", produces = "application/json; charset=utf-8")
+	public String sendMailMain(HttpSession session) {
+		// 로그인한 사원번호
+		String memId = ((Member) session.getAttribute("loginUser")).getMemberId();
+		// 받은 메일 리스트 조회
+		ArrayList<Mail> list = mService.selectSendMail(memId);
+
+	
+		return new Gson().toJson(list);
+	}
+	
+	
 
 	// 중요메일 조회
 	@RequestMapping("important.em")
@@ -1691,6 +1754,10 @@ public class MailController {
 		//System.out.println("result " + result);
 		return result>0 ? "success" : "fail";
 	}
+	
+	
+	//-----------검색-----------------
+	
 	
 	
 	

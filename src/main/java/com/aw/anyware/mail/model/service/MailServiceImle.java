@@ -175,7 +175,39 @@ public class MailServiceImle implements MailService {
 		return mDao.selectdeptAddBookList(sqlSession, pi,deptName);
 	}
 	
-	//메일
+	
+	/**
+	 * 사내 주소록 검색 
+	 */
+	@Override
+	public int selectEmpSearchCount(String keyword) {
+		return mDao.selectEmpSearchCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Member> selectEmpSearchList(String keyword, PageInfo pi) {
+		return mDao.selectEmpSearchList(sqlSession,keyword,pi);
+	}
+	
+
+	/**
+	 * 개인 주소록 검색 
+	 */
+	@Override
+	public int selectPerSearchCount(AddressBook ad) {
+		return mDao.selectPerSearchCount(sqlSession, ad);
+	}
+
+	@Override
+	public ArrayList<Member> selectPerSearchList(AddressBook ad, PageInfo pi) {
+		return mDao.selectPerSearchList(sqlSession,ad,pi);
+	}
+	
+	
+	
+	
+	
+	//----------------------------------메일---------------------------------------------
 
 	/**
 	 * 받은 메일 갯수 
@@ -262,9 +294,6 @@ public class MailServiceImle implements MailService {
 	public int insertMailAttachment(ArrayList<MailFile> atList) {
 		return mDao.insertMailAttachment(sqlSession, atList);
 	}
-
-
-	
 
 	/**
 	 * 중요메일 수 조회 
@@ -499,10 +528,28 @@ public class MailServiceImle implements MailService {
 		return mDao.selectReceiverData(sqlSession,emNo);
 	}
 
+	/**
+	 * 휴지통 메일 비우기 
+	 */
 	@Override
 	public int emptyTrashMailBox(String memId) {
 		return mDao.emptyTrashMailBox(sqlSession, memId);
 	}
+
+	/**
+	 * 메인페이지 받은메일, 보낸메일 조회 
+	 */
+	@Override
+	public ArrayList<Mail> selectReceiveMail(String memId) {
+		return mDao.selectReceiveMail(sqlSession,memId);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSendMail(String memId) {
+		return mDao.selectSendMail(sqlSession, memId);
+	}
+
+
 	
 	
 

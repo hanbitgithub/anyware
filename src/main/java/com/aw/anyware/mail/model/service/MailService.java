@@ -59,7 +59,17 @@ public interface MailService {
 	int selectdeptAddBookListCount(String deptName);
 	ArrayList<Member> selectdeptAddBookList(PageInfo pi,String deptName);
 
-	/*메일*/
+	//사내주소록 검색
+	int selectEmpSearchCount(String keyword);
+	ArrayList<Member> selectEmpSearchList(String keyword,PageInfo pi);
+	
+	//개인주소록 검색
+	int selectPerSearchCount(AddressBook ad);
+	ArrayList<Member> selectPerSearchList(AddressBook ad,PageInfo pi);
+	
+	
+	
+	/* 메일 */
 	
 	// 받은메일 개수, 리스트 조회
 	int selectReceiveMailListCount(String memId);
@@ -136,8 +146,7 @@ public interface MailService {
 	
 	//체크메일읽음/ 안읽음
 	int checkReadMail(ArrayList<MailStatus> list);
-	int checkUnReadMail(ArrayList<MailStatus> list);
-	
+	int checkUnReadMail(ArrayList<MailStatus> list);	
 	
 	//메일상세조회 
 	Mail selectMailDetail(MailStatus ms);
@@ -161,4 +170,9 @@ public interface MailService {
 
 	//휴지통 비우기
 	int emptyTrashMailBox(String memId);
+	
+	//메인페이지 받은메일 , 보낸메일 조회
+	ArrayList<Mail> selectReceiveMail(String memId);
+	ArrayList<Mail> selectSendMail(String memId);
+	
 }

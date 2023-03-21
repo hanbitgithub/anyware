@@ -72,10 +72,15 @@
   margin-left: 10px;
   }
 
+
 /*메일*/
 .nav-tabs{
   font-size: 13px;
 }  
+tr:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
 
 
 </style>
@@ -162,71 +167,148 @@
                <!-- Tab panes -->
                <div class="tab-content">
                  <div id="receive" class="container tab-pane active">
-                  <table class="table table-hover" style="font-size:12px">
-	                  <tr>
-	                  	<td width="15">김강쥐</td>
-	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="10">2023-03-08</td>
-	                  </tr> 
-	                  <tr>
-	                  	<td width="15">김강쥐</td>
-	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="10">2023-03-08</td>
-	                  </tr> 
-	                  <tr>
-	                  	<td width="15">김강쥐</td>
-	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="10">2023-03-08</td>
-	                  </tr> 
-	                  <tr>
-	                  	<td width="15">김강쥐</td>
-	                  	<td width="100">어쩌고 회신부탁드립니다.</td>
-	                  	<td width="10">2023-03-08</td>
-	                  </tr> 
-	                     
-	                  
-	                   
+                  <table class="table table-hover rlist"  style="font-size:12px">
+                 
                   </table>
                   
                  </div>
                  <div id="send" class="container tab-pane fade">       
-                   <table class="table table-hover" style="font-size:12px">
+                   <table class="table table-hover slist" style="font-size:12px">
 	                  <tr>
 	                  	<td width="15">이배추</td>
 	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
 	                  	<td width="20">2023-03-08</td>
 	                  </tr> 
-	                  <tr>
-	                  	<td width="15">이배추</td>
-	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr> 
-	                 
-	                 <tr>
-	                  	<td width="15">이배추</td>
-	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr> 
-	                 
-	                 <tr>
-	                  	<td width="15">이배추</td>
-	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr> 
-	                 
-	                 <tr>
-	                  	<td width="15">이배추</td>
-	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr> 
-	                 
-	                 
+	                
 	                   
                   </table>
                  </div>
                 
                </div>
           </div>
+          
+          <script>
+          $(function(){
+        	  $.ajax({
+        		  url: "receiveList.em",
+        		  success:function(list){
+        			 // console.log(list);
+        			  let value = "";
+        			  for(let i=0; i<list.length; i++){
+        				  let r = list[i];
+      	
+        				  if(r.mailStatus.read == 'Y'){
+        				  value += "<tr style='font-weight: 500' class='mstatus" + r.emNo +"'>"
+        				        + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
+        				        + "<td width='10'>" + r.memName +"</td>"
+        				        + "<td width='120'>" + (r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle)  
+        				        + "</td>"
+        				        + "<td width='20'>" + r.sendDate +"</td>"
+        				        + "</tr>"
+        				  }else{
+        					  value += "<tr style='font-weight: bold' class='mstatus" + r.emNo +"'>"
+        					    + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
+          				        + "<td width='10'>" + r.memName +"</td>"
+          				        + "<td width='120'>" +(r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle)
+          				        + "</td>"
+          				        + "<td width='20'>" + r.sendDate +"</td>"
+          				        + "</tr>"
+        				  }  
+        			  }
+        			  
+        			     $(".rlist").html(value);
+        		  },
+        		  error:function(){
+        			  console.log("받은메일 조회 ajax 통신실패");
+        		  }
+        	  })
+
+          })
+          </script>
+          
+           
+	       <form id="mailDetail" action="" method="post">
+	        <input type="hidden" name="box">
+			<input type="hidden" name="emType">
+			<input type="hidden" name="emNo" id="detailNo">
+			<input type="hidden" name="receiver" value="${loginUser.memberId}">
+			<input type="hidden" name="sender" value="${loginUser.memberId}">
+		  </form>
+					
+			  <script>
+         		 $(".rlist").on("click","tr",function(){
+				
+					let emNo = $(this).children('input[type=hidden]').val();
+					console.log(emNo);
+					
+					$("#detailNo").val(emNo);
+					$("input[name=box]").val(1);
+					$("input[name=emType]").val(1);
+					
+					$(".mstatus"+emNo ).css("font-weight","300");
+			
+					$("#mailDetail").attr("action", 'mail.em').submit();
+
+				});
+         		 
+
+         		 $(".slist").on("click","tr",function(){
+				
+					let emNo = $(this).children('input[type=hidden]').val();
+					console.log(emNo);
+					$("#detailNo").val(emNo);
+					$("input[name=box]").val(0);
+					$("input[name=emType]").val(0);
+					
+					$(".mstatus"+emNo ).css("font-weight","300");
+			
+					$("#mailDetail").attr("action", 'mail.em').submit();
+
+				});
+			
+	          </script>
+	          	
+
+          <script>
+          $(function(){
+        	  $.ajax({
+        		  url: "sendList.em",
+        		  success:function(list){
+        			 // console.log(list);
+        			  let value = "";
+        			  for(let i=0; i<list.length; i++){
+        				  let r = list[i];
+      	
+        				  if(r.mailStatus.read == 'Y'){
+        				  value += "<tr style='font-weight: 500'  class='mstatus" + r.emNo +"'>"
+        					   + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
+        				        + "<td width='10'>" + r.receivers.substring(0,3) +"</td>"
+        				        + "<td width='120'>" + (r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle) 
+        				        + "</td>"
+        				        + "<td width='20'>" + r.sendDate +"</td>"
+        				        + "</tr>"
+        				  }else{
+        					  value += "<tr style='font-weight: bold' class='mstatus" + r.emNo +"'>"
+        						 + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
+          				        + "<td width='10'>" + r.receivers.substring(0,3) +"</td>"
+          				        + "<td width='120'>" +(r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle) 
+          				        + "</td>"
+          				        + "<td width='20'>" + r.sendDate +"</td>"
+          				        + "</tr>"
+        				  }  
+        			  }
+        			  
+        			     $(".slist").html(value);
+        		  },
+        		  error:function(){
+        			  console.log("받은메일 조회 ajax 통신실패");
+        		  }
+        	  })
+          })
+          
+          </script>
+          
+          
                               
 				
 		</div>

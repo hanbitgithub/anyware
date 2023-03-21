@@ -26,5 +26,7 @@ public class AddressBook {
 	
 	private String groupName;
 	private String nameMail;
+	private String keyword;
+
 
 }
