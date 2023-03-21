@@ -41,6 +41,7 @@ public class Member {
 	private String encPwd; // 비밀번호 변경 기능을 통해 암호화된 비밀번호
 	private String enrollTime; // 사용자가 출근한 시간
 	private String birthday;
+	private String jobCode;
 
 }
 
