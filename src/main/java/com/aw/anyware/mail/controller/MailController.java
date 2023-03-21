@@ -1744,6 +1744,36 @@ public class MailController {
 		return new Gson().toJson(list);
 	}
 	
+	//발송취소 
+	@ResponseBody
+	@RequestMapping("cancel.em")
+	public String cancelMail(MailStatus ms) {
+
+		ArrayList<MailStatus> list = new ArrayList<>();
+
+		// 결과값
+		int result = 0;
+		String[] mailNo = ms.getEmNo().split(",");
+		String[] receive = ms.getReceiver().split(",");
+
+		for (int i = 0; i < mailNo.length; i++) {
+			MailStatus ms2 = new MailStatus();
+			ms2.setEmNo(mailNo[i]);
+			ms2.setReceiver(receive[i]);
+			
+			list.add(ms2);
+		}
+
+		 System.out.println(list);
+
+		result = mService.cancelMail(list);
+
+		return result > 0 ? "success" : "fail";
+
+	}
+	
+	
+	
 	
 	//휴지통 비우기
 	@ResponseBody

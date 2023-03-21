@@ -716,6 +716,16 @@ public class MailDao {
 		return (ArrayList)sqlSession.selectList("mailMapper.selectReceiverData",emNo);
 	}
 	
+	public int cancelMail(SqlSessionTemplate sqlSession, ArrayList<MailStatus> list) {
+		int result = 0;		
+		for(MailStatus ms : list) {		
+				result += sqlSession.delete("mailMapper.cancelMail", ms);
+
+		}
+		
+		return result;
+	}
+	
 	/**
 	 * @param sqlSession
 	 * @param memId

@@ -80,6 +80,7 @@
 </resultMap>
 
 <resultMap id="mailStatusResult" type="MailStatus">	
+	<id column="em_no" property="emNo" />
 	<result column="em_type" property="emType"/>
 	<result column="receiver_Name" property="receiverName" />
 	<result column="receiver" property="receiver" />
@@ -433,6 +434,7 @@ select
 	 and trash = 'N'
 	 and spam = 'N'
 	 and temp_save = 'N'
+	 and read in ('Y','N')
 
 </select>
 <!-- 받은메일 리스트  -->
@@ -461,6 +463,7 @@ select
 	 and trash = 'N'
 	 and spam = 'N'
 	 and temp_save = 'N'
+	 and read in ('Y','N')
      order by m.em_no desc
 
 </select>
@@ -1196,7 +1199,7 @@ update tb_mail_status
  	    em_no
  	   ,receiver_name
  	   ,receiver
- 	   ,decode(read,'Y','수신완료','안읽음') "read"
+ 	   ,decode(read,'Y','수신완료','N','안읽음','발송취소') "read"
  	   ,to_char(read_time,'YYYY-MM-DD(DY) HH24:MI:SS') "read_time" 
  	   ,em_type
   from tb_mail_status
@@ -1204,6 +1207,19 @@ update tb_mail_status
    and em_no = #{emNo}
 
 </select>
+
+<!-- 발송취소 -->
+<update id="cancelMail">
+
+update tb_mail_status
+  set read = 'C'
+  where em_no = #{emNo}
+  and receiver = #{receiver}
+  and  em_type in ('1','2')
+
+</update>
+
+
 
 
 <!-- 휴지통 비우기  -->
@@ -1217,7 +1233,7 @@ and trash = 'Y'
 </delete>
 
 
-<!-- 메인페이 받은메일, 보낸메일 조회 -->
+<!-- 메인페이지 받은메일, 보낸메일 조회 -->
 <select id="selectReceiveMail" resultMap="mailResult">
 select *
 from
@@ -1244,6 +1260,7 @@ from
 	 and trash = 'N'
 	 and spam = 'N'
 	 and temp_save = 'N'
+	 and read in ('Y','N')
      order by m.em_no desc
   )
   where rownum  between 1 and 5  
@@ -1279,6 +1296,7 @@ from
 	 and trash = 'N'
 	 and spam = 'N'
 	 and temp_stock = 'N'
+	 and read in ('Y','N')
    order by m.em_no desc
  )
  where rownum  between 1 and 5   

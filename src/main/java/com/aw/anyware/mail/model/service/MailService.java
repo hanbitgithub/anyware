@@ -167,7 +167,10 @@ public interface MailService {
 	
 	//수신확인용 리스트 조회
 	ArrayList<MailStatus> selectReceiverData(String emNo);
-
+	
+	//선택메일 발송취소
+	int cancelMail(ArrayList<MailStatus> list);
+	
 	//휴지통 비우기
 	int emptyTrashMailBox(String memId);
 	

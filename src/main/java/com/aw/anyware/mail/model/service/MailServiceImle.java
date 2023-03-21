@@ -527,6 +527,14 @@ public class MailServiceImle implements MailService {
 	public ArrayList<MailStatus> selectReceiverData(String emNo) {
 		return mDao.selectReceiverData(sqlSession,emNo);
 	}
+	
+	/**
+	 * 선택메일 발송취소 
+	 */
+	@Override
+	public int cancelMail(ArrayList<MailStatus> list) {
+		return mDao.cancelMail(sqlSession,list);
+	}
 
 	/**
 	 * 휴지통 메일 비우기 
@@ -548,6 +556,8 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> selectSendMail(String memId) {
 		return mDao.selectSendMail(sqlSession, memId);
 	}
+
+	
 
 
 	

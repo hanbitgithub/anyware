@@ -665,7 +665,7 @@ input[type=checkbox] {
 	                              
 	                           </div>
 	                           <div class="modal-footer">
-	                           <button type=button" class="btn btn-primary btn-sm sub">발송취소</button>
+	                           <button type=button" class="btn btn-primary btn-sm sub" onclick="cancelEm();">발송취소</button>
 	                           <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">취소</button>
 	                           </div>
 	                         
@@ -688,25 +688,24 @@ input[type=checkbox] {
 	            			   for(let i = 0; i < list.length; i++){
 	            				   
 	            				   let readStatus = list[i].read;
-	            				   let disableCheckbox = (readStatus === '수신완료') ? 'disabled' : '';
+	            				   let disableCheckbox = (readStatus == '수신완료' || readStatus == '발송취소') ? 'disabled' : '';
 	            				   
-	            				   value += "<tr>"
-	            				         + "<td><input type='checkbox' name='receiver' class='checkR' "+ disableCheckbox + "></td>"
+	            				   value += "<tr>"          				   
+	            				         + "<td><input type='checkbox' name='checkR' class='checkR' "
+	            				         +  "value='" + list[i].emNo + "' "
+	            				         +  disableCheckbox + ">"
+	            				         + "<input type='hidden' name='receiver' value='"+ list[i].receiver + "'>"
+	            				         + "</td>"
 	            				         + "<td>" + list[i].receiverName + "</td>"
 	            				         + "<td>" + list[i].receiver +"@anyware.com"+ "</td>"
-	            				         + "<td>" + list[i].read + "</td>"
+	            				         + "<td class='status'>" + list[i].read + "</td>"
 	            				         + "<td>" 
 
-	            				         if(list[i].readTime != null){
+	            				         if(list[i].readTime != null && readStatus == '수신완료' ){
 	            				        	 value += list[i].readTime 
 	            				         }
 	            				   value += "</td>"
  									
-	            				   if( list[i].read =='수신완료' ){
-	            					   $(".checkR").eq(i).attr('disabled', true);
-	            					   
-	            					   
-	            				   }
 	            			   }
 	            			   
 	            		     $("#receiverTb tbody").html(value);
@@ -727,22 +726,78 @@ input[type=checkbox] {
                    $(function(){
                        $("#selectAll").click(function(){
                            if($(this).is(":checked")){
-                        	   
-                        	   $("input[name=receiver]").each(function(){
+ 
+                        	   $("input[name=checkR]").each(function(){
                         		  var opt = $(this).prop("disabled");
-                        		  
                         		  if(!opt){
                         			  $(this).prop("checked",true);
                         		  }
                         	   })
                               
                            }else{
-                        	   $("input[name=receiver]").prop("checked",false);
+                        	   $("input[name=checkR]").prop("checked",false);
                            }
                        })
                    })
 	               
-	               </script>
+	           </script>
+	           
+	           
+	           
+	          <script>
+	           function cancelEm(){
+						// 선택한 요소가 있는지 확인
+						let $checked = $(".checkR:checked");
+						let emNo = $checked.val();
+						var tr = $checked.closest('tr');
+						let status = tr.children(".status");
+						
+
+						console.log("emNo" + emNo);
+						// 선택하지 않은 경우
+						if( $checked.length < 1){
+							alert("회수할 메일을 선택해주세요.");
+							return false;
+								 
+						} else { // 선택한 경우
+							 let checkArr = [];
+							 let receiverArr = [];
+
+							 $(".checkR").each(function(){
+								 if($(this).prop("checked")){
+									 checkArr.push( $(this).val() );
+									
+									 var memId = $(this).siblings("input[name=receiver]").val();
+									 receiverArr.push(memId);
+								 }
+							 });
+							 
+							const emNoArr = checkArr.toString();
+							const reArr = receiverArr.toString();
+	
+							 $.ajax({
+									url : "cancel.em",
+									data : {
+										receiver : reArr,
+										emNo : emNoArr
+									},
+									success : function(result){
+										if(result == 'success'){
+										   	console.log(result);
+										   	alert("메일이 회수되었습니다.");
+										   	
+										   	status.text("발송취소");
+										}
+									},
+									error : function(){
+										alert("회수에 실패했습니다.\n다시 시도해주세요.");
+										console.log("ajax 회수실패 ");
+									}
+								 })
+					   }
+	           }    
+	           
+	           </script>
    
 
        <!--페이징 영역-->
