@@ -99,6 +99,24 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.insertMember(sqlSession, m);
 	}
 
+	@Override
+	public int outMember(int memberNo) {
+		
+		return mDao.outMember(sqlSession, memberNo);
+	}
+
+	@Override
+	public int selectListCountOut() {
+		
+		return mDao.selectListCountOut(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectOutMember(PageInfo pi) {
+		
+		return mDao.selectOutMember(sqlSession, pi);
+	}
+
 	
 
 	

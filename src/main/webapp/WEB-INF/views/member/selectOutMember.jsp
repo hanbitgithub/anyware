@@ -377,7 +377,6 @@ a {
                 
             <ul>
                 <li><a href="regist.me">신규사원등록</a></li>
-                <li><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
                 
                 
                 
@@ -398,20 +397,7 @@ a {
                 <div class="partLine"></div>
                 <br>
 
-                <div id="search-area">
-                    <form action="" method="get">
-                    <input type="hidden" name="cpage" value="1">
-                         <select name="condition">
-                             <option value="">인사부</option>
-                             <option value="">총무부</option>
-                             <option value="">영업부</option>
-                         </select>
-                        
-                         <input type="text" name="keyword" value="${ keyword }">
-                         <button type="submit">검색</button>
-                    </form>
-                 </div>
-                 <br>
+                
 
             <div id="table-div" align="center">
                 <table style="border: 1px solid black;">
@@ -421,9 +407,11 @@ a {
                             <th class="thead-th" style="width: 100px;">부서</th>
                             <th class="thead-th" style="width: 100px;">직급/직책</th>
                             <th class="thead-th" style="width: 100px;">이름</th>
-                            <th class="thead-th" style="width: 200px;">주민등록번호</th>
-                            <th class="thead-th" style="width: 200px;">주소</th>
-                            <th class="thead-th" style="width: 200px;">연락처</th>
+                            <th class="thead-th" style="width: 200px;">아이디</th>
+                            <th class="thead-th" style="width: 200px;">입사일</th>
+                            <th class="thead-th" style="width: 100px;">이메일</th>
+                            
+                           
                         </tr>
                     </thead>
                     <tbody>
@@ -433,23 +421,16 @@ a {
                             <td class="tbody-td">${ m.deptName }</td>
                             <td class="tbody-td">${ m.jobName }/${ m.position }</td>
                             <td class="tbody-td">${ m.name }</td>
-                            <td class="tbody-td">${ m.rrn }</td>
-                            <td class="tbody-td">${ m.address }</td>
-                            <td class="tbody-td">${ m.phone }</td>
+                            <td class="tbody-td">${ m.memberId }</td>
+                            <td class="tbody-td">${ m.enrollDate }</td>
+                            <td class="tbody-td">${ m.email }</td>                            
                         </tr>
                         </c:forEach>
                     </tbody>
                 </table>
             </div>
 
-            <script>
-                //한행 클릭시 실행할 함수
-                $(function(){
-                	$("tbody>tr").click(function(){
-                		location.href = 'detailAllMember.me?memberNo=' + $(this).children("#memberNo").text();
-                	})
-                })
-            </script>
+            
 
             <div id="paging-area">
                 <div id="paging-area2" align="center">
@@ -462,12 +443,12 @@ a {
                             </c:when>
                             
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage - 1 }&deptName=${ loginUser.deptName }">이전</a></li>
+                                <li class="page-item"><a class="page-link" href="selectOut.me?cpage=${ pi.currentPage - 1 }&deptName=${ loginUser.deptName }">이전</a></li>
                             </c:otherwise>
                         </c:choose>
                         
                         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ p }&deptName=${ loginUser.deptName }">${ p }</a></li>
+                            <li class="page-item"><a class="page-link" href="selectOut.me?cpage=${ p }&deptName=${ loginUser.deptName }">${ p }</a></li>
                         </c:forEach>
                         
                     
@@ -476,7 +457,7 @@ a {
                                 <li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage + 1 }&deptName=${ loginUser.deptName }">다음</a></li>
+                                <li class="page-item"><a class="page-link" href="selectOut.me?cpage=${ pi.currentPage + 1 }&deptName=${ loginUser.deptName }">다음</a></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

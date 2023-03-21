@@ -45,6 +45,14 @@ public interface MemberService {
 	
 	int insertMember(Member m);
 	
+	// 퇴사처리
+	
+	int outMember(int memberNo);
+	
+	int selectListCountOut();
+	
+	ArrayList<Member> selectOutMember(PageInfo pi);
+	
 	
 	
 	//Member selectDayOff(Member m);

@@ -252,6 +252,36 @@
  			)
  </insert> 
  
+ <update id="outMember">
+ 	update
+ 			tb_member
+ 		set status = 'N',
+ 			out_date = to_char(SYSDATE,'YYYY-MM-DD')
+ 	   where member_no = #{memberNo}
+ </update>
+ 
+ <select id="selectListCountOut" resultType="_int">
+		select
+				count(*)
+			from tb_member
+		   where status = 'N'
+	</select>
+	
+<select id="selectOutMember" resultMap="memberResult">
+    select
+    		member_no,
+    		dept_name,
+    		job_name,
+    		position,    		
+    		name,
+    		member_id,    		    		
+    		email,    		
+    		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
+    		out_date  		
+    	from tb_member
+       where status = 'N'
+    		
+  </select>
   
   
 </mapper>

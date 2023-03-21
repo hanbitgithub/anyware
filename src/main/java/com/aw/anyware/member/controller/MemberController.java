@@ -294,5 +294,44 @@ public class MemberController {
 		return mv;
 	}
 	
+	@RequestMapping("outMember.me") // 전체사원조회 페이지로 재요청???
+	public ModelAndView outMember(int memberNo, ModelAndView mv) {
+		int result = mService.outMember(memberNo);
+		
+		if(result > 0) {
+			mv.addObject("alertMsg", "퇴사처리 되었습니다").setViewName("main");
+			return mv;			
+		}else {
+			mv.addObject("errorMsg", "퇴사처리에 실패하였습니다").setViewName("common.errorPage");
+			return mv;
+		}
+	}
+	
+	@RequestMapping("selectOut.me")	
+	public String selectOut(@RequestParam(value="cpage", defaultValue="1") int currentPage,
+									String deptName, Model model, HttpSession session) {
+		
+		if(deptName.equals("인사부")) {
+			
+			int listCount = mService.selectListCountOut();
+			
+			PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+			ArrayList<Member> list = mService.selectOutMember(pi);
+			
+			if(list != null) {
+				model.addAttribute("pi",pi);
+				model.addAttribute("list",list);
+				return "member/selectOutMember";
+			}else {
+				model.addAttribute("errorMsg", "정보를 불러오지 못하였습니다");
+				return "common/errorPage";
+			}
+		}else {
+			model.addAttribute("errorMsg", "접근 권한이 없습니다");
+			return "common/errorPage";
+		}
+		
+	}
+	
 
 }

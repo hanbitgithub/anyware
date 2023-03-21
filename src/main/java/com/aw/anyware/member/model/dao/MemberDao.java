@@ -94,6 +94,25 @@ public class MemberDao {
 		return sqlSession.insert("memberMapper.insertMember", m);
 	}
 
+	public int outMember(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return sqlSession.update("memberMapper.outMember", memberNo);
+	}
+
+	public int selectListCountOut(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("memberMapper.selectListCountOut");
+	}
+
+	public ArrayList<Member> selectOutMember(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		 int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit(); 
+		 int limit = pi.getBoardLimit();
+		 RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectOutMember", null, rowBounds);
+	}
+
 	
 
 	

@@ -453,7 +453,7 @@ a {
 
 
         <div class="content">
-            <b> ${ m.name }님의 인사관리</b>
+            <b> ${ m.name }님의 인사관리</b><br>
             <span>${ loginUser.name }님이 조회</span>
             <br><br>
             <div class="partLine"></div>
@@ -585,9 +585,23 @@ a {
          </div>       
             </form>
         <div id="employLeave-div">
-            <button id="leave" type="button">퇴사처리</button>
+            <input type="button" disabled = 'disabled' value="퇴사처리" id="outMemberBtn">
         </div>
-
+			<script>
+				if(${loginUser.memberNo} != ${m.memberNo}){					
+						$('#outMemberBtn').attr('disabled', false);					
+				}else{					
+					$('#outMemberBtn').attr('disabled', true);					
+				}
+			</script>
+			
+			<script>
+				$(function(){
+					$('#outMemberBtn').click(function(){
+						location.href = 'outMember.me?memberNo='+ ${m.memberNo};
+					})
+				})
+			</script>
 
             
         </div>    
