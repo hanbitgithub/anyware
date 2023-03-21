@@ -60,4 +60,9 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.deleteLike(sqlSession, like);
 	}
 
+	@Override
+	public Project selectProjectDetail(int projectNo) {
+		return pDao.selectProjectDetail(sqlSession, projectNo);
+	}
+
 }

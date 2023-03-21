@@ -46,10 +46,6 @@
 	        </ul>
         </div>
 
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-		<a class="btn btn-primary" id="back" href="list.pj">project 목록</a>
-
     </div>
 	
 </body>

@@ -13,21 +13,17 @@
 		<result column="count" property="count" />
 		<result column="owner" property="owner" />
 		<result column="category" property="category" />
+		<collection property="listList" resultMap="listResult" />
 	</resultMap>
 	
-	<resultMap type="Like" id="likeResult">
-		<result column="member_no" property="memberNo" />
-		<result column="project_No" property="projectNo" />
-		<result column="like_date" property="likeDate" />
+	<resultMap type="PjList" id="listResult">
+		<id column="list_no" property="listNo" />
+		<result column="list_title" property="listTitle" />
+		<result column="begin_date" property="beginDate" />
+		<result column="end_date" property="endDate" />
+		<result column="color" property="color" />
 	</resultMap>
 	
-	<resultMap type="ProjectMember" id="pjmemberResult">
-		<result column="project_no" property="projectNo" />
-		<result column="member_no" property="memberNo" />
-		<result column="status" property="status" />
-		<result column="enroll_date" property="enrollDate" />
-		<result column="owner_status" property="ownerStatus" />
-	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 		select
@@ -218,5 +214,19 @@
 		   and project_no = #{projectNo}
 	</delete>
 	
+	<select id="selectProjectDetail" resultMap="projectResult">
+		select
+		       project_no
+		     , project_title
+		     , project_content
+		     , list_no
+		     , list_title
+		     , begin_date
+		     , end_date
+		     , color
+		  from tb_project
+		  left join tb_list using (project_no)
+		 where project_no = #{projectNo}
+	</select>
 	
 </mapper>

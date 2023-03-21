@@ -51,6 +51,10 @@ public class ProjectDao {
 		return sqlSession.delete("projectMapper.deleteLike", like);
 	}
 
+	public Project selectProjectDetail(SqlSessionTemplate sqlSession, int projectNo) {
+		return sqlSession.selectOne("projectMapper.selectProjectDetail", projectNo);
+	}
+
 	
 	
 	

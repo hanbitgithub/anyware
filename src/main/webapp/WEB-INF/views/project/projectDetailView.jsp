@@ -84,46 +84,22 @@
     <jsp:include page="../common/listmenu.jsp"></jsp:include>
 
     <div class="content">
-        <h1>[개발]프로젝트1</h1>
+        <h1>${ pj.projectTitle }</h1>
         <br>
-        <div>이 프로젝트는 무슨 프로젝트일까용?</div>
+        <div>${ pj.projectContent }</div>
         <br>
         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">리스트 추가</button>
         <br><br>
 
         <div class="list-area">
-			<div class="list" onclick="location.href='detail.li'" style="border-left: 15px solid rgb(255, 153, 153);">
-				<div class="list-name">프로젝트 기획보고서</div>
-                <br>
-                <div class="period">기간</div>
-                <span>23/02/19</span> - <span>23/02/20</span>
-			</div>
-			<div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(255, 204, 153);">
-				<div class="list-name">UI 설계보고서</div>
-                <br>
-                <div class="period">기간</div>
-                <span>23/02/20</span> - <span>23/02/27</span>
-			</div>
-            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(255, 255, 156);">
-				<div class="list-name">DB 설계보고서</div>
-                <br>
-                <div class="period">기간</div>
-                <span>23/02/27</span> - <span>23/03/05</span>
-			</div>
-            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(176, 247, 162);">
-				<div class="list-name">XXXXXX</div>
-                <br>
-                <div class="period">기간</div>
-                <span>23/02/19</span> - <span>23/02/20</span>
-			</div>
-            <div class="list" onclick="location.href=''" style="border-left: 15px solid rgb(153, 204, 255);">
-				<div class="list-name">XXXXXXXX</div>
-                <br>
-                <div class="period">기간</div>
-                <span>23/02/19</span> - <span>23/02/20</span>
-			</div>
-		</div>
-        
+        	<c:forEach var="l" items="${ pj.listList }">
+        		<div class="list" onclick="location.href='detail.li'" style="border-left: 15px solid ${ l.color };">
+					<div class="list-name">${ l.listTitle }</div>
+	                <br>
+	                <div class="period">기간</div>
+	                <span>${ l.beginDate }</span> - <span>${ l.endDate }</span>
+				</div>
+        	</c:forEach>
     </div>
 
     <!-- The Modal -->

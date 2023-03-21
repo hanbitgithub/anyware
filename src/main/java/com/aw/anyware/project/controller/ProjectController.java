@@ -88,12 +88,17 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("detail.pj")
-	public String projectDetailView(int no) {
+	public String projectDetailView(int no, Model model) {
+		
+		Project pj = pService.selectProjectDetail(no);
+		
+		model.addAttribute("pj", pj);
+		System.out.println(pj);
 		return "project/projectDetailView";
 	}
 	
 	@RequestMapping("detail.li")
-	public String listDetailView() {
+	public String selectProjectDetail() {
 		return "project/listDetailView";
 	}
 

@@ -26,5 +26,7 @@ public class Project {
 	private int count;
 	private String owner;
 	private String category;
+	
+	private ArrayList<List> listList;
 
 }

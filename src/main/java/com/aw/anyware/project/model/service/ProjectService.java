@@ -23,6 +23,8 @@ public interface ProjectService {
 	// 즐겨찾기 해제 서비스(delete)
 	int deleteLike(Like like);
 	
+	// 프로젝트 상세 조회 서비스(select)
+	Project selectProjectDetail(int projectNo);
 	
 	
 }

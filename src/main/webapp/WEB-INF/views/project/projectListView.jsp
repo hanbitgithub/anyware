@@ -119,7 +119,7 @@
 				<div class="title">전체 프로젝트</div>
 			</c:when>
 			<c:when test="${ category eq 'my' || category eq 'my-search' }">
-				<div class="title">참여중인 프로젝트</div>
+				<div class="title">참여한 프로젝트</div>
 			</c:when>
 			<c:when test="${ category eq 'like' || category eq 'like-search' }">
 				<div class="title">즐겨찾기</div>
