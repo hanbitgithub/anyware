@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -97,7 +98,9 @@
 					<div class="list-name">${ l.listTitle }</div>
 	                <br>
 	                <div class="period">기간</div>
+
 	                <span>${ l.beginDate }</span> - <span>${ l.endDate }</span>
+                    
 				</div>
         	</c:forEach>
     </div>
@@ -115,15 +118,17 @@
 		
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form action="">
+					<form action="insert.li" method="post" id="addListForm">
+                        <input type="hidden" name="projectNo" value="${ pj.projectNo }">
+                        <input type="hidden" name="memberNo" value="${ loginUser.memberNo }">
 						<div>
 							<b>리스트 이름<span class="essential"> *</span></b>
-							<input type="text" id="name" name="">
+							<input type="text" id="name" name="listTitle" required>
 						</div>
 						<br>
 						<div>
                             <b>기간<span class="essential"> *</span></b><br>
-                            <input type="date" required class="date"> - <input type="date" required class="date">
+                            <input type="date" required class="date" name="beginDate" required> - <input type="date" required class="date" name="endDate" required>
                         </div>
                         <br>
                         <div>
@@ -176,9 +181,45 @@
 						<br><br>
 
 						<div class="btn-area" align="center">
-							<button type="submit" class="btn btn-primary">생성</button>&nbsp;
+							<button type="submit" class="btn btn-primary" onsubmit="isChecked();">생성</button>&nbsp;
 							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 						</div>
+						
+						<script>
+							function isChecked(){
+								const checkbox = document.getElementsByName("color");
+                                let count = 0;
+                                checkbox.forEach(function(cb){
+                                    if(cb.checked == true){
+                                        count ++;
+                                    }
+                                })
+
+                                if(count == 0){
+                                    return false;
+                                }
+							}
+
+                            const addListForm = document.querySelector("#addListForm");
+                            addListForm.addEventListener("submit",isChecked);
+
+                            function isChecked(){
+                                event.preventDefault();
+								const checkbox = document.getElementsByName("color");
+                                let count = 0;
+                                checkbox.forEach(function(cb){
+                                    if(cb.checked == true){
+                                        count ++;
+                                    }
+                                })
+
+                                if(count == 0){
+                                    alert("색상을 선택해주세요.");
+                                } else {
+                                	addListForm.submit();
+                                }
+							}
+						</script>
 
 					</form>
 				</div>

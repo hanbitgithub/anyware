@@ -18,6 +18,7 @@ import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.service.ProjectService;
 import com.aw.anyware.project.model.vo.Like;
+import com.aw.anyware.project.model.vo.List;
 import com.aw.anyware.project.model.vo.Project;
 
 @Controller
@@ -26,6 +27,7 @@ public class ProjectController {
 	@Autowired
 	private ProjectService pService;
 	
+	// projectListView
 	@RequestMapping("list.pj")
 	public String selectProjectList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
 									String category, String condition, String keyword, Model model, 
@@ -88,15 +90,38 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("detail.pj")
-	public String projectDetailView(int no, Model model) {
+	public String projectDetailView(int no, HttpSession session) {
 		
 		Project pj = pService.selectProjectDetail(no);
 		
-		model.addAttribute("pj", pj);
-		System.out.println(pj);
+		session.setAttribute("pj", pj);
+		
 		return "project/projectDetailView";
 	}
 	
+	
+	// projectDetailView
+	@RequestMapping("insert.li")
+	public String insertList(List list) {
+		
+		int result = pService.insertList(list);
+		
+		return "redirect:detail.pj?no=" + list.getProjectNo();
+	}
+	
+	@RequestMapping("participant.pj")
+	public String manageParticipant(Model model) {
+		
+		ArrayList<Member> dList = pService.selectDeptList();
+		ArrayList<Member> mList = pService.selectMemberList();
+		
+		model.addAttribute("mList", mList);
+		model.addAttribute("dList", dList);
+		
+		return "project/participantsManageView";
+	}
+	
+	// listDetailView
 	@RequestMapping("detail.li")
 	public String selectProjectDetail() {
 		return "project/listDetailView";

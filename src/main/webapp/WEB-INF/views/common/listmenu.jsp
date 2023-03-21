@@ -40,11 +40,15 @@
         
         <div id="list-area">
 	        <ul>
-	            <li><a href="detail.pj">LIST</a></li> <br>
-	            <li><a href="participants.pj">인원 관리</a></li> <br>
+	            <li><a href="detail.pj?no=${ pj.projectNo }">LIST</a></li> <br>
+	            <li><a href="participant.pj">인원 관리</a></li> <br>
 	            <li><a href="">일정 관리</a></li> <br>
 	        </ul>
         </div>
+
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+
+		<a class="btn btn-primary" href="javascript:history.back();">project 목록</a>
 
     </div>
 	

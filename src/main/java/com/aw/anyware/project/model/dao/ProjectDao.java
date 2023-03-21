@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.vo.Like;
+import com.aw.anyware.project.model.vo.List;
 import com.aw.anyware.project.model.vo.Project;
 
 @Repository
@@ -53,6 +54,18 @@ public class ProjectDao {
 
 	public Project selectProjectDetail(SqlSessionTemplate sqlSession, int projectNo) {
 		return sqlSession.selectOne("projectMapper.selectProjectDetail", projectNo);
+	}
+
+	public int insertList(SqlSessionTemplate sqlSession, List list) {
+		return sqlSession.insert("projectMapper.insertList", list);
+	}
+
+	public ArrayList<Member> selectDeptList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("projectMapper.selectDeptList");
+	}
+
+	public ArrayList<Member> selectMemberList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("projectMapper.selectMemberList");
 	}
 
 	

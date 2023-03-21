@@ -157,7 +157,7 @@
 
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
-		<a class="btn btn-primary" id="back" href="detail.pj">List 목록</a>
+		<a class="btn btn-primary" id="back" href="javascript:history.back();">List 목록</a>
 
 		<script>
 			function addlist(){

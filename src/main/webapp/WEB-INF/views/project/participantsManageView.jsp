@@ -111,6 +111,10 @@
         width: 50px;
         font-weight: bold;
     }
+
+    .file:hover{
+        cursor: pointer;
+    }
 </style>
 </head>
 <body>
@@ -130,8 +134,20 @@
             <ul id="browser" class="filetree treeview-famfamfam">
                 <li><span class="folder">(주)Anyware</span>
                     <ul>
-                        <li><span class="file">대표</span></li>
-                        <li><span class="file">상무</span></li>
+                        <c:forEach var="m" items="${ mList }">
+                        	<c:choose>
+	                            <c:when test="${ m.jobName eq '사장'}">
+	                                <li><span class="file">사장 ${ m.name } </span></li>
+	                            </c:when>
+	                            <c:when test="${ m.jobName eq '부사장' }">
+	                                <li><span class="file">부사장 ${ m.name } </span></li>
+	                            </c:when>
+	                            <c:when test="${ m.jobName eq '대표이사' }">
+	                                <li><span class="file">대표이사 ${ m.name } </span></li>
+	                            </c:when>
+                        	</c:choose>
+                        </c:forEach>
+                        
                         <li class="closed"><span class="folder">인사부</span>
                              <ul>
                                  <li><span class="file">사원1</span></li>

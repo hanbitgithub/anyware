@@ -24,6 +24,13 @@
 		<result column="color" property="color" />
 	</resultMap>
 	
+	<resultMap type="Member" id="memberResult">
+		<id column="member_no" property="memberNo" />
+		<result column="dept_name" property="deptName" />
+		<result column="job_name" property="jobName" />
+		<result column="job_code" property="jobCode" />
+		<result column="name" property="name" />
+	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
 		select
@@ -221,12 +228,59 @@
 		     , project_content
 		     , list_no
 		     , list_title
-		     , begin_date
-		     , end_date
+		     , to_date(begin_date, 'yy/mm/dd') "BEGIN_DATE"
+		     , to_date(end_date, 'yy/mm/dd') "END_DATE"
 		     , color
 		  from tb_project
 		  left join tb_list using (project_no)
 		 where project_no = #{projectNo}
+		 order
+		    by end_date asc
+	</select>
+	
+	<insert id="insertList">
+		insert
+		  into tb_list
+		  (
+		  	list_no
+		  , project_no
+		  , member_no
+		  , list_title
+		  , begin_date
+		  , end_date
+		  , color
+		  )
+		  values
+		  (
+		  	seq_lino.nextval
+		  , #{projectNo}
+		  , #{memberNo}
+		  , #{listTitle}
+		  , #{beginDate}
+		  , #{endDate}
+		  , #{color}
+		  )
+	</insert>
+	
+	<select id="selectDeptList" resultMap="memberResult">
+		select distinct
+		       dept_name
+		  from tb_member
+		 where not dept_name is null
+		 order
+		    by dept_name asc
+	</select>
+	
+	<select id="selectMemberList" resultMap="memberResult">
+		select
+		       member_no
+		     , dept_name
+		     , name
+		     , decode(job_name, '사장', 1, '부사장', 2, '대표이사', 3, '부장', 4, '과장', 5, '대리', 6, '사원', 7) job_code
+		     , job_name
+		  from tb_member
+		 order
+		    by dept_name, job_code
 	</select>
 	
 </mapper>

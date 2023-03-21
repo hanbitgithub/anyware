@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.aw.anyware.common.model.vo.PageInfo;
+import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.vo.Like;
+import com.aw.anyware.project.model.vo.List;
 import com.aw.anyware.project.model.vo.Project;
-import com.aw.anyware.project.model.vo.ProjectMember;
 
 public interface ProjectService {
 	
@@ -25,6 +26,15 @@ public interface ProjectService {
 	
 	// 프로젝트 상세 조회 서비스(select)
 	Project selectProjectDetail(int projectNo);
+	
+	// 리스트 추가 서비스(insert)
+	int insertList(List list);
+	
+	// 인원 조회 서비스(select)
+	// 부서명 조회(select)
+	ArrayList<Member> selectDeptList();
+	// 부서별 인원 조회(select)
+	ArrayList<Member> selectMemberList();
 	
 	
 }

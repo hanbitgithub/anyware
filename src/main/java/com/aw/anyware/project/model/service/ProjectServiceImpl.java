@@ -11,6 +11,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.dao.ProjectDao;
 import com.aw.anyware.project.model.vo.Like;
+import com.aw.anyware.project.model.vo.List;
 import com.aw.anyware.project.model.vo.Project;
 import com.aw.anyware.project.model.vo.ProjectMember;
 
@@ -63,6 +64,21 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public Project selectProjectDetail(int projectNo) {
 		return pDao.selectProjectDetail(sqlSession, projectNo);
+	}
+
+	@Override
+	public int insertList(List list) {
+		return pDao.insertList(sqlSession, list);
+	}
+
+	@Override
+	public ArrayList<Member> selectDeptList() {
+		return pDao.selectDeptList(sqlSession);
+	}
+
+	@Override
+	public ArrayList<Member> selectMemberList() {
+		return pDao.selectMemberList(sqlSession);
 	}
 
 }
