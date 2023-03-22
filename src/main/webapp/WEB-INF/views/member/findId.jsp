@@ -14,9 +14,9 @@
 			<div><input type="text" name="memberNo" id="memberNo" placeholder="사원번호를 입력해주세요"></div>
 			<br>
 			<div><button type="submit" onclick="submit1()">아이디 찾기</button></div>
-			
-		
 	</div>
+	
+	<div align="center" id="message" style="display: none;"><b>이메일로 인증코드를 전송했습니다</b></div>
 	
 	<div align="center">
 		<form action="" id="checkCodeForm">
@@ -34,7 +34,9 @@
 				$.ajax({
 					url:"searchId.me",
 					data:{memberNo:memberNo},
-					success:function(code1)
+					success:function(code1){
+						$('#message').css('display', 'block');
+					}
 				})
 			}else{
 				alert("사원번호를 입력해주세요");
