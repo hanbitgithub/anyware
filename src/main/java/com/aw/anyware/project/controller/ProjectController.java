@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,6 +21,7 @@ import com.aw.anyware.project.model.service.ProjectService;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
 import com.aw.anyware.project.model.vo.Project;
+import com.google.gson.Gson;
 
 @Controller
 public class ProjectController {
@@ -108,7 +110,7 @@ public class ProjectController {
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="addparticipant.pj")
+	@RequestMapping(value="addparticipant.ajax", produces="application/json; charset=UTF-8")
 	public String addParticipant(int projectNo, int memberNo) {
 		HashMap<String, Integer> map = new HashMap<>();
 		map.put("projectNo", projectNo);
@@ -116,7 +118,13 @@ public class ProjectController {
 		
 		int result = pService.addParticipant(map);
 		
-		return result > 0 ? "success" : "fail";
+		if(result > 0) {
+			Member m = pService.selectParticipant(map);
+			return new Gson().toJson(m);
+		} else {
+			return "false";
+		}
+		
 	}
 	
 	// projectDetailView
@@ -153,6 +161,23 @@ public class ProjectController {
 		model.addAttribute("pList", pList);
 		
 		return "project/participantsManageView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deletepp.ajax")
+	public String deleteParticipant(int projectNo, int memberNo) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("memberNo", memberNo);
+		
+		Member m = pService.selectParticipant(map);
+		
+		if(m.getPosition().equals("Y")) {
+			return "owner";
+		} else {
+			int result = pService.deleteParticipant(map);
+			return result > 0 ? "success" : "fail";
+		}
 	}
 	
 	// listDetailView

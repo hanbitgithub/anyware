@@ -85,6 +85,11 @@ public class ProjectServiceImpl implements ProjectService {
 	public int addParticipant(HashMap<String, Integer> map) {
 		return pDao.addParticipant(sqlSession, map);
 	}
+	
+	@Override
+	public Member selectParticipant(HashMap<String, Integer> map) {
+		return pDao.selectParticipant(sqlSession, map);
+	}
 
 	@Override
 	public ArrayList<Member> selectDeptList() {
@@ -100,6 +105,13 @@ public class ProjectServiceImpl implements ProjectService {
 	public ArrayList<Member> selectParticipantList(int projectNo) {
 		return pDao.selectParticipantList(sqlSession, projectNo);
 	}
+
+	@Override
+	public int deleteParticipant(HashMap<String, Integer> map) {
+		return pDao.deleteParticipant(sqlSession, map);
+	}
+
+	
 
 	
 

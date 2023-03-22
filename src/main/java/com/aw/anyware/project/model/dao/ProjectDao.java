@@ -57,7 +57,11 @@ public class ProjectDao {
 	}
 	
 	public int addParticipant(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
-		return sqlSession.insert("");
+		return sqlSession.insert("projectMapper.addParticipant", map);
+	}
+	
+	public Member selectParticipant(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("projectMapper.selectParticipant", map);
 	}
 
 	public int selectRequestStatus(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
@@ -83,6 +87,12 @@ public class ProjectDao {
 	public ArrayList<Member> selectParticipantList(SqlSessionTemplate sqlSession, int projectNo) {
 		return (ArrayList)sqlSession.selectList("projectMapper.selectParticipantList", projectNo);
 	}
+
+	public int deleteParticipant(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.delete("projectMapper.deleteParticipant", map);
+	}
+
+	
 
 	
 

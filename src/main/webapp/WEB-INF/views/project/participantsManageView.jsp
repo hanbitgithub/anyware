@@ -175,25 +175,41 @@
         <script>
             function addpp(e){
                 let memNo = $(e).next().val();
+                let count = 0;
+
                 let ppset = $(".pp-set");
-                
                 ppset.each(function(){
                     if($(this).children("input[type=hidden]").val() == memNo){
                         alert("이미 프로젝트에 포함된 인원입니다.");
-                    } else {
-                        $.ajax({
-                            url:"addparticipant.pj",
+                        count++;
+                    }
+                })
+
+                let req = $(".request-list input[type=hidden]");
+                req.each(function(){
+                    if($(this).val() == memNo){
+                        alert("이미 참여 요청한 인원입니다.");
+                        count++;
+                    }
+                })
+
+                if(count == 0){
+                    $.ajax({
+                            url:"addparticipant.ajax",
                             data:{projectNo:${ pj.projectNo }
                                 , memberNo:memNo},
                             success:function(result){
-                                console.log(result);
+                                value = "<div class='pp-set'>"
+                                            + "<input type='hidden' name='memberNo' value=" + result.memberNo + ">"
+                                            + "<div class='pp-name'>" + result.name + "(" +  result.deptName + "/" + result.jobName + ")<span class='cancle'>✕</span></div>"
+                                        + "</div>";
+                                $(".pp-list").append(value);
                             },
                             error:function(){
                                 console.log("참여인원 추가용 ajax 통신 실패");
                             }
                         })
-                    }
-                })
+                }
             }
         </script>
 
@@ -227,7 +243,14 @@
                         <c:if test="${ p.status eq 1 }">
                             <div class="pp-set">
                                 <input type="hidden" name="memberNo" value="${ p.memberNo }">
-                                <div class="pp-name">${ p.name }(${ p.deptName }/${ p.jobName })<span class="cancle">✕</span></div>
+                                <c:choose>
+                                    <c:when test="${ p.deptName == '미정'}">
+                                        <div class="pp-name">${ p.name }(${ p.jobName })<span class="cancle">✕</span></div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="pp-name">${ p.name }(${ p.deptName }/${ p.jobName })<span class="cancle">✕</span></div>
+                                    </c:otherwise>
+                                </c:choose>
                             </div>
                         </c:if>
                     </c:forEach>
@@ -241,6 +264,7 @@
                         <c:forEach var="p" items="${ pList }">
                             <c:if test="${ p.status eq 2 }">
                                 <tr>
+                                    <td><input type="hidden" value="${ p.memberNo }"></td>
                                     <td class="re-name">${ p.name }(${p.deptName}/${p.jobName})</td>
                                     <td class="accept-td"><button class="accept">수락</button></td>
                                     <td class="reject-td"><button class="reject">거절</button></td>
@@ -260,6 +284,28 @@
                     $(".accept").css("display", "none");
                     $(".reject").css("display", "none");
                 }
+            })
+
+            $(document).on("click", ".cancle", function(){
+                let ppset = $(this).parent().parent();
+                $.ajax({
+                    url:"deletepp.ajax",
+                    data:{memberNo:$(this).parent().prev().val()
+                        , projectNo:${pj.projectNo}},
+                    success:function(result){
+                        console.log(result);
+                        if(result == 'success'){
+                            ppset.remove();
+                        } else if(result == 'owner'){
+                            alert("방장은 삭제할 수 없습니다.");
+                        } else {
+                            alert("참여 인원 삭제 실패");
+                        }
+                    },
+                    error:function(){
+                        console.log("참여자 delete용 ajax 통신 실패");
+                    }
+                })
             })
         </script>
 

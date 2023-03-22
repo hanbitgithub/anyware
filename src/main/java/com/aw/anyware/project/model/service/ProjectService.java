@@ -36,8 +36,10 @@ public interface ProjectService {
 	
 	// 프로젝트 인원 추가 서비스(insert)
 	int addParticipant(HashMap<String, Integer> map);
+	Member selectParticipant(HashMap<String, Integer> map);
 	
-	
+	// 프로젝트 인원 제거 서비스(delete)
+	int deleteParticipant(HashMap<String, Integer> map);
 	
 	// 인원 조회 서비스(select)
 	// 부서명 조회(select)

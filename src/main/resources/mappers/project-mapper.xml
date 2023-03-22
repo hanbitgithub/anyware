@@ -32,6 +32,7 @@
 		<result column="job_code" property="jobCode" />
 		<result column="name" property="name" />
 		<result column="status" property="status" />
+		<result column="owner_status" property="position" />
 	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -341,4 +342,43 @@
 		  join tb_projectMember pm on (m.member_no = pm.member_no)
 		 where project_no = #{projectNo}
 	</select>
+	
+	<insert id="addParticipant">
+		insert
+		  into tb_projectmember
+		  (
+		  	project_no
+		  , member_no
+		  , status
+		  , owner_status
+		  )
+		  values
+		  (
+		  	#{projectNo}
+		  , #{memberNo}
+		  , 1
+		  , 'N'
+		  )
+	</insert>
+	
+	<select id="selectParticipant" resultMap="memberResult">
+		select
+			   pm.member_no
+		     , name
+		     , dept_name
+		     , job_name
+		     , pm.status "status"
+		     , owner_status
+		  from tb_member m
+		  join tb_projectMember pm on (m.member_no = pm.member_no)
+		 where project_no = #{projectNo}
+		   and pm.member_no = #{memberNo}
+	</select>
+	
+	<delete id="deleteParticipant">
+		delete
+		  from tb_projectmember
+		 where project_no = #{projectNo}
+		   and member_no = #{memberNo}
+	</delete>
 </mapper>
