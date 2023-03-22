@@ -1764,12 +1764,9 @@ public class MailController {
 			list.add(ms2);
 		}
 
-		 System.out.println(list);
-
+		// System.out.println(list);
 		result = mService.cancelMail(list);
-
 		return result > 0 ? "success" : "fail";
-
 	}
 	
 	
@@ -1788,8 +1785,61 @@ public class MailController {
 	
 	//-----------검색-----------------
 	
+	@RequestMapping("searchS.em")
+	public String searchSendMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		
+		model.addAttribute("filter",ms.getFilter());
+		//System.out.println(ms);
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.selectSearchSendMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> slist = mService.selectSearchSendMailList(pi, ms);
+		model.addAttribute("slist",slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
+		//System.out.println(slist);
+		
+		return "mail/sendMailBox";
+
+	}
 	
+	@RequestMapping("searchR.em")
+	public String searchReceiveMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		model.addAttribute("filter",ms.getFilter());
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.selectSearchReceiveMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> rlist = mService.selectSearchReceiveMailList(pi, ms);
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
 	
+		return "mail/receiveMailBox";
+	}
 	
 
 }

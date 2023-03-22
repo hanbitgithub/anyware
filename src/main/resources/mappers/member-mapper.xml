@@ -243,9 +243,9 @@
  				#{memberPwd},
  				#{email},
  				#{phone},
- 				concat(#{address}, (#{detailAddress}||#{extraAddress})) as "address",
+ 				concat(#{address}, (#{detailAddress}||#{extraAddress})),
  				'Y',
- 				to_date(#{enrollDate}, 'YY/MM/DD') as "enroll_date", 
+ 				to_date(#{enrollDate}, 'YY/MM/DD'), 
  				null,
  				12,
  				#{profileUrl}				

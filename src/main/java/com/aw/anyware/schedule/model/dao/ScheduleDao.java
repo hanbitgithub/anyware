@@ -29,10 +29,54 @@ public class ScheduleDao {
 		return sqlSession.insert("scheduleMapper.addCalendarModal", c);
 	}
 	
-	// 내 캘린더 목록
+	/** 내 캘린더 목록
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
 	public ArrayList<Calendar> calendarList(SqlSessionTemplate sqlSession, int memberNo) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.calendarList", memberNo);
 	}
+	
+	/** 내 캘린더 수정 화면
+	 * @param sqlSession
+	 * @param calendar
+	 * @return
+	 */
+	public Calendar calendarModifyModal(SqlSessionTemplate sqlSession, Calendar c) {
+		return sqlSession.selectOne("scheduleMapper.calendarModifyModal", c);
+	}
+	
+	/** 내 캘린더 수정
+	 * @param sqlSession
+	 * @param calendarVo
+	 * @return
+	 */
+	public int updateCalendar(SqlSessionTemplate sqlSession, Calendar c) {
+		return sqlSession.update("scheduleMapper.updateCalendar", c);
+	}
+	
+	/** 내 캘린더 삭제
+	 * @param sqlSession
+	 * @param c
+	 * @return
+	 */
+	public int deleteCalendar(SqlSessionTemplate sqlSession, Calendar c) {
+		return sqlSession.delete("scheduleMapper.deleteCalendar", c);
+	}
+	
+	/** 스케줄 목록 조회 
+	 * @param sqlSession
+	 * @param memberNo
+	 * @return
+	 */
+	public ArrayList<Schedule> scheduleList(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", memberNo);
+	}
+	
+	
+	
+	
 	
 
 	

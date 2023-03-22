@@ -1303,7 +1303,148 @@ from
 </select>
 
 
+<!-- 보낸메일함 검색  -->
+<select id="selectSearchSendMailCount" resultType="_int">
+select 
+ 		count(*)
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)	
+	where trash = 'N'
+	 and spam = 'N'
+	 and temp_stock = 'N'
+	 and read in ('Y','N')
+ 	  and em_type = '0'
+ 	  and m.receiver||em_title  like '%' || #{keyword} || '%' 
+ 	  and sender= #{sender}
+ 	  <choose>
+	 	  <when test="filter == 'notRead'">
+	 	  	and read = 'N'
+	 	  </when>
+	 	  <when test="filter == 'important'">
+	 	  	and important = 'Y'
+	 	  </when>
+	 	    <when test="filter == 'attachment'">
+	 	  	and ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no)  > 0
+	 	  </when>
+     </choose>
 
+</select>
+
+<select id="selectSearchSendMailList" resultMap="mailResult">
+select 
+ 		 m. em_no
+        , sender
+	    , NVL(em_title,'제목없음') "em_title"
+	    , em_content
+	    , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	    , receiver_name
+	    , m.receiver
+	    , ref_email
+	    , read
+	    , important
+	    , em_type
+	    ,( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	from tb_mail m
+	join tb_mail_status s on (m.em_no = s.em_no)	
+	where trash = 'N'
+	 and spam = 'N'
+	 and temp_stock = 'N'
+	 and read in ('Y','N')
+	 and em_type = '0'
+	 and m.receiver||em_title  like '%' || #{keyword} || '%' 
+	 and sender= #{sender}
+	 	<choose>
+	 	  <when test="filter == 'notRead'">
+	 	  	and read = 'N'
+	 	  </when>
+	 	   <when test="filter == 'important'">
+	 	  	and important = 'Y'
+	 	  </when>
+	 	    <when test="filter == 'attachment'">
+	 	  	and ( select count(emf_no)
+                   from tb_mail_file  f
+                   where f.em_no = m.em_no)  > 0
+	 	  </when>
+ 	 </choose>
+   order by m.em_no desc
+
+</select>
+
+<!--받은메일함 검색 -->
+<select id="selectSearchReceiveMailCount" resultType="_int">
+	select count(m.em_no) "count"
+	 from tb_mail m
+	 join  tb_mail_status  s on (m.em_no = s.em_no)
+	 where em_type in (1,2)
+	 and s.receiver = #{receiver}
+	 and trash = 'N'
+	 and spam = 'N'
+	 and temp_save = 'N'
+	 and read in ('Y','N')
+	 and mem_name ||em_title  like '%' || #{keyword} || '%' 
+	 	<choose>
+	 	  <when test="filter == 'notRead'">
+	 	  	and read = 'N'
+	 	  </when>
+	 	   <when test="filter == 'important'">
+	 	  	and important = 'Y'
+	 	  </when>
+	 	    <when test="filter == 'attachment'">
+	 	  	and ( select count(emf_no)
+                   from tb_mail_file  f
+                   where f.em_no = m.em_no)  > 0
+	 	  </when>
+ 	 </choose>
+
+</select>
+<!-- 받은메일 리스트  -->
+<select id="selectSearchReceiveMailList" resultMap="mailResult">
+	select m.em_no
+	     , NVL(em_title,'제목없음') "em_title"
+	     , em_content
+	     , mem_name
+	     , sender
+	     , to_char(send_date,'YYYY-MM-DD(DY) HH24:MI:SS') "send_date"
+	     , em_type
+	     , receiver_name
+	     , s.receiver
+	     , s.read
+	     , s.important
+	     , trash
+	     , spam
+	     , ( select count(emf_no)
+              from tb_mail_file  f
+              where f.em_no = m.em_no) "atcount"
+	 from tb_mail m
+	 join  tb_mail_status  s on (m.em_no = s.em_no)
+	 where em_type in (1,2)
+	 and s.receiver = #{receiver}
+	 and trash = 'N'
+	 and spam = 'N'
+	 and temp_save = 'N'
+	 and read in ('Y','N')
+	 and mem_name ||em_title  like '%' || #{keyword} || '%' 
+	 	<choose>
+	 	  <when test="filter == 'notRead'">
+	 	  	and read = 'N'
+	 	  </when>
+	 	   <when test="filter == 'important'">
+	 	  	and important = 'Y'
+	 	  </when>
+	 	    <when test="filter == 'attachment'">
+	 	  	and ( select count(emf_no)
+                   from tb_mail_file  f
+                   where f.em_no = m.em_no)  > 0
+	 	  </when>
+ 	 </choose>
+	 
+     order by m.em_no desc
+
+</select>
 
 
 </mapper>

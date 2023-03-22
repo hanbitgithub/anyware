@@ -13,7 +13,22 @@ public interface ScheduleService {
 	// 내 캘린더 추가
 	int addCalendarModal(Calendar c);
 	
-	// 내 캘린더 목록
+	// 내 캘린더 목록 조회
 	ArrayList<Calendar> calendarList(int memberNo);
+	
+	// 내 캘린더 수정 화면
+	Calendar calendarModifyModal(Calendar c);
+	
+	// 내 캘린더 수정
+	int updateCalendar(Calendar c);
+	
+	// 내 캘린더 삭제
+	int deleteCalendar(Calendar c);
+	
+	// 스케줄 목록 조회
+	ArrayList<Schedule> scheduleList(int memberNo);
+	
+	
+	
 	
 }

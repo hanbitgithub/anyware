@@ -558,6 +558,37 @@ public class MailServiceImle implements MailService {
 	}
 
 	
+	
+	
+	/**
+	 * 보낸메일함 검색 
+	 */
+	@Override
+	public int selectSearchSendMailCount(MailStatus ms) {
+		return mDao.selectSearchSendMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSearchSendMailList(PageInfo pi, MailStatus ms) {
+		return mDao.selectSearchSendMailList(sqlSession,pi,ms);
+	}
+
+	/**
+	 * 받은메일함 검색 
+	 */
+	@Override
+	public int selectSearchReceiveMailCount(MailStatus ms) {
+		return mDao.selectSearchReceiveMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> selectSearchReceiveMailList(PageInfo pi, MailStatus ms) {
+		return mDao.selectSearchReceiveMailList(sqlSession,pi,ms);
+	}
+	
+	
+
+	
 
 
 	

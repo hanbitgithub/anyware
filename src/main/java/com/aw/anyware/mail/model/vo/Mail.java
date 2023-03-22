@@ -33,4 +33,5 @@ public class Mail {
 	private MailStatus mailStatus;
 	private ArrayList<MailFile> fileList;
 	private MailFile mailFile;
+	
 }

@@ -145,8 +145,8 @@ input[type=checkbox] {
                       </li>
                       
                     </ul>
-                    <form class="d-flex" role="search">
-                      <input class="form-control form-control-sm me-2" id="search" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+                    <form class="d-flex" role="search" action="searchI.em">
+                      <input class="form-control form-control-sm me-2" id="search" name="keyword" value="${keyword}" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -154,16 +154,7 @@ input[type=checkbox] {
               </nav>
 
             <table class="table">
-                 
-               <!--  <tr style="font-size: 14px;">
-                    <td width="20"><input type="checkbox"></td>
-                    <td width="20"><img src="resources/images/star.png" width="18" class="star"></td>
-                    <td width="25"><img src="resources/images/envelope.png" width="17" class="envelope"></td>
-                    <td width="100">곽두팔</td>
-                    <td width="700">2월 3주차 주간 매출 보고</td>
-                    <td width="50"><img src="resources/images/paper-clip.png" width="16" ></td>
-                    <td width="200">2023-02-22 16:20:04</td>
-                </tr> -->
+
                  <c:choose>
                 	<c:when test="${ empty ilist }">
                 		<tr align="center">
