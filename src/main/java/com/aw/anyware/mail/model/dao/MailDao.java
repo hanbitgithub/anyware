@@ -860,7 +860,9 @@ public class MailDao {
 	}
 	
 	
-	
+	public MailFile selectMailAttachmentList(SqlSessionTemplate sqlSession, String emfNo){
+		return sqlSession.selectOne("mailMapper.selectMailAttachmentList", emfNo);
+	}
 	
 
 }

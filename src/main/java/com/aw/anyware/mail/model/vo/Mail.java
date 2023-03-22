@@ -27,6 +27,8 @@ public class Mail {
 	private String tempDate;
 	private String tempRead;
 	private String emfNo;
+	private String originName;
+	private String changeName;
 	private int atcount;
 	
 	

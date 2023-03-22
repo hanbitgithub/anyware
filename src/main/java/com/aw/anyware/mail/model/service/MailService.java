@@ -174,6 +174,9 @@ public interface MailService {
 	//휴지통 비우기
 	int emptyTrashMailBox(String memId);
 	
+	//첨부파일 조회
+	MailFile selectMailAttachmentList(String emfNo);
+	
 	//메인페이지 받은메일 , 보낸메일 조회
 	ArrayList<Mail> selectReceiveMail(String memId);
 	ArrayList<Mail> selectSendMail(String memId);

@@ -214,6 +214,7 @@ input[type=checkbox] {
 			                			<td width="700" class="mail-title">
 			                			${r.emTitle }
 			                			<input type="hidden" name="mailNo" value="${r.emNo }">
+			                			<input type="hidden" name="emType" value="${r.mailStatus.emType }">
 			                			</td>
 			                			<td width="50">
 			                				<c:if test="${ r.mailFile.atcount > 0}">
@@ -242,6 +243,7 @@ input[type=checkbox] {
 			                			<td width="150">${r.memName }</td>
 			                			<td width="700" class="mail-title">${r.emTitle }
 			                			<input type="hidden" name="mailNo" value="${r.emNo }">
+			                			<input type="hidden" name="emType" value="${r.mailStatus.emType }">
 			                			</td>
 			                			<td width="50">
 			                				
@@ -263,7 +265,7 @@ input[type=checkbox] {
             
             <form id="mailDetail" action="" method="post">
             <input type="hidden" name="box" value="1">
-			<input type="hidden" name="emType" value="1">
+			<input type="hidden" name="emType" id="emType">
 			<input type="hidden" name="emNo" id="detailNo">
 			<input type="hidden" name="receiver" value="${loginUser.memberId}">
 			</form>
@@ -274,8 +276,10 @@ input[type=checkbox] {
 				$(".mail-title").click(function(){
 					var $tr = $(this).closest("tr");
 					let emNo = $(this).children('input[type=hidden]').val();
+					let emType = $(this).children('input[name=emType]').val();
 					//console.log(emNo);
 					$("#detailNo").val(emNo);
+					$("#emType").val(emType);
 					
 					$(".mstatus"+emNo ).css("font-weight","300");
 					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");

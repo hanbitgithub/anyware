@@ -96,6 +96,7 @@
 
 <resultMap id="mailFileResult" type="MailFile">
 	<id column="emf_no" property="emfNo" />
+	<result column="em_no" property="emNo"/>
 	<result column="origin_name" property="originName" />
 	<result column="change_name" property="changeName" />
 	<result column="file_size" property="fileSize" />
@@ -938,6 +939,19 @@ delete
 
 </delete>
 
+<!-- 첨부파일 조회 -->
+<select id="selectMailAttachmentList" resultMap="mailFileResult">
+select 
+       emf_no
+     , em_no
+     , origin_name
+     , change_name
+     , file_size
+ from tb_mail_file
+ where em_no = #{emNo}      
+  
+</select>
+
 <!-- 방금임시저장한 메일번호 -->
 <!-- <select id="selectSaveMailGetEmNo" resultType="_int">
 select em_no
@@ -1084,7 +1098,7 @@ select
 	from tb_mail m
 	join tb_mail_status s on (m.em_no = s.em_no)
 	left outer join tb_mail_file f on (m.em_no = f.em_no)
-    where (sender= #{sender} and s.receiver is null
+    where ((sender= #{sender} and s.receiver is null)
 	 or s.receiver = #{receiver})
      and s.em_no = #{emNo}
      <choose>

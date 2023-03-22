@@ -634,6 +634,11 @@ public class MailServiceImle implements MailService {
 	public ArrayList<Mail> searchTrashMailList(PageInfo pi, MailStatus ms) {
 		return mDao.searchTrashMailList(sqlSession,pi,ms);
 	}
+
+	@Override
+	public MailFile selectMailAttachmentList(String emfNo) {
+		return mDao.selectMailAttachmentList(sqlSession, emfNo);
+	}
 	
 	
 

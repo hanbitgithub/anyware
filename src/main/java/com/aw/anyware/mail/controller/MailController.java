@@ -1,6 +1,7 @@
 package com.aw.anyware.mail.controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -980,6 +982,8 @@ public class MailController {
 		if (ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
 			ms.setReceiver(null);
 		}
+		//System.out.println(ms);
+		
 		int read = mService.checkReadMail(ms);
 
 		// System.out.println(read);
@@ -1542,6 +1546,7 @@ public class MailController {
 	@RequestMapping("sendForward.em")
 	public String sendForwardMail(Mail m, MultipartFile[] upfile, Model model,HttpSession session) {
 
+		System.out.println(m);
 		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
 		ArrayList<MailFile> atList = new ArrayList<>();
 
@@ -1549,7 +1554,6 @@ public class MailController {
 		int result2 = 0;
 		// 첨부파일
 		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
-
 
 		String receivers = m.getReceivers();
 		receivers = receivers.replaceAll("\"value\":\"", "");
@@ -1624,17 +1628,49 @@ public class MailController {
 		}
 
 			// -----------------첨부파일 insert--------------
+		
 
-			for (MultipartFile file : upfile) {
+			if (m.getEmfNo() != null) {
+				// 이전첨부파일을 현재 메일번호에도 복제..?? 
+				String[] emfArr = m.getEmfNo().split(",");
 				
-				System.out.println("파일 :"+file.getOriginalFilename());
+			ArrayList<MailFile> prevAtList = new ArrayList<>();
+			for (String emfNo : emfArr) {
+				MailFile prevAt = mService.selectMailAttachmentList(emfNo);
+				prevAtList.add(prevAt);
+			}
+			
+			//System.out.println("이전파일" + prevAtList);
+			for (MailFile prevAt : prevAtList) {
+		        // 파일 복제를 위한 경로 설정
+		        String prevFilePath = session.getServletContext().getRealPath(prevAt.getChangeName());
+		        String newFilePath = "resources/uploadFiles/mailFiles/" + prevAt.getChangeName();
+		        
+		        // 파일 복제
+		        File prevFile = new File(prevFilePath);
+		        File newFile = new File(session.getServletContext().getRealPath(newFilePath));
+		        try {
+		            FileUtils.copyFile(prevFile, newFile);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+		        
+		        MailFile newAt = new MailFile();
+		        newAt.setOriginName(prevAt.getOriginName());
+		        newAt.setChangeName(newFilePath);
+		        newAt.setFileSize(prevAt.getFileSize());
+		        newAt.setEmNo(m.getEmNo());
+		        
+		     // 새로운 첨부파일 정보를 attachmentList에 추가
+		        atList.add(newAt);
+		
+			  }
+			}
+			for (MultipartFile file : upfile) {
+
 				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
 					
-					if (m.getEmfNo() != null) {
-						// 이전첨부파일을 현재 메일번호에도 복제..?? 
-						
-					}
-					// 저장 파일 경로!
+					// 저장 파일 경로
 					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
 
 					// 첨부파일
@@ -1653,7 +1689,7 @@ public class MailController {
 				if (atList.size() > 0) { // 첨부파일이 추가된 경우
 					result3 = mService.insertMailAttachment(atList);
 				}
-
+				
 			}
 
 
