@@ -10,37 +10,38 @@
 <style>
 #wrap {
     position:relative;
-    /*width:1300px;  wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값
+   /* width: 1300px;/* wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값
     height:700px; */
-    top:30%;
     left:30%;
-    transform: translate(-30%, +5%); /* 중앙정렬 */
+    transform: translate(-38%,1%); /* 중앙정렬 */
     margin:auto;
+ 
 }
-#wrap > #left {
-    width:35%;
+#wrap > .left {
+    width:37%;
     height:350px;
-    border: 1px solid rgb(247, 247, 247);
+    border: 1px solid rgb(230, 230, 230);
     border-radius: 5px;
     /*background-color: rgb(247, 247, 247);*/
     float:left;
     margin: 5px;
     box-sizing:border-box; /* border 또한 위치값을 갖기에 div크기가 더 커짐을 방지하기 위한 */
 }
-#wrap > #right {
+#wrap > .right {
     width:60%;
     height:350px;
-    border: 1px solid rgb(247, 247, 247);
+    border: 1px solid rgb(230, 230, 230);
     border-radius: 5px;
     /*background-color: rgb(247, 247, 247);*/
     float:left;
     margin: 5px;
     box-sizing:border-box; /* border 또한 위치값을 갖기에 div크기가 더 커짐을 방지하기 위한 */
 }
+/*
 #wrap > div:nth-child(3) {
-    clear:both; /* float:left 의 줄바꿈을 위한 */
+    clear:both;  float:left 의 줄바꿈을 위한 
 }
-
+*/
 
 /* 프로필 이미지 */
 .profile {
@@ -76,6 +77,7 @@
 /*메일*/
 .nav-tabs{
   font-size: 13px;
+  font-weight:600;
 }  
 tr:hover {
   background-color: #eee;
@@ -94,13 +96,10 @@ tr:hover {
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-		HEAD
-		content
-		
 
-		 
+
     <div id="wrap">
-        <div id="left" style="text-align:center;">
+        <div class="left" style="text-align:center;">
           <br><br><br>
           <img class="profile" src="">
             <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b></p>
@@ -139,17 +138,17 @@ tr:hover {
         </script>
 
 
-        <div id="right">
+        <div class="right">
         <br>
         <i class="fa-regular fa-file"></i> &nbsp;
           <span><b>전자결재</b></span>
         </div>
 
 
-        <div id="left">
+        <div class="left">
         <br>
        <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
-          <span><b>&nbsp;&nbsp; ✉️ &nbsp; 메일함</b></span>
+          <span><b>&nbsp;&nbsp;&nbsp; ✉️ &nbsp; 메일함</b></span>
           <div class="container">
                <br>
                <!-- Nav tabs -->
@@ -167,26 +166,20 @@ tr:hover {
                <!-- Tab panes -->
                <div class="tab-content">
                  <div id="receive" class="container tab-pane active">
-                  <table class="table table-hover rlist"  style="font-size:12px">
+                  <table class="table table-hover rlist"  style="font-size:13px">
                  
                   </table>
                   
                  </div>
                  <div id="send" class="container tab-pane fade">       
-                   <table class="table table-hover slist" style="font-size:12px">
-	                  <tr>
-	                  	<td width="15">이배추</td>
-	                  	<td width="100">견적서 요청 어쩌고어쩌고 어쩌고....</td>
-	                  	<td width="20">2023-03-08</td>
-	                  </tr> 
-	                
-	                   
+                   <table class="table table-hover slist" style="font-size:13px">
+	      
                   </table>
                  </div>
                 
                </div>
           </div>
-          
+        </div>
           <script>
           $(function(){
         	  $.ajax({
@@ -311,10 +304,10 @@ tr:hover {
           
                               
 				
-		</div>
+	
 
 
-        <div id="right">
+        <div class="right">
         <br>
         <i class="fa-solid fa-list"></i> &nbsp;
           <span><b>자유게시판</b></span>
