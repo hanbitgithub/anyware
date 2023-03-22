@@ -151,6 +151,7 @@
 	cursor: pointer;
 	vertical-align: top;
 	margin-top: 3px;
+	padding: 2px 8px;
 }
 </style>
 
@@ -395,15 +396,13 @@
                             <th height="40px">첨부파일</th>
                             <td>
                           	   <div id="fileUpload" class="dragAndDropDiv" onclick="$('#upfile').click();">Drag & Drop Files Here or Browse Files
-                          	   <div class="dropBox file-list">
-									
-								</div> 
+                          	   
                           	   </div>
                                <input type="file" name="upfile" id="upfile"   onchange="addFile();" multiple/>
                             	<span class="fileMsg" style="font-size:13px">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-							    <!-- <div class="dropBox file-list">
-									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
-								</div>  -->
+							     <div class="dropBox file-list">
+								
+								</div> 
                             	
                             </td>
                         </tr>
@@ -428,6 +427,56 @@
                        
 
                     </table>
+                    
+                     <script>
+
+                    $(function (){
+                        // 파일 드롭 다운
+                        fileDropDown();
+                    });
+                  
+                    
+                    function fileDropDown(){
+                        var dropZone = $(".dragAndDropDiv");
+                        //Drag기능
+                        dropZone.on('dragenter',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#E3F2FC');
+                        });
+                        dropZone.on('dragleave',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#FFFFFF');
+                        });
+                        dropZone.on('dragover',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#E3F2FC');
+                        });
+                        dropZone.on('drop',function(e){
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#FFFFFF');
+                             
+                            var dragfiles = e.originalEvent.dataTransfer.files;
+                            if(dragfiles != null){
+                                if(dragfiles.length < 1){
+                                    alert("폴더 업로드 불가");
+                                    return;
+                                }
+                                console.log(dragfiles);
+                                addFile(dragfiles);
+                            }else{
+                                alert("ERROR");
+                            }
+                        });
+                    }
+                    
+                    </script>
 				
                     <script>
                         $(document).ready(function() {
@@ -456,7 +505,7 @@
 			var filesArr = new Array(); // 다중 첨부파일 들어갈 파일 배열
 
 			/* 첨부파일 추가 */
-			function addFile() {
+			function addFile(dragfiles) {
 				
 				// 안내문 삭제
 				$(".fileMsg").remove();
@@ -464,7 +513,14 @@
 				var maxFileCnt = 5; // 첨부파일 최대 개수
 				var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
 				var remainFileCnt = maxFileCnt - attFileCnt; // 추가로 첨부가능한 개수
-				var files = $('#upfile')[0].files; // 현재 선택된 첨부파일 리스트 FileList
+				var files = ""; // 현재 선택된 첨부파일 리스트 FileList
+				
+
+				if(dragfiles !=null){
+					files = dragfiles;
+				}else{
+					files = $('#upfile')[0].files;
+				}
 				
 				// 첨부파일 개수 확인
 				if (files.length > remainFileCnt) {

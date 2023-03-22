@@ -185,4 +185,16 @@ public interface MailService {
 	int selectSearchReceiveMailCount(MailStatus ms);
 	ArrayList<Mail> selectSearchReceiveMailList(PageInfo pi, MailStatus ms);
 	
+	int searchImportantMailCount(MailStatus ms);
+	ArrayList<Mail> searchImportantMailList(PageInfo pi, MailStatus ms);
+	
+	int searchSendToMeMailCount(MailStatus ms);
+	ArrayList<Mail> searchSendToMeMailList(PageInfo pi, MailStatus ms);
+	
+	int searchTemporaryMailCount(MailStatus ms);
+	ArrayList<Mail> searchTemporaryMailList(PageInfo pi, MailStatus ms);
+	
+	int searchTrashMailCount(MailStatus ms);
+	ArrayList<Mail> searchTrashMailList(PageInfo pi, MailStatus ms);
+	
 }

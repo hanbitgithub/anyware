@@ -164,12 +164,7 @@ input[type=checkbox] {
                     	
                     	</script>
                     
-                    
-                    
-                    
-                    
-                    
-                    
+
                     <form class="d-flex" role="search" action="searchS.em">
                       <input class="form-control form-control-sm me-2" id="search" name="keyword"  value="${keyword }"type="search" placeholder="검색어를 입력하세요" aria-label="Search">         
                       <input type="hidden" name="sender" value="${loginUser.memberId}">
@@ -356,14 +351,9 @@ input[type=checkbox] {
 	              	
 	                  $("#mailDetail").attr("action", 'forward.em').submit();
 						}
-					
-	              	  
-	            	
+				
 	            }
            
-			
-			
-			
 			</script>
 			
 			

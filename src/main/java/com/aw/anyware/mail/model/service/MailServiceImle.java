@@ -63,9 +63,6 @@ public class MailServiceImle implements MailService {
 	public int insertAddressGroup(AddressGroup ag) {
 		return mDao.insertAddressGroup(sqlSession,ag);
 	}
-	
-	
-
 
 	/**
 	 * 그룹별 리스트 수 
@@ -584,6 +581,58 @@ public class MailServiceImle implements MailService {
 	@Override
 	public ArrayList<Mail> selectSearchReceiveMailList(PageInfo pi, MailStatus ms) {
 		return mDao.selectSearchReceiveMailList(sqlSession,pi,ms);
+	}
+
+	/**
+	 * 중요메일함 검색 
+	 */
+	@Override
+	public int searchImportantMailCount(MailStatus ms) {
+		return mDao.searchImportantMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> searchImportantMailList(PageInfo pi, MailStatus ms) {
+		return mDao.searchImportantMailList(sqlSession,pi,ms);
+	}
+
+	/**
+	 * 내게쓴메일함 검색 
+	 */
+	@Override
+	public int searchSendToMeMailCount(MailStatus ms) {
+		return mDao.searchSendToMeMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> searchSendToMeMailList(PageInfo pi, MailStatus ms) {
+		return mDao.searchSendToMeMailList(sqlSession,pi,ms);
+	}
+
+	/**
+	 * 임시보관함 검색 
+	 */
+	@Override
+	public int searchTemporaryMailCount(MailStatus ms) {
+		return mDao.searchTemporaryMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTemporaryMailList(PageInfo pi, MailStatus ms) {
+		return mDao.searchTemporaryMailList(sqlSession,pi,ms);
+	}
+
+	/**
+	 * 휴지통 검색 
+	 */
+	@Override
+	public int searchTrashMailCount(MailStatus ms) {
+		return mDao.searchTrashMailCount(sqlSession,ms);
+	}
+
+	@Override
+	public ArrayList<Mail> searchTrashMailList(PageInfo pi, MailStatus ms) {
+		return mDao.searchTrashMailList(sqlSession,pi,ms);
 	}
 	
 	

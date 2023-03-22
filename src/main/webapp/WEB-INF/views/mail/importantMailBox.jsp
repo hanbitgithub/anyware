@@ -136,7 +136,8 @@ input[type=checkbox] {
                             <img src="resources/images/filter.png" width='15px' alt="">
                             필터
                         </a>
-                        <ul class="dropdown-menu">
+                        <ul class="dropdown-menu" id="filter">
+                          <li><a class="dropdown-item" href="#">전체</a></li>
                           <li><a class="dropdown-item" href="#">안읽은메일</a></li>
                           <li><a class="dropdown-item" href="#">중요메일</a></li>
                           <li><a class="dropdown-item" href="#">첨부메일</a></li>
@@ -145,8 +146,22 @@ input[type=checkbox] {
                       </li>
                       
                     </ul>
+                    <script>
+                    		$("#filter a").click(function(){
+                    			var filter = $(this).text();
+                    			$("input[name=filter]").val(filter);
+                    			
+                    			$(".d-flex").submit();
+                    		})
+                    	
+                    </script>
+                    
                     <form class="d-flex" role="search" action="searchI.em">
                       <input class="form-control form-control-sm me-2" id="search" name="keyword" value="${keyword}" type="search" placeholder="검색어를 입력하세요" aria-label="Search">
+					  <input type="hidden" name="sender" value="${loginUser.memberId}">
+					  <input type="hidden" name="receiver" value="${loginUser.memberId}">
+					  <input type="hidden" name="filter" value="${filter}">
+		                      
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
@@ -696,11 +711,6 @@ input[type=checkbox] {
             
                
 
-
-
-
-
-
           
        <!--페이징 영역-->
 		<div id="paging-area" align="center">
@@ -711,25 +721,25 @@ input[type=checkbox] {
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${empty keyword }">
+						<c:when test="${empty keyword and empty filter}">
 							<button
 								onclick="location.href='important.em?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='important.em?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+								onclick="location.href='searchI.em?cpage=${pi.currentPage-1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
-					<c:when test="${empty keyword }">
+					<c:when test="${empty keyword and empty filter }">
 						<button onclick="location.href='important.em?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='important.em?cpage=${p}&keyword=${keyword}'">${p}</button>
+							onclick="location.href='searchI.em?cpage=${p}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -740,13 +750,13 @@ input[type=checkbox] {
 				</c:when>
 				<c:otherwise>
 					<c:choose>
-						<c:when test="${empty keyword }">
+						<c:when test="${empty keyword and empty filter }">
 							<button
 								onclick="location.href='important.em?cpage=${pi.currentPage + 1}'">다음</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='important.em?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
+								onclick="location.href='searchI.em?cpage=${pi.currentPage+1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">다음</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

@@ -1151,7 +1151,7 @@ public class MailController {
 			}
 
 			if (result1 > 0 && result2 > 0 && result3 > 0) {
-				session.setAttribute("alertMsg", "메일 전송 완료");
+				//session.setAttribute("alertMsg", "메일 전송 완료");
 			} else {
 				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
 			}
@@ -1271,12 +1271,10 @@ public class MailController {
 			}
 
 			if (result1 > 0 && result2 > 0 && result3 > 0) {
-				session.setAttribute("alertIcon", "success");
-				session.setAttribute("alertTitle", "메일 전송 완료");
+				
 				// session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
 			} else {
-				session.setAttribute("alertIcon", "error");
-				session.setAttribute("alertTitle", "메일 전송 실패");
+				
 				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
 			}
 
@@ -1456,7 +1454,7 @@ public class MailController {
 
 	// 답장하기 페이지
 	@RequestMapping("replyMail.em")
-	public String replyMailForm(MailStatus ms, Model model) {
+	public String replyMailForm(MailStatus ms, Model model,HttpSession session) {
 		//
 		if (ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
 			ms.setReceiver(null);
@@ -1490,6 +1488,14 @@ public class MailController {
 		  case "5" : title = "휴지통"; detail = mService.selectMailDetail(ms); break;
 		 
 		}
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+
+		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
+		model.addAttribute("groupList", groupList);
+		// System.out.println(groupList);
+		List<Map<String, Object>> memberList = mService.addressbookMemberList();
+		model.addAttribute("memberList", memberList);
 
 		// System.out.println(detail);
 
@@ -1511,12 +1517,161 @@ public class MailController {
 	
 	// 전달하기 
 	@RequestMapping("forward.em")
-	public String forwardMail(int emNo, Model model) {
-		Mail m = mService.selectReplyMail(emNo);
+	public String forwardMail(MailStatus ms, Model model,HttpSession session) {
+		Mail detail = new Mail(); // 메일 상세조회
 
-		model.addAttribute("m", m);
+		detail = mService.selectMailDetail(ms);
+		
+		// System.out.println(detail);
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+
+		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
+		model.addAttribute("groupList", groupList);
+		// System.out.println(groupList);
+		List<Map<String, Object>> memberList = mService.addressbookMemberList();
+		model.addAttribute("memberList", memberList);
+		
+
+		model.addAttribute("m", detail);
 
 		return "mail/forwardMailForm";
+	}
+	
+	
+	//전달할 메일 전송 (이전첨부파일 포함)
+	@RequestMapping("sendForward.em")
+	public String sendForwardMail(Mail m, MultipartFile[] upfile, Model model,HttpSession session) {
+
+		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
+		ArrayList<MailFile> atList = new ArrayList<>();
+
+		// 메일상태
+		int result2 = 0;
+		// 첨부파일
+		int result3 = 1; // (첨부파일 없으면 : 1 | 첨부파일 첨부시 => 성공 : 1 | 실패 : 0)
+
+
+		String receivers = m.getReceivers();
+		receivers = receivers.replaceAll("\"value\":\"", "");
+		receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+
+		m.setReceivers(receivers);
+
+		String cc = m.getRefEmail();
+		cc = cc.replaceAll("\"value\":\"", "");
+		cc = cc.replaceAll("\\[|\\]|\"|\\{|\\}", "");
+
+		m.setRefEmail(cc);
+
+		// 메일 테이블 insert
+		int result1 = mService.insertSendMail(m);
+
+		model.addAttribute("receivers", receivers);
+		model.addAttribute("cc", cc);
+
+		ArrayList<MailStatus> list = new ArrayList<>();
+		if (result1 > 0) {
+			// 메일 상태 insert
+			// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
+			// ----------- 보낸 메일 ------------
+			MailStatus ms = new MailStatus();
+			ms.setEmType("0");
+			ms.setSender(m.getSender());
+
+			list.add(ms); // ArrayList<MailStatus>에 추가
+
+			// ---------- 받은 메일 ---------------
+			// 받는사람 이름 배열에 담은후 구분자로 나누기
+			String[] receiverArr = receivers.split(",");
+			for (String r : receiverArr) {
+				String[] parts = r.split(" ");
+				String id = parts[1].split("@")[0];
+				// System.out.println(id);
+				String name = parts[0].split("@")[0];
+				// System.out.println(name);
+
+				MailStatus ms2 = new MailStatus();
+				ms2.setEmType("1");
+				ms2.setReceiverName(name);
+				ms2.setReceiver(id);
+				ms2.setSender(m.getSender());
+
+				list.add(ms2);
+			}
+
+			// --------- 참조 메일 --------------
+			if (!cc.equals("")) { // 참조메일이 있을경우
+
+				// 참조자 이름 배열에 담은후 구분자로 나누기
+				String[] ccArr = cc.split(",");
+				for (String c : ccArr) {
+					String[] parts = c.split(" ");
+					String id = parts[1].split("@")[0];
+					String name = parts[0].split("@")[0];
+
+					MailStatus ms3 = new MailStatus();
+					ms3.setEmType("2");
+					ms3.setReceiverName(name);
+					ms3.setReceiver(id);
+					ms3.setSender(m.getSender());
+
+					list.add(ms3);
+				}
+
+			}
+			result2 = mService.insertMailStatus(list);
+
+		}
+
+			// -----------------첨부파일 insert--------------
+
+			for (MultipartFile file : upfile) {
+				
+				System.out.println("파일 :"+file.getOriginalFilename());
+				if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
+					
+					if (m.getEmfNo() != null) {
+						// 이전첨부파일을 현재 메일번호에도 복제..?? 
+						
+					}
+					// 저장 파일 경로!
+					String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
+
+					// 첨부파일
+					MailFile at = new MailFile();
+
+					at.setOriginName(file.getOriginalFilename());
+					at.setChangeName(saveFilePath);
+					at.setFileSize((int) file.getSize());
+					at.setEmNo(m.getEmNo());
+
+					// at를 attachmentList에 담기
+					atList.add(at);
+				}
+
+				// 첨부파일 보내기
+				if (atList.size() > 0) { // 첨부파일이 추가된 경우
+					result3 = mService.insertMailAttachment(atList);
+				}
+
+			}
+
+
+			if (result1 > 0 && result2 > 0 && result3 > 0) {
+				session.setAttribute("alert", "메일 전송 완료");
+
+				model.addAttribute("receivers", receivers);
+				model.addAttribute("cc", cc);
+
+				return "mail/successSendmail";
+				// session.setAttribute("alertMsg", "성공적으로 메일을 보냈습니다.");
+			} else {
+				session.setAttribute("alert", "메일 전송을 실패했습니다.");
+
+				return "error";
+			}
+
+		
 	}
 
 	// 메일 삭제 (상세페이지에서 삭제시 )
@@ -1545,7 +1700,7 @@ public class MailController {
 
 	// 임시보관에함에서 임시저장메일 이어쓰기
 	@RequestMapping("tempMail.em")
-	public String temporaryMailWrite(MailStatus ms, Model model) {
+	public String temporaryMailWrite(MailStatus ms, Model model,HttpSession session) {
 		// 상세페이지로 들어가는 순간 읽음으로표시
 		if (ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
 			ms.setReceiver(null);
@@ -1567,6 +1722,14 @@ public class MailController {
 			}
 		}
 		// System.out.println(detail);
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+
+		List<Map<String, Object>> groupList = mService.addressbookGroupList(memNo);
+		model.addAttribute("groupList", groupList);
+		// System.out.println(groupList);
+		List<Map<String, Object>> memberList = mService.addressbookMemberList();
+		model.addAttribute("memberList", memberList);
 
 		model.addAttribute("title", title);
 		model.addAttribute("m", detail);
@@ -1728,7 +1891,7 @@ public class MailController {
 		} else {
 			session.setAttribute("alert", "메일 전송을 실패했습니다.");
 
-			return "error";
+			return "common/errorPage";
 		}
 
 	}
@@ -1840,6 +2003,113 @@ public class MailController {
 	
 		return "mail/receiveMailBox";
 	}
+	
+	@RequestMapping("searchI.em")
+	public String searchImportantMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		model.addAttribute("filter",ms.getFilter());
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.searchImportantMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> ilist = mService.searchImportantMailList(pi, ms);
+		model.addAttribute("ilist",ilist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
+	
+		return "mail/importantMailBox";
+	}
+	
+	
+	@RequestMapping("searchM.em")
+	public String searchSendToMeMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		model.addAttribute("filter",ms.getFilter());
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.searchSendToMeMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> rlist = mService.searchSendToMeMailList(pi, ms);
+		model.addAttribute("rlist",rlist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
+	
+		return "mail/sendToMeBox";
+	}
+	
+	@RequestMapping("searchT.em")
+	public String searchTemporaryMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		model.addAttribute("filter",ms.getFilter());
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.searchTemporaryMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> slist = mService.searchTemporaryMailList(pi, ms);
+		model.addAttribute("slist",slist);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
+	
+		return "mail/temporaryStorageMailBox";
+	}
+	
+	@RequestMapping("searchD.em")
+	public String searchTrashMail(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, MailStatus ms,Model model) {
+		model.addAttribute("filter",ms.getFilter());
+		
+		String filter = ms.getFilter();
+		if(filter.equals("안읽은메일")) {
+			ms.setFilter("notRead");
+		}else if(filter.equals("중요메일")) {
+			ms.setFilter("important");
+		}else if(filter.equals("첨부메일")) {
+			ms.setFilter("attachment");
+		}
+
+		int listCount = mService.searchTrashMailCount(ms);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		
+		//검색 후 리스트 
+		ArrayList<Mail> list = mService.searchTrashMailList(pi, ms);
+		model.addAttribute("list",list);
+		model.addAttribute("pi",pi);
+		model.addAttribute("keyword",ms.getKeyword());
+		
+	
+		return "mail/trashMailBox";
+	}
+	
+	
 	
 
 }

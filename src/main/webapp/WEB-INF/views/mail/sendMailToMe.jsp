@@ -59,7 +59,7 @@
 	display: inline-block;
 	vertical-align: top;
 	margin-top: 3px;
-	width: 500px;
+	width: 300px;
 }
 
 .filesize {
@@ -75,16 +75,15 @@
 
 .abort {
 	background-color:#c0443bd1;
-	-moz-border-radius: 4px;
-	-webkit-border-radius: 4px;
-	border-radius: 4px;
+	-moz-border-radius: 3px;
+	-webkit-border-radius: 3px;
+	border-radius: 50%;
 	border: none;
 	display: inline-block;
 	color: #fff;
-	font-family: arial;
 	font-size: 12px;
-	font-weight: normal;
-	padding: 3px 9px;
+	font-weight: border;
+	padding: 2px 8px;
 	cursor: pointer;
 	vertical-align: top;
 	margin-top: 3px;
@@ -140,7 +139,7 @@
                                 <input type="file" name="upfile" id="upfile2" style="display:none;"  onchange="addFile2();" multiple/>
                             	
 								<div class="dropBox file-list">
-									<span class="fileMsg">※ 첨부파일은 최대 5개까지 가능합니다.</span>
+									<span class="fileMsg" style="font-size:13px">※ 첨부파일은 최대 5개까지 가능합니다.</span>
 								</div>
                             </td>
                         </tr>
@@ -150,10 +149,58 @@
                                 <textarea id="summernote" name="emContent"></textarea>
                             </td>
                         </tr>
-                        
-                       
-
+ 
                     </table>
+                    
+                    <script>
+
+                    $(function (){
+                        // 파일 드롭 다운
+                        fileDropDown();
+                    });
+                  
+                    
+                    function fileDropDown(){
+                        var dropZone = $(".dragAndDropDiv");
+                        //Drag기능
+                        dropZone.on('dragenter',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#E3F2FC');
+                        });
+                        dropZone.on('dragleave',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#FFFFFF');
+                        });
+                        dropZone.on('dragover',function(e){
+                            e.stopPropagation();
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#E3F2FC');
+                        });
+                        dropZone.on('drop',function(e){
+                            e.preventDefault();
+                            // 드롭다운 영역 css
+                            dropZone.css('background-color','#FFFFFF');
+                             
+                            var dragfiles = e.originalEvent.dataTransfer.files;
+                            if(dragfiles != null){
+                                if(dragfiles.length < 1){
+                                    alert("폴더 업로드 불가");
+                                    return;
+                                }
+                                console.log(dragfiles);
+                                addFile2(dragfiles);
+                            }else{
+                                alert("ERROR");
+                            }
+                        });
+                    }
+                    
+                    </script>
 
                     <script>
                         $(document).ready(function() {
@@ -289,7 +336,7 @@
 			var filesArr = new Array(); // 다중 첨부파일 들어갈 파일 배열
 
 			/* 첨부파일 추가 */
-			function addFile2() {
+			function addFile2(dragfiles) {
 				
 				// 안내문 삭제
 				$(".fileMsg").remove();
@@ -297,7 +344,15 @@
 				var maxFileCnt = 5; // 첨부파일 최대 개수
 				var attFileCnt = document.querySelectorAll('.filebox').length; // 기존 추가된 첨부파일 개수
 				var remainFileCnt = maxFileCnt - attFileCnt; // 추가로 첨부가능한 개수
-				var files = $('#upfile2')[0].files; // 현재 선택된 첨부파일 리스트 FileList
+				var files = ""; // 현재 선택된 첨부파일 리스트 FileList
+				
+				if(dragfiles !=null){
+					files = dragfiles;
+				}else{
+					files = $('#upfile')[0].files;
+				}
+				
+				
 				
 				// 첨부파일 개수 확인
 				if (files.length > remainFileCnt) {
@@ -341,7 +396,7 @@
 					htmlData += '<div id="file' + i + '" class="filebox">';
 					htmlData += '<span class="name filename">'+ filesArr[i].name + '</span>';
 					htmlData += '<span class="size filesize">'+ sizeStr + '</span>';
-					htmlData += '<button type="button" class="delete abort" onclick="deleteFile('+ i + ');">X</button>';
+					htmlData += '<button type="button" class="delete abort" onclick="deleteFile('+ i + ');">x</button>';
 					htmlData += '</div>';
 		
 				}

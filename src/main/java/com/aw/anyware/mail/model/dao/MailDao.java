@@ -768,6 +768,11 @@ public class MailDao {
 	}
 	
 	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 받은메일 검색 
+	 */
 	public int selectSearchReceiveMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
 		return sqlSession.selectOne("mailMapper.selectSearchReceiveMailCount",ms);
 		
@@ -780,6 +785,82 @@ public class MailDao {
 		
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSearchReceiveMailList",ms,rowBounds);
 	}
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 중요메일 검색 
+	 */
+	public int searchImportantMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.searchImportantMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> searchImportantMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSendToMeMailList",ms,rowBounds);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 내게쓴 메일 검색 
+	 */
+	public int searchSendToMeMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.searchSendToMeMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> searchSendToMeMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.searchSendToMeMailList",ms,rowBounds);
+	}
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 임시보관함 검색 
+	 */
+	public int searchTemporaryMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.searchTemporaryMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> searchTemporaryMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.searchTemporaryMailList",ms,rowBounds);
+	}
+	
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 휴지통 검색 
+	 */
+	public int searchTrashMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.searchTrashMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> searchTrashMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.searchTrashMailList",ms,rowBounds);
+	}
+	
+	
+	
 	
 
 }
