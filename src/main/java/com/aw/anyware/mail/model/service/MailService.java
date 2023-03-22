@@ -178,4 +178,11 @@ public interface MailService {
 	ArrayList<Mail> selectReceiveMail(String memId);
 	ArrayList<Mail> selectSendMail(String memId);
 	
+	//메일 검색 
+	int selectSearchSendMailCount(MailStatus ms);
+	ArrayList<Mail> selectSearchSendMailList(PageInfo pi, MailStatus ms);
+	
+	int selectSearchReceiveMailCount(MailStatus ms);
+	ArrayList<Mail> selectSearchReceiveMailList(PageInfo pi, MailStatus ms);
+	
 }

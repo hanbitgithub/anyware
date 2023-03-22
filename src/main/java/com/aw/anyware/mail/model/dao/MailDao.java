@@ -747,5 +747,39 @@ public class MailDao {
 	public ArrayList<Mail> selectSendMail(SqlSessionTemplate sqlSession, String memId){
 		return (ArrayList)sqlSession.selectList("mailMapper.selectSendMail",memId);
 	}
+	
+	
+	/**
+	 * @param sqlSession
+	 * @param ms
+	 * @return 보낸메일 검색 
+	 */
+	public int selectSearchSendMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.selectSearchSendMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> selectSearchSendMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSearchSendMailList",ms,rowBounds);
+	}
+	
+	
+	public int selectSearchReceiveMailCount(SqlSessionTemplate sqlSession, MailStatus ms) {
+		return sqlSession.selectOne("mailMapper.selectSearchReceiveMailCount",ms);
+		
+	}
+	
+	public ArrayList<Mail> selectSearchReceiveMailList(SqlSessionTemplate sqlSession, PageInfo pi, MailStatus ms){
+		int offset = (pi.getCurrentPage()-1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset,limit);
+		
+		return (ArrayList)sqlSession.selectList("mailMapper.selectSearchReceiveMailList",ms,rowBounds);
+	}
+	
 
 }

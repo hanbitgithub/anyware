@@ -24,10 +24,12 @@ public class MailStatus {
 	private String spam;
 	private String tempSave;
 	private String emTypes;
+	private String keyword;
 
 	
 	private String box;
 	private String sender;
+	private String filter;
 
 	
 	
