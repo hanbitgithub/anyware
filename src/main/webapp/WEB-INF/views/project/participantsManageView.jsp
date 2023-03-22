@@ -136,52 +136,66 @@
                     <ul>
                         <c:forEach var="m" items="${ mList }">
                         	<c:choose>
-	                            <c:when test="${ m.jobName eq '사장'}">
-	                                <li><span class="file">사장 ${ m.name } </span></li>
+	                            <c:when test="${ m.jobName eq '대표이사'}">
+	                                <li><span class="file" onclick="addpp(this);">대표이사 ${ m.name }</span><input type="hidden" value="${ m.memberNo }"></li>
 	                            </c:when>
 	                            <c:when test="${ m.jobName eq '부사장' }">
-	                                <li><span class="file">부사장 ${ m.name } </span></li>
-	                            </c:when>
-	                            <c:when test="${ m.jobName eq '대표이사' }">
-	                                <li><span class="file">대표이사 ${ m.name } </span></li>
+	                                <li><span class="file" onclick="addpp(this);">부사장 ${ m.name }</span><input type="hidden" value="${ m.memberNo }"></li>
 	                            </c:when>
                         	</c:choose>
                         </c:forEach>
+
+                        <c:forEach var="d" items="${ dList }">
+                        	<li class="closed"><span class="folder">${ d.deptName }</span>
+                        	<ul>
+	                            <c:forEach var="m" items="${ mList }">
+	                                <c:choose>
+	                                	<c:when test="${ m.deptName eq d.deptName }">
+	                                		<li><span class="file" onclick="addpp(this);">${ m.name }(${ m.jobName })</span><input type="hidden" value="${ m.memberNo }"></li>
+	                                	</c:when>
+	                                </c:choose>
+	                            </c:forEach>
+                            </ul>
+                        </c:forEach>
+
+                        <li class="closed"><span class="folder">기타</span>
+                        <ul>
+                            <c:forEach var="m" items="${ mList }">
+                            	<c:if test="${ m.jobName ne '대표이사' and m.jobName ne '부사장' and m.deptName eq '미정' }">
+                            		<li><span class="file" onclick="addpp(this);">${ m.name }(${ m.jobName })</span><input type="hidden" value="${ m.memberNo }"></li>
+                            	</c:if>
+                            </c:forEach>
+                        </ul>
                         
-                        <li class="closed"><span class="folder">인사부</span>
-                             <ul>
-                                 <li><span class="file">사원1</span></li>
-                                 <li><span class="file">사원2</span></li>
-                                 <li><span class="file">사원3</span></li>
-                                 <li><span class="file">사원4</span></li>
-                             </ul>
-                        </li>
-                        <li class="closed"><span class="folder">총무부</span>
-                            <ul>
-                                <li><span class="file">사원1</span></li>
-                                <li><span class="file">사원2</span></li>
-                                <li><span class="file">사원3</span></li>
-                                <li><span class="file">사원4</span></li>
-                            </ul>
-                        </li>
-                        <li class="closed"><span class="folder">개발부</span>
-                            <ul>
-                                <li><span class="file">사원1</span></li>
-                                <li><span class="file">사원2</span></li>
-                                <li><span class="file">사원3</span></li>
-                            </ul>
-                        </li>
-                        <li class="closed"><span class="folder">기획부</span>
-                            <ul>
-                                <li><span class="file">사원1</span></li>
-                                <li><span class="file">사원2</span></li>
-                                <li><span class="file">사원3</span></li>
-                            </ul>
-                        </li>
                     </ul>
                 </li>
             </ul>
         </div>
+
+        <script>
+            function addpp(e){
+                let memNo = $(e).next().val();
+                let ppset = $(".pp-set");
+                
+                ppset.each(function(){
+                    if($(this).children("input[type=hidden]").val() == memNo){
+                        alert("이미 프로젝트에 포함된 인원입니다.");
+                    } else {
+                        $.ajax({
+                            url:"addparticipant.pj",
+                            data:{projectNo:${ pj.projectNo }
+                                , memberNo:memNo},
+                            success:function(result){
+                                console.log(result);
+                            },
+                            error:function(){
+                                console.log("참여인원 추가용 ajax 통신 실패");
+                            }
+                        })
+                    }
+                })
+            }
+        </script>
 
         <script src="resources/js/treeview/jquery.cookie.js" type="text/javascript"></script>
         <script src="resources/js/treeview/jquery.treeview.js" type="text/javascript"></script>
@@ -209,10 +223,14 @@
             <div class="participant">
                 <div class="menu-list">참여 인원</div>
                 <div class="pp-list">
-                    <div class="pp-name">김현지(개발부/사원)<span class="cancle">✕</span></div>
-                    <div class="pp-name">유한빛(개발부/사원)<span class="cancle">✕</span></div>
-                    <div class="pp-name">이빛나(개발부/사원)<span class="cancle">✕</span></div>
-                    <div class="pp-name">이소민(개발부/사원)<span class="cancle">✕</span></div>
+                    <c:forEach var="p" items="${ pList }">
+                        <c:if test="${ p.status eq 1 }">
+                            <div class="pp-set">
+                                <input type="hidden" name="memberNo" value="${ p.memberNo }">
+                                <div class="pp-name">${ p.name }(${ p.deptName }/${ p.jobName })<span class="cancle">✕</span></div>
+                            </div>
+                        </c:if>
+                    </c:forEach>
                 </div>
             </div>
 
@@ -220,21 +238,30 @@
                 <div class="menu-list">참여 요청</div>
                 <div class="request-wrap">
                     <table class="request-list">
-                        <tr>
-                            <td class="re-name">성찬호(개발부/사원)</td>
-                            <td class="accept-td"><button class="accept">수락</button></td>
-                            <td class="reject-td"><button class="reject">거절</button></td>
-                        </tr>
-                        <tr>
-                            <td class="re-name">김진우(개발부/사원)</td>
-                            <td class="accept-td"><button class="accept">수락</button></td>
-                            <td class="reject-td"><button class="reject">거절</button></td>
-                        </tr>
+                        <c:forEach var="p" items="${ pList }">
+                            <c:if test="${ p.status eq 2 }">
+                                <tr>
+                                    <td class="re-name">${ p.name }(${p.deptName}/${p.jobName})</td>
+                                    <td class="accept-td"><button class="accept">수락</button></td>
+                                    <td class="reject-td"><button class="reject">거절</button></td>
+                                </tr>
+                            </c:if>
+                        </c:forEach>
                     </table>
                 </div>
                 
             </div>
         </div>
+
+        <script>
+            $(function(){
+                if(${ pj.participation } == 0){
+                    $(".cancle").css("display", "none");
+                    $(".accept").css("display", "none");
+                    $(".reject").css("display", "none");
+                }
+            })
+        </script>
 
     </div>
 

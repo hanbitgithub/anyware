@@ -89,18 +89,50 @@ public class ProjectController {
 		return result > 0 ? "success" : "fail";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="addrequest.ajax")
+	public String addRequest(int projectNo, HttpSession session) {
+		HashMap<String, Object> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("memberNo", ((Member)session.getAttribute("loginUser")).getMemberNo());
+		
+		int status = pService.selectRequestStatus(map);
+		
+		if(status == 0) { // 기존 요청 없음
+			int result = pService.addRequest(map);
+			return result > 0 ? "success" : "fail";
+		} else { // 기존 요청 있음
+			return "already";
+		}
+		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addparticipant.pj")
+	public String addParticipant(int projectNo, int memberNo) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("projectNo", projectNo);
+		map.put("memberNo", memberNo);
+		
+		int result = pService.addParticipant(map);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
+	// projectDetailView
 	@RequestMapping("detail.pj")
 	public String projectDetailView(int no, HttpSession session) {
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("projectNo", no);
+		map.put("memberNo", ((Member)session.getAttribute("loginUser")).getMemberNo());
 		
-		Project pj = pService.selectProjectDetail(no);
+		Project pj = pService.selectProjectDetail(map);
 		
 		session.setAttribute("pj", pj);
 		
 		return "project/projectDetailView";
 	}
 	
-	
-	// projectDetailView
 	@RequestMapping("insert.li")
 	public String insertList(List list) {
 		
@@ -110,13 +142,15 @@ public class ProjectController {
 	}
 	
 	@RequestMapping("participant.pj")
-	public String manageParticipant(Model model) {
+	public String manageParticipant(int no, Model model) {
 		
 		ArrayList<Member> dList = pService.selectDeptList();
 		ArrayList<Member> mList = pService.selectMemberList();
+		ArrayList<Member> pList = pService.selectParticipantList(no);
 		
 		model.addAttribute("mList", mList);
 		model.addAttribute("dList", dList);
+		model.addAttribute("pList", pList);
 		
 		return "project/participantsManageView";
 	}

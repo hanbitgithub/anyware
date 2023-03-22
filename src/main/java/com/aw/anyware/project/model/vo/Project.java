@@ -2,6 +2,8 @@ package com.aw.anyware.project.model.vo;
 
 import java.util.ArrayList;
 
+import com.aw.anyware.member.model.vo.Member;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +28,7 @@ public class Project {
 	private int count;
 	private String owner;
 	private String category;
+	private int participation;
 	
 	private ArrayList<List> listList;
 

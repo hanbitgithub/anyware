@@ -89,7 +89,9 @@
         <br>
         <div>${ pj.projectContent }</div>
         <br>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">리스트 추가</button>
+        <c:if test="${ pj.participation == 1}">
+            <button type="button" class="btn btn-primary addBtn" data-toggle="modal" data-target="#myModal">리스트 추가</button>
+        </c:if>
         <br><br>
 
         <div class="list-area">
@@ -103,7 +105,9 @@
                     
 				</div>
         	</c:forEach>
-    </div>
+        </div>
+
+	</div>
 
     <!-- The Modal -->
 	<div class="modal" id="myModal">
@@ -226,7 +230,6 @@
 		
 			</div>
 		</div>
-	</div>
       
 
 </body>

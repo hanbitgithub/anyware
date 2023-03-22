@@ -25,16 +25,27 @@ public interface ProjectService {
 	int deleteLike(Like like);
 	
 	// 프로젝트 상세 조회 서비스(select)
-	Project selectProjectDetail(int projectNo);
+	Project selectProjectDetail(HashMap<String, Integer> map);
 	
 	// 리스트 추가 서비스(insert)
 	int insertList(List list);
+	
+	// 비공개 프로젝트 참여 요청 서비스(insert)
+	int selectRequestStatus(HashMap<String, Object> map);
+	int addRequest(HashMap<String, Object> map);
+	
+	// 프로젝트 인원 추가 서비스(insert)
+	int addParticipant(HashMap<String, Integer> map);
+	
+	
 	
 	// 인원 조회 서비스(select)
 	// 부서명 조회(select)
 	ArrayList<Member> selectDeptList();
 	// 부서별 인원 조회(select)
 	ArrayList<Member> selectMemberList();
+	// 참여인원 조회(select)
+	ArrayList<Member> selectParticipantList(int projectNo);
 	
 	
 }

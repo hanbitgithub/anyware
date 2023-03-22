@@ -162,7 +162,7 @@
 			</c:if>
 
 			<c:forEach var="l" items="${ list }">
-				<div class="project" onclick="location.href='detail.pj?no=${ l.projectNo }';">
+				<div class="project" onclick="goDetail(this);">
 					<div class="project-name">${ l.projectTitle }</div>
 					<c:choose>
 						<c:when test="${ l.publicStatus eq 'Y' }">
@@ -172,6 +172,7 @@
 							<div class="public">🔒</div>
 						</c:otherwise>
 					</c:choose>
+					<input type="hidden" value="${ l.projectNo }">
 					<c:choose>
 						<c:when test="${ l.count ne 1 }">
 							<div class="project-people">${ l.owner } 외 ${ l.count - 1 }명</div>
@@ -183,13 +184,14 @@
 					<c:choose>
 						<c:when test="${ l.like eq '1' }">
 							<div class="favorite" onclick="clickHeart(this);">💙</div>
-							<input type="hidden" value="${ l.projectNo }">
+							<input type="hidden" class="projectNo" value="${ l.projectNo }">
 						</c:when>
 						<c:otherwise>
 							<div class="favorite" onclick="clickHeart(this);">🤍</div>
-							<input type="hidden" value="${ l.projectNo }">
+							<input type="hidden" class="projectNo" value="${ l.projectNo }">
 						</c:otherwise>
-					</c:choose>	
+					</c:choose>
+					<input type="hidden" class="participation" value="${ l.participation }">
 				</div>
 			</c:forEach>
 		</div>
@@ -228,6 +230,23 @@
 							console.log("즐겨찾기 해제 ajax 통신 실패");
 						}
 					})
+				}
+			}
+
+			function goDetail(e){
+				let $lock = $(e).children().eq(1).text();
+				let $projectNo = $(e).children().eq(2).val();
+				let $pp = $(e).children(".participation");
+				if($lock == '🔓'){
+					location.href='detail.pj?no=' + $projectNo;
+				} else {
+					if($pp.val() == 1){
+						location.href='detail.pj?no=' + $projectNo;
+					} else {
+						$(".requestModal").click();
+						$("#no").val($projectNo);
+					}
+					
 				}
 			}
 		</script>
@@ -330,6 +349,25 @@
 			</c:if>
 		</div>
 
+		<button type="button" class="btn btn-primary requestModal" data-toggle="modal" data-target="#requestModal" style="display: none;"></button>
+
+	</div>
+
+	<div class="modal" id="requestModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<!-- Modal body -->
+				<div class="modal-body" style="text-align: center; font-size: 20px;">
+						<br>
+						<div>비공개 프로젝트입니다.</div>
+						<div>프로젝트 참여 요청을 하시겠습니까?</div>
+						<br>
+						<input type="hidden" id="no" value="">
+					<button type="button" class="btn btn-primary" onclick="addRequest();">요청</button>
+					<button type="button" class="btn btn-danger closebtn" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
 	</div>
 
 	<script>
@@ -339,6 +377,26 @@
 				p[i].style.backgroundColor = "#7291f6";
 				p[i].style.color = "white";
 			}
+		}
+
+		function addRequest(e){
+			$(".closebtn").click();
+			$.ajax({
+				url:"addrequest.ajax",
+				data:{projectNo:$("#no").val()},
+				success:function(result){
+					if(result == 'success'){
+						alert("참여 요청이 완료되었습니다.");
+					} else if(result == 'already') {
+						alert("이미 참여요청 된 프로젝트입니다.");
+					} else {
+						alert("참여 요청에 실패했습니다.");
+					}
+				},
+				error:function(){
+					console.log("참여 요청용 ajax 통신 실패");
+				}
+			})
 		}
 	</script>
 

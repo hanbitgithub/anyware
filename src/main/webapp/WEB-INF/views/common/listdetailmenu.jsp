@@ -155,7 +155,7 @@
 			</tr>
 		</table>
 
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 		<a class="btn btn-primary" id="back" href="javascript:history.back();">List 목록</a>
 

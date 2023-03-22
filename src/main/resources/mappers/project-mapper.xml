@@ -13,6 +13,7 @@
 		<result column="count" property="count" />
 		<result column="owner" property="owner" />
 		<result column="category" property="category" />
+		<result column="participation" property="participation" />
 		<collection property="listList" resultMap="listResult" />
 	</resultMap>
 	
@@ -30,6 +31,7 @@
 		<result column="job_name" property="jobName" />
 		<result column="job_code" property="jobCode" />
 		<result column="name" property="name" />
+		<result column="status" property="status" />
 	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -39,24 +41,26 @@
 		               p.project_no
 		          from tb_project p
 		          <choose>
-				  	<when test="category == 'all-searhch' || category == 'my' || category == 'my-search'">
-				  	  join tb_projectmember pm on (pm.project_no = p.project_no)
+				  	<when test="category == 'all-search' or category == 'my' or category == 'my-search'">
+				      join tb_projectmember pm on (pm.project_no = p.project_no)
 				      join tb_member m on (pm.member_no = m.member_no)
 				  	</when>
-				  	<when test="category == 'like' || category == 'like-search'">
+				  	<when test="category == 'like' or category == 'like-search'">
 				  	  join tb_like l on (l.project_no = p.project_no)
-		    		  join tb_member m on (l.member_no = m.member_no)
+		    		  join tb_projectmember pm on (pm.project_no = p.project_no)
+		      		  join tb_member m on (pm.member_no = m.member_no)
 				  	</when>
 				  </choose>
-		         where p.status = 'Y'
-		            <choose>
-		                <when test="category == 'my'">
-		                    and pm.member_No = #{memberNo}
-		                </when>
-		                <when test="category == 'like'">
+				 where p.status = 'Y'
+				 	<choose>
+				 		<when test="category == 'my'">
+				 			and pm.member_no = #{memberNo}
+				 			and pm.status = 1
+				 		</when>
+				 		<when test="category == 'like'">
 				 			and l.member_no = #{memberNo}
 				 		</when>
-		                <when test="category == 'all-search' || category == 'my-search' || category == 'like-search'">
+				 		<when test="category == 'all-search' or category == 'my-search' or category == 'like-search'">
 				 			<choose>
 				 				<when test="condition == 'title'">
 				 					and project_title
@@ -70,7 +74,8 @@
 				 				and p.project_no in (select
 							                            project_no
 							                       from tb_projectmember
-							                      where member_no = #{memberNo})
+							                      where member_no = #{memberNo}
+							                        and status = 1)
 				 			</if>
 				 			<if test="category == 'like-search'">
 				 				and p.project_no in (select
@@ -79,7 +84,7 @@
 							                          where member_no = #{memberNo})
 							</if>
 				 		</when>
-				    </choose>
+				 	</choose>
 		        )
 	</select>
 	
@@ -105,26 +110,34 @@
 		         where pm.status = 1
 		           and project_no = p.project_no
 		           and owner_status = 'Y') "OWNER"
+		     , (select
+		               count(*)
+		          from tb_projectmember
+		         where project_no = p.project_no
+		           and member_no = #{memberNo}
+		           and status = 1) "PARTICIPATION"
 		  from tb_project p
 		  <choose>
-		  	<when test="category == 'all-searhch' || category == 'my' || category == 'my-search'">
-		  	  join tb_projectmember pm on (pm.project_no = p.project_no)
+		  	<when test="category == 'all-search' or category == 'my' or category == 'my-search'">
+		      join tb_projectmember pm on (pm.project_no = p.project_no)
 		      join tb_member m on (pm.member_no = m.member_no)
 		  	</when>
-		  	<when test="category == 'like' || category == 'like-search'">
+		  	<when test="category == 'like' or category == 'like-search'">
 		  	  join tb_like l on (l.project_no = p.project_no)
-    		  join tb_member m on (l.member_no = m.member_no)
+    		  join tb_projectmember pm on (pm.project_no = p.project_no)
+      		  join tb_member m on (pm.member_no = m.member_no)
 		  	</when>
 		  </choose>
 		 where p.status = 'Y'
 		 	<choose>
 		 		<when test="category == 'my'">
 		 			and pm.member_no = #{memberNo}
+		 			and pm.status = 1
 		 		</when>
 		 		<when test="category == 'like'">
 		 			and l.member_no = #{memberNo}
 		 		</when>
-		 		<when test="category == 'all-search' || category == 'my-search' || category == 'like-search'">
+		 		<when test="category == 'all-search' or category == 'my-search' or category == 'like-search'">
 		 			<choose>
 		 				<when test="condition == 'title'">
 		 					and project_title
@@ -138,7 +151,8 @@
 		 				and p.project_no in (select
 					                            project_no
 					                       from tb_projectmember
-					                      where member_no = #{memberNo})
+					                      where member_no = #{memberNo}
+					                        and status = 1)
 		 			</if>
 		 			<if test="category == 'like-search'">
 		 				and p.project_no in (select
@@ -221,21 +235,54 @@
 		   and project_no = #{projectNo}
 	</delete>
 	
+	<select id="selectRequestStatus" resultType="_int">
+		select
+			   count(*)
+		  from tb_projectmember
+		 where project_no = #{projectNo}
+		   and member_no = #{memberNo}
+		   and status = 2
+	</select>
+	
+	<insert id="addRequest">
+		insert
+		  into tb_projectmember
+		  (
+		  	project_no
+		  , member_no
+		  , status
+		  , owner_status
+		  )
+		  values
+		  (
+		  	#{projectNo}
+		  , #{memberNo}
+		  , 2
+		  , 'N'
+		  )
+	</insert>
+	
 	<select id="selectProjectDetail" resultMap="projectResult">
 		select
-		       project_no
+		       p.project_no
 		     , project_title
 		     , project_content
 		     , list_no
 		     , list_title
-		     , to_date(begin_date, 'yy/mm/dd') "BEGIN_DATE"
-		     , to_date(end_date, 'yy/mm/dd') "END_DATE"
+		     , to_char(to_date(begin_date, 'yy/mm/dd'), 'yy/mm/dd') "BEGIN_DATE"
+		     , to_char(to_date(end_date, 'yy/mm/dd'), 'yy/mm/dd') "END_DATE"
 		     , color
-		  from tb_project
-		  left join tb_list using (project_no)
-		 where project_no = #{projectNo}
+		     , (select
+		               count(*)
+		          from tb_projectmember
+		         where project_no = p.project_no
+		           and member_no = #{memberNo}
+		           and status = 1) "participation"
+		  from tb_project p
+		  left join tb_list l on (p.project_no = l.project_no)
+		 where p.project_no = #{projectNo}
 		 order
-		    by end_date asc
+		    by to_date(end_date, 'yy/mm/dd') asc
 	</select>
 	
 	<insert id="insertList">
@@ -266,7 +313,7 @@
 		select distinct
 		       dept_name
 		  from tb_member
-		 where not dept_name is null
+		 where not dept_name = '미정'
 		 order
 		    by dept_name asc
 	</select>
@@ -276,11 +323,22 @@
 		       member_no
 		     , dept_name
 		     , name
-		     , decode(job_name, '사장', 1, '부사장', 2, '대표이사', 3, '부장', 4, '과장', 5, '대리', 6, '사원', 7) job_code
+		     , decode(job_name, '대표이사', 1, '부사장', 2, '부장', 3, '과장', 4, '대리', 5, '사원', 6) job_code
 		     , job_name
 		  from tb_member
 		 order
 		    by dept_name, job_code
 	</select>
 	
+	<select id="selectParticipantList" resultMap="memberResult">
+		select
+			   pm.member_no
+		     , name
+		     , dept_name
+		     , job_name
+		     , pm.status "status"
+		  from tb_member m
+		  join tb_projectMember pm on (m.member_no = pm.member_no)
+		 where project_no = #{projectNo}
+	</select>
 </mapper>

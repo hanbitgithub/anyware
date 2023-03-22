@@ -62,13 +62,28 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project selectProjectDetail(int projectNo) {
-		return pDao.selectProjectDetail(sqlSession, projectNo);
+	public Project selectProjectDetail(HashMap<String, Integer> map) {
+		return pDao.selectProjectDetail(sqlSession, map);
 	}
 
 	@Override
 	public int insertList(List list) {
 		return pDao.insertList(sqlSession, list);
+	}
+	
+	@Override
+	public int selectRequestStatus(HashMap<String, Object> map) {
+		return pDao.selectRequestStatus(sqlSession, map);
+	}
+	
+	@Override
+	public int addRequest(HashMap<String, Object> map) {
+		return pDao.addRequest(sqlSession, map);
+	}
+	
+	@Override
+	public int addParticipant(HashMap<String, Integer> map) {
+		return pDao.addParticipant(sqlSession, map);
 	}
 
 	@Override
@@ -80,5 +95,14 @@ public class ProjectServiceImpl implements ProjectService {
 	public ArrayList<Member> selectMemberList() {
 		return pDao.selectMemberList(sqlSession);
 	}
+
+	@Override
+	public ArrayList<Member> selectParticipantList(int projectNo) {
+		return pDao.selectParticipantList(sqlSession, projectNo);
+	}
+
+	
+
+	
 
 }

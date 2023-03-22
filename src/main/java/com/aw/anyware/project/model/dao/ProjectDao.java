@@ -51,9 +51,21 @@ public class ProjectDao {
 	public int deleteLike(SqlSessionTemplate sqlSession, Like like) {
 		return sqlSession.delete("projectMapper.deleteLike", like);
 	}
+	
+	public int addRequest(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.insert("projectMapper.addRequest", map);
+	}
+	
+	public int addParticipant(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.insert("");
+	}
 
-	public Project selectProjectDetail(SqlSessionTemplate sqlSession, int projectNo) {
-		return sqlSession.selectOne("projectMapper.selectProjectDetail", projectNo);
+	public int selectRequestStatus(SqlSessionTemplate sqlSession, HashMap<String, Object> map) {
+		return sqlSession.selectOne("projectMapper.selectRequestStatus", map);
+	}
+
+	public Project selectProjectDetail(SqlSessionTemplate sqlSession, HashMap<String, Integer> map) {
+		return sqlSession.selectOne("projectMapper.selectProjectDetail", map);
 	}
 
 	public int insertList(SqlSessionTemplate sqlSession, List list) {
@@ -68,7 +80,11 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.selectMemberList");
 	}
 
+	public ArrayList<Member> selectParticipantList(SqlSessionTemplate sqlSession, int projectNo) {
+		return (ArrayList)sqlSession.selectList("projectMapper.selectParticipantList", projectNo);
+	}
+
 	
-	
+
 	
 }
