@@ -76,6 +76,7 @@ public class MemberController {
 		}else {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			session.setAttribute("loginUser", loginUser);
+			System.out.println(loginUser);
 			
 			mv.setViewName("main");
 		}else {
@@ -273,9 +274,10 @@ public class MemberController {
 	
 	@RequestMapping("insert.me")
 	public ModelAndView insertMember(Member m, ModelAndView mv) {
+		
+		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
+		m.setMemberPwd(encPwd);
 		System.out.println(m);
-		
-		
 		int result = mService.insertMember(m);
 		if(result > 0) {
 			mv.addObject("alertMsg", "신규 사원을 추가하였습니다");
