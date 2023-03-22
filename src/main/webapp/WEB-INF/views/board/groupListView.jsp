@@ -92,17 +92,12 @@ table{
 			<p><b>개발부게시판</b></p>
 		</c:when>
 	</c:choose>
-	
 	<hr>
-	<div class="">
-			<select name="" id="" class="button">
-				<option value="전체">전체</option>
-				<option value="제목">제목</option>
-				<option value="작성자">작성자</option>
-			</select>
-            <input type="text" placeholder="제목으로 검색하기" class="button" style="display: inline-block;">
+		<form action="search.gr" method="Get">
+            <input type="hidden" name="cpage" value="1">
+            <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
             <button type="submit" class="button">검색</button>
-            <br>
+        </form>
 
             <table id="boardList" class="table table-hover" align="center">
               <thead>
@@ -201,6 +196,6 @@ table{
               </div>
                
 	
-	</div> </div>
+	</div> 
 </body>
 </html>

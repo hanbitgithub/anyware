@@ -160,22 +160,39 @@
 	<div class="content">
 	<p><b>조직도</b></p> 
 	<hr>
-		<form action="">
-            <input type="text" name="keyword" id="button" placeholder="이름으로 검색">
+		<form action="search.grp" method="get">
+            <input type="hidden" name="cpage" value="1">
+            <input type="text" name="keyword" value="${ keyword }" id="button" placeholder="이름으로 검색">
             <button type="submit" id="button">검색</button>
         </form>
+        
 	<br>
 	<div id="tree">
         <ul>
             <li>
-                <a href="#">대표이사</a>
+            	
+                        <c:forEach var="g" items="${ list }">
+                        <c:if test="${ g.jobName eq '대표이사' }">
+                        <a  data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                        <input type="hidden" name="memberNo" value="${g.memberNo }">
+                        ${g.name } ${g.jobName }
+                        </a>
+                        </c:if>
+                        </c:forEach>
                 <ul>
 					
                     <li>
-                        <a href="#">사장</a>
+                    	<c:forEach var="g" items="${ list }">
+                        <c:if test="${ g.jobName eq '부사장' }">
+                        <a  data-toggle="modal" data-target="#myModal" onclick="selectList(${g.memberNo});">
+                        <input type="hidden" name="memberNo" value="${g.memberNo }">
+                        ${g.name } ${g.jobName }
+                        </a>
+                        </c:if>
+                        </c:forEach>
                         <ul>
                             <li>
-                            	<a href="">개발팀</a>
+                            	<a name="deptName" >${list[i].deptName }개발팀</a>
                                 <c:forEach var="g" items="${ list }">
                                 <c:if test="${ g.deptName eq '개발부' }">
                                 <ul>

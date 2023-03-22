@@ -106,12 +106,44 @@ public class BoardDao {
 		return sqlSession.update("boardMapper.deleteReport", reportNo);
 	}
 
-	public int updateReply(SqlSessionTemplate sqlSession, int replyNo) {
-		return sqlSession.update("boardMapper.updateReply", replyNo);
+	public int updateReply(SqlSessionTemplate sqlSession, Reply r) {
+		return sqlSession.update("boardMapper.updateReply", r);
 	}
 
 	public int deleteReply(SqlSessionTemplate sqlSession, int replyNo) {
 		return sqlSession.update("boardMapper.deleteReply", replyNo);
+	}
+
+	public int selectSearchCount(SqlSessionTemplate sqlSession, String keyword) {
+		return sqlSession.selectOne("boardMapper.selectSearchCount", keyword);
+	}
+
+
+	public ArrayList<Board> searchBoardList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchBoardList", keyword, rowBounds);
+	}
+	
+	public ArrayList<Board> searchNoticeList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchNoticeList", keyword, rowBounds);
+	}
+	
+	public ArrayList<Board> searchGroupList(SqlSessionTemplate sqlSession, PageInfo pi, String keyword) {
+
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.searchGroupList", keyword, rowBounds);
 	}
 
 

@@ -87,11 +87,6 @@ table{
 	<p><b>신고관리</b></p>
 	<hr>
 	
-	<div class="search-area">
-		<input type="text" value="제목으로 검색하기" class="button">
-           <button type="submit" class="button">검색</button>
-	</div>
-	<br>
 		<table id="boardList" class="table table-hover" align="center">
               <thead>
               <tr>

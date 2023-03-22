@@ -32,5 +32,6 @@ public class GroupMap {
 	private String profileUrl; // 프로필 사진 수정본 경로
 	
 	
+	
 
 }
