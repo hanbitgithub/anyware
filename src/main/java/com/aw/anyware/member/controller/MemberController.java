@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.Pagination;
+import com.aw.anyware.member.CrunchifyJavaMailExample;
 import com.aw.anyware.member.model.service.MemberService;
 import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
@@ -28,6 +31,8 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	
 	
 	
 	
@@ -76,7 +81,7 @@ public class MemberController {
 		}else {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
 			session.setAttribute("loginUser", loginUser);
-			System.out.println(loginUser);
+			
 			
 			mv.setViewName("main");
 		}else {
@@ -157,9 +162,9 @@ public class MemberController {
 		System.out.println("mPwd : " + mPwd);
 		if(mPwd != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), mPwd)) {
 			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
-			System.out.println("encPwd : " + encPwd);
+			
 			m.setEncPwd(encPwd);
-			System.out.println("m : " + m);
+			
 			int result = mService.changePwd(m);
 			
 			if(result > 0) {
@@ -277,7 +282,7 @@ public class MemberController {
 		
 		String encPwd = bcryptPasswordEncoder.encode(m.getMemberPwd());
 		m.setMemberPwd(encPwd);
-		System.out.println(m);
+		
 		int result = mService.insertMember(m);
 		if(result > 0) {
 			mv.addObject("alertMsg", "신규 사원을 추가하였습니다");
@@ -332,6 +337,50 @@ public class MemberController {
 			model.addAttribute("errorMsg", "접근 권한이 없습니다");
 			return "common/errorPage";
 		}
+		
+	}
+	/*
+	@RequestMapping("mailTest.me")	
+	public void mailTest(String email) {
+		
+		try {
+			CrunchifyJavaMailExample.generateAndSendEmail(email);
+		} catch (AddressException e) {
+			
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+		}
+	}
+	*/
+	@RequestMapping("findId.me")
+	public ModelAndView findId(ModelAndView mv) {
+		mv.setViewName("member/findId");
+		return mv;
+	}
+	
+	@RequestMapping("searchId.me")
+	public void searchId(int memberNo) {
+		String code = String.valueOf((int)(Math.random() * 90000 + 10000));
+		System.out.println("첫번째 : " + code);
+		Member m = mService.detailAllMember(memberNo);
+		try {
+			CrunchifyJavaMailExample.generateAndSendEmail(m, code);
+			
+		} catch (AddressException e) {
+			
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@RequestMapping("checkCode.me")
+	public static void checkCode(String code) {
+		System.out.println(code);
 		
 	}
 	
