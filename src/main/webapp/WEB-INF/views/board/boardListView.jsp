@@ -80,14 +80,10 @@ table{
 	<div class="content">
 	<p><b>자유게시판</b></p>
 	<hr>
-	<div class="">
-		<form action="">
-            <select name="" id="" class="button">
-              <option value="전체">전체</option>
-              <option value="제목">제목</option>
-              <option value="작성자">작성자</option>
-            </select>
-            <input type="text" name="keyword" class="button" placeholder="제목으로 검색하기">
+	
+		<form action="search.bo" method="Get">
+            <input type="hidden" name="cpage" value="1">
+            <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
             <button type="submit" class="button">검색</button>
         </form>
 
@@ -156,6 +152,6 @@ table{
               </div>
                
 	
-	</div>
+	
 </body>
 </html>

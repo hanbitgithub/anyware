@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.groupMap.model.dao.GroupMapDao;
 import com.aw.anyware.groupMap.model.vo.GroupMap;
 
@@ -27,4 +28,16 @@ public class GroupMapServiceImpl implements GroupMapService {
 	public ArrayList<GroupMap> ajaxSelectMemberList(int memberNo) {
 		return gDao.ajaxSelectMemberList(sqlSession, memberNo);
 	}
+
+	@Override
+	public int selectSearchCount(String keyword) {
+		return gDao.selectSearchCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<GroupMap> searchMemberList(PageInfo pi, String keyword) {
+		return gDao.searchMemberList(sqlSession, pi, keyword);
+	}
+
+
 }

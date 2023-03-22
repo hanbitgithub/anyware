@@ -230,10 +230,15 @@ public class BoardController {
 	 * @return
 	 */
 	@RequestMapping("update.re")
-	public String updateReply(int no, Board b, HttpSession session, Model model) {
+	public String updateReply(int no, String content, Board b, HttpSession session, Model model) {
 		
-
-		int result = bService.updateReply(no);
+		
+		Reply r = new Reply();
+		r.setReplyNo(no);
+		r.setReplyContent(content);
+		
+		int result = bService.updateReply(r);
+		int result1 = bService.updateBoard(b);
 		
 		/*
 		if(result > 0) {
@@ -365,6 +370,61 @@ public class BoardController {
 			
 		}
 	}
+	
+	@RequestMapping("search.bo")
+	public String searchBoardList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchCount(keyword);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		
+		ArrayList<Board> list = bService.searchBoardList(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		
+		return "board/boardListView";
+	}
+	
+	@RequestMapping("search.no")
+	public String searchNoticeList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchCount(keyword);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		
+		ArrayList<Board> list = bService.searchNoticeList(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		
+		return "board/noticeListView";
+	}
+	
+	@RequestMapping("search.gr")
+	public String searchGroupList(String keyword, @RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int searchCount = bService.selectSearchCount(keyword);
+		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 10, 10);
+		
+		ArrayList<Board> list = bService.searchGroupList(pi, keyword);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+		model.addAttribute("keyword", keyword);
+		
+		return "board/groupListView";
+	}
+	
+	
+
+
+	
 
 	
 }

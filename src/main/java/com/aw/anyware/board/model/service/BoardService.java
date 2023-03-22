@@ -45,10 +45,16 @@ public interface BoardService {
 	int deleteReport(int reportNo);
 	
 	// 댓글수정
-	int updateReply(int replyNo);
+	int updateReply(Reply r);
 	
 	// 댓글삭제
 	int deleteReply(int replyNo);
+	
+	// 검색
+	int selectSearchCount(String keyword);
+	ArrayList<Board> searchBoardList(PageInfo pi, String keyword);
+	ArrayList<Board> searchNoticeList(PageInfo pi, String keyword);
+	ArrayList<Board> searchGroupList(PageInfo pi, String keyword);
 	
 	
 

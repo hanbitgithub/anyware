@@ -107,14 +107,36 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int updateReply(int replyNo) {
-		return bDao.updateReply(sqlSession, replyNo);
+	public int updateReply(Reply r) {
+		return bDao.updateReply(sqlSession, r);
 	}
 
 	@Override
 	public int deleteReply(int replyNo) {
 		return bDao.deleteReply(sqlSession, replyNo);
 	}
+
+	@Override
+	public int selectSearchCount(String keyword) {
+		return bDao.selectSearchCount(sqlSession, keyword);
+	}
+
+	@Override
+	public ArrayList<Board> searchBoardList(PageInfo pi, String keyword) {
+		return bDao.searchBoardList(sqlSession, pi, keyword);
+	}
+
+	@Override
+	public ArrayList<Board> searchNoticeList(PageInfo pi, String keyword) {
+		return bDao.searchNoticeList(sqlSession, pi, keyword);
+	}
+
+	@Override
+	public ArrayList<Board> searchGroupList(PageInfo pi, String keyword) {
+		return bDao.searchGroupList(sqlSession, pi, keyword);
+	}
+
+
 
 
 

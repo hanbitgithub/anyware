@@ -80,9 +80,12 @@ table{
 	<div class="content">
 	<p><b>공지사항</b></p>
 	<hr>
-	<div class="">
-            <input type="text" placeholder="제목으로 검색하기" class="button">
+	
+        <form action="search.no" method="Get">
+            <input type="hidden" name="cpage" value="1">
+            <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
             <button type="submit" class="button">검색</button>
+        </form>
             <br>
 
             <table id="boardList" class="table table-hover" align="center">
@@ -144,6 +147,6 @@ table{
               </div>
                
 	
-	</div>
+	
 </body>
 </html>

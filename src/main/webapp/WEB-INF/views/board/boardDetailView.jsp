@@ -10,6 +10,11 @@
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <style>
 #img {
     width: 30px;
@@ -45,6 +50,12 @@ textarea {
     border: 1px solid rgb(219, 219, 219);
     background-color: rgb(255, 255, 255);
     font-size: 15px;
+}
+#replyContent{
+	resize: none;
+	background-color: white;
+	height: 30px;
+	border: none;
 }
 </style>
 </head>
@@ -146,6 +157,50 @@ textarea {
 	</div>
 	
 	 <script>
+		// 댓글리스트조회
+    	function selectReplyList(){
+    		$.ajax({
+    			url:"rlist.bo",
+    			data:{no:${b.boardNo}},
+    			success:function(list){
+    				console.log(list);
+    				
+    				let value = "";
+					for(let i=0; i<list.length; i++){
+    				if('${loginUser.name}' == list[i].name){
+								value += "<tr>"
+								+ "<td>"
+								+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
+								+ "&nbsp;"
+								+ "<span>" + list[i].createDate + "</span>"
+								+ "<br><br>"
+								+ "<input type='text' name='replyContent' id='replyContent' value='" + list[i].replyContent + "'  readonly>"  + "<br>"
+								+ "<a style='color:gray;' id='updateReply' onclick='updateReply(" + list[i].replyNo + ");' >수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
+								
+								+ "</td>"
+								+ "</tr>";
+						}else{
+										value += "<tr>"
+										+ "<td>"
+										+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
+										+ "&nbsp;"
+										+ "<span>" + list[i].createDate + "</span>"
+										+ "<br><br>"
+										+ "<p>" + list[i].replyContent + "</p>"
+										+ "</td>"
+										+ "</tr>";
+						}
+					}
+    				
+    				$("#replyArea tbody").html(value);
+    				$("#rcount").text(list.length);
+    				
+    			},error:function(){
+    				console.log("댓글리스트 조회용 ajax 통신 실패");
+    			}
+    		})
+    	}
+		
 		// 댓글작성
     	$(function(){
     		selectReplyList();
@@ -178,54 +233,41 @@ textarea {
     			
     	}
     	
-		// 댓글리스트조회
-    	function selectReplyList(){
-    		$.ajax({
-    			url:"rlist.bo",
-    			data:{no:${b.boardNo}},
-    			success:function(list){
-    				console.log(list);
-    				
-    				let value = "";
-					for(let i=0; i<list.length; i++){
-    				if('${loginUser.name}' == list[i].name){
-								value += "<tr>"
-								+ "<td>"
-								+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
-								+ "&nbsp;"
-								+ "<span>" + list[i].createDate + "</span>"
-								+ "<br><br>"
-								+ "<p>" + list[i].replyContent + "</p>"
-								+ "<a style='color:gray;' onclick='updateReply(" + list[i].replyNo + ");' >수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
-								+ "</td>"
-								+ "</tr>";
-						}else{
-										value += "<tr>"
-										+ "<td>"
-										+ "<span>" + "<b>" + list[i].name + "</b>" + "&nbsp;" + list[i].jobName + "</span>"
-										+ "&nbsp;"
-										+ "<span>" + list[i].createDate + "</span>"
-										+ "<br><br>"
-										+ "<p>" + list[i].replyContent + "</p>"
-										+ "</td>"
-										+ "</tr>";
-						}
-					}
-    				
-    				$("#replyArea tbody").html(value);
-    				$("#rcount").text(list.length);
-    				
-    			},error:function(){
-    				console.log("댓글리스트 조회용 ajax 통신 실패");
-    			}
-    		})
-    	}
     </script>
 
     <script>
+    // 댓글수정
+    function updateReply(replyNo){
+    	
+    	document.qyerySelector('#replyContent').readOnly = false;
+    }
+
+		
+	function updateReply(replyNo, replyContent){
+	  $.ajax({
+	      url:"update.re",
+	      data:{no:replyNo , content: replyContent},
+	        success:function(result){
+	        	if(result>0){	
+	        		
+	        		selectReplyList();
+	        		alert("성공적으로 수정되었습니다.");
+	        		
+	        			}else{			
+	        				
+	        			alert("댓글 등록 실패");
+	        			}
+	        	
+	        		}, error:function(){
+	        		 console.log("댓글수정용 ajax 통신실패")
+	        			}
+	        		})
+	        	}
+	
+   
 	$(function(){
 		selectReplyList();
-	})
+	}) 
 	function deleteReply(replyNo){
 		$.ajax({
 			url:"delete.re",
@@ -319,5 +361,13 @@ textarea {
                 })
             })
         </script>
+        
+        	
+			  
+			
+		  
+		
+		
+	  
 </body>
 </html>

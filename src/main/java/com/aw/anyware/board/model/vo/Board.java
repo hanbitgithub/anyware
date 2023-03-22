@@ -30,4 +30,5 @@ public class Board {
 	private String reportContent;
 	private String reportDate;
 	private int reportNo;
+	
 }
