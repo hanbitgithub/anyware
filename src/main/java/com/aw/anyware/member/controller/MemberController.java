@@ -361,12 +361,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping("searchId.me")
-	public void searchId(int memberNo) {
+	public String searchId(int memberNo) {
 		String code = String.valueOf((int)(Math.random() * 90000 + 10000));
+		String code1 = " ";
 		System.out.println("첫번째 : " + code);
 		Member m = mService.detailAllMember(memberNo);
 		try {
-			CrunchifyJavaMailExample.generateAndSendEmail(m, code);
+			code1 = CrunchifyJavaMailExample.generateAndSendEmail(m, code);
+			
 			
 		} catch (AddressException e) {
 			
@@ -375,6 +377,7 @@ public class MemberController {
 			
 			e.printStackTrace();
 		}
+		return code1;
 		
 	}
 	

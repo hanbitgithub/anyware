@@ -378,6 +378,7 @@ a {
             <ul>
                 <li><a href="regist.me">신규사원등록</a></li>
                 <li><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
+                <li><a href="mailTest.me?email=${loginUser.email}">메일테스트</a></li>
                 
                 
                 
