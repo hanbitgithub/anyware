@@ -25,5 +25,7 @@ public class Schedule {
 	private int memberNo;
 	private int calendarNo;
 	private String allday;
+	
+	private String scColor;
 
 }

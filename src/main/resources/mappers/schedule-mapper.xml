@@ -15,6 +15,7 @@
 		<result column="member_no" property="memberNo" />
 		<result column="calendar_no" property="calendarNo" />
 		<result column="allday" property="allday" />
+		<result column="SC_COLOR" property="scColor" />
 	</resultMap>
 	
 	<resultMap id="CalendarResult" type="Calendar">
@@ -89,6 +90,62 @@
 		 where 1=1
 		   and member_no = #{memberNo}
 	</select>
+	
+	<!-- 내 캘린더 수정 화면 -->
+	<select id="calendarModifyModal" resultMap="CalendarResult">
+		select
+			   calendar_no
+			 , my_calendar
+			 , sc_color
+			 , member_no
+		  from tb_category
+		 where 1=1
+		   and calendar_no = #{calendarNo}
+		   and member_no = #{memberNo}
+	</select>
+	
+	<!-- 내 캘린더 수정 -->
+	<update id="updateCalendar">
+		update tb_category
+		   set
+			   my_calendar = #{myCalendar},
+			   sc_color = #{scColor}
+		 where 1=1
+		   and calendar_no = #{calendarNo}
+		   and member_no = #{memberNo}
+	</update>
+	
+	<!-- 내 캘린더 삭제 -->
+	<delete id="deleteCalendar">
+		delete
+		  from tb_category
+		 where calendar_no = #{calendarNo}
+		   and member_no = #{memberNo}
+	</delete>
+	
+	<!-- 스케줄 목록 조회 -->
+	<select id="scheduleList" resultMap="scheduleResult">
+		select 
+		       schedule_no
+			 , start_date
+			 , end_date
+			 , start_time
+			 , end_time
+			 , sc_title
+			 , sc_content
+			 , status
+			 , write_date
+			 , s.member_no
+			 , calendar_no
+			 , sc_color
+		From tb_m_schedule s
+        join tb_category c using(calendar_no)
+        where s.member_no = 1
+	</select>
+	
+	
+	
+	
 	
 	
 	

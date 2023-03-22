@@ -35,11 +35,51 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scDao.addCalendarModal(sqlSession, c);
 	}
 
-	
-	@Override public ArrayList<Calendar> calendarList(int memberNo) {
+	/**
+	 * 내 캘린더 목록
+	 */
+	@Override 
+	public ArrayList<Calendar> calendarList(int memberNo) {
 		return scDao.calendarList(sqlSession, memberNo); 
 	}
 	 
+	/**
+	 * 내 캘린더 수정 화면
+	 */
+	@Override
+	public Calendar calendarModifyModal(Calendar c) {
+		return scDao.calendarModifyModal(sqlSession, c);
+	}
+
+	/**
+	 * 내 캘린더 수정
+	 */
+	@Override
+	public int updateCalendar(Calendar c) {
+		return scDao.updateCalendar(sqlSession, c);
+	}
+
+	/**
+	 * 내 캘린더 삭제
+	 */
+	@Override
+	public int deleteCalendar(Calendar c) {
+		return scDao.deleteCalendar(sqlSession, c);
+	}
+
+	/**
+	 * 스케줄 목록 조회
+	 */
+	@Override
+	public ArrayList<Schedule> scheduleList(int memberNo) {
+		return scDao.scheduleList(sqlSession, memberNo);
+	}
+	
+	
+	
+	
+	
+	
 	
 
 }
