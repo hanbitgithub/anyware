@@ -40,8 +40,8 @@
         
         <div id="list-area">
 	        <ul>
-	            <li><a href="detail.pj?no=${ pj.projectNo }">LIST</a></li> <br>
-	            <li><a href="participant.pj?no=${ pj.projectNo }">인원 관리</a></li> <br>
+	            <li><a href="detail.pj?projectNo=${ pj.projectNo }">LIST</a></li> <br>
+	            <li><a href="participant.pj?projectNo=${ pj.projectNo }">인원 관리</a></li> <br>
 	            <li><a href="">일정 관리</a></li> <br>
 	        </ul>
         </div>

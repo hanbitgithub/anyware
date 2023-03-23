@@ -238,10 +238,10 @@
 				let $projectNo = $(e).children().eq(2).val();
 				let $pp = $(e).children(".participation");
 				if($lock == '🔓'){
-					location.href='detail.pj?no=' + $projectNo;
+					location.href='detail.pj?projectNo=' + $projectNo;
 				} else {
 					if($pp.val() == 1){
-						location.href='detail.pj?no=' + $projectNo;
+						location.href='detail.pj?projectNo=' + $projectNo;
 					} else {
 						$(".requestModal").click();
 						$("#no").val($projectNo);

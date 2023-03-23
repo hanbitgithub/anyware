@@ -12,8 +12,9 @@ import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.dao.ProjectDao;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
-import com.aw.anyware.project.model.vo.ProjectMember;
+import com.aw.anyware.project.model.vo.Todo;
 
 @Service
 public class ProjectServiceImpl implements ProjectService {
@@ -62,8 +63,8 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public Project selectProjectDetail(HashMap<String, Integer> map) {
-		return pDao.selectProjectDetail(sqlSession, map);
+	public Project selectProjectDetail(PjMem pm) {
+		return pDao.selectProjectDetail(sqlSession, pm);
 	}
 
 	@Override
@@ -72,23 +73,23 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 	
 	@Override
-	public int selectRequestStatus(HashMap<String, Object> map) {
-		return pDao.selectRequestStatus(sqlSession, map);
+	public int selectRequestStatus(PjMem pm) {
+		return pDao.selectRequestStatus(sqlSession, pm);
 	}
 	
 	@Override
-	public int addRequest(HashMap<String, Object> map) {
-		return pDao.addRequest(sqlSession, map);
+	public int addRequest(PjMem pm) {
+		return pDao.addRequest(sqlSession, pm);
 	}
 	
 	@Override
-	public int addParticipant(HashMap<String, Integer> map) {
-		return pDao.addParticipant(sqlSession, map);
+	public int addParticipant(PjMem pm) {
+		return pDao.addParticipant(sqlSession, pm);
 	}
 	
 	@Override
-	public Member selectParticipant(HashMap<String, Integer> map) {
-		return pDao.selectParticipant(sqlSession, map);
+	public Member selectParticipant(PjMem pm) {
+		return pDao.selectParticipant(sqlSession, pm);
 	}
 
 	@Override
@@ -107,14 +108,48 @@ public class ProjectServiceImpl implements ProjectService {
 	}
 
 	@Override
-	public int deleteParticipant(HashMap<String, Integer> map) {
-		return pDao.deleteParticipant(sqlSession, map);
+	public int deleteParticipant(PjMem pm) {
+		return pDao.deleteParticipant(sqlSession, pm);
 	}
 
-	
+	@Override
+	public int acceptParticipant(PjMem pm) {
+		return pDao.acceptParticipant(sqlSession, pm);
+	}
 
-	
+	@Override
+	public int rejectParticipant(PjMem pm) {
+		return pDao.rejectParticipant(sqlSession, pm);
+	}
 
-	
+	@Override
+	public List selectList(int listNo) {
+		return pDao.selectList(sqlSession, listNo);
+	}
+
+	@Override
+	public Todo addTodo(Todo td) {
+		
+		int result = pDao.addTodo(sqlSession, td);
+		
+		Todo todo = new Todo();
+		if(result > 0) {
+			int todoNo = pDao.selectTodoNo(sqlSession);
+			todo = pDao.selectTodo(sqlSession, todoNo);
+		}
+		
+		return todo;
+	}
+
+	@Override
+	public int updateTodo(HashMap<String, Integer> map) {
+		return pDao.updateTodo(sqlSession, map);
+	}
+
+	@Override
+	public int deleteTodo(int todoNo) {
+		return pDao.deleteTodo(sqlSession, todoNo);
+	}
+
 
 }

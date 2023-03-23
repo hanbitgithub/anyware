@@ -7,7 +7,9 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
+import com.aw.anyware.project.model.vo.Todo;
 
 public interface ProjectService {
 	
@@ -25,29 +27,43 @@ public interface ProjectService {
 	int deleteLike(Like like);
 	
 	// 프로젝트 상세 조회 서비스(select)
-	Project selectProjectDetail(HashMap<String, Integer> map);
+	Project selectProjectDetail(PjMem pm);
 	
 	// 리스트 추가 서비스(insert)
 	int insertList(List list);
 	
 	// 비공개 프로젝트 참여 요청 서비스(insert)
-	int selectRequestStatus(HashMap<String, Object> map);
-	int addRequest(HashMap<String, Object> map);
+	int selectRequestStatus(PjMem pm);
+	int addRequest(PjMem pm);
 	
 	// 프로젝트 인원 추가 서비스(insert)
-	int addParticipant(HashMap<String, Integer> map);
-	Member selectParticipant(HashMap<String, Integer> map);
+	int addParticipant(PjMem pm);
+	Member selectParticipant(PjMem pm);
 	
 	// 프로젝트 인원 제거 서비스(delete)
-	int deleteParticipant(HashMap<String, Integer> map);
+	int deleteParticipant(PjMem pm);
+	
+	// 프로젝트 참여요청 승인 서비스(update)
+	int acceptParticipant(PjMem pm);
+	
+	// 프로젝트 참여요청 거절 서비스(delete)
+	int rejectParticipant(PjMem pm);
 	
 	// 인원 조회 서비스(select)
-	// 부서명 조회(select)
 	ArrayList<Member> selectDeptList();
-	// 부서별 인원 조회(select)
 	ArrayList<Member> selectMemberList();
-	// 참여인원 조회(select)
 	ArrayList<Member> selectParticipantList(int projectNo);
 	
+	// 리스트 조회 서비스(select)
+	List selectList(int listNo);
+	
+	// 할일 추가 서비스(insert)
+	Todo addTodo(Todo td);
+	
+	// 할일 업데이트 서비스(update)
+	int updateTodo(HashMap<String, Integer> map);
+	
+	// 할일 제거 서비스(delete)
+	int deleteTodo(int todoNo);
 	
 }

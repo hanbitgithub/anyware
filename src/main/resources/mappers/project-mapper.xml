@@ -19,10 +19,12 @@
 	
 	<resultMap type="PjList" id="listResult">
 		<id column="list_no" property="listNo" />
+		<result column="member_no" property="memberNo" />
 		<result column="list_title" property="listTitle" />
 		<result column="begin_date" property="beginDate" />
 		<result column="end_date" property="endDate" />
 		<result column="color" property="color" />
+		<collection property="todoList" resultMap="todoResult" />
 	</resultMap>
 	
 	<resultMap type="Member" id="memberResult">
@@ -33,6 +35,12 @@
 		<result column="name" property="name" />
 		<result column="status" property="status" />
 		<result column="owner_status" property="position" />
+	</resultMap>
+	
+	<resultMap type="Todo" id="todoResult">
+		<id column="todo_no" property="todoNo" />
+		<result column="todo_title" property="todoTitle" />
+		<result column="finish_status" property="finishStatus" />
 	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -381,4 +389,89 @@
 		 where project_no = #{projectNo}
 		   and member_no = #{memberNo}
 	</delete>
+	
+	<update id="acceptParticipant">
+		update
+			   tb_projectmember
+		   set status = 1
+		 where project_no = #{projectNo}
+		   and member_no = #{memberNo}
+	</update>
+	
+	<delete id="rejectParticipant">
+		delete
+		  from tb_projectmember
+		 where project_no = #{projectNo}
+		   and member_no = #{memberNo}
+	</delete>
+	
+	<select id="selectList" resultMap="listResult">
+		select
+		       l.list_no
+		     , list_title
+		     , to_char(to_date(begin_date, 'yy/mm/dd'), 'yy/mm/dd') "BEGIN_DATE"
+		     , to_char(to_date(end_date, 'yy/mm/dd'), 'yy/mm/dd') "END_DATE"
+		     , todo_no
+		     , todo_title
+		     , finish_status
+		  from tb_list l
+		  left join tb_todo td on (l.list_no = td.list_no)
+		 where l.list_no = #{listNo}
+		 order
+		 	by todo_no asc
+	</select>
+	
+	<insert id="addTodo">
+		insert
+		  into tb_todo
+		  (
+		  	todo_no
+		  , list_no
+		  , member_no
+		  , todo_title
+		  )
+		  values
+		  (
+		  	seq_tdno.nextval
+		  , #{listNo}
+		  , #{tdMemberNo}
+		  , #{todoTitle}
+		  )
+	</insert>
+	
+	<select id="selectTodoNo" resultType="_int">
+		select
+			   seq_tdno.currval
+		  from dual
+	</select>
+	
+	<select id="selectTodo" resultMap="todoResult">
+		select
+			   todo_no
+			 , todo_title
+			 , finish_status
+		  from tb_todo
+		 where todo_no = #{todoNo}
+	</select>
+	
+	<update id="updateTodo">
+		update
+			   tb_todo
+		<choose>
+			<when test="length == 1">
+				set finish_status = 'N'
+			</when>
+			<otherwise>
+				set finish_status = 'Y'
+			</otherwise>
+		</choose>
+		 where todo_no = #{todoNo}
+	</update>
+	
+	<delete id="deleteTodo">
+		delete
+		  from tb_todo
+		 where todo_no = #{todoNo} 
+	</delete>
+	
 </mapper>

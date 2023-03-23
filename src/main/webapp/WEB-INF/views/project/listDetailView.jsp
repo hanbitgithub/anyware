@@ -60,7 +60,7 @@
     .chat-mine{
         justify-content:flex-end;
     }
-    img{
+    .chProfileImg{
         width: 50px;
         height: 50px;
         box-sizing: border-box;
@@ -110,7 +110,7 @@
             <table class="chat-other">
                 <tr>
                     <td rowspan="2">
-                        <img src="../../../resources/images/chat/defaultProfile.png">
+                        <img src="../../../resources/images/chat/defaultProfile.png" class="chProfileImg">
                     </td>
                     <td colspan="2">
                         <div class="writer">김현지(개발부/사원)</div>

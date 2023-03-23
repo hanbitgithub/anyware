@@ -96,16 +96,23 @@
 
         <div class="list-area">
         	<c:forEach var="l" items="${ pj.listList }">
-        		<div class="list" onclick="location.href='detail.li'" style="border-left: 15px solid ${ l.color };">
-					<div class="list-name">${ l.listTitle }</div>
-	                <br>
-	                <div class="period">기간</div>
-
-	                <span>${ l.beginDate }</span> - <span>${ l.endDate }</span>
-                    
-				</div>
+                <form action="detail.li" method="post" onclick="submit(this);">
+                    <div class="list" style="border-left: 15px solid ${ l.color };">
+                        <input type="hidden" name="listNo" value="${ l.listNo }">
+                        <div class="list-name">${ l.listTitle }</div>
+                        <br>
+                        <div class="period">기간</div>
+                        <span>${ l.beginDate }</span> - <span>${ l.endDate }</span>
+                    </div>
+                </form>
         	</c:forEach>
         </div>
+
+        <script>
+            function submit(e){
+                $(e).submit();
+            }
+        </script>
 
 	</div>
 
@@ -190,20 +197,6 @@
 						</div>
 						
 						<script>
-							function isChecked(){
-								const checkbox = document.getElementsByName("color");
-                                let count = 0;
-                                checkbox.forEach(function(cb){
-                                    if(cb.checked == true){
-                                        count ++;
-                                    }
-                                })
-
-                                if(count == 0){
-                                    return false;
-                                }
-							}
-
                             const addListForm = document.querySelector("#addListForm");
                             addListForm.addEventListener("submit",isChecked);
 

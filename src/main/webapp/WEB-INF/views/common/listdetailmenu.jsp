@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,6 +30,7 @@
 		font-size: 19px;
 		overflow:hidden;
 		height:auto;
+		position: relative;
 	}
 	.period, .todo{
 		font-size: 17px;
@@ -47,6 +49,7 @@
 	.list-td{
 		width: 120px;
 		height: 30px;
+		/* text-decoration: line-through; */
 	}
 	.done{
 		margin-right: 10px;
@@ -107,14 +110,15 @@
 	}
 
 	#back{
-		margin: 20px;
+		position: absolute;
+		top: 800px;
+		left: 35px;
 	}
 
 	
 </style>
 </head>
 <body>
-
 	<div class="menu">
         <div class="name">${ l.listTitle }<span data-toggle="modal" data-target="#myModal">⚙️</span></div>
 		<br>
@@ -127,36 +131,29 @@
 		<input type="text" id="todo-input" name="" placeholder="할 일 추가" onkeydown="addlist();">
 		
 		<table id="todo-table">
-			<tr>
-				<td class="dot">•</td>
-				<td class="list-td">
-					기획 의도
-				</td>
-				<td class="done" onclick="done(this);">✔</td>
-				<td class="delete" onclick="deletelist(this);">✕</td>
-				<td><input type="hidden" value="dd"></td>
-			</tr>
-			<tr>
-				<td class="dot">•</td>
-				<td class="list-td">
-					유사사이트 분석
-				</td>
-				<td class="done" onclick="done(this);">✔</td>
-				<td class="delete" onclick="deletelist(this);">✕</td>
-				<td><input type="hidden" value="dd"></td>
-			</tr>
-			<tr>
-				<td class="dot">•</td>
-				<td class="list-td">
-					가나다라마바사아자차카타파
-				</td>
-				<td class="done" onclick="done(this);">✔</td>
-				<td class="delete" onclick="deletelist(this);">✕</td>
-				<td><input type="hidden" value="dd"></td>
-			</tr>
+			<c:forEach var="td" items="${ l.todoList }">
+				<c:if test="${ td.todoNo ne 0 }">
+					<tr>
+						<td class="dot">•</td>
+						<c:choose>
+							<c:when test="${ td.finishStatus eq 'Y'}">
+								<td class="list-td">
+									<s>${ td.todoTitle }</s>
+								</td>
+							</c:when>
+							<c:otherwise>
+								<td class="list-td">
+									${ td.todoTitle }
+								</td>
+							</c:otherwise>
+						</c:choose>
+						<td class="done">✔</td>
+						<td class="delete">✕</td>
+						<td><input type="hidden" value="${ td.todoNo }"></td>
+					</tr>
+				</c:if>
+			</c:forEach>
 		</table>
-
-		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
 		<a class="btn btn-primary" id="back" href="javascript:history.back();">List 목록</a>
 
@@ -164,41 +161,102 @@
 			function addlist(){
 				if(event.keyCode == 13) {
 					let input = document.getElementById("todo-input");
-					event.preventDefault();
-					
-					if(input.value == ""){
-						alert("내용을 입력해주세요.");
-						return;
-					}
 
-					let value = "<tr>"
-									+ "<td class='dot'>•</td>"
-									+ "<td class='list-td'>"
-										+ input.value
-									+ "</td>"
-									+ "<td class='done' onclick='done(this);'>✔</td>"
-									+ "<td class='delete' onclick='deletelist(this);'>✕</td>"
-									+ "<td><input type='hidden' value='todoNo'></td>"
-								+ "</tr>";
-					
-					$("#todo-table").append(value);
-					input.value = "";
+					if(${ pj.participation } == 0){
+						alert("권한이 없습니다.");
+						input.value = "";
+						return;
+					} else {
+						// event.preventDefault();
+						
+						if(input.value.trim().length == 0){
+							alert("내용을 입력해주세요.");
+							return;
+						}
+
+						$.ajax({
+							url:"addtodo.ajax",
+							data:{listNo:${ l.listNo }
+								, tdMemberNo:${ loginUser.memberNo }
+								, todoTitle:input.value},
+							success:function(todo){
+								if(todo.todoNo != 0){
+									let value = "<tr>"
+													+ "<td class='dot'>•</td>"
+													+ "<td class='list-td'>"
+														+ todo.todoTitle
+													+ "</td>"
+													+ "<td class='done'>✔</td>"
+													+ "<td class='delete'>✕</td>"
+													+ "<td><input type='hidden' value='" + todo.todoNo + "'></td>"
+												+ "</tr>";
+						
+									$("#todo-table").append(value);
+									input.value = "";
+								}
+							},
+							error:function(){
+								console.log("todo 추가용 ajax 통신 실패");
+							}
+						})
+					}
 				};
 			}
 
-			function done(e){
-				// ajax로 update하기
-				console.log($(e).next().next().children("input").val());
-			}
+			// text-decoration: line-through;
+			$(document).on("click", ".done", function(){
+				let todoNo = $(this).next().next().children("input").val();
+				let listtd = $(this).prev();
+				let title = listtd.text();
+				if(${ pj.participation } == 0){
+					alert("권한이 없습니다.");
+					return;
+				} else {
+					$.ajax({
+						url:"updatetd.ajax",
+						data:{todoNo:todoNo
+							, length:listtd.children().length},
+						success:function(result){
+							if(result == 'success'){
+								if(listtd.children().length == 1){
+									listtd.html(title);
+								} else {
+									listtd.html("<s>" + title + "<s>");
+								}
+							}
+						}, 
+						error:function(){
 
-			function deletelist(e){
-				// ajax로 delete하기
-				console.log($(e).next().children("input").val());
-			}
+						}
+					})
+				}
+			})
+
+			$(document).on("click", ".delete", function(){
+				let todoNo = $(this).next().children("input").val();
+				let tr = $(this).parent();
+
+				if(${ pj.participation } == 0){
+					alert("권한이 없습니다.");
+					return;
+				} else {
+					$.ajax({
+						url:"deletetd.ajax",
+						data:{todoNo:todoNo},
+						success:function(result){
+							if(result == 'success'){
+								tr.remove();
+							}
+						}, 
+						error:function(){
+							console.log("할일 삭제용 ajax 통신 실패");
+						}
+					})
+				}
+			})
 
 		</script>
-
-	
+	</div>
 
 	<!-- The Modal -->
 	<div class="modal" id="myModal">
@@ -219,9 +277,13 @@
 							<input type="text" id="name" name="listTitle" value="${ l.listTitle }">
 						</div>
 						<br>
+
+						<fmt:parseDate value="${ l.beginDate }" var="beginDate" pattern="yy/MM/dd"/>
+						<fmt:parseDate value="${ l.endDate }" var="endDate" pattern="yy/MM/dd"/>
+
 						<div>
 							<b>기간<span class="essential"> *</span></b><br>
-							<input type="date" required class="date" value="${ l.beginDate }"> - <input type="date" required class="date" value="${ l.endDate }">
+							<input type="date" required class="date" value="<fmt:formatDate value='${ beginDate }' pattern='yyyy-MM-dd'/>"> - <input type="date" required class="date" value="<fmt:formatDate value='${ endDate }' pattern='yyyy-MM-dd'/>">
 						</div>
 						<br>
 						<div>
@@ -284,5 +346,6 @@
 			</div>
 		</div>
 	</div>
+	
 </body>
 </html>
