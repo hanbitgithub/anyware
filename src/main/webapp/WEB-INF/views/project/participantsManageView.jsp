@@ -115,6 +115,10 @@
     .file:hover{
         cursor: pointer;
     }
+
+    .reject, .accept, .cancle{
+        display: none;
+    }
 </style>
 </head>
 <body>
@@ -173,7 +177,24 @@
         </div>
 
         <script>
+            $(function(){
+                show();
+            })
+
+            function show(){
+                if(${ pj.participation } == 1){
+                    $(".cancle").show();
+                    $(".accept").show();
+                    $(".reject").show();
+                }
+            }
+
             function addpp(e){
+                if(${ pj.participation } == 0){
+                    alert("권한이 없습니다.");
+                    return;
+                }
+
                 let memNo = $(e).next().val();
                 let count = 0;
 
@@ -199,16 +220,25 @@
                             data:{projectNo:${ pj.projectNo }
                                 , memberNo:memNo},
                             success:function(result){
-                                value = "<div class='pp-set'>"
-                                            + "<input type='hidden' name='memberNo' value=" + result.memberNo + ">"
-                                            + "<div class='pp-name'>" + result.name + "(" +  result.deptName + "/" + result.jobName + ")<span class='cancle'>✕</span></div>"
-                                        + "</div>";
-                                $(".pp-list").append(value);
-                            },
-                            error:function(){
-                                console.log("참여인원 추가용 ajax 통신 실패");
-                            }
-                        })
+                                        if(result != 'fail'){
+                                            let value = "";
+                                            value += "<div class='pp-set'>"
+                                                        + "<input type='hidden' name='memberNo' value=" + result.memberNo + ">";
+                                            if(result.deptName == '미정'){
+                                                value += "<div class='pp-name'>" + result.name + "(" + result.jobName + ")<span class='cancle'>✕</span></div>";
+                                            } else {
+                                                value += "<div class='pp-name'>" + result.name + "(" + result.deptName + "/" + result.jobName + ")<span class='cancle'>✕</span></div>";
+                                            }
+                                            value += "</div>";
+
+                                            $(".pp-list").append(value);
+                                            show();
+                                        }
+                                    },
+                                error:function(){
+                                    console.log("참여인원 추가용 ajax 통신 실패");
+                                    }
+                            })
                 }
             }
         </script>
@@ -264,8 +294,15 @@
                         <c:forEach var="p" items="${ pList }">
                             <c:if test="${ p.status eq 2 }">
                                 <tr>
+                                    <c:choose>
+                                        <c:when test="${ p.deptName == '미정'}">
+                                            <td class="re-name">${ p.name }(${p.jobName})</td>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <td class="re-name">${ p.name }(${p.deptName}/${p.jobName})</td>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <td><input type="hidden" value="${ p.memberNo }"></td>
-                                    <td class="re-name">${ p.name }(${p.deptName}/${p.jobName})</td>
                                     <td class="accept-td"><button class="accept">수락</button></td>
                                     <td class="reject-td"><button class="reject">거절</button></td>
                                 </tr>
@@ -278,14 +315,6 @@
         </div>
 
         <script>
-            $(function(){
-                if(${ pj.participation } == 0){
-                    $(".cancle").css("display", "none");
-                    $(".accept").css("display", "none");
-                    $(".reject").css("display", "none");
-                }
-            })
-
             $(document).on("click", ".cancle", function(){
                 let ppset = $(this).parent().parent();
                 $.ajax({
@@ -304,6 +333,58 @@
                     },
                     error:function(){
                         console.log("참여자 delete용 ajax 통신 실패");
+                    }
+                })
+            })
+
+            $(document).on("click", ".accept", function(){
+                let acceptNo = $(this).parent().prev().children().val();
+                let tr = $(this).parent().parent();
+                
+                $.ajax({
+                    url:"acceptpp.ajax",
+                    data:{projectNo:${ pj.projectNo }
+                        , memberNo:acceptNo},
+                    success:function(result){
+                        if(result != 'fail'){
+                            tr.remove();
+                            let value = "";
+                            value += "<div class='pp-set'>"
+                                        + "<input type='hidden' name='memberNo' value=" + result.memberNo + ">";
+                            if(result.deptName == '미정'){
+                                value += "<div class='pp-name'>" + result.name + "(" + result.jobName + ")<span class='cancle'>✕</span></div>";
+                            } else {
+                                value += "<div class='pp-name'>" + result.name + "(" + result.deptName + "/" + result.jobName + ")<span class='cancle'>✕</span></div>";
+                            }
+                            value += "</div>";
+
+                            $(".pp-list").append(value);
+                            show();
+                        }
+                    },
+                    error:function(){
+                        console.log("참여요청 수락용 ajax 통신 실패");
+                    }
+                })
+            })
+
+            $(document).on("click", ".reject", function(){
+                let rejectNo = $(this).parent().prev().prev().children().val();
+                let tr = $(this).parent().parent();
+                console.log("dd");
+                
+                $.ajax({
+                    url:"rejectpp.ajax",
+                    type : "POST",
+                    data:{projectNo:${ pj.projectNo }
+                        , memberNo:rejectNo},
+                    success:function(result){
+                        if(result == 'success'){
+                            tr.remove();
+                        }
+                    },
+                    error:function(){
+
                     }
                 })
             })

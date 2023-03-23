@@ -1,5 +1,7 @@
 package com.aw.anyware.project.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,5 +23,7 @@ public class List {
 	private String endDate;
 	private String color;
 	private String enrollDate;
+	
+	private ArrayList<Todo> todoList;
 
 }

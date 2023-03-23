@@ -6,7 +6,6 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +19,9 @@ import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.service.ProjectService;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
+import com.aw.anyware.project.model.vo.Todo;
 import com.google.gson.Gson;
 
 @Controller
@@ -70,7 +71,7 @@ public class ProjectController {
 			model.addAttribute("alertMsg", "프로젝트 생성에 실패했습니다.");
 		}
 		
-		return "redirect:detail.pj?no=" + result; // 상세페이지로 이동
+		return "redirect:detail.pj?projectNo=" + result; // 상세페이지로 이동
 	}
 	
 	@ResponseBody
@@ -93,16 +94,17 @@ public class ProjectController {
 	
 	@ResponseBody
 	@RequestMapping(value="addrequest.ajax")
-	public String addRequest(int projectNo, HttpSession session) {
-		HashMap<String, Object> map = new HashMap<>();
-		map.put("projectNo", projectNo);
-		map.put("memberNo", ((Member)session.getAttribute("loginUser")).getMemberNo());
+	public String addRequest(PjMem pm, HttpSession session) {
 		
-		int status = pService.selectRequestStatus(map);
+		pm.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		
+		int status = pService.selectRequestStatus(pm);
 		
 		if(status == 0) { // 기존 요청 없음
-			int result = pService.addRequest(map);
+			int result = pService.addRequest(pm);
+			
 			return result > 0 ? "success" : "fail";
+			
 		} else { // 기존 요청 있음
 			return "already";
 		}
@@ -111,30 +113,26 @@ public class ProjectController {
 	
 	@ResponseBody
 	@RequestMapping(value="addparticipant.ajax", produces="application/json; charset=UTF-8")
-	public String addParticipant(int projectNo, int memberNo) {
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("projectNo", projectNo);
-		map.put("memberNo", memberNo);
+	public String addParticipant(PjMem pm) {
 		
-		int result = pService.addParticipant(map);
+		int result = pService.addParticipant(pm);
 		
 		if(result > 0) {
-			Member m = pService.selectParticipant(map);
+			Member m = pService.selectParticipant(pm);
 			return new Gson().toJson(m);
 		} else {
-			return "false";
+			return "fail";
 		}
 		
 	}
 	
 	// projectDetailView
 	@RequestMapping("detail.pj")
-	public String projectDetailView(int no, HttpSession session) {
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("projectNo", no);
-		map.put("memberNo", ((Member)session.getAttribute("loginUser")).getMemberNo());
+	public String projectDetailView(PjMem pm, HttpSession session) {
 		
-		Project pj = pService.selectProjectDetail(map);
+		pm.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		
+		Project pj = pService.selectProjectDetail(pm);
 		
 		session.setAttribute("pj", pj);
 		
@@ -146,15 +144,15 @@ public class ProjectController {
 		
 		int result = pService.insertList(list);
 		
-		return "redirect:detail.pj?no=" + list.getProjectNo();
+		return "redirect:detail.pj?projectNo=" + list.getProjectNo();
 	}
 	
 	@RequestMapping("participant.pj")
-	public String manageParticipant(int no, Model model) {
+	public String manageParticipantView(int projectNo, Model model) {
 		
 		ArrayList<Member> dList = pService.selectDeptList();
 		ArrayList<Member> mList = pService.selectMemberList();
-		ArrayList<Member> pList = pService.selectParticipantList(no);
+		ArrayList<Member> pList = pService.selectParticipantList(projectNo);
 		
 		model.addAttribute("mList", mList);
 		model.addAttribute("dList", dList);
@@ -165,25 +163,78 @@ public class ProjectController {
 	
 	@ResponseBody
 	@RequestMapping(value="deletepp.ajax")
-	public String deleteParticipant(int projectNo, int memberNo) {
-		HashMap<String, Integer> map = new HashMap<>();
-		map.put("projectNo", projectNo);
-		map.put("memberNo", memberNo);
+	public String deleteParticipant(PjMem pm) {
 		
-		Member m = pService.selectParticipant(map);
+		Member m = pService.selectParticipant(pm);
 		
 		if(m.getPosition().equals("Y")) {
 			return "owner";
 		} else {
-			int result = pService.deleteParticipant(map);
+			int result = pService.deleteParticipant(pm);
 			return result > 0 ? "success" : "fail";
 		}
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="acceptpp.ajax", produces="application/json; charset=UTF-8")
+	public String acceptParticipant(PjMem pm) {
+
+		int result = pService.acceptParticipant(pm);
+		
+		if(result > 0) {
+			Member m = pService.selectParticipant(pm);
+			return new Gson().toJson(m);
+		} else {
+			return "fail";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="rejectpp.ajax")
+	public String rejectParticipant(PjMem pm) {
+		
+		int result = pService.rejectParticipant(pm);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
 	// listDetailView
 	@RequestMapping("detail.li")
-	public String selectProjectDetail() {
+	public String selectProjectDetail(int listNo, HttpSession session) {
+		
+		List l = pService.selectList(listNo);
+		session.setAttribute("l", l);
+		
 		return "project/listDetailView";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="addtodo.ajax", produces="application/json; charset=UTF-8")
+	public String addTodo(Todo td) {
+		
+		Todo todo = pService.addTodo(td);
+		
+		return new Gson().toJson(todo);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="updatetd.ajax")
+	public String updateTodo(int todoNo, int length) {
+		
+		HashMap<String, Integer> map = new HashMap<>();
+		map.put("todoNo", todoNo);
+		map.put("length", length);
+		
+		int result = pService.updateTodo(map);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="deletetd.ajax")
+	public String deleteTodo(int todoNo) {
+		int result = pService.deleteTodo(todoNo);
+		return result > 0 ? "success" : "fail";
 	}
 
 }

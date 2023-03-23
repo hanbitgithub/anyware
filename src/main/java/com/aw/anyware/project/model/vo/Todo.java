@@ -15,7 +15,7 @@ public class Todo {
 	
 	private int todoNo;
 	private int listNo;
-	private int memberNo;
+	private int tdMemberNo;
 	private String todoTitle;
 	private String finishStatus;
 	private String enrollDate;
