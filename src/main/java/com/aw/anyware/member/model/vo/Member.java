@@ -42,6 +42,9 @@ public class Member {
 	private String enrollTime; // 사용자가 출근한 시간
 	private String birthday;
 	private String jobCode;
+	
+	private String newPwd; // 비밀번호 찾기
+	private String checkPwd; // 비밀번호 찾기
 
 }
 

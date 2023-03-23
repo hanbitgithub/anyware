@@ -76,7 +76,8 @@ a{
             <input type="password" name="memberPwd" placeholder="Password" required>
             <input type="submit" value="Login">
         </form>
-        <a href="findId.me">아이디</a>
+        <a href="findId.me">아이디 찾기</a>
+        <a href="findPwd.me">비밀번호 찾기</a>
 		
     </div> 
 

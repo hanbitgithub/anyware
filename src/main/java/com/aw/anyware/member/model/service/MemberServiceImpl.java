@@ -117,6 +117,18 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectOutMember(sqlSession, pi);
 	}
 
+	@Override
+	public Member searchPwd(Member m) {
+		
+		return mDao.searchPwd(sqlSession, m);
+	}
+
+	@Override
+	public int makeNewPwd(Member m) {
+		
+		return mDao.makeNewPwd(sqlSession, m);
+	}
+
 	
 
 	

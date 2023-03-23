@@ -28,10 +28,10 @@ public class CrunchifyJavaMailExample {
         //generateAndSendEmail();
         //System.out.println("\n\n ===> Your Java Program has just sent an Email successfully. Check your email..");
     //}
-    public static String generateAndSendEmail(Member m, String code) throws AddressException, MessagingException {
+    public static String generateAndSendEmail(Member mForFind, String code) throws AddressException, MessagingException {
         // Step1
         System.out.println("\n 1st ===> setup Mail Server Properties..");
-        System.out.println("crunch : " + m);
+        
         mailServerProperties = System.getProperties();
         mailServerProperties.put("mail.smtp.port", "587");
         mailServerProperties.put("mail.smtp.auth", "true");
@@ -41,7 +41,7 @@ public class CrunchifyJavaMailExample {
         System.out.println("\n\n 2nd ===> get Mail Session..");
         getMailSession = Session.getDefaultInstance(mailServerProperties, null);
         generateMailMessage = new MimeMessage(getMailSession);
-        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(m.getEmail()));
+        generateMailMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(mForFind.getEmail()));
         generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
         generateMailMessage.setSubject("테스트 메일입니다");
         String emailBody = "아이디 찾기입니다. \n다음 코드를 입력해주세요. \n 코드 : " + code + " qq회사 인사부";

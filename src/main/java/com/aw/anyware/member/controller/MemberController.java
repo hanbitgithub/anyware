@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.aw.anyware.common.model.vo.PageInfo;
@@ -360,15 +361,23 @@ public class MemberController {
 		return mv;
 	}
 	
-	@RequestMapping("searchId.me")
+	@RequestMapping("findPwd.me")
+	public ModelAndView findPwd(ModelAndView mv) {
+		mv.setViewName("member/findPwd");
+		return mv;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="searchId.me")
 	public String searchId(int memberNo) {
+		
 		String code = String.valueOf((int)(Math.random() * 90000 + 10000));
 		String code1 = " ";
-		System.out.println("첫번째 : " + code);
-		Member m = mService.detailAllMember(memberNo);
+		
+		Member mForFind = mService.detailAllMember(memberNo);
 		try {
-			code1 = CrunchifyJavaMailExample.generateAndSendEmail(m, code);
-			
+			code1 = CrunchifyJavaMailExample.generateAndSendEmail(mForFind, code);
+			System.out.println("code1 : " + code1);
 			
 		} catch (AddressException e) {
 			
@@ -377,14 +386,51 @@ public class MemberController {
 			
 			e.printStackTrace();
 		}
+		System.out.println("code1-2 : " + code1);
 		return code1;
 		
 	}
 	
-	@RequestMapping("checkCode.me")
-	public static void checkCode(String code) {
-		System.out.println(code);
+	@ResponseBody
+	@RequestMapping(value="selectFindId.me")
+	public String selectFindId(int memberNo) {
+		Member m = mService.detailAllMember(memberNo);
+		String requestId = m.getMemberId();
+		System.out.println("requestId : " + requestId);
+		return requestId;
 		
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="searchPwd.me")
+	public String searchPwd(Member m) {
+		String code = String.valueOf((int)(Math.random() * 90000 + 10000));
+		String code1 = " ";
+		Member mForFind = mService.searchPwd(m);
+		try {
+			code1 = CrunchifyJavaMailExample.generateAndSendEmail(mForFind, code);
+		} catch (AddressException e) {
+			
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			
+			e.printStackTrace();
+		}
+		return code;
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="makeNewPwd.me")
+	public int makeNewPwd(Member m) {
+		System.out.println(m);
+		System.out.println(m.getNewPwd());
+		String encPwd = bcryptPasswordEncoder.encode(m.getNewPwd());
+		System.out.println("encPwd1 : " + encPwd);
+		m.setEncPwd(encPwd);
+		System.out.println("encPwd2 : " + encPwd);
+		int result = mService.makeNewPwd(m);
+		return result;
+			
 	}
 	
 

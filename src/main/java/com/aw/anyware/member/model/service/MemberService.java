@@ -53,6 +53,12 @@ public interface MemberService {
 	
 	ArrayList<Member> selectOutMember(PageInfo pi);
 	
+	//비밀번호 찾기
+	
+	Member searchPwd(Member m);
+	
+	int makeNewPwd(Member m); // 비밀번호 찾기에서 비밀번호 변경하는 메소드
+	
 	
 	
 	//Member selectDayOff(Member m);

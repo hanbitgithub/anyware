@@ -283,5 +283,27 @@
     		
   </select>
   
+  <select id="searchPwd" resultMap="memberResult">
+    select
+    		member_no,
+    		
+    		member_id,
+    		
+    		email
+    		
+    	from tb_member
+       where status = 'Y'
+       and member_no = #{memberNo}
+       and member_id = #{memberId}
+    		
+  </select>
+  
+  <update id="makeNewPwd">
+  	update
+  			tb_member
+  		set member_pwd = #{encPwd}
+  	   where member_no = #{memberNo}
+  </update>
+  
   
 </mapper>

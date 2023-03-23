@@ -113,6 +113,16 @@ public class MemberDao {
 		return (ArrayList)sqlSession.selectList("memberMapper.selectOutMember", null, rowBounds);
 	}
 
+	public Member searchPwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.searchPwd",m);
+	}
+
+	public int makeNewPwd(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.makeNewPwd", m);
+	}
+
 	
 
 	
