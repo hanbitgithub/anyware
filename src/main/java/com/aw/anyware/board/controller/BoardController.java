@@ -455,15 +455,13 @@ public class BoardController {
 	@RequestMapping(value="like.bo")
 	public String likeBoard(Board b, HttpSession session, Model model) {
 
+		b.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
 		int result = bService.likeBoard(b);
 		
-		if(result > 0) { 
-			return "redirect:detail.bo?no=" + b.getPostNo();
-		}else {
-			model.addAttribute("errorMsg", "신고접수 실패");
-			return "common/errorPage";
-		}
+		return result > 0 ? "success" : "fail";
 	}
+	
+	
 	
 	@ResponseBody
 	@RequestMapping(value="unlike.bo")

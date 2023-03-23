@@ -100,6 +100,7 @@ table tbody tr {
               </thead>
               <tbody style="border: white">
                 <c:forEach var="b" items="${ list }">
+                <c:if test="${ loginUser.memberNo eq b.memberNo}">
                 <tr>
                   <td class="bno" >${ b.boardNo }</td>
                   <td>
@@ -112,6 +113,7 @@ table tbody tr {
                   <td>${ b.createDate }</td>
                   <td>${ b.count }</td>
                 </tr>
+                </c:if>
                 </c:forEach>
               </tbody>
             </table>
