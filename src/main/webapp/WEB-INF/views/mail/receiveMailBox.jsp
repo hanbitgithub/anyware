@@ -67,7 +67,7 @@ input[type=checkbox] {
 	<!-- 세부 내용 -->
 	<div class="content">
 		 <b style="font-size: 18px;"> 받은메일함</b> <span style="font-size: 13px">&nbsp;
-		   안읽은 메일 <span class="count">0</span> / 전체메일 ${ rCount }</span>
+		   안읽은 메일 <span class="count"> </span> / 전체메일 ${ rCount }</span>
 
 		   <script>
 		   $(function(){ 

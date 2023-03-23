@@ -47,15 +47,17 @@
 .profile {
   width:90px;
   border-radius: 100%;
+  margin-bottom: 5px;
   }
 
 /* 버튼 스타일 */
   .button1 {
   width: 60px; 
-  background-color: #0099cc;
+  background-color: #7291f6;
   color: rgb(255, 255, 255);
-  border: 2px solid  #0099cc;
+  border: 2px solid  #7291f6;
   border-radius: 7px;
+  font-weight: bold;
 }
 
 .button2 {
@@ -64,6 +66,7 @@
   color: black;
   border: 2px solid #e7e7e7;
   border-radius: 7px;
+   font-weight: bold;
 }
 
 /* 아이콘 */
@@ -100,13 +103,16 @@ tr:hover {
 
     <div id="wrap">
         <div class="left" style="text-align:center;">
-          <br><br><br>
-          <img class="profile" src="">
-            <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b></p>
+          <br><br>
+          <img class="profile" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />">
+            <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b>
+            <br><span style="font-size:14px;">${ loginUser.deptName }</span>
+            </p>
+             
           <p> 
-            출근시간 : ${ commute.commuteIn } 
+            출근시간 : &nbsp; ${ commute.commuteIn } 
             <br>
-            퇴근시간 : ${ commute.commuteOut }
+            퇴근시간 : &nbsp; ${ commute.commuteOut }
           </p>
           <button class="boutton button1" onclick="enrollAndOut(1);">출근</button>
           <button class="boutton button2" onclick="enrollAndOut(2);">퇴근</button>
@@ -148,7 +154,7 @@ tr:hover {
         <div class="left">
         <br>
        <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
-          <span><b>&nbsp;&nbsp;&nbsp; ✉️ &nbsp; 메일함</b></span>
+          <span onclick="location.href='receivebox.em'"><b>&nbsp;&nbsp;&nbsp;<img src="resources/images/maile.gif" width="30px;">  메일함</b> </span> &nbsp;<span class="count badge text-bg-primary"></span>
           <div class="container">
                <br>
                <!-- Nav tabs -->
@@ -217,6 +223,38 @@ tr:hover {
         	  })
 
           })
+          </script>
+          <script>
+          	$(function(){
+          		unreadCount();
+          	})
+          	
+          	function unreadCount(){
+                   		$.ajax({
+                   		    url: "unreadcount.em",
+                   		    data: { memId : '${loginUser.memberId}' },
+                   		    success: function (count){
+                   		    	console.log(count);
+                   		    	var value="";
+                   		    	if(count != 0 ){
+                   		    		value = count;
+                   		    	}else{
+                   		    		value = 0;
+                   		    		
+                   		    	}
+                   		            
+                   		          $(".count").html(value);
+                   		       
+                   		    	
+                   		    },error: function () {
+                     		      console.log("안읽은메일조회용 ajax 통신실패");
+                   		    }
+                   		  });
+                   		     
+            	}
+            
+            
+            </script>
           </script>
           
            

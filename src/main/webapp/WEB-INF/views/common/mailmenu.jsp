@@ -204,7 +204,7 @@ a{
                    		    	if(count != 0 ){
                    		    		value = count;
                    		    	}else{
-                   		    		$(".count").html("0");
+                   		    		value = 0;
                    		    		
                    		    	}
                    		            
