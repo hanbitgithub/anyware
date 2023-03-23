@@ -13,12 +13,12 @@
    /* width: 1300px;/* wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값
     height:700px; */
     left:30%;
-    transform: translate(-38%,1%); /* 중앙정렬 */
+    transform: translate(-35%,1%); /* 중앙정렬 */
     margin:auto;
  
 }
 #wrap > .left {
-    width:37%;
+    width:38%;
     height:350px;
     border: 1px solid rgb(230, 230, 230);
     border-radius: 5px;
@@ -69,6 +69,10 @@
    font-weight: bold;
 }
 
+button:hover{
+	opacity: 70%
+}
+
 /* 아이콘 */
 .icon {
   width:25px;
@@ -86,7 +90,10 @@ tr:hover {
   background-color: #eee;
   cursor: pointer;
 }
-
+#mailC:hover{
+	opacity: 70%;
+	cursor:pointer;
+}
 
 </style>
 </head>
@@ -154,16 +161,16 @@ tr:hover {
         <div class="left">
         <br>
        <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
-          <span onclick="location.href='receivebox.em'"><b>&nbsp;&nbsp;&nbsp;<img src="resources/images/maile.gif" width="30px;">  메일함</b> </span> &nbsp;<span class="count badge text-bg-primary"></span>
+          <span onclick="location.href='receivebox.em'" id="mailC"><b>&nbsp;&nbsp;&nbsp;<img src="resources/images/maile.gif" width="30px;">  메일함</b> </span> &nbsp;<span class="count badge text-bg-primary"></span>
           <div class="container">
                <br>
                <!-- Nav tabs -->
                <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" role="tablist">
                  <li class="nav-item">
-                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:black;">받은메일</a>
+                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:gray;">받은메일</a>
                  </li>
                  <li class="nav-item">
-                   <a class="nav-link" data-toggle="tab" href="#send" style="color:black;">보낸메일</a>
+                   <a class="nav-link" data-toggle="tab" href="#send" style="color:gray;">보낸메일</a>
                  </li>
                 
                </ul>
