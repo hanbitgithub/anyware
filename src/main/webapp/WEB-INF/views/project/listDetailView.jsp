@@ -10,22 +10,22 @@
     .chat-area{
         border: 2px solid rgb(211, 210, 210);
         border-radius: 0.3em;
-        width: 1300px;
+        width: 1400px;
         height: 650px;
         padding: 10px;
         overflow: auto;
     }
     .input-area{
-        width: 1200px;
+        width: 1400px;
         height: 40px;
     }
-    .inputbtn{
-        width: 1200px;
+    .input-div{
+        width: 1345px;
         position: relative;
         display: inline-block;
     }
     .input{
-        width: 1200px;
+        width: 1345px;
         height: 40px;
         padding-left: 10px;
         padding-right: 10px;
@@ -137,7 +137,7 @@
         <br>
 
         <div class="input-area">
-            <div class="inputbtn">
+            <div class="input-div">
                 <input type="text" class="input">
                 <button class="filebtn" onclick="openfile();">📂</button>
                 <input type="file" style="display: none;">

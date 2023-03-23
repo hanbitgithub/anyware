@@ -17,7 +17,6 @@
 	    padding: 40px 20px;
 	    border-right: 1px solid rgb(211, 210, 210);
 	    font-family: 'Nanum Gothic', sans-serif;
-		position: relative;
 	}
 	.menu li{
 	    margin-top: 5px;
