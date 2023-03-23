@@ -17,7 +17,8 @@
 	    padding: 40px 20px;
 	    border-right: 1px solid rgb(211, 210, 210);
 	    font-family: 'Nanum Gothic', sans-serif;
-		position: relative;
+	    margin:0;
+	
 	}
 	.menu li{
 	    margin-top: 5px;
@@ -110,6 +111,8 @@
 	#back{
 		margin: 20px;
 	}
+
+	
 </style>
 </head>
 <body>
@@ -197,7 +200,7 @@
 
 		</script>
 
-	</div>
+	
 
 	<!-- The Modal -->
 	<div class="modal" id="myModal">

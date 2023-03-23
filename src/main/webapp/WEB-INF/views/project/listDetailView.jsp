@@ -89,13 +89,17 @@
     .writer{
         margin-bottom: 2px;
     }
+    
+
+
+
 </style>
 </head>
 <body>
 
     <!-- 사이드 바  -->
 	<jsp:include page="../common/sidebar.jsp"></jsp:include>
-	<!-- 세부 메뉴 -->
+	
 	<jsp:include page="../common/listdetailmenu.jsp"></jsp:include>
 
     <div class="content">
