@@ -10,22 +10,22 @@
     .chat-area{
         border: 2px solid rgb(211, 210, 210);
         border-radius: 0.3em;
-        width: 1400px;
+        width: 1300px;
         height: 650px;
         padding: 10px;
         overflow: auto;
     }
     .input-area{
-        width: 1400px;
+        width: 1200px;
         height: 40px;
     }
     .inputbtn{
-        width: 1348px;
+        width: 1200px;
         position: relative;
         display: inline-block;
     }
     .input{
-        width: 1348px;
+        width: 1200px;
         height: 40px;
         padding-left: 10px;
         padding-right: 10px;
@@ -99,7 +99,7 @@
 	<jsp:include page="../common/listdetailmenu.jsp"></jsp:include>
 
     <div class="content">
-        <b style="font-size: 40px">프로젝트 기획보고서</b>
+        <b style="font-size: 40px">${ l.listTitle }</b>
         <br><br>
 
         <div class="chat-area">
