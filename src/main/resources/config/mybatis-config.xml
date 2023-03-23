@@ -31,6 +31,7 @@
 		<typeAlias type="com.aw.anyware.groupMap.model.vo.GroupMap" alias="GroupMap"/>
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Calendar" alias="Calendar" />
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Schedule" alias="Schedule" />
+		<typeAlias type="com.aw.anyware.project.model.vo.Participant" alias="Participant" />
 
 	</typeAliases>
 	
