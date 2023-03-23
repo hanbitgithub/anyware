@@ -6,6 +6,12 @@
 <head>
 <meta charset="UTF-8">
 <script src="https://kit.fontawesome.com/def66b134a.js" crossorigin="anonymous"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <title>anyware</title>
 <style>
 #wrap {
@@ -94,7 +100,18 @@ tr:hover {
 	opacity: 70%;
 	cursor:pointer;
 }
-
+#boardList{
+	padding-top: 10px;
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+#board-btn{
+	padding-right: 20px;
+	float: right;
+	font-size:small;
+	color: #464646;
+}
 </style>
 </head>
 <body>
@@ -354,9 +371,69 @@ tr:hover {
 
         <div class="right">
         <br>
-        <i class="fa-solid fa-list"></i> &nbsp;
-          <span><b>자유게시판</b></span>
+		&nbsp;&nbsp;&nbsp;
+		<img src="resources/images/board.png" width="20px;" height="25px;" style="margin-bottom: 5px;">&nbsp;
+          <span><b>자유게시판</b></span> 
+          <a href="list.bo" id="board-btn">+더보기</a>
+		  <div id="boardList">
+		  <table id="boardList" class="table table-hover" style="font-size: small; text-align: center;">
+			<thead>
+			<tr>
+				<th>번호</th>
+				<th>제목</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			  </tr>
+			</thead>
+			<tbody style="border: white">
+			</tbody>
+		  </table>
+			</div>
         </div>
+            <script>
+            	$(function(){
+            		
+            		mainBoardList();
+            		
+            		$(document).on("click", "#boardList>tbody>tr", function(){
+            			location.href = 'detail.bo?no=' + $(this).children().eq(0).text();
+            		})
+            	})
+            	
+            	function mainBoardList(){
+            		$.ajax({
+            			url:"mainPage.bo",
+            			success:function(list){
+            				console.log(list);
+            				
+            				let value = "";
+            				for(let i=0; i<list.length; i++){
+            					let b = list[i];
+            					value += "<tr>" 
+            							+ '<td>' + b.boardNo + "</td>"
+            							+ "<td>";
+            							if(b.originName != null){
+            								value += "📁";
+            							}
+            							value += b.boardTitle + "</td>" 
+            							+ "<td>" + b.name + b.jobName + "</td>" 
+            							+ "<td>" + b.createDate + "</td>"
+            							+ "<td>" + b.count + "</td>"
+            							+ "</tr>";
+            						
+            					
+            				}
+            				
+            				$("#boardList tbody").html(value);
+            			},error:function(){
+            				console.log("메인 게시글 조회용 ajax 통신실패");
+            			}
+            			
+            		})
+            	}
+            	
+            </script>
     </div>
 
 

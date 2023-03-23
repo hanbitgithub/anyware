@@ -75,7 +75,13 @@ textarea {
 		<table>
 		<ul id="aaa">
 		    <li>
-		       <b style="font-size: large;"><span name="boardTitle">${b.boardTitle }</span></b> 
+		       <b style="font-size: large;"><span name="boardTitle">${b.boardTitle }</span></b>
+		       &nbsp; 
+		       <form id="likeBoard" action="like.bo" method="post">
+		       <input type="text" value="${ loginUser.memberNo }">
+		       <input type="text" value="${ b.boardNo }">
+		       <button type="submmit">🤍</button>
+		       </form>
 		    </li>
 		
 		    <li>

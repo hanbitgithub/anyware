@@ -146,6 +146,27 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.searchGroupList", keyword, rowBounds);
 	}
 
+	public ArrayList<Board> selectMainList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("boardMapper.selectMainList");
+	}
+
+	public ArrayList selectLikeList(SqlSessionTemplate sqlSession, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("boardMapper.selectLikeList", null , rowBounds);
+	}
+
+	public int likeBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.insert("boardMapper.likeBoard", b);
+	}
+
+	public int deleteLikeBoard(SqlSessionTemplate sqlSession, Board b) {
+		return sqlSession.delete("boardMapper.deleteLikeBoard", b);
+	}
+
 
 
 

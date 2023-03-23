@@ -14,7 +14,7 @@
 <style>
 table{
     text-align: center;
-    margin-top: 13px;
+    margin-top: 30px;
 }
 .button {
     border-radius: 5px;
@@ -85,7 +85,6 @@ table{
 	<!-- 세부 내용 -->
 	<div class="content">
 	<p><b>신고관리</b></p>
-	<hr>
 	
 		<table id="boardList" class="table table-hover" align="center">
               <thead>

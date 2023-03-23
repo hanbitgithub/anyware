@@ -55,6 +55,12 @@ public interface BoardService {
 	ArrayList<Board> searchBoardList(PageInfo pi, String keyword);
 	ArrayList<Board> searchNoticeList(PageInfo pi, String keyword);
 	ArrayList<Board> searchGroupList(PageInfo pi, String keyword);
+	ArrayList<Board> selectMainList();
+	
+	ArrayList<Board> selectLikeList(PageInfo pi);
+	int likeBoard(Board b);
+	int deleteLikeBoard(Board b);
+
 	
 	
 

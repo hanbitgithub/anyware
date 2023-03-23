@@ -23,6 +23,8 @@ import com.aw.anyware.board.model.vo.Reply;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.common.template.FileUpload;
 import com.aw.anyware.common.template.Pagination;
+import com.aw.anyware.member.model.vo.Member;
+import com.aw.anyware.project.model.vo.Like;
 import com.google.gson.Gson;
 
 @Controller
@@ -280,6 +282,17 @@ public class BoardController {
 		return new Gson().toJson(result);
 	}
 	
+	/**
+	 * 메인화면
+	 * @return
+	 */
+
+	@ResponseBody
+	@RequestMapping(value="mainPage.bo", produces="application/json; charset=utf-8")
+	public String selectMainList() {
+		ArrayList<Board> list = bService.selectMainList();
+		return new Gson().toJson(list);
+	}
 	
 	/**
 	 * 메인화면 - 자유게시판
@@ -291,6 +304,7 @@ public class BoardController {
 		ArrayList<Board> list = bService.selectMainBoardList();
 		return new Gson().toJson(list);
 	}
+	
 	
 	/**
 	 * 메인화면 - 공지사항
@@ -419,6 +433,45 @@ public class BoardController {
 		model.addAttribute("keyword", keyword);
 		
 		return "board/groupListView";
+	}
+	
+	@RequestMapping("likelist.bo")
+	public String selectLikeList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+		
+		int listCount = bService.selectListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		ArrayList<Board> list = bService.selectLikeList(pi);
+		
+		model.addAttribute("pi", pi);
+		model.addAttribute("list", list);
+		
+
+		return "board/likeListView";
+		
+	}
+
+	@ResponseBody
+	@RequestMapping(value="like.bo")
+	public String likeBoard(Board b, HttpSession session, Model model) {
+
+		int result = bService.likeBoard(b);
+		
+		if(result > 0) { 
+			return "redirect:detail.bo?no=" + b.getPostNo();
+		}else {
+			model.addAttribute("errorMsg", "신고접수 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="unlike.bo")
+	public String deleteLikeBoard(Board b, HttpSession session) {
+		b.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = bService.deleteLikeBoard(b);
+		
+		return result > 0 ? "success" : "fail";
 	}
 	
 	

@@ -11,17 +11,21 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+    
 <style>
 table{
     width: 100%;
     text-align: center;
-    margin-top: 13px;
+    margin-top: 15px;
+}
+table tbody tr {
+  line-height: 2rem;
 }
 .button {
     border-radius: 5px;
     border: 1px solid rgb(221, 221, 221);
-    font-size: 14px;
-    margin-top: 13px;
+    font-size: 15px;
+    margin-top: 5px;
 }
 .page_wrap {
 	text-align:center;
@@ -38,12 +42,12 @@ table{
 	margin:0 3px;
 	float:left;
 	border:1px solid #e6e6e6;
-	width:28px;
+	width:30px;
 	height:28px;
 	line-height:28px;
 	text-align:center;
 	background-color:#fff;
-	font-size:13px;
+	font-size:14px;
 	color:#999999;
 	text-decoration:none;
 }
@@ -79,25 +83,23 @@ table{
 	<!-- 세부 내용 -->
 	<div class="content">
 	<p><b>공지사항</b></p>
-	<hr>
-	
-        <form action="search.no" method="Get">
-            <input type="hidden" name="cpage" value="1">
-            <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
-            <button type="submit" class="button">검색</button>
-        </form>
-            <br>
+	            <form action="search.no" method="Get" style="float: right;">
+                  <input type="hidden" name="cpage" value="1">
+                  <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
+                  <button type="submit" class="button">검색</button>
+              </form>
+              <br>
 
             <table id="boardList" class="table table-hover" align="center">
               <thead>
                   <th>번호</th>
-                  <th>제목</th>
+                  <th width="50%;">제목</th>
                   <th>작성자</th>
                   <th>작성일</th>
                   <th>조회수</th>
                 </tr>
               </thead>
-              <tbody style="border: white">
+              <tbody style="border: white;">
                 <c:forEach var="b" items="${ list }">
                 <tr>
                   <td class="bno">${ b.boardNo }</td>
@@ -108,6 +110,7 @@ table{
                 </tr>
                 </c:forEach>
               </tbody>
+              
             </table>
             
             <script>
@@ -144,6 +147,8 @@ table{
                       </c:otherwise>
                 </c:choose>   
                 </div>
+
+
               </div>
                
 	

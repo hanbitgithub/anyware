@@ -119,11 +119,21 @@
 	#tree li a:hover+ul ul::before{
 		border-color:  #94a0b4;
 	}
-#button {
+#button1 {
     border-radius: 5px;
     border: 1px solid rgb(221, 221, 221);
     font-size: 14px;
     margin-top: 13px;
+	height: 30px;
+	width: 160px;
+}
+#button2 {
+    border-radius: 5px;
+    border: 1px solid rgb(221, 221, 221);
+    font-size: 14px;
+    margin-top: 13px;
+	height: 30px;
+	width: 45px;
 }
 #user{
 	display: inline-block;
@@ -160,10 +170,10 @@
 	<div class="content">
 	<p><b>조직도</b></p> 
 	<hr>
-		<form action="search.grp" method="get">
+		<form action="search.grp" method="get" style="float: right;">
             <input type="hidden" name="cpage" value="1">
-            <input type="text" name="keyword" value="${ keyword }" id="button" placeholder="이름으로 검색">
-            <button type="submit" id="button">검색</button>
+            <input type="text" name="keyword" value="${ keyword }" id="button1" placeholder=" 이름으로 검색">
+            <button type="submit" id="button2">검색</button>
         </form>
         
 	<br>

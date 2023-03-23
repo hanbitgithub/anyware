@@ -7,9 +7,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
     <style>
 .notice{
     background-color: rgb(247, 247, 247);
+	border-radius: 5px;
     width: 45%;
     height: 600px;
     flex:1;
@@ -18,6 +25,7 @@
 }
 .board{
     background-color: rgb(247, 247, 247);
+	border-radius: 5px;
     width: 45%;;
     height: 600px;
     flex:1;
@@ -29,8 +37,14 @@ tbody{
     line-height: 50px;
 }
 .a {
-	color: rgb(247, 247, 247);
+	color: rgb(221, 221, 221);
 
+}
+h5 > a {
+	font-weight:600;
+}
+table{
+	background-color: white;
 }
     </style>
 </head>
@@ -44,10 +58,17 @@ tbody{
 	<!-- 세부 내용 -->
 	<div class="content">
 	    <div class="notice" style="display: inline-block"> 
-    		
-				<table id="noticeList">
+    		<br>
+				<table id="noticeList" class="table table-hover" style="font-size: small; text-align: center; margin-top: 30px;">
+					<h5 align="center"><a href="nlist.bo">공지사항</a></h5>
 					<thead>
-						<h3 align="center"><a href="nlist.bo">공지사항</a></h3>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회수</th>
+						  </tr>
 					</thead>
 					<tbody>
 					</tbody>
@@ -57,10 +78,17 @@ tbody{
     &nbsp;&nbsp;&nbsp;
 
 	    <div class="board" style="display: inline-block">
-	        
-				<table id="boardList">
+	        <br>
+				<table id="boardList" class="table table-hover" style="font-size: small; text-align: center; margin-top: 30px;">
+					<h5 align="center"><a href="list.bo">자유게시판</a></h5>
 					<thead>
-						<h3 align="center"><a href="list.bo">자유게시판</a></h3>
+						<tr>
+							<th>번호</th>
+							<th>제목</th>
+							<th>작성자</th>
+							<th>작성일</th>
+							<th>조회수</th>
+						  </tr>
 					</thead>
 					<tbody>
 					</tbody>
@@ -88,8 +116,15 @@ tbody{
             				for(let i=0; i<list.length; i++){
             					let n = list[i];
             					value += "<tr>" 
-            							+ '<td class="a">' + n.boardNo + "</td>"
-            							+ "<td>" + "&nbsp;&nbsp;" + n.boardTitle + "</td>" 
+            							+ '<td>' + n.boardNo + "</td>"
+            							+ "<td>";
+            							if(n.originName != null){
+            								value += "📁";
+            							}
+            							value += n.boardTitle + "</td>" 
+            							+ "<td>" + n.name + n.jobName + "</td>" 
+            							+ "<td>" + n.createDate + "</td>"
+            							+ "<td>" + n.count + "</td>"
             							+ "</tr>";
             						
             					
@@ -125,8 +160,15 @@ tbody{
             				for(let i=0; i<list.length; i++){
             					let b = list[i];
             					value += "<tr>" 
-            							+ '<td class="a">' + b.boardNo + "</td>"
-            							+ "<td>" + "&nbsp;&nbsp;" + b.boardTitle + "</td>" 
+            							+ '<td>' + b.boardNo + "</td>"
+            							+ "<td>";
+            							if(b.originName != null){
+            								value += "📁";
+            							}
+            							value += b.boardTitle + "</td>" 
+            							+ "<td>" + b.name + b.jobName + "</td>" 
+            							+ "<td>" + b.createDate + "</td>"
+            							+ "<td>" + b.count + "</td>"
             							+ "</tr>";
             						
             					

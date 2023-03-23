@@ -76,6 +76,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
+	public ArrayList<Board> selectMainList() {
+		return bDao.selectMainList(sqlSession);
+	}
+	
+	@Override
 	public ArrayList<Board> selectMainBoardList() {
 		return bDao.selectMainBoardList(sqlSession);
 	}
@@ -135,6 +140,22 @@ public class BoardServiceImpl implements BoardService {
 	public ArrayList<Board> searchGroupList(PageInfo pi, String keyword) {
 		return bDao.searchGroupList(sqlSession, pi, keyword);
 	}
+
+	@Override
+	public ArrayList<Board> selectLikeList(PageInfo pi) {
+		return (ArrayList)bDao.selectLikeList(sqlSession,pi);
+	}
+
+	@Override
+	public int likeBoard(Board b) {
+		return bDao.likeBoard(sqlSession, b);
+	}
+
+	@Override
+	public int deleteLikeBoard(Board b) {
+		return bDao.deleteLikeBoard(sqlSession, b);
+	}
+
 
 
 

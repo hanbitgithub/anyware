@@ -21,6 +21,7 @@ public class Board {
 	private int count;
 	private String status;
 	private int category;
+	private String boardLike;
 	
 	private String name;
 	private String jobName;
@@ -30,5 +31,7 @@ public class Board {
 	private String reportContent;
 	private String reportDate;
 	private int reportNo;
+	
+	private String likeDate;
 	
 }

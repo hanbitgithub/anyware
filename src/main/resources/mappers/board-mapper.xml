@@ -20,6 +20,8 @@
 		<result column="report_content" property="reportContent" />
 		<result column="report_date" property="reportDate" />
 		<result column="report_no" property="reportNo" />
+		<result column="board_like" property="boardLike" />
+		<result column="like_date" property="likeDate" />
 	</resultMap>
 	
 	<resultMap id="replyResult" type="Reply">
@@ -227,20 +229,47 @@
 		 where reply_no = #{replyNo}     
 	</update>
 	
+	<!-- 메인페이지 -->
+	<select id="selectMainList" resultMap="boardResult">
+        select *
+			from (
+				select			
+				       b.board_no
+				     , b.board_title
+                     , m.name
+                     , m.job_name
+                     , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+                     , count
+                     , origin_name
+				  from tb_board b
+                  join tb_member m on (b.board_writer = m.member_no)
+				 where b.status = 'Y'
+				 and b.category = '5'
+				 order
+				    by b.board_no desc
+			)
+         where rownum between 1 and 6
+	</select>
+	
 	<!-- 메인화면 자유게시판 -->
 	<select id="selectMainBoardList" resultMap="boardResult">
 		select *
 			from (
 				select			
-				       board_no
-				     , board_title
-				  from tb_board
-				 where status = 'Y'
+				       b.board_no
+				     , board_title, to_char(create_date, 'YYYY-MM-DD') as "create_date"
+                     , count
+                     , m.name
+                     , m.job_name
+                     , origin_name
+				  from tb_board b
+                  join tb_member m on (b.board_writer = m.member_no)
+				 where b.status = 'Y'
 				 and category = '5'
 				 order
 				    by board_no desc
 			)
-         where rownum between 1 and 8
+         where rownum between 1 and 6
 	</select>
 	
 	<!-- 메인화면 공지사항 -->
@@ -248,15 +277,21 @@
 		select *
 			from (
 				select			
-				       board_no
-				     , board_title
-				  from tb_board
-				 where status = 'Y'
+				       b.board_no
+				     , board_title 
+				     , m.name
+                     , m.job_name                   
+					 , to_char(create_date, 'YYYY-MM-DD') as "create_date"
+                     , count
+                     , origin_name
+				  from tb_board b
+                  join tb_member m on (b.board_writer = m.member_no)
+				 where b.status = 'Y'
 				 and category = '6'
 				 order
 				    by board_no desc
 			)
-         where rownum between 1 and 8
+         where rownum between 1 and 6
 	</select>
 
 	<!-- 신고하기 -->
@@ -357,4 +392,46 @@
        where status = 'Y'
        and board_title like '%' || #{keyword} || '%'
 	</select>
+	
+	<select id="selectLikeList" resultMap="boardResult">
+		select
+		       l.board_no
+		     , board_title
+		     , b.board_writer
+		     , to_char(b.create_date, 'YYYY-MM-DD') as "create_date"
+		     , count
+		     , category
+		     , m.name
+		     , m.job_name
+		     , origin_name
+		  from tb_likeboard l, tb_member m, tb_board b
+		  where l.member_no = m.member_no
+          and l.board_no = b.board_no
+		 order
+		    by board_no desc
+	</select>
+	
+	<insert id="likeBoard">
+		insert
+			into tb_likeboard
+			(
+			member_no ,
+			board_no ,
+			like_date
+			)
+			values
+			(
+			#{memberNo} ,
+			#{boardNo} ,
+			sysdate
+			)
+	</insert>
+	
+	<delete id="deleteLikeBoard">
+		delete
+		  from tb_likeboard
+		 where member_no = #{memberNo}
+		   and board_no = #{boardNo}
+	</delete>
+
 </mapper>

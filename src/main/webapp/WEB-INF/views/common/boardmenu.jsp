@@ -64,9 +64,13 @@
 						<li><a href="glist.bo">개발팀게시판</a></li>
 					</c:when>
 				</c:choose>
+	        </ul>
+	        <br>
+	        <span style="font-weight: 600; font-size: 15px;" >즐겨찾기</span><br>
+	        <ul>
+	            <li><a href="likelist.bo">찜한게시글</a></li>
 
 	        </ul>
-	        
 
         </div>
 
