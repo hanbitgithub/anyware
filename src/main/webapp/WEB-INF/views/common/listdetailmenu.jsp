@@ -114,11 +114,11 @@
 <body>
 
 	<div class="menu">
-        <div class="name">프로젝트 기획보고서<span data-toggle="modal" data-target="#myModal">⚙️</span></div>
+        <div class="name">${ l.listTitle }<span data-toggle="modal" data-target="#myModal">⚙️</span></div>
 		<br>
 
 		<div class="period">- 기간</div>
-		<span>23/02/13</span> - <span>23/02/20</span>
+		<span>${ l.beginDate }</span> - <span>${ l.endDate }</span>
 		<br><br>
         
 		<div class="todo">- To do list</div>
@@ -214,12 +214,12 @@
 					<form action="">
 						<div>
 							<b>리스트 이름<span class="essential"> *</span></b>
-							<input type="text" id="name" name="">
+							<input type="text" id="name" name="listTitle" value="${ l.listTitle }">
 						</div>
 						<br>
 						<div>
 							<b>기간<span class="essential"> *</span></b><br>
-							<input type="date" required class="date"> - <input type="date" required class="date">
+							<input type="date" required class="date" value="${ l.beginDate }"> - <input type="date" required class="date" value="${ l.endDate }">
 						</div>
 						<br>
 						<div>
