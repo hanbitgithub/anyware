@@ -61,7 +61,7 @@
 </style>
 </head>
 <body>
-<!-- 사이드 바  -->
+   <!-- 사이드 바  -->
 	<jsp:include page="../common/sidebar.jsp"></jsp:include>
 	
 	<!-- 세부 메뉴 -->
@@ -180,14 +180,8 @@
 						 }
 					     
 					 }
-				 
-            
-            
-            
-            
+				
             </script>
-       
-            
 
             
         <!--페이징 영역-->

@@ -131,7 +131,7 @@ input[type=checkbox] {
                     </script>
                     
                     
-                    <form class="d-flex" role="search" action="searchD.em">
+                    <form class="d-flex" role="search" action="searchD.em" method="post">
                       <input class="form-control form-control-sm me-2" id="search" type="search" name="keyword"  value="${keyword}" placeholder="검색어를 입력하세요" aria-label="Search">
                       <input type="hidden" name="sender" value="${loginUser.memberId}">
 					  <input type="hidden" name="receiver" value="${loginUser.memberId}">
