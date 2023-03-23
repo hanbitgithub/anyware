@@ -167,10 +167,10 @@ tr:hover {
                <!-- Nav tabs -->
                <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" role="tablist">
                  <li class="nav-item">
-                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:gray;">받은메일</a>
+                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:rgb(88, 88, 88);">받은메일</a>
                  </li>
                  <li class="nav-item">
-                   <a class="nav-link" data-toggle="tab" href="#send" style="color:gray;">보낸메일</a>
+                   <a class="nav-link" data-toggle="tab" href="#send" style="color:rgb(88, 88, 88)">보낸메일</a>
                  </li>
                 
                </ul>
