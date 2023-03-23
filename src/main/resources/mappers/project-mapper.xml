@@ -35,12 +35,24 @@
 		<result column="name" property="name" />
 		<result column="status" property="status" />
 		<result column="owner_status" property="position" />
+		<result column="profile_url" property="profileUrl" />
 	</resultMap>
 	
 	<resultMap type="Todo" id="todoResult">
 		<id column="todo_no" property="todoNo" />
 		<result column="todo_title" property="todoTitle" />
 		<result column="finish_status" property="finishStatus" />
+	</resultMap>
+	
+	<resultMap type="ListChat" id="listChatResult">
+		<id column="chat_no" property="chatNo" />
+		<result column="writer_no" property="writerNo" />
+		<result column="chat_content" property="chatContent" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="send_date" property="sendDate" />
+		<result column="send_time" property="sendTime" />
+		<collection property="memberList" resultMap="memberResult" />
 	</resultMap>
 
 	<select id="selectListCount" resultType="_int">
@@ -473,5 +485,25 @@
 		  from tb_todo
 		 where todo_no = #{todoNo} 
 	</delete>
+	
+	<select id="selectListChatList" resultMap="listChatResult">
+		select
+		       chat_no
+		     , writer_no
+		     , name
+		     , profile_url
+		     , dept_name
+		     , job_name
+		     , chat_content
+		     , origin_name
+		     , change_name
+		     , to_char(send_date, 'YYYY"년" MM"월" DD"일"') "send_date"
+     		 , to_char(send_date, 'HH24:mi') "send_time"
+		  from tb_listchat
+		  join tb_member on (member_no = writer_no)
+		 where list_no = #{listNo}
+		 order
+    		by chat_no asc
+	</select>
 	
 </mapper>

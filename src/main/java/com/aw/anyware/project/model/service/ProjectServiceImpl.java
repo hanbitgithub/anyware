@@ -12,6 +12,7 @@ import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.dao.ProjectDao;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.ListChat;
 import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
 import com.aw.anyware.project.model.vo.Todo;
@@ -149,6 +150,11 @@ public class ProjectServiceImpl implements ProjectService {
 	@Override
 	public int deleteTodo(int todoNo) {
 		return pDao.deleteTodo(sqlSession, todoNo);
+	}
+
+	@Override
+	public ArrayList<ListChat> selectListChatList(int listNo) {
+		return pDao.selectListChatList(sqlSession, listNo);
 	}
 
 

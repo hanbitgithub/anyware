@@ -7,6 +7,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.ListChat;
 import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
 import com.aw.anyware.project.model.vo.Todo;
@@ -65,5 +66,8 @@ public interface ProjectService {
 	
 	// 할일 제거 서비스(delete)
 	int deleteTodo(int todoNo);
+	
+	// 리스트 채팅 조회 서비스(select)
+	ArrayList<ListChat> selectListChatList(int listNo);
 	
 }

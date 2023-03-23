@@ -19,6 +19,7 @@ import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.service.ProjectService;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.ListChat;
 import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
 import com.aw.anyware.project.model.vo.Todo;
@@ -201,10 +202,8 @@ public class ProjectController {
 	// listDetailView
 	@RequestMapping("detail.li")
 	public String selectProjectDetail(int listNo, HttpSession session) {
-		
 		List l = pService.selectList(listNo);
 		session.setAttribute("l", l);
-		
 		return "project/listDetailView";
 	}
 	
@@ -235,6 +234,14 @@ public class ProjectController {
 	public String deleteTodo(int todoNo) {
 		int result = pService.deleteTodo(todoNo);
 		return result > 0 ? "success" : "fail";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="chlist.ajax", produces="application/json; charset=UTF-8")
+	public String selectListChatList(int listNo) {
+		ArrayList<ListChat> chlist = pService.selectListChatList(listNo);
+		
+		return new Gson().toJson(chlist);
 	}
 
 }

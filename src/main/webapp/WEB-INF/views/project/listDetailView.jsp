@@ -20,12 +20,12 @@
         height: 40px;
     }
     .input-div{
-        width: 1345px;
+        width: 1400px;
         position: relative;
         display: inline-block;
     }
     .input{
-        width: 1345px;
+        width: 1400px;
         height: 40px;
         padding-left: 10px;
         padding-right: 10px;
@@ -44,15 +44,6 @@
         position: absolute;
         right: 0;
     }
-    .submit{
-        height: 40px;
-        border: 2px solid rgb(211, 210, 210);
-        border-radius: 0.3em;
-        box-sizing: border-box;
-        background-color: white;
-        color: gray;
-    }
-    
     .chat-other, .chat-mine{
         display: flex;
         margin-bottom: 10px;
@@ -89,9 +80,6 @@
     .writer{
         margin-bottom: 2px;
     }
-    
-
-
 
 </style>
 </head>
@@ -140,19 +128,98 @@
 
         <br>
 
-        <div class="input-area">
-            <div class="input-div">
-                <input type="text" class="input">
-                <button class="filebtn" onclick="openfile();">📂</button>
-                <input type="file" style="display: none;">
+        <c:if test="${pj.participation eq 1}">
+            <div class="input-area">
+                <div class="input-div">
+                    <input type="text" class="input" onkeydown="insertListChat();">
+                    <button class="filebtn" onclick="openfile();">📂</button>
+                    <input type="file" style="display: none;">
+                </div>
             </div>
-            <button class="submit">전송</button>
-        </div>
+        </c:if>
     </div>
     
     <script>
         function openfile(){
            document.querySelector("input[type=file]").click();
+        }
+
+        $(function(){
+            selectChatList();
+            setInterval(selectChatList, 1000);
+            
+        })
+        
+        function insertListChat(){
+            if(event.keyCode == 13){
+                let content = $(".input").val();
+                console.log(content);
+            }
+
+            // $.ajax({
+            //     url:"",
+            //     data:{},
+            //     type:"post",
+            //     success:function(result){
+                    
+            //     },
+            //     error:function(){
+            //         console.log("리스트채팅 작성용 ajax 통신 실패");
+            //     }
+            // })
+        }
+        
+        function selectChatList(){
+            $.ajax({
+                url:"chlist.ajax",
+                type:"post",
+                data:{listNo:${l.listNo}},
+                success:function(chlist){
+                    let value = "";
+                    for(let i=0; i<chlist.length; i++){
+                        if(chlist[i].writerNo == ${loginUser.memberNo}){
+                            value += "<table class='chat-mine'>"
+                                        + "<tr>"
+                                            + "<td class='time-td'>"
+                                                + "<span class='time'>" + chlist[i].sendTime + "</span>"
+                                            + "</td>"
+                                            + "<td>"
+                                                + "<div class='content-mine'>" + chlist[i].chatContent + "</div>"
+                                            + "</td>"
+                                        + "</tr>"
+                                    + "</table>";
+                        } else {
+                            value += "<table class='chat-other'>"
+                                        + "<tr>"
+                                            + "<td rowspan='2'>"
+                                                + "<img src='" + chlist[i].memberList[0].profileUrl + "' class='chProfileImg'>"
+                                            + "</td>"
+                                            + "<td colspan='2'>";
+                                        if(chlist[i].memberList[0].deptName == '미정'){
+                                            value += "<div class='writer'>" + chlist[i].memberList[0].name + "(" + chlist[i].memberList[0].jobName + ")</div>";
+                                        } else {
+                                            value += "<div class='writer'>" + chlist[i].memberList[0].name + "(" + chlist[i].memberList[0].deptName + "/" + chlist[i].memberList[0].jobName + ")</div>";
+                                        }
+                                        value += "</td>"
+                                        + "</tr>"
+                                        + "<tr>"
+                                            + "<td>"
+                                                + "<div class='content-other'>" + chlist[i].chatContent + "</div>"
+                                            + "</td>"
+                                            + "<td class='time-td'>"
+                                                + "<span class='time'>" + chlist[i].sendTime + "</span>"
+                                            + "</td>"
+                                        + "</tr>"
+                                    + "</table>";
+                        }
+                    }
+
+                    $(".chat-area").html(value);
+                },
+                error:function(){
+                    console.log("리스트채팅 조회용 ajax 통신 실패");
+                }
+            })
         }
     </script>
 

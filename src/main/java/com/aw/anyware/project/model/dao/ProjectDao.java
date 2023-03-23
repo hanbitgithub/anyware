@@ -11,6 +11,7 @@ import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Member;
 import com.aw.anyware.project.model.vo.Like;
 import com.aw.anyware.project.model.vo.List;
+import com.aw.anyware.project.model.vo.ListChat;
 import com.aw.anyware.project.model.vo.PjMem;
 import com.aw.anyware.project.model.vo.Project;
 import com.aw.anyware.project.model.vo.Todo;
@@ -124,6 +125,10 @@ public class ProjectDao {
 
 	public int deleteTodo(SqlSessionTemplate sqlSession, int todoNo) {
 		return sqlSession.delete("projectMapper.deleteTodo", todoNo);
+	}
+
+	public ArrayList<ListChat> selectListChatList(SqlSessionTemplate sqlSession, int listNo) {
+		return (ArrayList)sqlSession.selectList("projectMapper.selectListChatList", listNo);
 	}
 
 	

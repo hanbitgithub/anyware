@@ -203,7 +203,6 @@
 				};
 			}
 
-			// text-decoration: line-through;
 			$(document).on("click", ".done", function(){
 				let todoNo = $(this).next().next().children("input").val();
 				let listtd = $(this).prev();
