@@ -20,6 +20,7 @@
     border-right: 1px solid rgb(211, 210, 210);
     font-family: 'Nanum Gothic', sans-serif;
     /* overflow: auto; */
+    z-index: 1;
     
 }
 .menu li{
@@ -144,6 +145,7 @@ a{
  	 height:15px;
  	 border:none;
  	 background-color:white;
+ 	
  	 
 }
 #adbook-area .dropdown:hover{
@@ -458,7 +460,7 @@ a{
 										selectGroupList();
     									$(".insertAddBook").hide();
     						
-    								
+    									groupList();
     							},
     							error: function(){
     								console.log("주소록 추가 ajax 통신실패");

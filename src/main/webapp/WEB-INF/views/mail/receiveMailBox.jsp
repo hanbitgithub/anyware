@@ -31,6 +31,7 @@
 
 input[type=checkbox] {
 	transform : scale(1.01);
+	z-index : 1;
 
 }
 .mail-title:hover{

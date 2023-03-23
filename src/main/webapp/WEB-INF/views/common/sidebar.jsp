@@ -300,7 +300,7 @@ a {
 
                    
                 </div>
-                <a href="#" class="nav__link">
+                <a href="logout.me" class="nav__link">
                     <ion-icon name="log-out-outline" class="nav__icon"></ion-icon>
                     <span class="nav_name">Logout</span>
                 </a>
@@ -360,7 +360,7 @@ a {
     <div class="header">
         <div id="profile" style="display: inline-block;">
              <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
-   				 <img src="resources/images/profile.jpg"  width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
+   				 <img id="profileImg" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />" width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
   			 </button>
            
           

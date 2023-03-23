@@ -58,7 +58,7 @@
                 <div id="btn-area">
                     <a onclick="replyEm();"><img src="resources/images/send (1).png"width="20"> 답장</a>
                   
-                    <a id="forward"><img src="resources/images/next.png"width="20"> 전달</a>
+                    <a onclick="forwardMail();"><img src="resources/images/next.png"width="20"> 전달</a>
                     
                     <c:choose>
                     <c:when test="${box eq 5}">
@@ -187,15 +187,63 @@
                     function replyEm(){
        					$("#mailDetail").attr("action", 'reply.em').submit();
 
-                    }     
+                    }  
+                    
+                    
+                    function forwardMail(){
+   	                  $("#mailDetail").attr("action", 'forward.em').submit();
+   					}
+   					
                     </script>
                     
-                    <script>
-                    $("#forward").click(function(){
-                    	$("#mailDetail").attr("action", 'forward.em').submit();
-                    })
-
-                    </script>
+                  <script>
+		              	$(".star").click(function(){
+							 var star = "resources/images/star.png"
+					         var award = "resources/images/award.png"
+							 var $button = $(this);
+							 
+		               	  if($button.attr("src") != star){  
+		               			$.ajax({
+		   		   					url:"like.em",
+		   		   					data:{
+		   		   						emNo : $("input[name=emNo]").val(),
+		   		   						emType : $("input[name=emType]").val(),
+		   		   						receiver : '${loginUser.memberId}'
+		   		   					},
+		   		   					success:function(result){
+		   		   						//console.log(result);
+		   		   					 	$button.attr("src",star);
+		   		   						 
+		   		   					},error:function(){
+		   		   						console.log("좋아요실패");
+		   		   					}
+		               			})
+		
+		                   }else{
+		                    	$.ajax({
+		                    		url:"dislike.em",
+		                    		data:{
+		                    			emNo :$("input[name=emNo]").val(),
+		                    			emType :$("input[name=emType]").val(),
+				   						receiver : '${loginUser.memberId}'
+		                    		},
+		                    		success:function(result){
+		                    			//console.log(result);
+		                    			$button.attr("src",award);
+		                    		
+		                    		},error: function(){
+		                    			console.log("좋아요 취소 실패");
+		                    		}
+		                    	}) 
+		                   	
+		                   }
+		
+		               })
+		  
+		                  
+                  
+                  </script>
+                    
                     
                    
                     

@@ -99,15 +99,15 @@
 	                               <table style="text-align: center;">
 	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
 	                                   <tr>
-	                                       <th width="100">이름 </th>
+	                                       <th width="100">이름 <span style="color:red;">*</span></th>
 	                                       <td><input type="text" name="name" required class="required"  data-name="이름"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>이메일</th>
-	                                       <td><input type="text" name="email" required class="required" data-name="이메일"></td>
+	                                       <th>이메일 <span style="color:red;">*</span></th>
+	                                       <td><input type="email" name="email" required class="required" data-name="이메일"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>연락처</th>
+	                                       <th>연락처 <span style="color:red;">*</span></th>
 	                                       <td><input type="text" name="phone" required class="required" data-name="연락처"></td>
 	                                   </tr>
 	                                   <tr>
@@ -123,9 +123,9 @@
 	                                       <td><input type="text" name="jobName"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>그룹 </th> 
+	                                       <th>그룹 <span style="color:red;">*</span></th> 
 	                                       <td>
-	                                           <select name="groupNo">
+	                                           <select name="groupNo" required data-name="그룹">
 	                                           
 	                                           </select>
 
@@ -266,15 +266,15 @@
 	                               		<input type="hidden" id="addNo" name="addNo">
 	                               		<input type="hidden" name="memNo" value="${loginUser.memberNo}">
 	                                   <tr>
-	                                       <th width="100">이름 </th>
+	                                       <th width="100">이름 <span style="color:red;">*</span></th>
 	                                       <td><input type="text" name="name" required  data-name="이름"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>이메일</th>
+	                                       <th>이메일 <span style="color:red;">*</span></th>
 	                                       <td><input type="text" name="email" required  data-name="이메일"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>연락처</th>
+	                                       <th>연락처 <span style="color:red;">*</span></th>
 	                                       <td><input type="text" name="phone" required data-name="연락처"></td>
 	                                   </tr>
 	                                   <tr>
@@ -290,10 +290,10 @@
 	                                       <td><input type="text" name="jobName"></td>
 	                                   </tr>
 	                                   <tr>
-	                                       <th>그룹 </th> 
+	                                       <th>그룹 <span style="color:red;">*</span></th> 
 	                                       <td>
-	                                           <select name="groupNo">
-	                                           
+	                                           <select name="groupNo" required data-name="그룹">
+	                                           	  
 	                                           </select>
 
 	                                           <button type="button" class="btn btn-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#groupAdd2">+</button>
@@ -304,7 +304,7 @@
 	                              
 	                           </div>
 	                           <div class="modal-footer">
-	                           <button type="button" class="btn btn-primary btn-sm" onclick="updateAddressBook();">저장</button>
+	                           <button type="button" class="btn btn-primary btn-sm sub2" onclick="updateAddressBook();">저장</button>
 	                           <button type="button" class="btn2 btn-secondary" data-bs-dismiss="modal">취소</button>
 	                           </div>
 	                         </form>
@@ -314,34 +314,46 @@
 	               
 	               <script>
 	               	 function updateAddressBook(){
-	               		
-	        				$.ajax({
-	        					url : "update.ad",
-	        					data : {
-	        						 'addNo': $('.addNo:checked').val(),
-	        						  'name': $('#updateForm [name="name"]').val(),
-	        						  'email': $('#updateForm [name="email"]').val(),
-	        						  'phone': $('#updateForm [name="phone"]').val(),
-	        						  'bizName': $('#updateForm [name="bizName"]').val(),
-	        						  'deptName': $('#updateForm [name="deptName"]').val(),
-	        						  'jobName': $('#updateForm [name="jobName"]').val(),
-	        						  'groupNo': $('#updateForm [name="groupNo"]').val()
-	        					},
-	        					success : function(result){
-	        						//console.log(result);
-	        						
-	        						if(result == 'success'){
-	        							alert("성공적으로 연락처를 수정했습니다.");
-	        							location.reload();
-	        						}
-	        					},
-	        					error : function(){
-	        						alert("연락처 정보를 수정하는데 실패했습니다. 다시 시도해주세요.");
-	        						location.reload();
-	        					}
-	        				})
-	        			
-	               	 }
+	               		 
+	               		 $("#updateForm").find(".required").each(function(index, item){
+				                // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
+				                if ($(this).val().trim() == '') {
+				                    alert($(this).attr("data-name")+" 항목을 입력하세요.");
+				                    isRight = false;
+				                    return false;
+				                }
+	               			 });
+	
+			        				$.ajax({
+			        					url : "update.ad",
+			        					data : {
+			        						 'addNo': $('.addNo:checked').val(),
+			        						  'name': $('#updateForm [name="name"]').val(),
+			        						  'email': $('#updateForm [name="email"]').val(),
+			        						  'phone': $('#updateForm [name="phone"]').val(),
+			        						  'bizName': $('#updateForm [name="bizName"]').val(),
+			        						  'deptName': $('#updateForm [name="deptName"]').val(),
+			        						  'jobName': $('#updateForm [name="jobName"]').val(),
+			        						  'groupNo': $('#updateForm [name="groupNo"]').val()
+			        					},
+			        					success : function(result){
+			        						//console.log(result);
+			        						
+			        						if(result == 'success'){
+			        							alert("성공적으로 연락처를 수정했습니다.");
+			        							location.reload();
+			        						}
+			        					},
+			        					error : function(){
+			        						alert("연락처 정보를 수정하는데 실패했습니다. 다시 시도해주세요.");
+			        						location.reload();
+			        					}
+			        				})
+			        		
+	                	   }
+	               	 
+	               	 
+	                 
 	               
 	               
 	               </script>
@@ -768,7 +780,8 @@
 						                    success: function(list) {
 						                        var selectOptions = '';
 						                        $.each(list, function() {
-						                            selectOptions += '<option value="' + this.groupNo + '">' + this.groupName + '</option>';
+						                        	
+						                            selectOptions +='<option value="' + this.groupNo + '">' + this.groupName + '</option>';
 						                        });
 						                        $('select[name="groupNo"]').html(selectOptions);
 						                        $(".groupName"+num).val("");
