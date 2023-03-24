@@ -16,11 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -196,11 +191,6 @@ a {
     margin-right: 50px;
     margin-top: 10px;
 }
-#chat-wrapper{
-    margin-top: 7px;
-    margin-right: 10px;
-}
-
 .drop-btn{
 	border:none;
 	background:white;
@@ -369,7 +359,6 @@ a {
                 <img id="profileImg" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />" width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
             </button>
            
-          
             <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
@@ -378,37 +367,90 @@ a {
             </div>
         </div>
 
-        <div class="dropdown">
-            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-              Dropdown button
+        <div class="messenger-wrapper">
+            <button onclick="toggleDropdown()" class="messengerbtn">
+                <img id="messengerImg" src="resources/images/chat/MessengerIcon.png">
             </button>
-            <div class="dropdown-menu">
-              <a class="dropdown-item" href="#">Link 1</a>
-              <a class="dropdown-item" href="#">Link 2</a>
-              <a class="dropdown-item" href="#">Link 3</a>
-            </div>
-        </div>
-          
+            <div id="messenger-area" class="messenger-area">
+                <div class="tab active" id="chatList" onclick="showContent('content1', 'chatList')"><ion-icon name="people-outline" class="group"></ion-icon></div>
+                <div class="tab" id="people" onclick="showContent('content2', 'people')"><ion-icon name="git-network-outline"></ion-icon></div>
+                <div id="content1" class="tab-content">
+                    <!-- 채팅 리스트 -->
+                    <h3>메신저 목록</h2>
+                    <div>
+                        <table class="thumbnail">
+                            <tr>
+                                <td class="img-td" rowspan="2">
+                                    <img src="resources/images/chat/defaultProfile.png" class="profileImg">
+                                </td>
+                                <td class="name-td">
+                                    <img src="resources/images/chat/green.png" class="logincheck">
+                                    <span class="name">김현지</span>
+                                </td>
+                                <td rowspan="2" class="notread-td">
+                                    3
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="content-td">
+                                    <div class="content-div">가나다라마바사아자차카타파하</div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                <div id="content2" class="tab-content" style="display: none;">
+                    <!-- 주소록 -->
+                    <h3>주소록</h3>
+                    <div>
 
-        <div id="chat-wrapper" style="display: inline-block;">
-            <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
-                <img id="profileImg" src="resources/images/chat/MessengerIcon.png" width="55px" height="55px"  class="rounded-circle" alt="Cinque Terre" >
-            </button>
-          
-            <div class="dropdown-menu dropdown-menu-sm" id="chat-dropdown">
-                <div class="chat-menu" aria-labelledby="dropdownMenuClickableInside">
-                    <button class="menubtn">
-                        <ion-icon name="people-outline" class="group"></ion-icon>
-                    </button>
-                    <button class="menubtn">
-                        <ion-icon name="git-network-outline"></ion-icon>
-                    </button>
+                    </div>
                 </div>
             </div>
         </div>
-       
+
     </div>
 
-    
+    <script>
+        function toggleDropdown() {
+			var dropdownContent = document.getElementById("messenger-area");
+			if (dropdownContent.style.display === "block") {
+				dropdownContent.style.display = "none";
+			} else {
+				dropdownContent.style.display = "block";
+
+                var tabs = document.getElementsByClassName("tab");
+                for (var i = 0; i < tabs.length; i++) {
+                    tabs[i].classList.remove("active");
+                }
+                
+                // 선택한 탭에 active 클래스를 추가합니다.
+                document.getElementById("chatList").classList.add('active');
+                }
+                document.getElementById("content1").style.display = "block";
+                document.getElementById("content2").style.display = "none";
+		}
+		
+		function showContent(contentName, tabName) {
+			// 모든 내용을 숨깁니다.
+			var contents = document.getElementsByClassName("tab-content");
+			for (var i = 0; i < contents.length; i++) {
+				contents[i].style.display = "none";
+			}
+			
+			// 선택한 내용을 보여줍니다.
+			document.getElementById(contentName).style.display = "block";
+			
+			// 모든 탭의 active 클래스를 제거합니다.
+			var tabs = document.getElementsByClassName("tab");
+			for (var i = 0; i < tabs.length; i++) {
+				tabs[i].classList.remove("active");
+			}
+			
+			// 선택한 탭에 active 클래스를 추가합니다.
+			document.getElementById(tabName).classList.add('active');
+		}
+    </script>
+
 </body>
 </html>
