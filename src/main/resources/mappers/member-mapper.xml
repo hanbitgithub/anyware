@@ -42,6 +42,7 @@
 <result column="off_date" property="offDate"/>
 </resultMap>
 
+
 	<select id="selectListCount" resultType="_int">
 		select
 				count(*)
@@ -315,7 +316,9 @@
   	   where member_no = #{memberNo}
   </update>
   
+
   <!-- 근태현황조회 -->
+  
   <select id="selectLastOff" resultMap="leaveOffResult">
   	select
   			DAYOFF_NO,
@@ -325,8 +328,8 @@
   	   where dayoff_no = (select dayoff_no
 						        from(select  dayoff_no
 						                    from tb_dayoff
-						                   where member_no = #{memberNo}
-						                   order by commute_no desc)
+						                   where applicant_no = #{memberNo}
+						                   order by dayoff_no desc)
 						    where rownum = 1)
   		
   </select>
@@ -345,7 +348,7 @@
   		
   </select>
   
-  
+    <!-- 근태현황조회 -->
   <select id="selectMemberAttendenceList" resultMap="commuteResult">
   select 
 	     commute_no
@@ -359,4 +362,41 @@
  from tb_commute
   where member_no = #{memberNo}
   </select>
+  
+  
+  <!-- 당일 근태 조회 -->
+  <select id="selectTodayCommute" resultMap="commuteResult">
+  select
+     commute_no
+    , name
+    , member_no
+    , commute_in
+    , commute_out
+    , round((to_date(commute_out,'HH24:MI:SS') - to_date(commute_in,'HH24:MI:SS'))*24,2) "commute_time"
+    , commute_date
+    , commute_status
+ from tb_commute
+ where member_no= #{memNo}
+ and commute_date = TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+  
+  </select>
+  <!-- 주 근무시간 -->
+  <select id="selectWeeklyCommute" resultType="_double">
+  SELECT NVL(ROUND(SUM((TO_DATE(commute_out,'HH24:MI:SS') - TO_DATE(commute_in,'HH24:MI:SS'))*24),2),0) AS "weekly"
+   FROM tb_commute
+   where  TRUNC(TO_DATE(commute_date, 'YYYY-MM-DD'), 'IW') = TRUNC(SYSDATE, 'IW')
+   and member_no= #{memNo}
+  </select>
+  <!-- 월 근무시간  -->
+  <select id="selectMonthCommute" resultType="_double">
+   SELECT NVL(SUM((TO_DATE(commute_out,'HH24:MI:SS') - TO_DATE(commute_in,'HH24:MI:SS'))*24),0) AS "month"
+     FROM tb_commute
+     WHERE EXTRACT(MONTH FROM  TO_DATE(commute_date,'YYYY-MM-DD')) = EXTRACT(MONTH FROM SYSDATE)
+     and member_no= #{memNo}
+  </select>
+  
+  
+  
+  
+  
 </mapper>

@@ -134,12 +134,29 @@ public class MemberServiceImpl implements MemberService {
 	public ArrayList<Commute> selectMemberAttendenceList(int memberNo) {
 		return mDao.selectMemberAttendenceList(sqlSession,memberNo);
 	}	
+	@Override
+	public Commute selectTodayCommute(int memNo) {
+		return mDao.selectTodayCommute(sqlSession, memNo);
+	}
+
+	
 	
    @Override
 	public LeaveOff selectLastOff(Member m) {
 		
 		return mDao.selectLastOff(sqlSession, m);
 	}
+
+	@Override
+	public double selectWeeklyCommute(int memNo) {
+		return mDao.selectWeeklyCommute(sqlSession, memNo);
+	}
+	
+	@Override
+	public double selectMonthCommute(int memNo) {
+		return mDao.selectMonthCommute(sqlSession, memNo);
+	}
+
 
 	
 

@@ -427,12 +427,14 @@ public class MemberController {
 	
 	@RequestMapping("leaveOff.me")
 	public ModelAndView leaveOff(Member m, ModelAndView mv) {
-		int memberNo = m.getMemberNo();
+		System.out.println(m);
 		if(m.getLeaveOff() > 0) {
 			LeaveOff lo = mService.selectLastOff(m);
+			System.out.println(lo);
 			
 		}else {
 			mv.addObject("alertMsg", "사용 가능한 잔여 연차가 없습니다");
+			mv.setViewName("member/main");
 		}
 		
 		
@@ -441,7 +443,28 @@ public class MemberController {
 	}
 	
 	@RequestMapping("attendence.me")
-	public String attendenceMember() {
+	public String attendenceMember(HttpSession session, Model model) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+		Commute c = mService.selectTodayCommute(memNo);
+		double weeklyWh = mService.selectWeeklyCommute(memNo);
+		double monthWh = mService.selectMonthCommute(memNo);
+		
+		int hours = (int) weeklyWh;
+		int minutes = (int) ((weeklyWh - hours) * 60);
+		String result = hours + "h " + minutes + "m";
+
+		
+		int hours2 = (int) monthWh ;
+		int minutes2 = (int) ((monthWh  - hours2) * 60);
+		String result2 = hours2 + "h " + minutes2 + "m";
+	
+	
+		model.addAttribute("c",c);
+		model.addAttribute("weekly",result);
+		model.addAttribute("month",result2);
+		
+		
 		return "member/attendenceMember";
 	}
 	
