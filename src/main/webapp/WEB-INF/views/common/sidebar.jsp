@@ -376,35 +376,119 @@ a {
                 <div class="tab" id="people" onclick="showContent('content2', 'people')"><ion-icon name="git-network-outline"></ion-icon></div>
                 <div id="content1" class="tab-content">
                     <!-- 채팅 리스트 -->
-                    <h3>메신저 목록</h2>
-                    <div>
-                        <table class="thumbnail">
-                            <tr>
-                                <td class="img-td" rowspan="2">
-                                    <img src="resources/images/chat/defaultProfile.png" class="profileImg">
-                                </td>
-                                <td class="name-td">
-                                    <img src="resources/images/chat/green.png" class="logincheck">
-                                    <span class="name">김현지</span>
-                                </td>
-                                <td rowspan="2" class="notread-td">
-                                    3
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="content-td">
-                                    <div class="content-div">가나다라마바사아자차카타파하</div>
-                                </td>
-                            </tr>
-                        </table>
+                    <h3 class="title">메신저 목록</h2>
+                    <div class="list-area">
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p><span>3</span>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/green.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div id="content2" class="tab-content" style="display: none;">
                     <!-- 주소록 -->
-                    <h3>주소록</h3>
+                    <h3 class="title">주소록</h3><br>
                     <div>
 
                     </div>
+                </div>
+                <div class="chat-area">
+
                 </div>
             </div>
         </div>
