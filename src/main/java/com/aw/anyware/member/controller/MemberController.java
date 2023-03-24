@@ -33,12 +33,7 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	@RequestMapping("main.do")
@@ -432,6 +427,13 @@ public class MemberController {
 		return result;
 			
 	}
+	
+	@RequestMapping("attendence.me")
+	public String attendenceMember() {
+		return "member/attendenceMember";
+	}
+	
+	
 	
 
 }
