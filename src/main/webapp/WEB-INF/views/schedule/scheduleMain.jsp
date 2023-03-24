@@ -358,8 +358,10 @@
 
                             },
                             eventClick: function (arg) {
-
+								
                                 detailModal(arg); // 일정 클릭시 상세보기 모달 호출
+                                
+                               
 
 
                                 // if (confirm('Are you sure you want to delete this event?')) {
@@ -383,9 +385,15 @@
                                                 start : data.startDate,
                                                 end: data.endDate,
                                                 color: data.scColor
+                                            
                                                 })
                                             }) 
                                             successCallback(events);
+                                        
+                                        
+                                        
+                                       
+                                       
                                         }
                                     }) 
                             },
@@ -394,6 +402,9 @@
             
                     calendar.render();
                 });
+                
+                
+            
             </script>
         </div>
     </div>
@@ -1599,7 +1610,7 @@
     
         // 일정 클릭시 상세보기 모달 오픈
         function detailModal(arg) {
-
+			
             //console.log("일정 클릭시 상세보기 모달 오픈");
             $('#DetailScheduleModal').modal('show');
 
@@ -1607,7 +1618,8 @@
             //$('input[name=endDate]').attr("value", arg.endStr);
 
         }
-
+        
+       
 
 
 
