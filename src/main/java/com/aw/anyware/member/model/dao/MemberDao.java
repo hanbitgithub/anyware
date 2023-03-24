@@ -135,4 +135,15 @@ public class MemberDao {
 		
 	}
 	
+	public Commute selectTodayCommute(SqlSessionTemplate sqlSession, int memNo) {	
+		return sqlSession.selectOne("memberMapper.selectTodayCommute", memNo);
+	}
+	
+	public double selectMonthCommute(SqlSessionTemplate sqlSession,int memNo ) {
+		return sqlSession.selectOne("memberMapper.selectMonthCommute", memNo);
+	}
+	
+	public double selectWeeklyCommute(SqlSessionTemplate sqlSession,int memNo ) {
+		return sqlSession.selectOne("memberMapper.selectWeeklyCommute", memNo);
+	}
 }

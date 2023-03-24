@@ -165,12 +165,12 @@ tr:hover {
 				<table>
 			
 					<tr>
-						<th width="150" height="30px">출근시간</th>
+						<th width="150" height="30px">출근</th>
 						<td width="200">${ commute.commuteIn }</td>
 					
 					</tr>
 					<tr>
-						<th width="150">퇴근시간</th>
+						<th width="150">퇴근</th>
 						<td width="200">${ commute.commuteOut }</td>
 					</tr>
 				

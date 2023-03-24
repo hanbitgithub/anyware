@@ -71,6 +71,8 @@ public interface MemberService {
 	//근태현황 조회
 	ArrayList<Commute> selectMemberAttendenceList(int memberNo);
 	
-	
+	Commute selectTodayCommute(int memNo);
+	double selectWeeklyCommute(int memNo);
+	double selectMonthCommute(int memNo);
 
 }
