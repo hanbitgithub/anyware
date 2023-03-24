@@ -16,10 +16,17 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
    
+    <!-- 메신저 css -->
+    <link rel="stylesheet" type="text/css" href="resources/css/messenger.css"/>
 
     <style>
         /* GOOGLE FONTS */
@@ -178,7 +185,7 @@ a {
 .header{
     height: 20px;
 }
-.header *{
+.header>div{
    float: right;
 }
 .chat{
@@ -188,6 +195,10 @@ a {
 #profile{
     margin-right: 50px;
     margin-top: 10px;
+}
+#chat-wrapper{
+    margin-top: 7px;
+    margin-right: 10px;
 }
 
 .drop-btn{
@@ -225,6 +236,8 @@ a {
     margin-top: 50px;
 }
 
+
+
     </style>
 </head>
 <body id="body-pd">
@@ -250,17 +263,10 @@ a {
                         <ion-icon name="person-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">인사</span>
                     </a>
-                   
-
 
                     <a href="receivebox.em" class="nav__link">
                         <ion-icon name="mail-outline"  class="nav__icon"></ion-icon>
                         <span class="nav_name">메일</span>
-                    </a>
-
-                    <a href="personal.ch" class="nav__link">
-                        <ion-icon name="chatbubbles-outline" class="nav__icon"></ion-icon>
-                        <span class="nav_name">메신저</span>
                     </a>
                     
                     <a href="ingListAll.appro?cat=ingListAll" class="nav__link">
@@ -370,16 +376,35 @@ a {
               <a class="dropdown-item" href="leaveOff.me?memberNo=${loginUser.memberNo}&leaveOff${loginUser.leaveOff}">연차신청</a>
               <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
-          </div>
+        </div>
 
-        <div class="chat position-relative" style="display: inline-block">
-            <button type="button" class="position-relative" style="border: none; background-color: #ffffff34;">
-                <img src="resources/images/chat-bubble.png" width="30px"  alt="">
-                <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">
-                  10
-                  <span class="visually-hidden">unread messages</span>
-                </span>
-              </button>
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+              Dropdown button
+            </button>
+            <div class="dropdown-menu">
+              <a class="dropdown-item" href="#">Link 1</a>
+              <a class="dropdown-item" href="#">Link 2</a>
+              <a class="dropdown-item" href="#">Link 3</a>
+            </div>
+        </div>
+          
+
+        <div id="chat-wrapper" style="display: inline-block;">
+            <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
+                <img id="profileImg" src="resources/images/chat/MessengerIcon.png" width="55px" height="55px"  class="rounded-circle" alt="Cinque Terre" >
+            </button>
+          
+            <div class="dropdown-menu dropdown-menu-sm" id="chat-dropdown">
+                <div class="chat-menu" aria-labelledby="dropdownMenuClickableInside">
+                    <button class="menubtn">
+                        <ion-icon name="people-outline" class="group"></ion-icon>
+                    </button>
+                    <button class="menubtn">
+                        <ion-icon name="git-network-outline"></ion-icon>
+                    </button>
+                </div>
+            </div>
         </div>
        
     </div>

@@ -134,12 +134,12 @@ select{
                             </c:when>
                             
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage - 1 }&deptName=${ loginUser.deptName }">이전</a></li>
+                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage - 1 }&deptName=${ loginUser.deptName }&memberNo=${loginUser.memberNo}">이전</a></li>
                             </c:otherwise>
                         </c:choose>
                         
                         <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-                            <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ p }&deptName=${ loginUser.deptName }">${ p }</a></li>
+                            <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ p }&deptName=${ loginUser.deptName }&memberNo=${loginUser.memberNo}">${ p }</a></li>
                         </c:forEach>
                         
                     
@@ -148,7 +148,7 @@ select{
                                 <li class="page-item disabled"><a class="page-link" href="#">다음</a></li>
                             </c:when>
                             <c:otherwise>
-                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage + 1 }&deptName=${ loginUser.deptName }">다음</a></li>
+                                <li class="page-item"><a class="page-link" href="selectAll.me?cpage=${ pi.currentPage + 1 }&deptName=${ loginUser.deptName }&memberNo=${loginUser.memberNo}">다음</a></li>
                             </c:otherwise>
                         </c:choose>
                     </ul>

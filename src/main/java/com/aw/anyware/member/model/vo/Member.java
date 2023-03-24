@@ -45,6 +45,8 @@ public class Member {
 	
 	private String newPwd; // 비밀번호 찾기
 	private String checkPwd; // 비밀번호 찾기
+	
+	private String offDate; // 연차 날짜
 
 }
 

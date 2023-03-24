@@ -32,6 +32,15 @@
 <result column="commute_status" property="commuteStatus"/>
 </resultMap>
 
+<resultMap id="leaveOffResult" type="LeaveOff">
+<id column="dayoff_no" property="dayoffNo"/>
+<result column="name" property="name"/>
+<result column="apply_date" property="applyDate"/>
+<result column="cancel_date" property="cancelDate"/>
+<result column="status" property="status"/>
+<result column="applicant_no" property="apNo"/>
+<result column="off_date" property="offDate"/>
+</resultMap>
 	<select id="selectListCount" resultType="_int">
 		select
 				count(*)
@@ -304,6 +313,35 @@
   		set member_pwd = #{encPwd}
   	   where member_no = #{memberNo}
   </update>
+  
+  <select id="selectLastOff" resultMap="LeaveOffResult">
+  	select
+  			DAYOFF_NO,
+  			APPLY_DATE,
+  			CANCEL_DATE
+  		from tb_dayoff
+  	   where dayoff_no = (select dayoff_no
+						        from(select  dayoff_no
+						                    from tb_dayoff
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)
+  		
+  </select>
+  
+  <select id="selectLeaveOff" resultMap="leaveOffResult">
+  	select
+  			DAYOFF_NO,
+			NAME,
+			APPLY_DATE,
+			CANCEL_DATE,
+			STATUS,
+			APPLICANT_NO,
+			OFF_DATE
+		from tb_dayoff
+	   where memberNo = #{memberNo}
+  		
+  </select>
   
   
 </mapper>
