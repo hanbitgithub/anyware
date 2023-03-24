@@ -10,9 +10,12 @@ public interface BoardService {
 
 	// 리스트 조회
 	int selectListCount();
+	
+	int selectGListCount(String deptName);
+	ArrayList<Board> selectGroupList(PageInfo pi, String deptName);
+	
 	ArrayList<Board> selectList(PageInfo pi);
 	ArrayList<Board> selectNoticeList(PageInfo pi);
-	ArrayList<Board> selectGroupList(PageInfo pi);
 	ArrayList<Board> selectMainBoardList();
 	ArrayList<Board> selectMainNoticeList();
 	

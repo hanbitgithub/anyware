@@ -259,7 +259,7 @@ a {
                 </div>
                 <div class="nav__list">
                    
-                    <a href="selectAll.me?deptName=${ loginUser.deptName }" class="nav__link">
+                    <a href="selectAll.me?deptName=${ loginUser.deptName }&memberNo=${loginUser.memberNo}" class="nav__link">
                         <ion-icon name="person-outline" class="nav__icon"></ion-icon>
                         <span class="nav_name">인사</span>
                     </a>
@@ -373,7 +373,7 @@ a {
             <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="#">근태관리</a>
-              <a class="dropdown-item" href="leaveOff.me">일정관리</a>
+              <a class="dropdown-item" href="leaveOff.me?memberNo=${loginUser.memberNo}&leaveOff${loginUser.leaveOff}">연차신청</a>
               <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
         </div>

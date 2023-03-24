@@ -112,50 +112,14 @@ table tbody tr {
               </thead>
               <tbody style="border: white">
                 <c:forEach var="b" items="${ list }">
-                  <c:choose>
-         
-		                <c:when test="${b.category eq '1' && loginUser.deptName eq '인사부'}">
-			                <tr>
-			                  <td class="bno">${ b.boardNo }</td>
-			                  <td>${ b.boardTitle }</td>
-			                  <td>${ b.name } ${ b.jobName }</td>
-			                  <td>${ b.createDate }</td>
-			                  <td>${ b.count }</td>
-			                </tr>
-		                </c:when>
-		                         
-		                <c:when test="${b.category eq '2' && loginUser.deptName eq '총무부'}">
-			                <tr>
-			                  <td class="bno">${ b.boardNo }</td>
-			                  <td>${ b.boardTitle }</td>
-			                  <td>${ b.name } ${ b.jobName }</td>
-			                  <td>${ b.createDate }</td>
-			                  <td>${ b.count }</td>
-			                </tr>
-		                </c:when>
-		                         
-		                <c:when test="${b.category eq '3' && loginUser.deptName eq '개발부'}">
-			                <tr>
-			                  <td class="bno">${ b.boardNo }</td>
-			                  <td>${ b.boardTitle }</td>
-			                  <td>${ b.name } ${ b.jobName }</td>
-			                  <td>${ b.createDate }</td>
-			                  <td>${ b.count }</td>
-			                </tr>
-		                </c:when>
-		                         
-		                <c:when test="${b.category eq '4' && loginUser.deptName eq '디자인부'}">
-			                <tr>
-			                  <td class="bno">${ b.boardNo }</td>
-			                  <td>${ b.boardTitle }</td>
-			                  <td>${ b.name } ${ b.jobName }</td>
-			                  <td>${ b.createDate }</td>
-			                  <td>${ b.count }</td>
-			                </tr>
-		                </c:when>
-		                
-		                
-			 	   </c:choose>
+               		<tr>
+			           <td class="bno">${ b.boardNo }</td>
+		               <td>${ b.boardTitle }</td>
+			           <td>${ b.name } ${ b.jobName }</td>
+			           <td>${ b.createDate }</td>
+			           <td>${ b.count }</td>
+			        </tr>
+          
                 </c:forEach>
               </tbody>
             </table>
@@ -174,7 +138,7 @@ table tbody tr {
               <div class="page_nation">
                 <c:choose>
 	              	<c:when test="${pi.currentPage eq 1 }">
-                    <a class="arrow prev disabled" href="#">이전</a>
+                    <a class="arrow prev disabled" href="#" disabled>이전</a>
                   </c:when>
                   <c:otherwise>  
                     <a class="arrow prev" href="glist.bo?cpage=${pi.currentPage-1 }">이전</a>
