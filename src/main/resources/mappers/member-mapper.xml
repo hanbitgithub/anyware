@@ -41,6 +41,7 @@
 <result column="applicant_no" property="apNo"/>
 <result column="off_date" property="offDate"/>
 </resultMap>
+
 	<select id="selectListCount" resultType="_int">
 		select
 				count(*)
@@ -315,7 +316,7 @@
   </update>
   
   <!-- 근태현황조회 -->
-  <select id="selectLastOff" resultMap="LeaveOffResult">
+  <select id="selectLastOff" resultMap="leaveOffResult">
   	select
   			DAYOFF_NO,
   			APPLY_DATE,
@@ -330,7 +331,7 @@
   		
   </select>
   
-  <select id="selectLeaveOff" resultMap="leaveOffResult">
+  <select id="applyOff" resultMap="leaveOffResult">
   	select
   			DAYOFF_NO,
 			NAME,
