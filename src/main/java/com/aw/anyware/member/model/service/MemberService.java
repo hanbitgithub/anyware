@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Commute;
+import com.aw.anyware.member.model.vo.LeaveOff;
 import com.aw.anyware.member.model.vo.Member;
 
 
@@ -58,6 +59,10 @@ public interface MemberService {
 	Member searchPwd(Member m);
 	
 	int makeNewPwd(Member m); // 비밀번호 찾기에서 비밀번호 변경하는 메소드
+	
+	// 연차
+	
+	LeaveOff selectLastOff(Member m);
 	
 	
 	

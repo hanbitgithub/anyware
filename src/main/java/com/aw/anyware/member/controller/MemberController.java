@@ -22,6 +22,7 @@ import com.aw.anyware.common.template.Pagination;
 import com.aw.anyware.member.CrunchifyJavaMailExample;
 import com.aw.anyware.member.model.service.MemberService;
 import com.aw.anyware.member.model.vo.Commute;
+import com.aw.anyware.member.model.vo.LeaveOff;
 import com.aw.anyware.member.model.vo.Member;
 import com.google.gson.Gson;
 
@@ -426,8 +427,13 @@ public class MemberController {
 	
 	@RequestMapping("leaveOff.me")
 	public ModelAndView leaveOff(Member m, ModelAndView mv) {
-		
-		
+		int memberNo = m.getMemberNo();
+		if(m.getLeaveOff() > 0) {
+			LeaveOff lo = mService.selectLastOff(m);
+			
+		}else {
+			mv.addObject("alertMsg", "사용 가능한 잔여 연차가 없습니다");
+		}
 		
 		
 		mv.setViewName("member/leaveOff");
@@ -448,6 +454,10 @@ public class MemberController {
 		return new Gson().toJson(list);
 	}
 	
+	@RequestMapping("applyOff.me")
+	public void applyOff(Member m) {
+		System.out.println(m);
+	}
 	
 
 }

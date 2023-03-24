@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.vo.Commute;
+import com.aw.anyware.member.model.vo.LeaveOff;
 import com.aw.anyware.member.model.vo.Member;
 
 @Repository
@@ -121,6 +122,11 @@ public class MemberDao {
 	public int makeNewPwd(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.update("memberMapper.makeNewPwd", m);
+	}
+
+	public LeaveOff selectLastOff(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.selectLastOff", m);
 	}
 
 	
