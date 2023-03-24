@@ -1,0 +1,16 @@
+/* 채팅 css */
+#chat-dropdown{
+    width: 500px;
+    height: 800px;
+}
+.chat-menu{
+    box-sizing: border-box;
+    height: 60px;
+    font-size: 40px;
+    border-bottom: 1px solid #ffffff34;
+}
+.menubtn{
+    border: none;
+    background-color: white;
+    box-sizing: border-box;
+}
