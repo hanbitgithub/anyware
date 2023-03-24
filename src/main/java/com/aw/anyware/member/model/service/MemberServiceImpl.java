@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import com.aw.anyware.common.model.vo.PageInfo;
 import com.aw.anyware.member.model.dao.MemberDao;
 import com.aw.anyware.member.model.vo.Commute;
+import com.aw.anyware.member.model.vo.LeaveOff;
 import com.aw.anyware.member.model.vo.Member;
 
 @Service
@@ -127,6 +128,12 @@ public class MemberServiceImpl implements MemberService {
 	public int makeNewPwd(Member m) {
 		
 		return mDao.makeNewPwd(sqlSession, m);
+	}
+
+	@Override
+	public LeaveOff selectLastOff(Member m) {
+		
+		return mDao.selectLastOff(sqlSession, m);
 	}
 
 	
