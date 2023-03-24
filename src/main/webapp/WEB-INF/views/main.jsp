@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<jsp:useBean id="now" class="java.util.Date" />  
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,10 +55,26 @@
 
 /* 프로필 이미지 */
 .profile {
-  width:90px;
+  width:150px;
+  height: 150px;
   border-radius: 100%;
   margin-bottom: 5px;
   }
+  
+#profile-area{
+  width:50%;
+  height: 300px;
+  float:left;
+  margin-top: 20px;
+  
+}
+#attendence-area{
+ 	width:40%;
+ 	height: 300px;
+ 	float:left;
+    margin-top: 50px;
+ 	
+}
 
 /* 버튼 스타일 */
   .button1 {
@@ -128,21 +148,57 @@ tr:hover {
     <div id="wrap">
         <div class="left" style="text-align:center;">
           <br><br>
-          <img class="profile" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />">
-            <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b>
-            <br><span style="font-size:14px;">${ loginUser.deptName }</span>
-            </p>
-             
-          <p> 
-            출근시간 : &nbsp; ${ commute.commuteIn } 
-            <br>
-            퇴근시간 : &nbsp; ${ commute.commuteOut }
-          </p>
-          <button class="boutton button1" onclick="enrollAndOut(1);">출근</button>
-          <button class="boutton button2" onclick="enrollAndOut(2);">퇴근</button>
+           <div id="profile-area" >
+	          <img class="profile" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />">
+	            <p><b>${ loginUser.name }</b><b> ${ loginUser.jobName }</b>
+	            <br><span style="font-size:14px;">${ loginUser.deptName }</span>
+	            </p>
+           </div> 
+           
+           <div id="attendence-area">
+           		<fmt:formatDate value="${now}" pattern="HH:mm:ss" var="now" />
+	            <p id="WhatTimeIsItNow" style="font-size:25px; text-align:center;"><b></b><c:out value="${now}"/><b></b></p> 
+				<table>
+					<tr>
+						<th width="200">출근시간</th>
+						<td width="200">${ commute.commuteIn }</td>
+					
+					</tr>
+					<tr>
+						<th width="200">퇴근시간</th>
+						<td width="200">${ commute.commuteOut }</td>
+					</tr>
+				
+				</table>
+	           <%-- <p> 
+	            <span><b>출근시간</b></span> &nbsp;<span> ${ commute.commuteIn } </span>
+	            <br>
+	            <span><b>퇴근시간</b> </span> &nbsp; <span>${ commute.commuteOut }</span>
+	          </p> --%>
+	          <br>
+	          <button class="boutton button1" onclick="enrollAndOut(1);">출근</button>
+	          <button class="boutton button2" onclick="enrollAndOut(2);">퇴근</button> 
+	        </div>
         </div>
-       
-       
+       <script type="text/javascript">
+			$(document).ready(function(){
+				var timeBoard = document.getElementById("WhatTimeIsItNow");
+
+			    function getTime() {
+			        var d = new Date();
+			        var hur = d.getHours();
+			        var min = d.getMinutes();
+			        var sec = d.getSeconds();
+
+			        var time = (hur < 10 ? "0" + hur  : hur) + ":" + (min < 10 ? "0" + min  : min) + ":" + (sec < 10 ? "0" + sec  : sec);
+
+			        timeBoard.innerHTML = time;
+			    }
+
+			    setInterval(getTime, 1000);
+			
+			})
+		</script>
         	
         <script>
           function enrollAndOut(num){

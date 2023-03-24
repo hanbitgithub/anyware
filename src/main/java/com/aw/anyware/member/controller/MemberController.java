@@ -33,12 +33,7 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	
-	
-	
-	
-	
-	
+
 	
 	
 	@RequestMapping("main.do")
@@ -437,6 +432,13 @@ public class MemberController {
 		mv.setViewName("member/leaveOff");
 		return mv;
 	}
+	
+	@RequestMapping("attendence.me")
+	public String attendenceMember() {
+		return "member/attendenceMember";
+	}
+	
+	
 	
 
 }
