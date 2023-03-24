@@ -16,6 +16,7 @@
 		<result column="calendar_no" property="calendarNo" />
 		<result column="allday" property="allday" />
 		<result column="SC_COLOR" property="scColor" />
+		<result column="MY_CALENDAR" property="myCalendar" />
 	</resultMap>
 	
 	<resultMap id="CalendarResult" type="Calendar">
@@ -138,12 +139,48 @@
 			 , s.member_no
 			 , calendar_no
 			 , sc_color
-		From tb_m_schedule s
-        join tb_category c using(calendar_no)
-        where s.member_no = 1
+		  from tb_m_schedule s
+          join tb_category c using(calendar_no)
+         where s.member_no = 1
+	</select>
+	
+	<!-- 캘린더 상세 조회 -->
+	<select id="detailScheduleList" resultMap="scheduleResult">
+		select 
+		       schedule_no
+			 , start_date
+			 , end_date
+			 , start_time
+			 , end_time
+			 , sc_title
+			 , sc_content
+			 , status
+			 , write_date
+			 , s.member_no
+			 , calendar_no
+			 , allday
+			 , sc_color
+			 , my_calendar
+	      from tb_m_schedule s
+	      join tb_category c using(calendar_no)
+	     where schedule_no = #{scheduleNo}
 	</select>
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 키워드 검색 -->
+	<select id="searchKeyword" resultMap="scheduleResult">
+		select *
+		  from tb_m_schedule
+		 where status = 'Y'
+		   and sc_title like '%' || #{keyword} || '%'
+	</select>
 	
 	
 	

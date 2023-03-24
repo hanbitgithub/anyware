@@ -27,5 +27,7 @@ public class Schedule {
 	private String allday;
 	
 	private String scColor;
+	private String keyword;
+	private String myCalendar;
 
 }

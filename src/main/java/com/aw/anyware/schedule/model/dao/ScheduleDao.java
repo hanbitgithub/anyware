@@ -74,6 +74,24 @@ public class ScheduleDao {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", memberNo);
 	}
 	
+	public ArrayList<Schedule> detailScheduleList(SqlSessionTemplate sqlSession, Schedule s) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.detailScheduleList", s);
+	}
+	
+	
+	
+	
+	
+	/** 키워드 검색
+	 * @param sqlSession
+	 * @param keyword
+	 * @return
+	 */
+	public ArrayList<Schedule> searchKeyword(SqlSessionTemplate sqlSession, Schedule s) {
+		return (ArrayList)sqlSession.selectList("scheduleMapper.searchKeyword", s);
+	}
+	
+	
 	
 	
 	
