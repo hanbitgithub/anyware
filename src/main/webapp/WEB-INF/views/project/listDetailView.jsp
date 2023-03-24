@@ -98,7 +98,7 @@
         <br><br>
 
         <div class="chat-area">
-            
+            <!-- 채팅 영역 -->
         </div>
 
         <br>
@@ -121,9 +121,7 @@
 
         $(function(){
             selectChatList();
-            setInterval(selectChatList, 1000);
-            
-            $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+            setInterval(selectChatList, 100);
         })
         
         function insertListChat(){
@@ -198,11 +196,13 @@
                     }
 
                     $(".chat-area").html(value);
+                    $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
                 },
                 error:function(){
                     console.log("리스트채팅 조회용 ajax 통신 실패");
                 }
             })
+
         }
     </script>
 
