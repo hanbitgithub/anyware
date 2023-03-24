@@ -48,9 +48,9 @@ public class MemberController {
 		
 	@RequestMapping("selectAll.me")
 	public String selectAllMember(@RequestParam(value="cpage", defaultValue="1") int currentPage,
-									String deptName, Model model, HttpSession session) {
+									String deptName, int memberNo, Model model, HttpSession session) {
 		
-		if(deptName.equals("인사부")) {
+		if(deptName.equals("인사부") || ((memberNo == 33) || memberNo == 34)) {
 			
 			int listCount = mService.selectListCount();
 			
@@ -296,11 +296,6 @@ public class MemberController {
 		}
 	}
 	
-	@RequestMapping("leaveOff.me")
-	public ModelAndView leaveOff(ModelAndView mv) {
-		mv.setViewName("member/leaveOff");
-		return mv;
-	}
 	
 	@RequestMapping("outMember.me") // 전체사원조회 페이지로 재요청???
 	public ModelAndView outMember(int memberNo, ModelAndView mv) {
@@ -431,6 +426,16 @@ public class MemberController {
 		int result = mService.makeNewPwd(m);
 		return result;
 			
+	}
+	
+	@RequestMapping("leaveOff.me")
+	public ModelAndView leaveOff(Member m, ModelAndView mv) {
+		
+		
+		
+		
+		mv.setViewName("member/leaveOff");
+		return mv;
 	}
 	
 
