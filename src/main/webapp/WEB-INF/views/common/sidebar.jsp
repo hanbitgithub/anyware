@@ -16,11 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.2/assets/css/docs.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -372,8 +367,8 @@ a {
           
             <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
-              <a class="dropdown-item" href="#">근태관리</a>
-              <a class="dropdown-item" href="leaveOff.me?memberNo=${loginUser.memberNo}&leaveOff=${loginUser.leaveOff}">연차신청</a>
+              <a class="dropdown-item" href="attendence.me">근태관리</a>
+              <a class="dropdown-item" href="leaveOff.me?memberNo=${loginUser.memberNo}&leaveOff${loginUser.leaveOff}">연차신청</a>
               <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
         </div>
