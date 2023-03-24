@@ -75,16 +75,69 @@ textarea {
 	<p><b>게시글 상세보기</b></p> 
 	<hr>
 		<!-- 게시글 -->
-		<input id="btn" type="button" value="뒤로가기" onClick="history.go(-1)" style="float: right; height: 25px;"> 
+		<c:choose>
+			<c:when test="${b.category eq '5' }">
+				<button id="btn" type="button"  onclick="location.href='list.bo'" style="float: right; height: 25px;">목록</button>
+			</c:when>
+			<c:when test="${b.category eq '6' }">
+				<button id="btn" type="button" onclick="location.href='nlist.bo'" style="float: right; height: 25px;">목록</button>
+			</c:when>
+			<c:otherwise>
+				<button id="btn" type="button" onclick="location.href='glist.bo'" style="float: right; height: 25px;">목록</button>
+			</c:otherwise>	
+		</c:choose>
+		
 		<table>
 		<ul id="aaa">
 		    <li>
 		       <b style="font-size: large;"><span name="boardTitle">${b.boardTitle }</span></b>
 		       &nbsp; 
-
+					<c:if test="${not empty b.likeDate }">
+					<span class="like" onclick="like(this);">❤️</span>
+					<input type="hidden" name="boardNo" value="${b.boardNo }">
+					</c:if>
+					<c:if test="${ empty b.likeDate }">
+					<span class="like" onclick="like(this);">🤍</span>
+					<input type="hidden" name="boardNo" value="${b.boardNo }">
+					</c:if>
 		       
 		    </li>
-		
+	<script>
+	
+	function like(e){
+		event.stopImmediatePropagation();
+
+		if(e.innerHTML == "🤍"){
+			$.ajax({
+				url:"like.bo",
+				type:"post",
+				data:{boardNo:${b.boardNo}},
+				success:function(result){
+					if(result == "success"){
+						$(e).text("❤️");
+					}
+				},
+				error:function(){
+					console.log("즐겨찾기 추가 ajax 통신 실패");
+				}
+			})
+		} else {
+			$.ajax({
+				url:"unlike.bo",
+				type:"post",
+				data:{boardNo:${b.boardNo}},
+				success:function(result){
+					if(result == "success"){
+						$(e).text("🤍");
+					}
+				},
+				error:function(){
+					console.log("즐겨찾기 해제 ajax 통신 실패");
+				}
+			})
+		}
+	}
+	</script>
 		    <li>
 		        
 		        <span>
@@ -145,7 +198,9 @@ textarea {
 		        <tr>
 		           <td colspan="2" style="font-size: 13px;">
 		            댓글 (<span id="rcount"></span>)
+		            <c:if test="${b.category != '6' }">
 		            <a style="float: right; font-size: 13px;"href="" data-toggle="modal" data-target="#myModal">신고하기</a>
+		            </c:if>
 		        </td>
 		        </tr>
 		    </thead>
@@ -181,8 +236,8 @@ textarea {
 								+ "&nbsp;"
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
-								+ "<input type='text' name='replyContent' id='replyContent' value='" + list[i].replyContent + "'  readonly>"  + "<br>"
-								+ "<a style='color:gray;' id='updateReply' onclick='updateReply(" + list[i].replyNo + ");' >수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
+								+ "<p class='reply'>" + list[i].replyContent + "</p>" + "<br>"
+								+ "<a style='color:gray;' id='updateReply' onclick='updateReply("");'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
 								
 								+ "</td>"
 								+ "</tr>";
@@ -207,6 +262,7 @@ textarea {
     			}
     		})
     	}
+		
 		
 		// 댓글작성
     	$(function(){
@@ -244,10 +300,6 @@ textarea {
 
     <script>
     // 댓글수정
-    function updateReply(replyNo){
-    	
-    	document.qyerySelector('#replyContent').readOnly = false;
-    }
 
 		
 	function updateReply(replyNo, replyContent){
@@ -295,6 +347,7 @@ textarea {
 			}
 		})
 	}
+
     </script>
     
            <!-- 신고 모달 -->
