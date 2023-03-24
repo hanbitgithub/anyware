@@ -271,7 +271,6 @@
 			data:{no:memberNo},
 			success:function(list){
 					console.log(list);
-
 				
 				let value="";
 				for(let i=0; i<list.length; i++){
@@ -293,7 +292,7 @@
 				
 				
 			},error:function(){
-				console.log("댓글리스트 조회용 ajax 통신 실패");
+				console.log("사원정보 조회용 ajax 통신 실패");
 			}
 		})
 	}
