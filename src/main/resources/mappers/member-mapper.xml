@@ -305,5 +305,19 @@
   	   where member_no = #{memberNo}
   </update>
   
+  <!-- 근태현황조회 -->
   
+  <select id="selectMemberAttendenceList" resultMap="commuteResult">
+  select 
+	     commute_no
+	    , name
+	    , member_no
+	    , NVL(commute_in,'미입력') "commute_in"
+        , NVL(commute_out,'미입력') "commute_out"
+	    , round((to_date(commute_out,'HH24:MI:SS') - to_date(commute_in,'HH24:MI:SS'))*24,2) "commute_time"
+	    , commute_date
+	    , commute_status
+ from tb_commute
+  where member_no = #{memberNo}
+  </select>
 </mapper>

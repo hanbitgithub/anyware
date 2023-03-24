@@ -376,15 +376,16 @@
                             events: function(info, successCallback, failureCallback) { // 캘린더 화면에 뿌리기
                                 $.ajax({
                                         url: 'scheduleList.sc',
-                                        type: 'POST',
                                         success: function(param) {   
                                         var events = [];                     
                                         $.each(param, function(index, data){
                                             events.push({
+                                                
                                                 title : data.scTitle,
                                                 start : data.startDate,
                                                 end: data.endDate,
                                                 color: data.scColor
+                                                
                                             
                                                 })
                                             }) 

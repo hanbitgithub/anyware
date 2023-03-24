@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
+<jsp:useBean id="currTime" class="java.util.Date" /> 
 <jsp:useBean id="now" class="java.util.Date" />  
 
 <!DOCTYPE html>
@@ -55,8 +55,8 @@
 
 /* 프로필 이미지 */
 .profile {
-  width:150px;
-  height: 150px;
+  width:120px;
+  height: 120px;
   border-radius: 100%;
   margin-bottom: 5px;
   }
@@ -65,14 +65,14 @@
   width:50%;
   height: 300px;
   float:left;
-  margin-top: 20px;
+  margin-top: 30px;
   
 }
 #attendence-area{
  	width:40%;
  	height: 300px;
  	float:left;
-    margin-top: 50px;
+    margin-top: 40px;
  	
 }
 
@@ -84,6 +84,7 @@
   border: 2px solid  #7291f6;
   border-radius: 7px;
   font-weight: bold;
+  
 }
 
 .button2 {
@@ -92,7 +93,8 @@
   color: black;
   border: 2px solid #e7e7e7;
   border-radius: 7px;
-   font-weight: bold;
+  font-weight: bold;
+
 }
 
 button:hover{
@@ -156,16 +158,19 @@ tr:hover {
            </div> 
            
            <div id="attendence-area">
-           		<fmt:formatDate value="${now}" pattern="HH:mm:ss" var="now" />
-	            <p id="WhatTimeIsItNow" style="font-size:25px; text-align:center;"><b></b><c:out value="${now}"/><b></b></p> 
+           	<fmt:formatDate value="${now}" pattern="yyyy년 MM월 dd일" var="now" />
+           		<c:out value="${now}"/>
+           		<fmt:formatDate value="${currTime}" pattern="HH:mm:ss" var="currTime" />
+	            <p id="WhatTimeIsItNow" style="font-size:25px; text-align:center;"><b></b><c:out value="${currTime}"/><b></b></p> 
 				<table>
+			
 					<tr>
-						<th width="200">출근시간</th>
+						<th width="150" height="30px">출근시간</th>
 						<td width="200">${ commute.commuteIn }</td>
 					
 					</tr>
 					<tr>
-						<th width="200">퇴근시간</th>
+						<th width="150">퇴근시간</th>
 						<td width="200">${ commute.commuteOut }</td>
 					</tr>
 				

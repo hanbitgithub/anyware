@@ -63,7 +63,8 @@ public interface MemberService {
 	
 	//Member selectDayOff(Member m);
 	
-	
+	//근태현황 조회
+	ArrayList<Commute> selectMemberAttendenceList(int memberNo);
 	
 	
 

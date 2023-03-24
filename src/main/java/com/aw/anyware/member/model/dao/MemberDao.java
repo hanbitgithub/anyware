@@ -124,6 +124,9 @@ public class MemberDao {
 	}
 
 	
-	
+	public ArrayList<Commute> selectMemberAttendenceList(SqlSessionTemplate sqlSession, int memberNo){
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMemberAttendenceList",memberNo);
+		
+	}
 	
 }

@@ -22,5 +22,7 @@ public class Commute {
 	private String commuteDate;
 	private int memberNo;
 	private String commuteStatus;
+	
+	private String commuteTime;
 
 }

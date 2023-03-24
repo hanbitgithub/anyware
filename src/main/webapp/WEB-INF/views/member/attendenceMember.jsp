@@ -22,7 +22,18 @@
 	text-align: center;
 	font-size: 19px;
 }
-
+.calender{
+	height:500px;
+}
+.fc .fc-col-header-cell-cushion {
+  display: inline-block;
+  padding: 2px 4px;
+}
+.event-icon {
+  width: 24px;
+}
+.fc-day-number.fc-sat.fc-past { color:#0000FF; }     /* 토요일 */
+.fc-day-number.fc-sun.fc-past { color:#FF0000; }    /* 일요일 */
 </style>
 </head>
 <body>
@@ -56,8 +67,7 @@
           			<td>10h 54m 40s</td>
           			<td>37h 5m 20s</td>
           		</tr>
-          		
-          		
+      
           	</table>
           </div>
           <hr>
@@ -70,8 +80,73 @@
 
 		      document.addEventListener('DOMContentLoaded', function() {
 		        var calendarEl = document.getElementById('calendar');
-		        var calendar = new FullCalendar.Calendar(calendarEl, {
-		          initialView: 'dayGridMonth'
+		        var calendar = new FullCalendar.Calendar(
+		        		calendarEl,
+		        		{
+		        	
+                         headerToolbar: {
+                             left: 'prev,next today',
+                             center: 'title',
+                             right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                         },	
+                         editable: true,
+                         selectable: true,
+                         businessHours: true,
+                         navLinks: true, // can click day/week names to navigate views
+                         selectable: true,
+                         selectMirror: true,
+                         droppable: true,
+                         drop: function (arg) {
+                             // is the "remove after drop" checkbox checked?
+                             if (document.getElementById('drop-remove').checked) {
+                                 // if so, remove the element from the "Draggable Events" list
+                                 arg.draggedEl.parentNode.removeChild(arg.draggedEl);
+                             }
+                         },
+                       
+                         events: function(info, successCallback, failureCallback) { 
+                             $.ajax({
+                                     url: 'attendenceList.me',
+                                     data:{
+                                    	 memberNo: ${loginUser.memberNo}
+                                     },
+                                     type: 'POST',
+                                     success: function(param) {   
+                                     var events = [];                     
+                                     $.each(param, function(index, data){
+                                         events.push({
+                                        	 title : '출근 '+data.commuteIn,
+                                             start : data.commuteDate,
+                                             end: data.commuteDate
+                                         
+                                             })
+                                         }) 
+                                         
+                                     $.each(param, function(index, data){
+                                         events.push({
+                                        	 title : '퇴근 '+data.commuteOut,
+                                             start : data.commuteDate,
+                                             end: data.commuteDate
+                                         
+                                             })
+                                         })     
+                                       
+
+                                         
+                                         
+                                         successCallback(events);
+                                     
+                                     
+                                        console.log(param);
+                                    
+                                    
+                                     }
+                                 }) 
+                         },
+
+		        	
+		        	
+		        
 		        });
 		        calendar.render();
 		      });

@@ -129,6 +129,11 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.makeNewPwd(sqlSession, m);
 	}
 
+	@Override
+	public ArrayList<Commute> selectMemberAttendenceList(int memberNo) {
+		return mDao.selectMemberAttendenceList(sqlSession,memberNo);
+	}
+
 	
 
 	

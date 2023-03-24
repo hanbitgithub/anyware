@@ -23,6 +23,7 @@ import com.aw.anyware.member.CrunchifyJavaMailExample;
 import com.aw.anyware.member.model.service.MemberService;
 import com.aw.anyware.member.model.vo.Commute;
 import com.aw.anyware.member.model.vo.Member;
+import com.google.gson.Gson;
 
 @Controller
 public class MemberController {
@@ -438,6 +439,14 @@ public class MemberController {
 		return "member/attendenceMember";
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="attendenceList.me",produces = "application/json; charset=utf-8")
+	public String memberAttendenceList(int memberNo) {
+		ArrayList<Commute> list =  mService.selectMemberAttendenceList(memberNo); 
+		
+		System.out.println(list);
+		return new Gson().toJson(list);
+	}
 	
 	
 
