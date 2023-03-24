@@ -236,8 +236,8 @@ textarea {
 								+ "&nbsp;"
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
-								+ "<p class='reply'>" + list[i].replyContent + "</p>" + "<br>"
-								+ "<a style='color:gray;' id='updateReply' onclick='updateReply("");'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
+								+ "<p>" + list[i].replyContent + "</p>" + "<br>"
+								+ "<a style='color:gray;' id='updateReply' onclick='updateReply();'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
 								
 								+ "</td>"
 								+ "</tr>";
