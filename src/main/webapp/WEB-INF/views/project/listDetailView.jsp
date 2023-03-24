@@ -80,7 +80,10 @@
     .writer{
         margin-bottom: 2px;
     }
-
+    .date-div{
+        text-align: center;
+        margin: 10px;
+    }
 </style>
 </head>
 <body>
@@ -95,35 +98,7 @@
         <br><br>
 
         <div class="chat-area">
-            <table class="chat-other">
-                <tr>
-                    <td rowspan="2">
-                        <img src="../../../resources/images/chat/defaultProfile.png" class="chProfileImg">
-                    </td>
-                    <td colspan="2">
-                        <div class="writer">김현지(개발부/사원)</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="content-other">사진보내주세요...제발요ㅠ</div>
-                    </td>
-                    <td class="time-td">
-                        <span class="time">12:10 PM</span>
-                    </td>
-                </tr>
-            </table>
-            
-            <table class="chat-mine">
-                <tr>
-                    <td class="time-td">
-                        <span class="time">12:10 PM</span>
-                    </td>
-                    <td>
-                        <div class="content-mine">키키</div>
-                    </td>
-                </tr>
-            </table>
+            <!-- 채팅 영역 -->
         </div>
 
         <br>
@@ -146,27 +121,30 @@
 
         $(function(){
             selectChatList();
-            setInterval(selectChatList, 1000);
-            
+            setInterval(selectChatList, 100);
         })
         
         function insertListChat(){
             if(event.keyCode == 13){
                 let content = $(".input").val();
-                console.log(content);
-            }
 
-            // $.ajax({
-            //     url:"",
-            //     data:{},
-            //     type:"post",
-            //     success:function(result){
-                    
-            //     },
-            //     error:function(){
-            //         console.log("리스트채팅 작성용 ajax 통신 실패");
-            //     }
-            // })
+                $.ajax({
+                url:"insertlchat.ajax",
+                data:{chatContent:content
+                    , writerNo:${loginUser.memberNo}
+                    , listNo:${l.listNo}},
+                type:"post",
+                success:function(result){
+                    if(result == 'success'){
+                        $(".input").val("");
+                        selectChatList();
+                    }
+                },
+                error:function(){
+                    console.log("리스트채팅 작성용 ajax 통신 실패");
+                }
+            })
+            }
         }
         
         function selectChatList(){
@@ -176,50 +154,55 @@
                 data:{listNo:${l.listNo}},
                 success:function(chlist){
                     let value = "";
-                    for(let i=0; i<chlist.length; i++){
-                        if(chlist[i].writerNo == ${loginUser.memberNo}){
-                            value += "<table class='chat-mine'>"
-                                        + "<tr>"
-                                            + "<td class='time-td'>"
-                                                + "<span class='time'>" + chlist[i].sendTime + "</span>"
-                                            + "</td>"
-                                            + "<td>"
-                                                + "<div class='content-mine'>" + chlist[i].chatContent + "</div>"
-                                            + "</td>"
-                                        + "</tr>"
-                                    + "</table>";
-                        } else {
-                            value += "<table class='chat-other'>"
-                                        + "<tr>"
-                                            + "<td rowspan='2'>"
-                                                + "<img src='" + chlist[i].memberList[0].profileUrl + "' class='chProfileImg'>"
-                                            + "</td>"
-                                            + "<td colspan='2'>";
-                                        if(chlist[i].memberList[0].deptName == '미정'){
-                                            value += "<div class='writer'>" + chlist[i].memberList[0].name + "(" + chlist[i].memberList[0].jobName + ")</div>";
-                                        } else {
-                                            value += "<div class='writer'>" + chlist[i].memberList[0].name + "(" + chlist[i].memberList[0].deptName + "/" + chlist[i].memberList[0].jobName + ")</div>";
-                                        }
-                                        value += "</td>"
-                                        + "</tr>"
-                                        + "<tr>"
-                                            + "<td>"
-                                                + "<div class='content-other'>" + chlist[i].chatContent + "</div>"
-                                            + "</td>"
-                                            + "<td class='time-td'>"
-                                                + "<span class='time'>" + chlist[i].sendTime + "</span>"
-                                            + "</td>"
-                                        + "</tr>"
-                                    + "</table>";
+                    for(let j=0; j<chlist.length; j++){
+                        value += "<div class='date-div'>" + chlist[j].sendDate + "</div>";
+                        for(let i=0; i<chlist[j].chatInfo.length; i++){
+                            if(chlist[j].chatInfo[i].writerNo == ${loginUser.memberNo}){
+                                value += "<table class='chat-mine'>"
+                                            + "<tr>"
+                                                + "<td class='time-td'>"
+                                                    + "<span class='time'>" + chlist[j].chatInfo[i].sendTime + "</span>"
+                                                + "</td>"
+                                                + "<td>"
+                                                    + "<div class='content-mine'>" + chlist[j].chatInfo[i].chatContent + "</div>"
+                                                + "</td>"
+                                            + "</tr>"
+                                        + "</table>";
+                            } else {
+                                value += "<table class='chat-other'>"
+                                            + "<tr>"
+                                                + "<td rowspan='2'>"
+                                                    + "<img src='" + chlist[j].chatInfo[i].profileUrl + "' class='chProfileImg'>"
+                                                + "</td>"
+                                                + "<td colspan='2'>";
+                                            if(chlist[j].chatInfo[i].deptName == '미정'){
+                                                value += "<div class='writer'>" + chlist[j].chatInfo[i].name + "(" + chlist[j].chatInfo[i].jobName + ")</div>";
+                                            } else {
+                                                value += "<div class='writer'>" + chlist[j].chatInfo[i].name + "(" + chlist[j].chatInfo[i].deptName + "/" + chlist[j].chatInfo[i].jobName + ")</div>";
+                                            }
+                                            value += "</td>"
+                                            + "</tr>"
+                                            + "<tr>"
+                                                + "<td>"
+                                                    + "<div class='content-other'>" + chlist[j].chatInfo[i].chatContent + "</div>"
+                                                + "</td>"
+                                                + "<td class='time-td'>"
+                                                    + "<span class='time'>" + chlist[j].chatInfo[i].sendTime + "</span>"
+                                                + "</td>"
+                                            + "</tr>"
+                                        + "</table>";
+                            }
                         }
                     }
 
                     $(".chat-area").html(value);
+                    $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
                 },
                 error:function(){
                     console.log("리스트채팅 조회용 ajax 통신 실패");
                 }
             })
+
         }
     </script>
 

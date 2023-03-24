@@ -31,6 +31,11 @@
 	  color: inherit;
 	  text-decoration:none;
 	}
+	#back{
+		position: absolute;
+		top: 800px;
+		left: 30px;
+	}
 	
 </style>
 </head>
@@ -47,8 +52,8 @@
         </div>
 
 		<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-		<a class="btn btn-primary" href="javascript:history.back();">project 목록</a>
+		
+		<a class="btn btn-primary" id="back" href="list.pj?category=${category}&condition=${condition}&keyword=${keyword}&cpage=${pi.currentPage}">project 목록</a>
 
     </div>
 	

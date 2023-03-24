@@ -25,7 +25,11 @@ public class ListChat {
 	private String changeName;
 	private String sendDate;
 	private String sendTime;
+	private String name;
+	private String deptName;
+	private String jobName;
+	private String profileUrl;
 	
-	private ArrayList<Member> memberList;
+	private ArrayList<ListChat> chatInfo;
 
 }

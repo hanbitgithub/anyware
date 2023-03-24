@@ -70,4 +70,10 @@ public interface ProjectService {
 	// 리스트 채팅 조회 서비스(select)
 	ArrayList<ListChat> selectListChatList(int listNo);
 	
+	// 리스트 채팅 작성 서비스(insert)
+	int insertListChat(ListChat ch);
+	
+	// 리스트 수정 서비스(update)
+	int updateList(List l);
+	
 }

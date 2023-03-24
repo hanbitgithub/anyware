@@ -131,6 +131,14 @@ public class ProjectDao {
 		return (ArrayList)sqlSession.selectList("projectMapper.selectListChatList", listNo);
 	}
 
+	public int insertListChat(SqlSessionTemplate sqlSession, ListChat ch) {
+		return sqlSession.insert("projectMapper.insertListChat", ch);
+	}
+
+	public int updateList(SqlSessionTemplate sqlSession, List l) {
+		return sqlSession.update("projectMapper.updateList", l);
+	}
+
 	
 	
 }
