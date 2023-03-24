@@ -317,6 +317,8 @@
   </update>
   
 
+  <!-- 근태현황조회 -->
+  
   <select id="selectLastOff" resultMap="leaveOffResult">
   	select
   			DAYOFF_NO,
@@ -332,7 +334,7 @@
   		
   </select>
   
-  <select id="selectLeaveOff" resultMap="leaveOffResult">
+  <select id="applyOff" resultMap="leaveOffResult">
   	select
   			DAYOFF_NO,
 			NAME,
