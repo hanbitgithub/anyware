@@ -157,5 +157,15 @@ public class ProjectServiceImpl implements ProjectService {
 		return pDao.selectListChatList(sqlSession, listNo);
 	}
 
+	@Override
+	public int insertListChat(ListChat ch) {
+		return pDao.insertListChat(sqlSession, ch);
+	}
+
+	@Override
+	public int updateList(List l) {
+		return pDao.updateList(sqlSession, l);
+	}
+
 
 }

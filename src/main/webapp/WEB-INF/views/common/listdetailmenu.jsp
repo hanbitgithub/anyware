@@ -120,7 +120,7 @@
 </head>
 <body>
 	<div class="menu">
-        <div class="name">${ l.listTitle }<span data-toggle="modal" data-target="#myModal">⚙️</span></div>
+		<div class="name">${ l.listTitle }<c:if test="${pj.participation eq 1}"><span data-toggle="modal" data-target="#myModal">⚙️</span></c:if></div>
 		<br>
 
 		<div class="period">- 기간</div>
@@ -155,7 +155,7 @@
 			</c:forEach>
 		</table>
 
-		<a class="btn btn-primary" id="back" href="javascript:history.back();">List 목록</a>
+		<a class="btn btn-primary" id="back" href="detail.pj?projectNo=${pj.projectNo}">List 목록</a>
 
 		<script>
 			function addlist(){
@@ -270,7 +270,8 @@
 		
 				<!-- Modal body -->
 				<div class="modal-body">
-					<form action="">
+					<form action="update.li">
+						<input type="hidden" name="listNo" value="${l.listNo}">
 						<div>
 							<b>리스트 이름<span class="essential"> *</span></b>
 							<input type="text" id="name" name="listTitle" value="${ l.listTitle }">
@@ -282,7 +283,7 @@
 
 						<div>
 							<b>기간<span class="essential"> *</span></b><br>
-							<input type="date" required class="date" value="<fmt:formatDate value='${ beginDate }' pattern='yyyy-MM-dd'/>"> - <input type="date" required class="date" value="<fmt:formatDate value='${ endDate }' pattern='yyyy-MM-dd'/>">
+							<input type="date" required class="date" name="beginDate" value="<fmt:formatDate value='${ beginDate }' pattern='yyyy-MM-dd'/>"> - <input type="date" required class="date" name="endDate" value="<fmt:formatDate value='${ endDate }' pattern='yyyy-MM-dd'/>">
 						</div>
 						<br>
 						<div>
@@ -306,11 +307,20 @@
 						<script>
 							$(function(){
 								const label = document.querySelectorAll("label");
+								const checkbox = document.getElementsByName("color");
 
 								label.forEach(function(lb){
 									// lb.style.background = lb.getAttribute("for");
 									lb.style.background = document.getElementById(lb.getAttribute("for")).value;
 								})
+
+								checkbox.forEach(function(box){
+									if(box.value == "${l.color}"){
+										box.checked = true;
+										$(box).next().text("✔")
+									}
+								})
+								
 							})
 
 							function checkOnlyOne(element) {
@@ -335,7 +345,7 @@
 						<br><br>
 
 						<div class="btn-area" align="center">
-							<button type="submit" class="btn btn-primary">생성</button>&nbsp;
+							<button type="submit" class="btn btn-primary">수정</button>&nbsp;
 							<button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
 						</div>
 

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.ibatis.reflection.SystemMetaObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,8 +35,7 @@ public class ProjectController {
 	// projectListView
 	@RequestMapping("list.pj")
 	public String selectProjectList(@RequestParam(value="cpage", defaultValue="1")int currentPage,
-									String category, String condition, String keyword, Model model, 
-									HttpServletRequest request) {
+									String category, String condition, String keyword, HttpSession session) {
 		
 		HashMap<String, Object> map = new HashMap<>();
 		map.put("category", category);
@@ -45,16 +45,16 @@ public class ProjectController {
 		int listCount = pService.selectListCount(map);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		
-		int memberNo = ((Member)request.getSession().getAttribute("loginUser")).getMemberNo();
+		int memberNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
 		map.put("memberNo", memberNo);
 		
 		ArrayList<Project> list = pService.selectProjectList(map, pi);
 		
-		model.addAttribute("pi", pi);
-		model.addAttribute("list", list);
-		model.addAttribute("category", category);
-		model.addAttribute("condition", condition);
-		model.addAttribute("keyword", keyword);
+		session.setAttribute("pi", pi);
+		session.setAttribute("list", list);
+		session.setAttribute("category", category);
+		session.setAttribute("condition", condition);
+		session.setAttribute("keyword", keyword);
 		
 		return "project/projectListView";
 	}
@@ -242,6 +242,28 @@ public class ProjectController {
 		ArrayList<ListChat> chlist = pService.selectListChatList(listNo);
 		
 		return new Gson().toJson(chlist);
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="insertlchat.ajax")
+	public String insertListChat(ListChat ch) {
+		int result = pService.insertListChat(ch);
+		return result > 0 ? "success" : "fail";
+	}
+	
+	@RequestMapping("update.li")
+	public String updateList(List list, HttpSession session, Model model) {
+		list.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		int result = pService.updateList(list);
+		
+		if(result > 0) {
+			List l = pService.selectList(list.getListNo());
+			session.setAttribute("l", l);
+		} else {
+			model.addAttribute("alertMsg", "리스트 수정 실패");
+		}
+		
+		return "redirect:detail.li?listNo=" + list.getListNo();
 	}
 
 }

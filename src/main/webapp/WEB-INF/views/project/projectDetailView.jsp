@@ -96,7 +96,7 @@
 
         <div class="list-area">
         	<c:forEach var="l" items="${ pj.listList }">
-                <form action="detail.li" method="post" onclick="submit(this);">
+                <form action="detail.li" onclick="submit(this);">
                     <div class="list" style="border-left: 15px solid ${ l.color };">
                         <input type="hidden" name="listNo" value="${ l.listNo }">
                         <div class="list-name">${ l.listTitle }</div>
