@@ -427,12 +427,14 @@ public class MemberController {
 	
 	@RequestMapping("leaveOff.me")
 	public ModelAndView leaveOff(Member m, ModelAndView mv) {
-		int memberNo = m.getMemberNo();
+		System.out.println(m);
 		if(m.getLeaveOff() > 0) {
 			LeaveOff lo = mService.selectLastOff(m);
+			System.out.println(lo);
 			
 		}else {
 			mv.addObject("alertMsg", "사용 가능한 잔여 연차가 없습니다");
+			mv.setViewName("member/main");
 		}
 		
 		
