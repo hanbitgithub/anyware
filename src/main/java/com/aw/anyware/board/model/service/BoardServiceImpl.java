@@ -26,6 +26,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public int selectGListCount(String deptName) {
+		return bDao.selectGListCount(sqlSession, deptName);
+	}
+	
+	@Override
 	public ArrayList<Board> selectList(PageInfo pi) {
 		return bDao.selectList(sqlSession, pi);
 	}
@@ -71,8 +76,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<Board> selectGroupList(PageInfo pi) {
-		return bDao.selectGroupList(sqlSession, pi);
+	public ArrayList<Board> selectGroupList(PageInfo pi, String deptName) {
+		return bDao.selectGroupList(sqlSession, pi, deptName);
 	}
 
 	@Override
@@ -155,6 +160,10 @@ public class BoardServiceImpl implements BoardService {
 	public int deleteLikeBoard(Board b) {
 		return bDao.deleteLikeBoard(sqlSession, b);
 	}
+
+
+
+
 
 
 

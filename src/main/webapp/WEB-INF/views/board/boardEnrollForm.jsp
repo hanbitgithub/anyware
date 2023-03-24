@@ -55,21 +55,18 @@
 			<c:when test="${loginUser.deptName eq '총무부' }">
 			       <select id="category" name="category">
 			           <option value="5">자유게시판</option>
-			           <option value="6">공지사항</option>
 			           <option value="2">총무팀</option>
 			       </select>
 			</c:when>
 			<c:when test="${loginUser.deptName eq '디자인부' }">
 			       <select id="category" name="category">
 			           <option value="5">자유게시판</option>
-			           <option value="6">공지사항</option>
 			           <option value="4">디자인팀</option>
 		        	</select>
 			</c:when>
 			<c:when test="${loginUser.deptName eq '개발부' }">
 			        <select id="category" name="category">
 			            <option value="5">자유게시판</option>
-			            <option value="6">공지사항</option>
 			            <option value="3">개발팀</option>
 			        </select>
 			</c:when>

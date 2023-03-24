@@ -81,12 +81,7 @@ table tbody tr {
 	
 	<!-- 세부 내용 -->
 	<div class="content">
-	<p><b>자유게시판</b></p>
-		<form action="search.bo" method="Get" style="float: right;">
-            <input type="hidden" name="cpage" value="1">
-            <input type="text" name="keyword" value="${ keyword }"  class="button" placeholder="제목으로 검색하기">
-            <button type="submit" class="button">검색</button>
-        </form> <br>
+	<p><b>즐겨찾기</b></p>
 
             <table id="boardList" class="table table-hover" align="center">
               <thead>

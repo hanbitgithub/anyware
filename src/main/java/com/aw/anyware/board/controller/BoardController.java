@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +45,7 @@ public class BoardController {
 		
 		int listCount = bService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Board> list = bService.selectList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -61,7 +63,7 @@ public class BoardController {
 		
 		int listCount = bService.selectListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
 		ArrayList<Board> list = bService.selectNoticeList(pi);
 		
 		model.addAttribute("pi", pi);
@@ -73,15 +75,22 @@ public class BoardController {
 	}
 	
 	@RequestMapping("glist.bo")
-	public String selectGroupList(@RequestParam(value="cpage", defaultValue="1") int currentPage, Model model) {
+	public String selectGroupList(@RequestParam(value="cpage", defaultValue="1")int currentPage, Model model, HttpServletRequest request) {
 		
-		int listCount = bService.selectListCount();
+		String deptName = ((Member)request.getSession().getAttribute("loginUser")).getDeptName();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
-		ArrayList<Board> list = bService.selectGroupList(pi);
+		
+		int listCount = bService.selectGListCount(deptName);
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		ArrayList<Board> list = bService.selectGroupList(pi, deptName);
+		
+		
 		
 		model.addAttribute("pi", pi);
 		model.addAttribute("list", list);
+		
+		System.out.println();
 		
 
 		return "board/groupListView";

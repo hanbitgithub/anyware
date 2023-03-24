@@ -35,13 +35,13 @@ public class BoardDao {
 		return (ArrayList)sqlSession.selectList("boardMapper.selectNoticeList", null, rowBounds);
 	}
 	
-	public ArrayList<Board> selectGroupList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Board> selectGroupList(SqlSessionTemplate sqlSession, PageInfo pi, String deptName) {
 		
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset, limit);
 		
-		return (ArrayList)sqlSession.selectList("boardMapper.selectGroupList", null, rowBounds);
+		return (ArrayList)sqlSession.selectList("boardMapper.selectGroupList", deptName, rowBounds);
 	}
 
 	
@@ -165,6 +165,12 @@ public class BoardDao {
 
 	public int deleteLikeBoard(SqlSessionTemplate sqlSession, Board b) {
 		return sqlSession.delete("boardMapper.deleteLikeBoard", b);
+	}
+
+
+
+	public int selectGListCount(SqlSessionTemplate sqlSession, String deptName) {
+		return sqlSession.selectOne("boardMapper.selectGListCount", deptName);
 	}
 
 
