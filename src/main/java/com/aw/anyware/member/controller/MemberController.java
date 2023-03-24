@@ -444,7 +444,7 @@ public class MemberController {
 	public String memberAttendenceList(int memberNo) {
 		ArrayList<Commute> list =  mService.selectMemberAttendenceList(memberNo); 
 		
-		System.out.println(list);
+		//System.out.println(list);
 		return new Gson().toJson(list);
 	}
 	
