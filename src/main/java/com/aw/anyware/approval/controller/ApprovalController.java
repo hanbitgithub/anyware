@@ -285,4 +285,16 @@ public class ApprovalController {
 		
 		return "approval/approUpdateForm";
 	}
+	
+	@ResponseBody
+	@RequestMapping(value = "main.appro", produces="application/json; charset=UTF-8")
+	public String mainAppro(HttpSession session) {
+		
+		userNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+		listCount = aService.ingCountAll(userNo);
+		pi = Pagination.getPageInfo(listCount, 1, 5, 5);
+		list = aService.ingListAll(userNo, pi);
+		
+		return new Gson().toJson(list);
+	}
 }
