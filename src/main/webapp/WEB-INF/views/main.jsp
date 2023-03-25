@@ -255,7 +255,7 @@ tr:hover {
 
              
                <!-- Tab panes -->
-               <div class="tab-content">
+               <div class="tab-content" style="padding:0px;">
                  <div id="receive" class="container tab-pane active">
                   <table class="table table-hover rlist"  style="font-size:13px">
                  
