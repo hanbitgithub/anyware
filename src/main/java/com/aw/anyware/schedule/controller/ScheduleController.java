@@ -88,7 +88,18 @@ public class ScheduleController {
 	@ResponseBody
 	public String deleteCalendar(Calendar c, HttpSession session) {
 		c.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		System.out.println("c는" + c);		
+		
+		Schedule q = new Schedule();
+		q.setCalendarNo(c.getCalendarNo());
+		q.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		System.out.println("qqq : " + q);
+		
+		int ss = scService.aaa(q);
+		System.out.println("ss :"+ss);
+		
 		int result = scService.deleteCalendar(c);
+
 		return result > 0 ? "success" : "fail";
 	}
 	
@@ -114,22 +125,42 @@ public class ScheduleController {
 		return list;
 	}
 	
+	// 스케줄 상세 조회 수정
+	@RequestMapping("updateScheduleModal.sc")
+	@ResponseBody
+	public String updateScheduleModal(Schedule s, HttpSession session) {
+		s.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		System.out.println("s를찍어볼게" + s);
+		int result = scService.updateScheduleModal(s);
+		
+		//System.out.println("result는" + result);
+		
+		return result > 0 ? "success" : "fail";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
 	// 키워드 검색
-//	@GetMapping("searchKeyword.sc")
-//	public String searchKeyword(@RequestParam(value = "keyword") String keyword, Model m) {
-//		Schedule s = new Schedule();
-//		s.setKeyword(keyword);
-//		ArrayList<Schedule> list = scService.searchKeyword(s);
-//		System.out.println("키워드 검색은 : " + list);
-//		m.addAttribute("list", list);
-//		return "schedule/scheduleSearchList";
-//		
-//		
-//		
-//	}
+	@GetMapping("searchKeyword.sc")
+	public String searchKeyword(@RequestParam(value = "keyword") String keyword, Model m) {
+		Schedule s = new Schedule();
+		s.setKeyword(keyword);
+		ArrayList<Schedule> list = scService.searchKeyword(s);
+		//System.out.println("키워드 검색은 : " + list);
+		m.addAttribute("list", list);
+		return "schedule/scheduleSearchList";
+
+	}
 	
 	
 
