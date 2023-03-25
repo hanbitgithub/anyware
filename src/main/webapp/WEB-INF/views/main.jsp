@@ -170,12 +170,12 @@ button:hover{
 			
 					<tr>
 						<th width="150" height="30px">출근</th>
-						<td width="200">${ commute.commuteIn }</td>
+						<td width="200" id="commuteIn"></td>
 					
 					</tr>
 					<tr>
 						<th width="150">퇴근</th>
-						<td width="200">${ commute.commuteOut }</td>
+						<td width="200" id="commuteOut"></td>
 					</tr>
 				
 				</table>
@@ -211,7 +211,7 @@ button:hover{
         	
         <script>
           function enrollAndOut(num){
-        	  
+        	 
         	  
         	//const c = new Date();
         	//const year = c.getFullYear();
@@ -224,13 +224,58 @@ button:hover{
           	//const cTime = c.getHours() + ':' + c.getMinutes();
           	          	          	          	  
             if(num == 1){
+            	
+            	 if($("#commuteIn").text() != ""){
+           				  alert("이미 출근처리 되었습니다.");
+            	 } else{
                     location.href = 'commuteIn.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
                     				//+'&commuteDate='+cDate + '&commuteIn='+cTime;
+                    				
+                  } 				
             }else{
+           	 if($("#commuteOut").text() != ""){
+				 alert("이미 퇴근처리 되었습니다.");
+           	 } else{
                     location.href = 'commuteOut.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
-            }
+             }
+          }
           }
         </script>
+        
+        
+        <script>
+			$(document).ready(function(){
+						
+						$.ajax({
+							url:"commute.me",
+							data:{
+							},
+							success:function(result){
+								console.log(result);
+								
+								
+								 if($("#commuteIn").text() == ""){
+									 $("#commuteIn").html(result.commuteIn);
+			            	    }
+								 
+								 if($("#commuteOut").text() == ""){
+									 $("#commuteOut").html(result.commuteOut);
+					           	 }
+								
+								
+							  	
+								
+							},error:function(){
+								console.log("실패");
+							}
+							
+						})
+							
+					})
+					
+        
+        </script>
+        
 
 
         <div class="right">
