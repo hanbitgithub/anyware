@@ -328,8 +328,8 @@
   	   where dayoff_no = (select dayoff_no
 						        from(select  dayoff_no
 						                    from tb_dayoff
-						                   where member_no = #{memberNo}
-						                   order by commute_no desc)
+						                   where applicant_no = #{memberNo}
+						                   order by dayoff_no desc)
 						    where rownum = 1)
   		
   </select>

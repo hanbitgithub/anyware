@@ -1,16 +1,113 @@
-/* 채팅 css */
-#chat-dropdown{
+/* 메신저 드롭다운 css */
+.messengerbtn {
+    border: 0;
+    background-color: white;
+    position: relative;
+    display: inline-block;
+    margin-top: 9px;
+    margin-right: 10px;
+}
+#messengerImg {
+    width: 55px;
+    height: 55px;
+}
+.messenger-area {
+    border: 2px solid rgb(230, 230, 230);
+    border-radius: 0.7em;
+    display: none;
+    position: absolute;
+    z-index: 1;
     width: 500px;
     height: 800px;
-}
-.chat-menu{
-    box-sizing: border-box;
-    height: 60px;
-    font-size: 40px;
-    border-bottom: 1px solid #ffffff34;
-}
-.menubtn{
-    border: none;
+    right: 5px;
     background-color: white;
-    box-sizing: border-box;
+    text-align: center;
+}
+.messengerbtn:hover .messenger-area {
+    display: block;
+}
+.tab {
+    display: inline-block;
+    cursor: pointer;
+    padding: 10px;
+    background-color: white;
+    color: gray;
+    font-size: 40px;
+    margin-left: 40px;
+    margin-right: 40px;
+}
+.tab.active {
+    color: black;
+}
+.tab-content {
+    padding: 20px;
+    text-align: left;
+}
+.list-area{
+    overflow: auto;
+}
+.title{
+    margin-bottom: 7px;
+}
+
+/* 채팅리스트 css */
+.list-area{
+    height: 640px;
+    overflow: auto;
+}
+.list-set {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+  }
+.list-set:hover{
+    background-color: rgb(230, 230, 230);
+    cursor: pointer;
+}
+.list-set>img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 16px;
+}
+.chat-content {
+    flex: 1;
+}
+.chat-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.chat-name {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+}
+.chat-time {
+    margin: 0;
+    font-size: 14px;
+    color: #9B9B9B;
+}
+.chat-preview {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+    color: #4F4F4F;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    width: 300px;
+    display: inline-block;
+}
+.loginCheck{
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+}
+
+/* 주소록 css */
+
+
+/* 채팅창 css */
+.chat-area{
+    display: none;
 }

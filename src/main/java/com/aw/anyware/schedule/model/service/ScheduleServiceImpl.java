@@ -74,6 +74,34 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Schedule> scheduleList(int memberNo) {
 		return scDao.scheduleList(sqlSession, memberNo);
 	}
+
+	/**
+	 * 스케줄 상세 조회
+	 */
+	@Override
+	public ArrayList<Schedule> detailScheduleList(Schedule s) {
+		return scDao.detailScheduleList(sqlSession, s);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
+	 * 키워드 검색
+	 */
+	@Override
+	public ArrayList<Schedule> searchKeyword(Schedule s) {
+		return scDao.searchKeyword(sqlSession, s);
+	}
+
+	
+	
+	
+	
 	
 	
 	

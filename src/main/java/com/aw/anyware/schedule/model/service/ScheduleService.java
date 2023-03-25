@@ -28,6 +28,14 @@ public interface ScheduleService {
 	// 스케줄 목록 조회
 	ArrayList<Schedule> scheduleList(int memberNo);
 	
+	// 스케줄 상세 조회
+	ArrayList<Schedule> detailScheduleList(Schedule s);
+	
+	
+	
+	// 키워드 검색
+	ArrayList<Schedule> searchKeyword(Schedule s);
+	
 	
 	
 	

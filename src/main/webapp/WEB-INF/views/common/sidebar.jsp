@@ -191,11 +191,6 @@ a {
     margin-right: 50px;
     margin-top: 10px;
 }
-#chat-wrapper{
-    margin-top: 7px;
-    margin-right: 10px;
-}
-
 .drop-btn{
 	border:none;
 	background:white;
@@ -374,26 +369,174 @@ a {
         </div>
 
       
-
-        <div id="chat-wrapper" style="display: inline-block;">
-            <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
-                <img id="profileImg" src="resources/images/chat/MessengerIcon.png" width="55px" height="55px"  class="rounded-circle" alt="Cinque Terre" >
+        <div class="messenger-wrapper">
+            <button onclick="toggleDropdown()" class="messengerbtn">
+                <img id="messengerImg" src="resources/images/chat/MessengerIcon.png">
             </button>
-          
-            <div class="dropdown-menu dropdown-menu-sm" id="chat-dropdown">
-                <div class="chat-menu" aria-labelledby="dropdownMenuClickableInside">
-                    <button class="menubtn">
-                        <ion-icon name="people-outline" class="group"></ion-icon>
-                    </button>
-                    <button class="menubtn">
-                        <ion-icon name="git-network-outline"></ion-icon>
-                    </button>
+            <div id="messenger-area" class="messenger-area">
+                <div class="tab active" id="chatList" onclick="showContent('content1', 'chatList')"><ion-icon name="people-outline" class="group"></ion-icon></div>
+                <div class="tab" id="people" onclick="showContent('content2', 'people')"><ion-icon name="git-network-outline"></ion-icon></div>
+                <div id="content1" class="tab-content">
+                    <!-- 채팅 리스트 -->
+                    <h3 class="title">메신저 목록</h2>
+                    <div class="list-area">
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p><span>3</span>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/green.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                        <div class="list-set">
+                            <img src="${loginUser.profileUrl}">
+                            <div class="chat-content">
+                              <div class="chat-info">
+                                <h2 class="chat-name"><img src="resources/images/chat/red.png" class="loginCheck">이름(부서/직급)</h2>
+                                <p class="chat-time">시간</p>
+                              </div>
+                              <p class="chat-preview">채팅내용 한줄</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="content2" class="tab-content" style="display: none;">
+                    <!-- 주소록 -->
+                    <h3 class="title">주소록</h3><br>
+                    <div>
+
+                    </div>
+                </div>
+                <div class="chat-area">
+
                 </div>
             </div>
         </div>
-       
+
     </div>
 
-    
+    <script>
+        function toggleDropdown() {
+			var dropdownContent = document.getElementById("messenger-area");
+			if (dropdownContent.style.display === "block") {
+				dropdownContent.style.display = "none";
+			} else {
+				dropdownContent.style.display = "block";
+
+                var tabs = document.getElementsByClassName("tab");
+                for (var i = 0; i < tabs.length; i++) {
+                    tabs[i].classList.remove("active");
+                }
+                
+                // 선택한 탭에 active 클래스를 추가합니다.
+                document.getElementById("chatList").classList.add('active');
+                }
+                document.getElementById("content1").style.display = "block";
+                document.getElementById("content2").style.display = "none";
+		}
+		
+		function showContent(contentName, tabName) {
+			// 모든 내용을 숨깁니다.
+			var contents = document.getElementsByClassName("tab-content");
+			for (var i = 0; i < contents.length; i++) {
+				contents[i].style.display = "none";
+			}
+			
+			// 선택한 내용을 보여줍니다.
+			document.getElementById(contentName).style.display = "block";
+			
+			// 모든 탭의 active 클래스를 제거합니다.
+			var tabs = document.getElementsByClassName("tab");
+			for (var i = 0; i < tabs.length; i++) {
+				tabs[i].classList.remove("active");
+			}
+			
+			// 선택한 탭에 active 클래스를 추가합니다.
+			document.getElementById(tabName).classList.add('active');
+		}
+    </script>
+
 </body>
 </html>
