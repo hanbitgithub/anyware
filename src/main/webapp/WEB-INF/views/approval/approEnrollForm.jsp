@@ -228,7 +228,7 @@
 											+ "<td>" + memberList[i].jobName + "</td>"
 											+ "<td>" + memberList[i].deptName + "</td>"
 											+ "<td><input type='checkbox' name='approMem' value='"+ i +"'></td>"
-											+"</td>"
+											+"</tr>"
 								}
 								
 								$("#memberList tbody").html(value);
