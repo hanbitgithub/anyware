@@ -12,7 +12,7 @@
 		height:350px;
 	}
 	
-	 .list-area>tbody>tr:hover{
+	 .st-area>tbody>tr:hover{
     	cursor:pointer;
     }
 </style>
@@ -48,7 +48,7 @@
 		<h4><b>진행중인 문서</b></h4>
 		<br>
 		<div id="square">
-		<table class="list-area table" >
+		<table class="st-area table" >
 		    <thead>
 		        <tr>
 		           <th width="5px">번호</th>
@@ -94,7 +94,7 @@
 		<script>
 			<!-- 결재 상세 페이지-->
 			$(function(){
-				$(".list-area>tbody>tr").click(function(){
+				$(".st-area>tbody>tr").click(function(){
 						location.href ='detail.appro?approNo='+$(this).children().eq(0).text();
 				})
 			})

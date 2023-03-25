@@ -53,7 +53,6 @@
 /* 채팅리스트 css */
 .list-area{
     height: 640px;
-    overflow: auto;
 }
 .list-set {
     display: flex;
@@ -114,5 +113,43 @@
 
 /* 채팅창 css */
 .chat-area{
-    display: none;
+    /* display: none; */
+    border: 1px solid lightgray;
+    border-radius:10px;
+    margin-bottom: 10px;
+    height: 520px;
 }
+.chat-message{
+    margin:10px 5px;
+}
+.chat-message.mine{
+    display: flex;
+    justify-content:flex-end;
+}
+
+.chat-message .send-message{
+  padding: 5px 7px;
+  border-radius: 10px;
+  max-width: 190px;
+  font-size:0.9em;
+  white-space: pre-line;
+}
+.send-message{
+    margin-top: 5px;
+    display: inline-block;
+}
+.sendtime{
+    margin-right: 2px;
+    margin-left: 2px;
+    font-size: 10px;
+    color: gray;
+}
+.chat-message.other .send-message{background: lightgray;}
+.chat-message.mine .send-message{background: #FFE08C;}
+
+.profileImg{
+    width: 25px;
+    height: 25px;
+    margin-right: 2px;
+}
+

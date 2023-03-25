@@ -114,7 +114,11 @@ button:hover{
   font-size: 13px;
   font-weight:600;
 }  
-tr:hover {
+.rlist tr:hover {
+  background-color: #eee;
+  cursor: pointer;
+}
+.slist tr:hover {
   background-color: #eee;
   cursor: pointer;
 }
@@ -306,10 +310,10 @@ tr:hover {
                <!-- Nav tabs -->
                <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" role="tablist">
                  <li class="nav-item">
-                   <a class="nav-link active" data-toggle="tab" href="#receive" style="color:rgb(88, 88, 88);">받은메일</a>
+                   <a class="nav-link active" data-toggle="tab" href="#receiveM" style="color:rgb(88, 88, 88);">받은메일</a>
                  </li>
                  <li class="nav-item">
-                   <a class="nav-link" data-toggle="tab" href="#send" style="color:rgb(88, 88, 88)">보낸메일</a>
+                   <a class="nav-link" data-toggle="tab" href="#sendM" style="color:rgb(88, 88, 88)">보낸메일</a>
                  </li>
                 
                </ul>
@@ -317,13 +321,13 @@ tr:hover {
              
                <!-- Tab panes -->
                <div class="tab-content" style="padding:0px;">
-                 <div id="receive" class="container tab-pane active">
+                 <div id="receiveM" class="container tab-pane active">
                   <table class="table table-hover rlist"  style="font-size:13px">
                  
                   </table>
                   
                  </div>
-                 <div id="send" class="container tab-pane fade">       
+                 <div id="sendM" class="container tab-pane fade">       
                    <table class="table table-hover slist" style="font-size:13px">
 	      
                   </table>
