@@ -368,11 +368,12 @@ a {
               <a class="dropdown-item" href="logout.me">로그아웃</a>
             </div>
         </div>
+        
 
       
         <div class="messenger-wrapper">
             <button onclick="toggleDropdown()" class="messengerbtn">
-                <img id="messengerImg" src="resources/images/chat/MessengerIcon.png">
+                <img id="messengerImg" src="resources/images/chat/MessengerIcon.png" width="50">
             </button>
             <div id="messenger-area" class="messenger-area">
                 <div class="tab active" id="chatList" onclick="showContent('chat-list', 'chatList')"><ion-icon name="people-outline" class="group"></ion-icon></div>

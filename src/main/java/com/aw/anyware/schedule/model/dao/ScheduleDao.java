@@ -74,9 +74,36 @@ public class ScheduleDao {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.scheduleList", memberNo);
 	}
 	
+	/** 스케줄 상세 조회
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
 	public ArrayList<Schedule> detailScheduleList(SqlSessionTemplate sqlSession, Schedule s) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.detailScheduleList", s);
 	}
+	
+	/** 캘린더 삭제시 일정 삭제
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
+	public int aaa(SqlSessionTemplate sqlSession, Schedule s) {
+		System.out.println("cccccccc dao ::" + s);
+		return sqlSession.delete("scheduleMapper.aaa", s);
+	}
+	
+	/** 스케줄 상세 조회 수정
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
+	public int updateScheduleModal(SqlSessionTemplate sqlSession, Schedule s) {
+		return sqlSession.update("scheduleMapper.updateScheduleModal", s);
+	}
+	
+	
+	
 	
 	
 	
@@ -90,6 +117,8 @@ public class ScheduleDao {
 	public ArrayList<Schedule> searchKeyword(SqlSessionTemplate sqlSession, Schedule s) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.searchKeyword", s);
 	}
+
+	
 	
 	
 	
