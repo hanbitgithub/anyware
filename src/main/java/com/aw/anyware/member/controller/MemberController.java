@@ -3,6 +3,7 @@ package com.aw.anyware.member.controller;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.AddressException;
@@ -34,6 +35,9 @@ public class MemberController {
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
+	
+	@Autowired
+	private HashMap<String, String> map;
 	
 
 	
@@ -71,6 +75,7 @@ public class MemberController {
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
+		System.out.println(loginUser);
 		
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
@@ -235,35 +240,91 @@ public class MemberController {
 	
 	@RequestMapping("commuteIn.me")
 	public ModelAndView enrollMember(Commute c, ModelAndView mv, HttpSession session) {
+		Commute checkTime = mService.selectCommute(c);
+		System.out.println("checkTime : " +checkTime);
+		String checkToday = mService.selectToday();
 		
-		int result = mService.insertCommute(c);
-		if(result > 0) {
+		if(checkTime == null) {
+			int result = mService.insertCommute(c);
+			if(result > 0) {
+				Commute cTime = mService.selectCommute(c);				
+				mv.addObject("commute", cTime);
+				mv.addObject("alertMsg", "출근하였습니다");
+				mv.setViewName("main");
+				return mv;
+			}else {
+				mv.addObject("errorMsg", "다시 시도해주십시오");
+				mv.setViewName("main");
+				return mv;
+			}
+		}else if(checkTime.getCommuteDate().equals(checkToday)) {
 			Commute cTime = mService.selectCommute(c);
 			
 			mv.addObject("commute", cTime);
-			mv.addObject("alertMsg", "출근하였습니다");
-			mv.setViewName("main");
-			return mv;
-		}else {
-			mv.addObject("errorMsg", "다시 시도해주십시오");
+			System.out.println("출근함");
+			mv.addObject("alertMsg", "이미 출근하였습니다");
 			mv.setViewName("main");
 			return mv;
 		}
-		
+		return mv;
 	}
+	
+		/*
+		if(checkTime.getCommuteDate().equals(checkToday)) {
+			
+			
+				Commute cTime = mService.selectCommute(c);
+				
+				mv.addObject("commute", cTime);
+				System.out.println("출근함");
+				mv.addObject("alertMsg", "이미 출근하였습니다");
+				mv.setViewName("main");
+				return mv;
+			
+			
+		}else {
+			int result = mService.insertCommute(c);
+			if(result > 0) {
+				Commute cTime = mService.selectCommute(c);
+				
+				mv.addObject("commute", cTime);
+				mv.addObject("alertMsg", "출근하였습니다");
+				mv.setViewName("main");
+				return mv;
+			}else {
+				mv.addObject("errorMsg", "다시 시도해주십시오");
+				mv.setViewName("main");
+				return mv;
+			}
+		}
+		*/
+		
+	
 	
 	@RequestMapping("commuteOut.me")
 	public ModelAndView commuteOut(Commute c, ModelAndView mv, HttpSession session) {
-		int result = mService.commuteOut(c);
-		if(result > 0) {
-			Commute cTime = mService.selectCommute(c);
-			
-			mv.addObject("commute", cTime);
-			mv.addObject("alertMsg", "퇴근하였습니다");
-			mv.setViewName("main");
-			return mv;
+		Commute checkTime = mService.selectCommute(c);
+		System.out.println(checkTime);
+		if(checkTime.getCommuteOut() == null) {
+			int result = mService.commuteOut(c);
+			if(result > 0) {
+				Commute cTime = mService.selectCommute(c);
+				
+				mv.addObject("commute", cTime);
+				mv.addObject("alertMsg", "퇴근하였습니다");
+				mv.setViewName("main");
+				return mv;
+			}else {
+				mv.addObject("errorMsg", "다시 시도해주십시오");
+				mv.setViewName("main");
+				return mv;
+			}
+		
+		
 		}else {
-			mv.addObject("errorMsg", "다시 시도해주십시오");
+			Commute cTime = mService.selectCommute(c);
+			mv.addObject("commute", cTime);
+			mv.addObject("alertMsg", "이미 퇴근하였습니다");
 			mv.setViewName("main");
 			return mv;
 		}
