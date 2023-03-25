@@ -109,7 +109,7 @@
     		job_name,
     		position,
     		duty,
-    		name,
+    		m.name,
     		member_id,
     		member_pwd,
     		TO_CHAR(to_date(substr(rrn,1,6),'RRMMDD'), 'YY"년" MM"월" DD"일"') as "rrn",
@@ -119,7 +119,9 @@
     		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
     		profile_url
-    	from tb_member
+    		
+    	from tb_member m
+    	   		    	    	
        where status = 'Y'
        and member_id = #{memberId}
       
@@ -207,8 +209,13 @@
   
   <select id="selectCommute" resultMap="commuteResult">
   	select
-  			commute_in,
-  			commute_out
+  				COMMUTE_NO,
+				NAME,
+				COMMUTE_IN,
+				COMMUTE_OUT,
+				COMMUTE_DATE,
+				MEMBER_NO,
+				COMMUTE_STATUS
   		from tb_commute
   	   where commute_no = (select commute_no
 						        from(select  commute_no
@@ -218,6 +225,13 @@
 						    where rownum = 1)
   		
   </select>
+  
+  <select id="selectToday" resultType="string">
+		select
+				TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+			from dual
+		   
+	</select>
   
  <insert id="insertMember">
  	insert

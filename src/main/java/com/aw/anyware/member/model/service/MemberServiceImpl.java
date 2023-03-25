@@ -93,6 +93,12 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.selectCommute(sqlSession, c);
 	}
+	
+	@Override
+	public String selectToday() {
+		
+		return mDao.selectToday(sqlSession);
+	}
 
 	@Override
 	public int insertMember(Member m) {
@@ -156,6 +162,8 @@ public class MemberServiceImpl implements MemberService {
 	public double selectMonthCommute(int memNo) {
 		return mDao.selectMonthCommute(sqlSession, memNo);
 	}
+
+	
 
 
 	

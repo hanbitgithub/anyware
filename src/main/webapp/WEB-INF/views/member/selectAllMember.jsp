@@ -71,8 +71,9 @@ select{
                 <br>
 
                 <div id="search-area">
-                    <form action="" method="get">
+                    <form action="search.me" method="get">
                     <input type="hidden" name="cpage" value="1">
+                    <input type="hidden" name="deptName" value="${loginUser.deptName}">
                          <select name="condition">
                              <option value="">인사부</option>
                              <option value="">총무부</option>

@@ -146,4 +146,9 @@ public class MemberDao {
 	public double selectWeeklyCommute(SqlSessionTemplate sqlSession,int memNo ) {
 		return sqlSession.selectOne("memberMapper.selectWeeklyCommute", memNo);
 	}
+
+	public String selectToday(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("memberMapper.selectToday");
+	}
 }

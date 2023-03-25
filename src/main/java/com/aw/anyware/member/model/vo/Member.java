@@ -47,6 +47,9 @@ public class Member {
 	private String checkPwd; // 비밀번호 찾기
 	
 	private String offDate; // 연차 날짜
+	
+	private String commuteIn;
+	private String commuteOut;
 
 }
 
