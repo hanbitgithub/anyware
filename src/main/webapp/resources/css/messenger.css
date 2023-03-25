@@ -73,7 +73,7 @@
 .chat-content {
     flex: 1;
 }
-.chat-info {
+.chat-info, .preview-div {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,6 +102,11 @@
     width: 10px;
     height: 10px;
     margin-right: 5px;
+}
+.notread{
+    margin: 8px 5px 0 0;
+    color: red;
+    font-weight: bold;
 }
 
 /* 주소록 css */
