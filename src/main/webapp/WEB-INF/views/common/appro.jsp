@@ -14,12 +14,12 @@
 
 <style>
 
-    .list-area{
+    .st-area{
         text-align: center;
         font-size: 80%;
     }
     
-    .list-area>tbody>tr:hover{
+    .st-area>tbody>tr:hover{
     	background:gray;
     	
     }

@@ -174,7 +174,7 @@
 	      <div class="modal-body">
 	      
    			<div style="width:100%; height:350px; overflow:auto">
-				<table class="list-area table" id="memberList" >
+				<table class="st-area table" id="memberList" >
 				    <thead>
 				        <tr>
 				           <th width="30px">이름</th>
@@ -308,7 +308,7 @@
 	      <div class="modal-body">
 	      
    			<div style="width:100%; height:350px; overflow:auto">
-				<table class="list-area table" id="refList" >
+				<table class="st-area table" id="refList" >
 				    <thead>
 				        <tr>
 				           <th width="30px">이름</th>
@@ -443,7 +443,7 @@
 	      <div class="modal-body">
 	      
    			<div style="width:100%; height:350px; overflow:auto">
-				<table class="list-area table" id="openList" >
+				<table class="st-area table" id="openList" >
 				    <thead>
 				        <tr>
 				           <th width="30px">이름</th>
