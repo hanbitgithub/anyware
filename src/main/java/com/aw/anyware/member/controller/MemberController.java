@@ -543,5 +543,15 @@ public class MemberController {
 		System.out.println(m);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="commute.me",produces = "application/json; charset=utf-8")
+	public String selectCommteToday(HttpSession session) {
+		
+		int memNo = ((Member) session.getAttribute("loginUser")).getMemberNo();
+		Commute c = mService.selectTodayCommute(memNo);
+		return new Gson().toJson(c);
+		
+	}
+	
 
 }
