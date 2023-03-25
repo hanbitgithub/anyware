@@ -356,10 +356,11 @@ a {
     <div class="header">
         <div id="profile" style="display: inline-block;">
             <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
-                <img id="profileImg" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />" width="50px" height="50px"  class="rounded-circle" alt="Cinque Terre" >
+                <img id="profileImg" src="<c:out value='${loginUser.profileUrl }' default='resources/images/profile2.jpg' />" width="55px" height="55px"  class="rounded-circle" alt="Cinque Terre" >
             </button>
            
-            <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
+          
+            <div class="dropdown-menu dropdown-menu-sm" style="font-size: 14px;">
               <a class="dropdown-item" href="memberUpdate.me">정보수정</a>
               <a class="dropdown-item" href="attendence.me">근태관리</a>
               <a class="dropdown-item" href="leaveOff.me?memberNo=${loginUser.memberNo}&leaveOff${loginUser.leaveOff}">연차신청</a>
@@ -367,6 +368,7 @@ a {
             </div>
         </div>
 
+      
         <div class="messenger-wrapper">
             <button onclick="toggleDropdown()" class="messengerbtn">
                 <img id="messengerImg" src="resources/images/chat/MessengerIcon.png">
