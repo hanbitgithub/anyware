@@ -75,7 +75,6 @@ public class MemberController {
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
 		
 		Member loginUser = mService.loginMember(m);
-		System.out.println(loginUser);
 		
 		if(loginUser == null) {
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
@@ -161,8 +160,7 @@ public class MemberController {
 	
 	@RequestMapping("changePwd.me")
 	public String changePwd2(Member m, Model model, HttpSession session) {
-		String mPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();
-		System.out.println("mPwd : " + mPwd);
+		String mPwd = ((Member)session.getAttribute("loginUser")).getMemberPwd();		
 		if(mPwd != null && bcryptPasswordEncoder.matches(m.getMemberPwd(), mPwd)) {
 			String encPwd = bcryptPasswordEncoder.encode(m.getUpdatePwd());
 			
@@ -240,8 +238,7 @@ public class MemberController {
 	
 	@RequestMapping("commuteIn.me")
 	public ModelAndView enrollMember(Commute c, ModelAndView mv, HttpSession session) {
-		Commute checkTime = mService.selectCommute(c);
-		System.out.println("checkTime : " +checkTime);
+		Commute checkTime = mService.selectCommute(c);		
 		String checkToday = mService.selectToday();
 		
 		if(checkTime == null) {
@@ -261,14 +258,25 @@ public class MemberController {
 			Commute cTime = mService.selectCommute(c);
 			
 			mv.addObject("commute", cTime);
-			System.out.println("출근함");
 			mv.addObject("alertMsg", "이미 출근하였습니다");
 			mv.setViewName("main");
 			return mv;
+		}else {
+			int result = mService.insertCommute(c);
+			if(result > 0) {
+				Commute cTime = mService.selectCommute(c);				
+				mv.addObject("commute", cTime);
+				mv.addObject("alertMsg", "출근하였습니다");
+				mv.setViewName("main");
+				return mv;
+			}else {
+					mv.addObject("errorMsg", "다시 시도해주십시오");
+					mv.setViewName("main");
+					return mv;
+			}
+		
 		}
-		return mv;
 	}
-	
 		/*
 		if(checkTime.getCommuteDate().equals(checkToday)) {
 			
@@ -488,21 +496,44 @@ public class MemberController {
 	
 	@RequestMapping("leaveOff.me")
 	public ModelAndView leaveOff(Member m, ModelAndView mv) {
-		System.out.println(m);
+		
 		if(m.getLeaveOff() > 0) {
-			LeaveOff lo = mService.selectLastOff(m);
-			System.out.println(lo);
+			mv.setViewName("member/leaveOff");
+			return mv;
 			
 		}else {
 			mv.addObject("alertMsg", "사용 가능한 잔여 연차가 없습니다");
-			mv.setViewName("member/main");
+			mv.setViewName("main");
+			return mv;
 		}
-		
-		
-		mv.setViewName("member/leaveOff");
-		return mv;
+						
 	}
 	
+	@RequestMapping("insertOff.me")
+	private ModelAndView insertOff(LeaveOff lo, HttpSession session, ModelAndView mv) {
+		System.out.println("이름 : " + lo);
+		int leaveOff = ((Member)session.getAttribute("loginUser")).getLeaveOff();	
+		LeaveOff lof = mService.selectLastOff(lo);
+		if((lof == null) || (leaveOff > 0)) {
+			int result = mService.insertOff(lo);
+			if(result > 0) {
+				mv.addObject("alertMsg", "연차를 신청하였습니다");
+				mv.setViewName("main");
+				return mv;
+			}else {
+				mv.addObject("alertMsg", "연차 신청에 실패했습니다. 다시 시도해주세요");
+				mv.setViewName("main");
+				return mv;
+			}
+		}else {
+			mv.addObject("alertMsg", "연차를 신청할 수 없습니다");
+			mv.setViewName("main");
+			return mv;
+		}
+	}
+	
+	
+	/*
 	@RequestMapping("attendence.me")
 	public String attendenceMember(HttpSession session, Model model) {
 		
@@ -528,7 +559,8 @@ public class MemberController {
 		
 		return "member/attendenceMember";
 	}
-	
+	*/
+	/*
 	@ResponseBody
 	@RequestMapping(value="attendenceList.me",produces = "application/json; charset=utf-8")
 	public String memberAttendenceList(int memberNo) {
@@ -537,12 +569,9 @@ public class MemberController {
 		//System.out.println(list);
 		return new Gson().toJson(list);
 	}
+	*/
 	
-	@RequestMapping("applyOff.me")
-	public void applyOff(Member m) {
-		System.out.println(m);
-	}
-	
+	/*
 	@ResponseBody
 	@RequestMapping(value="commute.me",produces = "application/json; charset=utf-8")
 	public String selectCommteToday(HttpSession session) {
@@ -552,6 +581,6 @@ public class MemberController {
 		return new Gson().toJson(c);
 		
 	}
-	
+	*/
 
 }

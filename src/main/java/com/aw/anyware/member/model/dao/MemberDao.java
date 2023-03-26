@@ -124,9 +124,9 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.makeNewPwd", m);
 	}
 
-	public LeaveOff selectLastOff(SqlSessionTemplate sqlSession, Member m) {
+	public LeaveOff selectLastOff(SqlSessionTemplate sqlSession, LeaveOff lo) {
 		
-		return sqlSession.selectOne("memberMapper.selectLastOff", m);
+		return sqlSession.selectOne("memberMapper.selectLastOff", lo);
 	}
 
 	
@@ -146,9 +146,15 @@ public class MemberDao {
 	public double selectWeeklyCommute(SqlSessionTemplate sqlSession,int memNo ) {
 		return sqlSession.selectOne("memberMapper.selectWeeklyCommute", memNo);
 	}
-
+	
 	public String selectToday(SqlSessionTemplate sqlSession) {
 		
 		return sqlSession.selectOne("memberMapper.selectToday");
 	}
+
+	public int insertOff(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.insert("memberMapper.insertOff");
+	}
+	
 }

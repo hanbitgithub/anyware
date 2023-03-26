@@ -64,9 +64,9 @@ public interface MemberService {
 	
 	// 연차
 	
-	LeaveOff selectLastOff(Member m);
+	LeaveOff selectLastOff(LeaveOff lo);
 	
-	
+	int insertOff(LeaveOff lo);
 	
 	//Member selectDayOff(Member m);
 	

@@ -170,12 +170,12 @@ button:hover{
 			
 					<tr>
 						<th width="150" height="30px">출근</th>
-						<td width="200" id="commuteIn"></td>
+						<td width="200" id="commuteIn">${commute.commuteIn}</td>
 					
 					</tr>
 					<tr>
 						<th width="150">퇴근</th>
-						<td width="200" id="commuteOut"></td>
+						<td width="200" id="commuteOut">${commute.commuteOut}</td>
 					</tr>
 				
 				</table>
@@ -208,8 +208,21 @@ button:hover{
 			
 			})
 		</script>
+		
+		<script>
+          function enrollAndOut(num){
+        	         	
+          	          	          	          	  
+            if(num == 1){
+                    location.href = 'commuteIn.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
+                    				//+'&commuteDate='+cDate + '&commuteIn='+cTime;
+            }else{
+                    location.href = 'commuteOut.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}';
+            }
+          }
+        </script>
         	
-        <script>
+        <!--  <script>
           function enrollAndOut(num){
         	 
         	  
@@ -240,10 +253,10 @@ button:hover{
              }
           }
           }
-        </script>
+        </script> 
         
         
-        <script>
+        <!--  <script>
 			$(document).ready(function(){
 						
 						$.ajax({
@@ -274,7 +287,7 @@ button:hover{
 					})
 					
         
-        </script>
+        </script>-->
         
 
 
