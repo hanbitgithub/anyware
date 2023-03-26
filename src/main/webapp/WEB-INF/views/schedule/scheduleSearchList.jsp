@@ -10,6 +10,7 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
     <style>
 
+    
     /*컨텐트 영역*/
     .content {
         /* border: 1px solid rgb(129, 129, 252); */
@@ -95,7 +96,6 @@
         font-weight: 600;
     }
 
-
     /* 캘린더 부분 */
     .main-right-2 {
         /* border: 1px solid rgb(129, 129, 252); */
@@ -105,8 +105,13 @@
         top: 35px;
         padding: 20px;
     }
-    
-    
+
+    .ppaging {
+        /* border: 1px solid rgb(129, 129, 252); */
+        width:27%;
+        margin-left:340px;
+    }
+
     /* 모달 */
     /* 새 일정 추가 모달 AddScheduleModal / 드래그 새 일정 추가 모달  */
     #calendarNo, #startDate, #startTime, #endDate, #endTime, #scTitle, #scContent {
@@ -116,8 +121,30 @@
     #startTime, #endTime {
         height: 28px;
     }
-    
+    /* 드래그시 새 일정 추가 모달 */
+    #dragCalendarNo, #dragStartDate, #dragStartTime, #dragEndDate, #dragEndTime, #dragScTitle, #dragScContent {
+    	width: 100%;
+    }
 
+    #dragStartTime, #dragEndTime {
+        height: 28px;
+    }
+    /*  클릭시 상세 보기 모달 */
+    #clickCalendarNo, #clickStartDate, #clickStartTime, #clickEndDate, #clickEndTime, #clickScTitle, #clickScContent {
+    	width: 100%;
+    }
+
+    #clickStartTime, #clickEndTime {
+        height: 28px;
+    }
+    /*  클릭시 상세 보기 수정 모달 */
+    #cccc, #modifyStartDate, #modifyStartTime, #modifyEndDate, #modifyEndTime, #modifyScTitle, #modifyScContent {
+    	width: 100%;
+    }
+
+    #modifyStartTime, #modifyEndTime {
+        height: 28px;
+    }
 
     /* 내 캘린더 추가 체크박스 */
     .mycalenderCheckbox input[type="checkbox"] {
@@ -169,12 +196,15 @@
         appearance: none;
         cursor: pointer;
         transition: background 0.2s;
-        border: 1px solid rgb(77, 77, 77);
+        background:transparent;
+        /* border: 1.5px solid rgb(77, 77, 77); */
     }
 
     #myCalendars input[type="checkbox"]:checked {
-        background: #5e90e7;
-        border: none;
+        
+        /* background:transparent !important; */
+        border:2px solid rgb(77, 77, 77);
+
     }
     
     #myCalendars>div {
@@ -185,6 +215,9 @@
     #myCalendars button {position:absolute; right:0px;}
 
     .myCalendars img {position:absolute; right:0px;}
+
+    /* 수정하기 버튼 */
+    /* #modifyImg:hover {display:block;} */
 
     /* 리스트 */
     #navbarSupportedContent {position:relative;}
@@ -269,7 +302,7 @@
                         <c:otherwise>
                             <c:forEach var="l" items="${ list }">
                                 <tr style="text-align:center;">
-                                    <td width="30%;">${l.startDate}</td>
+                                    <td width="30%;">${l.startDate} ~ ${l.endDate}</td>
                                     <td width="30%;">${l.myCalendar}</td>
                                     <td width="30%;">${l.scTitle}</td>
                                 </tr>
@@ -277,6 +310,20 @@
                         </c:otherwise>
                     </c:choose>
                 </table>
+                <br><br><br><br>
+
+                <!-- 페이징 -->
+                <div class="ppaging">
+                <ul class="pagination pagination-sm">
+                    <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                    <li class="page-item"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                    <li class="page-item"><a class="page-link" href="#">5</a></li>
+                    <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                  </ul>
+                </div>
 
             </div>
         </div>
@@ -287,7 +334,7 @@
 
 <!------------------------------------------------ 모달 ------------------------------------------ -->
 
-    <!-- 새 일정 추가 모달 -->
+       <!-- 새 일정 추가 모달 -->
     <div class="modal" id="AddScheduleModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -452,7 +499,7 @@
                         </table>
 
                         <div class="modal-footer" style="border:none;">
-                            <button type="button" class="btn btn-primary btn-sm" onClick="AddScheduleModal();">저장</button>
+                            <button type="button" class="btn btn-primary btn-sm" onClick="AddScheduleModal();" data-dismiss="modal">저장</button>
                             <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
                         </div>
                         
@@ -580,26 +627,36 @@
                                 <th style="text-align:center">내 캘린더 색상</th>
                                 <td>
                                     <div class="mycalenderCheckbox">
+                                        <label for="pink" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(255, 206, 214)" id="pink" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="pink" class="check-label"></label>
+                                        </label>
+                                        <label for="red" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(255, 50, 50)" id="red" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="red" class="check-label"></label>
+                                        </label>
+                                        <label for="orange" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(255, 177, 33)" id="orange" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="orange" class="check-label"></label>
+                                        </label>
+                                        <label for="yellow" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(255, 243, 21)" id="yellow" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="yellow" class="check-label"></label>
+                                        </label>
+                                        <label for="lightgreen" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(184, 235, 82)" id="lightgreen" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="lightgreen" class="check-label"></label>
+                                        </label>
+                                        <label for="green" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(38, 189, 38)" id="green" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="green" class="check-label"></label>
+                                        </label>
+                                        <label for="lightblue" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(186, 230, 245)" id="lightblue" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="lightblue" class="check-label"></label>
+                                        </label>
+                                        <label for="blue" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(30, 66, 248)" id="blue" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="blue" class="check-label"></label>
+                                        </label>
+                                        <label for="purple" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(206, 101, 229)" id="purple" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="purple" class="check-label"></label>
+                                        </label>
+                                        <label for="black" class="check-label">
                                         <input type="checkbox" name="scColor" value="rgb(77, 76, 76)" id="black" class="scColor" onclick="checkOnlyOne(this);">
-                                        <label for="black" class="check-label"></label>
+                                        </label>
                                     </div>
                                 </td>
                             </tr>
@@ -608,7 +665,7 @@
                         <div class="modal-footer" style="border:none;">
                             <button type="button" class="btn btn-primary btn-sm" onClick="calendarModalupdate();" data-dismiss="modal">수정</button>
                             <button type="button" class="btn btn-primary btn-sm" onClick="calendarModaldelete();" data-dismiss="modal" >삭제</button>
-                            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">취소</button>
+                            <button type="button" class="btn btn-secondary btn-sm" onClick="calendarCloseModalBtn();"data-dismiss="modal" >취소</button>
                         </div>
 
                     <script>
@@ -657,6 +714,8 @@
 <script>
     
     let selectCalendarNoModal = ''; // 내 캘린더 수정
+
+    
 
     // 새 일정 추가 스크립트 
     function AddScheduleModal() {
@@ -786,48 +845,54 @@
 
     // 내 캘린더 목록 / 일정 추가 카테고리
     function calendarList() {
-            //console.log("calendarList")
-            $.ajax({
-                url: "calendarList.sc",
-                data: {},
-                success: function (resData) {
-                    // console.log(resData[i].scColor)
-                    //console.log(resData.length)
-                    let html = '';
-                    let html2 = '';
-                    if (resData.length == 0) {
-                    //     html += '<input type="checkbox"><span>&nbsp;&nbsp;&nbsp;' + "내 일정" + '</span>';
-                    } else {
-                        
-                        for (let i = 0; i < resData.length; i++) {
-                            //console.log(resData[i].scColor)
-                            html += '<div class="cName"><input type="checkbox" name="scColor" class="scColor" style="background:' + resData[i].scColor + '">'
-                                 + '&nbsp;&nbsp;&nbsp;' + resData[i].myCalendar + '</div>'
-                                 + '<button type="button" style="background-color:transparent; border:none;" data-toggle="modal" data-target="#ModifymyCalendarModal" onclick="ModifymyCalendarModal('+ resData[i].calendarNo +');"><img src="resources/images/modification.png" style="width:17px; height:17px;"></button><br>';
-                            html2 += '<option value="' + resData[i].calendarNo + '">' + resData[i].myCalendar + '</option>'
-                            }
-                            //console.log(resData[i].myCalendar);
+        //console.log("calendarList")
+        $.ajax({
+            url: "calendarList.sc",
+            data: {},
+            success: function (resData) {
+                // console.log(resData[i].scColor)
+                //console.log(resData.length)
+                let html = '';
+                let html2 = '';
+                if (resData.length == 0) {
+                //     html += '<input type="checkbox"><span>&nbsp;&nbsp;&nbsp;' + "내 일정" + '</span>';
+                } else {
+                    
+                    for (let i = 0; i < resData.length; i++) {
+                        //console.log(resData[i].scColor)
+                        html += '<div class="cName"><input type="checkbox" id="cScColor" name="scColor" class="scColor" style="background:' + resData[i].scColor + '">'
+                             + '&nbsp;&nbsp;&nbsp;' + resData[i].myCalendar + '</div>'
+                             + '<button type="button" style="background-color:transparent; border:none;" data-toggle="modal" data-target="#ModifymyCalendarModal" onclick="ModifymyCalendarModal('+ resData[i].calendarNo +');"><img id="modifyImg" src="resources/images/modification.png" style="width:17px; height:17px;"></button><br>';
+                        html2 += '<option value="' + resData[i].calendarNo + '">' + resData[i].myCalendar + '</option>'
+                        }
+                        //console.log(resData[i].myCalendar);
 
-                        $("#myCalendars").append(html);
-                        $("#calendarNo").html(html2);
-                        $("#dragCalendarNo").html(html2);
+                    $("#myCalendars").append(html);
+                    $("#calendarNo").html(html2);
+                    $("#dragCalendarNo").html(html2);
+                    $("#cccc").html(html2);
 
-                        // $(":checkbox[name='scColor'][value='" + resData.scColor + "']").attr
+                    
 
-                        // #myCalendars input[type="checkbox"]:checked {
-                        //         background: #5e90e7;
-                        //         border: none;
-                        //     }
+
+
+                    // if($("input:checkbox[id='cScColor']").prop("checked", true)) {
+                    //     $(this).css({
+                    //         background: 'black',
+                    //         border: '1px solid green'
+                    //     });
                         
-                        
-                    }
-                },
-                error: function () {
-                    console.log("내 캘린더목록");
+                    // }
+
+                    
                 }
-            });
+            },
+            error: function () {
+                console.log("내 캘린더목록");
+            }
+        });
 
-        }
+    }
 
     // 내 캘린더 수정 모달 화면
     function ModifymyCalendarModal(calendarNo) {
@@ -840,7 +905,7 @@
             //scColor : scColorCheckboxModal
         }
         
-        console.log(reqData)
+        //console.log(reqData)
 
         $.ajax({
             url: "selectCalendar.sc",
@@ -851,7 +916,11 @@
     
                 $('input[name=myCalendar]').attr("value", resData.myCalendar);
 
-                $(":checkbox[name='scColor'][value='" + resData.scColor + "']").attr('checked', true);
+                //$(":checkbox[name='scColor'][value='" + resData.scColor + "']").attr('checked', true);
+                
+                $(":checkbox[name='scColor'][value='" + resData.scColor + "']").attr('checked', true).after("<div class='ck'></div>");
+
+
 
 
             },
@@ -859,6 +928,15 @@
                 //console.log("내 캘린더목록");
             }
         });
+    }
+
+    // 내 캘린더 모달 취소 버튼
+    function calendarCloseModalBtn() {
+        $("#ModifymyCalendarModal input[type=checkbox]").each(function(){
+            $(this).prop("checked", false);
+            $(".ck").removeClass("ck");
+        })
+
     }
 
     // 내 캘린더 수정 
@@ -889,7 +967,7 @@
             url: "updateCalendar.sc",
             data: reqData,
             success: function (resData) {
-                console.log(resData)
+                //console.log(resData)
                 if (resData == "success") {
                     alert("내 캘린더를 수정했습니다.");
                     $("#myCalendars").empty();
@@ -926,7 +1004,7 @@
             scColor : color
         }
 
-        console.log(reqData)
+        //console.log(reqData)
 
         
         $.ajax({
@@ -948,8 +1026,11 @@
         });
         
     }
+    
+    
 
 </script>
+
 
 
 </body>

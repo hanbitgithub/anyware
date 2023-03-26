@@ -66,7 +66,15 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public int deleteCalendar(Calendar c) {
 		return scDao.deleteCalendar(sqlSession, c);
 	}
-
+	
+	/**
+	 * 캘린더 삭제시 해당 일정 삭제
+	 */
+	@Override
+	public int deleteCalendarSchedule(Schedule s) {
+		return scDao.deleteCalendarSchedule(sqlSession, s);
+	}
+	
 	/**
 	 * 스케줄 목록 조회
 	 */
@@ -84,14 +92,6 @@ public class ScheduleServiceImpl implements ScheduleService {
 	}
 	
 	/**
-	 * 캘린더 삭제시 일정 삭제
-	 */
-	@Override
-	public int aaa(Schedule s) {
-		return scDao.aaa(sqlSession, s);
-	}
-	
-	/**
 	 * 스케줄 상세 조회 수정
 	 */
 	@Override
@@ -99,13 +99,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scDao.updateScheduleModal(sqlSession, s);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * 스케줄 삭제
+	 */
+	@Override
+	public int deleteSchedule(Schedule s) {
+		return scDao.deleteSchedule(sqlSession, s);
+	}
 	
 	/**
 	 * 키워드 검색
@@ -114,6 +114,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 	public ArrayList<Schedule> searchKeyword(Schedule s) {
 		return scDao.searchKeyword(sqlSession, s);
 	}
+
+	
 
 	
 	

@@ -215,6 +215,14 @@
     #clickStartTime, #clickEndTime {
         height: 28px;
     }
+    /*  클릭시 상세 보기 수정 모달 */
+    #cccc, #modifyStartDate, #modifyStartTime, #modifyEndDate, #modifyEndTime, #modifyScTitle, #modifyScContent {
+    	width: 100%;
+    }
+
+    #modifyStartTime, #modifyEndTime {
+        height: 28px;
+    }
 
 
 
@@ -360,7 +368,7 @@
                                 center: 'title',
                                 right: 'dayGridMonth,timeGridWeek,timeGridDay'
                             },
-                            initialDate: '2023-01-12',
+                            initialDate: '2023-03-29',
                             navLinks: true, // can click day/week names to navig0ate views
                             selectable: true,
                             selectMirror: true,
@@ -425,7 +433,8 @@
                                                 start : data.startDate,
                                                 end: endDate2,
                                                 color: data.scColor,
-                                                scheduleNo : data.scheduleNo
+                                                scheduleNo : data.scheduleNo,
+                                                calendarNo : data.calendarNo
                                                 })
                                             
                                                 
@@ -1034,16 +1043,16 @@
                                         <!-- <input type="checkbox" name="scColor" value="pink" id="pink" class="scColor">
                                         <label for="pink" class="check-label"></label> -->
                                         <div style="width:17px; height:17px; background: black; border-radius:5px; display:inline-block;" id="scColorBox"></div>
-                                        <span id="xxx">&nbsp;&nbsp;캘린더 이름~~~</span>
+                                        <span id="xxx" readonly>&nbsp;&nbsp;캘린더 이름~~~</span>
                                     </div>
                                     
                                 </td>
                             </tr>
                             <tr>
                                 <th>일정시작</th>
-                                <td><input type="date" id="clickStartDate" name="startDate" value=""></td>
+                                <td><input type="date" id="clickStartDate" name="startDate" value="" readonly></td>
                                 <td>
-                                    <select id="clickStartTime" name="startTime">
+                                    <select id="clickStartTime" name="startTime" readonly>
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
                                         <option value="01:00">01:00</option>
@@ -1097,13 +1106,13 @@
                                 </td>
                                 <td id="alldayCheck" style="position:relative;">
                                     <input type="checkbox" id="clickallday" name="allday" value="Y"
-                                        style="width:17px; height:17px; margin-top:10px;">
+                                        style="width:17px; height:17px; margin-top:10px;" disabled>
                                     <span style="position:absolute; top:6px; right:25px;">종일</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>일정종료</th>
-                                <td><input type="date" id="clickEndDate" name="endDate"></td>
+                                <td><input type="date" id="clickEndDate" name="endDate" readonly></td>
                                 <td>
                                     <select id="clickEndTime" name="endTime">
                                         <option value="00:00">00:00</option>
@@ -1163,21 +1172,21 @@
                             <tr>
                                 <th>일정제목</th>
                                 <td colspan="3">
-                                    <input type="text" id="clickScTitle" name="scTitle" value=""/>
+                                    <input type="text" id="clickScTitle" name="scTitle" value="" readonly />
                                 </td>
                             </tr>
                             <tr>
                                 <th>일정내용</th>
                                 <td colspan="3">
                                     <textarea id="clickScContent" name="scContent"
-                                            style="width:100%;height:200px;resize: none;"></textarea>
+                                            style="width:100%;height:200px;resize: none;" readonly></textarea>
                                 </td>
                             </tr>
                         </table>
 
                         <div class="modal-footer" style="border:none;">
                             <button type="button" class="btn btn-primary btn-sm" id="qwer" data-toggle="modal" data-target="#ModifySchedulModal">수정</button> <!-- 수정 -->
-                            <button type="button" class="btn btn-primary btn-sm" onClick="clickAddScheduleModal();">삭제</button> <!-- 삭제 -->
+                            <button type="button" class="btn btn-primary btn-sm" onClick="deleteScheduleModal();">삭제</button> <!-- 삭제 -->
                             <button type="button" class="btn btn-secondary btn-sm" onclick="DetailCloseModalBtn();" data-dismiss="modal">확인</button>
                         </div>
                         
@@ -1195,7 +1204,7 @@
 
                 <!-- Modal body -->
                 <div class="modal-body">
-                    <span style="font-size:20px; font-weight:600;">상세보기</span>
+                    <span style="font-size:20px; font-weight:600;">수정하기</span>
                     <br><br>
 
                     <form action="">
@@ -1218,9 +1227,9 @@
                             </tr>
                             <tr>
                                 <th>일정시작</th>
-                                <td><input type="date" id="ModifyStartDate" name="startDate" value=""></td>
+                                <td><input type="date" id="modifyStartDate" name="startDate" value=""></td>
                                 <td>
-                                    <select id="ModifyStartTime" name="startTime">
+                                    <select id="modifyStartTime" name="startTime">
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
                                         <option value="01:00">01:00</option>
@@ -1273,16 +1282,16 @@
                                     </select>
                                 </td>
                                 <td id="alldayCheck" style="position:relative;">
-                                    <input type="checkbox" id="Modifyallday" name="allday" value="Y"
+                                    <input type="checkbox" id="modifyallday" name="allday" value="Y"
                                         style="width:17px; height:17px; margin-top:10px;">
                                     <span style="position:absolute; top:6px; right:25px;">종일</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>일정종료</th>
-                                <td><input type="date" id="ModifyEndDate" name="endDate"></td>
+                                <td><input type="date" id="modifyEndDate" name="endDate"></td>
                                 <td>
-                                    <select id="ModifyEndTime" name="endTime">
+                                    <select id="modifyEndTime" name="endTime">
                                         <option value="00:00">00:00</option>
                                         <option value="00:30">00:30</option>
                                         <option value="01:00">01:00</option>
@@ -1353,9 +1362,8 @@
                         </table>
 
                         <div class="modal-footer" style="border:none;">
-                            <button type="button" class="btn btn-primary btn-sm" onclick="modifyAddScheduleModal();">수정</button> <!-- 수정 -->
-                            <button type="button" class="btn btn-primary btn-sm" onClick="clickAddScheduleModal();">삭제</button> <!-- 삭제 -->
-                            <button type="button" class="btn btn-secondary btn-sm" onclick="DetailCloseModalBtn();" data-dismiss="modal">확인</button>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="modifyAddScheduleModal();" data-dismiss="modal">수정</button> 
+                            <button type="button" class="btn btn-secondary btn-sm" onclick="DetailCloseModalBtn();" data-dismiss="modal">취소</button>
                         </div>
                         
                     </form>
@@ -1663,7 +1671,7 @@
                 scColor : color
             }
 
-            console.log(reqData)
+            //console.log(reqData)
 
             
             $.ajax({
@@ -1809,14 +1817,19 @@
             $('#DragAddScheduleModal').modal('hide');
         }
         
-        let efef;
+        let efef; // scheduleNo
+        let fdfd; // calendarNo
         // 일정 클릭시 상세보기 모달 오픈
         function detailModal(arg) {
             $('#DetailScheduleModal').modal('show');
 
+            //console.log(arg);
             //console.log(arg.event.extendedProps.scheduleNo);
 
+            const calendarNo = arg.event.extendedProps.calendarNo;
             const scheduleNo = arg.event.extendedProps.scheduleNo;
+        
+            fdfd = calendarNo;
             efef = scheduleNo;
             //console.log(scheduleNo);
 
@@ -1855,6 +1868,8 @@
                                 box[i].selected = true;
                             } 
                         }
+                        $("#clickStartTime").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("#clickStartTime").attr('onChange', 'this.selectedIndex = this.initialSelect;');
                     }); 
 
                     // 종료시간
@@ -1867,8 +1882,9 @@
                             if(box2[i].value == endTime) {
                                 box2[i].selected = true;
                             } 
-
                         }
+                        $("#clickEndTime").attr('onFocus', 'this.initialSelect = this.selectedIndex;');
+                        $("#clickEndTime").attr('onChange', 'this.selectedIndex = this.initialSelect;');
                     }); 
 
                    
@@ -1934,12 +1950,12 @@
 
 
             // 날짜
-            document.querySelector("#ModifyStartDate").value = document.querySelector("#clickStartDate").value;
-            document.querySelector("#ModifyEndDate").value = document.querySelector("#clickEndDate").value;
+            document.querySelector("#modifyStartDate").value = document.querySelector("#clickStartDate").value;
+            document.querySelector("#modifyEndDate").value = document.querySelector("#clickEndDate").value;
 
             // 시작시간
             $(function(){
-                let box = document.getElementById('ModifyStartTime');
+                let box = document.getElementById('modifyStartTime');
                 let startTime = document.querySelector("#clickStartTime").value;
                 for(let i=0; i<box.length; i++) {
                     if(box[i].value == startTime) {
@@ -1949,7 +1965,7 @@
             }); 
             // 종료시간
             $(function(){
-                let box2 = document.getElementById('ModifyEndTime');
+                let box2 = document.getElementById('modifyEndTime');
                 let endTime = document.querySelector("#clickEndTime").value;
                 for(let i=0; i<box2.length; i++) {
                     if(box2[i].value == endTime) {
@@ -1962,27 +1978,28 @@
             
             //종일 
             $(function(){
-                if($('#ModifyEndTime').val() == '00:00' && $('#ModifyStartTime').val() == '00:00') {
-                    $("input:checkbox[id='Modifyallday']").prop("checked", true);
-                    $("#ModifyStartTime").prop("disabled", true);
-                    $("#ModifyEndTime").prop("disabled", true);
+                if($('#modifyEndTime').val() == '00:00' && $('#modifyStartTime').val() == '00:00') {
+                    $("input:checkbox[id='modifyallday']").prop("checked", true);
+                    $("#modifyStartTime").prop("disabled", true);
+                    $("#modifyEndTime").prop("disabled", true);
                 } else {
-                    $("input:checkbox[id='Modifyallday']").prop("checked", false);
-                    $("#ModifyStartTime").prop("disabled", false);
-                    $("#ModifyEndTime").prop("disabled", false);
+                    $("input:checkbox[id='modifyallday']").prop("checked", false);
+                    $("#modifyStartTime").prop("disabled", false);
+                    $("#modifyEndTime").prop("disabled", false);
                 }
+
                 
             }); 
 
-            $("input:checkbox[id='Modifyallday']").click(function(){
-                if($("input:checkbox[id='Modifyallday']").is(":checked")) {
-                    $('#ModifyStartTime').val("00:00");
-                    $('#ModifyEndTime').val("00:00");
-                    $("#ModifyStartTime").prop("disabled", true);
-                    $("#ModifyEndTime").prop("disabled", true);
+            $("input:checkbox[id='modifyallday']").click(function(){
+                if($("input:checkbox[id='modifyallday']").is(":checked")) {
+                    $('#modifyStartTime').val("00:00");
+                    $('#modifyEndTime').val("00:00");
+                    $("#modifyStartTime").prop("disabled", true);
+                    $("#modifyEndTime").prop("disabled", true);
                 } else {
-                    $("#ModifyStartTime").prop("disabled", false);
-                    $("#ModifyEndTime").prop("disabled", false);
+                    $("#modifyStartTime").prop("disabled", false);
+                    $("#modifyEndTime").prop("disabled", false);
                 }
             });
 
@@ -1992,14 +2009,14 @@
         function modifyAddScheduleModal() {
 
             let calendarNo = document.querySelector("#cccc").value
-	        let startDate = document.querySelector("#ModifyStartDate").value
-	        let startTime = document.querySelector("#ModifyStartTime").value
-	        let endDate = document.querySelector("#ModifyEndDate").value
-	        let endTime = document.querySelector("#ModifyEndTime").value
-	        let allday = document.querySelector("#Modifyallday").value
+	        let startDate = document.querySelector("#modifyStartDate").value
+	        let startTime = document.querySelector("#modifyStartTime").value
+	        let endDate = document.querySelector("#modifyEndDate").value
+	        let endTime = document.querySelector("#modifyEndTime").value
+	        let allday = document.querySelector("#modifyallday").value
 	        let scTitle = document.querySelector("#modifyScTitle").value
 	        let scContent = document.querySelector("#modifyScContent").value
-            // console.log(calendarNo);
+             //console.log(calendarNo);
             // console.log(startDate);
             // console.log(startTime);
             // console.log(endDate);
@@ -2060,7 +2077,66 @@
 
         }
 
+        // 일정 삭제
+        function deleteScheduleModal() {
+            let calendarNo = fdfd
+            let scheduleNo = efef
+            //let calendarNo = document.querySelector("#xxx").value
+	        let startDate = document.querySelector("#clickStartDate").value
+	        let startTime = document.querySelector("#clickStartTime").value
+	        let endDate = document.querySelector("#clickEndDate").value
+	        let endTime = document.querySelector("#clickEndTime").value
+	        let allday = document.querySelector("#clickallday").value
+	        let scTitle = document.querySelector("#clickScTitle").value
+	        let scContent = document.querySelector("#clickScContent").value
 
+            //console.log(calendarNo);
+            //console.log(scheduleNo);
+            // console.log(startDate);
+            // console.log(startTime);
+            // console.log(endDate);
+            // console.log(endTime);
+            // console.log(allday);
+            // console.log(scTitle);
+            // console.log(scContent);
+
+            const reqData = {
+                calendarNo : calendarNo,
+                scheduleNo : scheduleNo,
+                startDate : startDate,
+                startTime : startTime,
+                endDate : endDate,
+                endTime : endTime,
+                allday : allday,
+                scTitle : scTitle,
+                scContent : scContent
+            }
+
+            //console.log(reqData);
+
+            
+            $.ajax({
+                url: "deleteSchedule.sc",
+                data: reqData,
+                success: function (resData) {
+                    //console.log(resData)
+                    if (resData == "success") {
+                        alert("일정을 삭제했습니다.");
+                        $("#myCalendars").empty();
+                        calendarList();
+                    } else {
+                        alert("일정 삭제를 실패했습니다.");
+                    }
+                },
+                error: function () {
+                    console.log("일정 삭제 실패");
+                }
+            });
+            
+        
+
+
+        }
         
 
         // 키워드 검색

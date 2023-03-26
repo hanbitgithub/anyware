@@ -88,15 +88,16 @@ public class ScheduleController {
 	@ResponseBody
 	public String deleteCalendar(Calendar c, HttpSession session) {
 		c.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
-		System.out.println("c는" + c);		
+		//System.out.println("c는" + c);		
 		
+		// 캘린더 삭제시 해당 일정 삭제
 		Schedule q = new Schedule();
 		q.setCalendarNo(c.getCalendarNo());
 		q.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
-		System.out.println("qqq : " + q);
+		//System.out.println("qqq : " + q);
 		
-		int ss = scService.aaa(q);
-		System.out.println("ss :"+ss);
+		int ss = scService.deleteCalendarSchedule(q);
+		//System.out.println("ss :"+ss);
 		
 		int result = scService.deleteCalendar(c);
 
@@ -130,7 +131,7 @@ public class ScheduleController {
 	@ResponseBody
 	public String updateScheduleModal(Schedule s, HttpSession session) {
 		s.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
-		System.out.println("s를찍어볼게" + s);
+		//System.out.println("s를찍어볼게" + s);
 		int result = scService.updateScheduleModal(s);
 		
 		//System.out.println("result는" + result);
@@ -138,17 +139,15 @@ public class ScheduleController {
 		return result > 0 ? "success" : "fail";
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 스케줄 삭제
+	@RequestMapping("deleteSchedule.sc")
+	@ResponseBody
+	public String deleteSchedule(Schedule s, HttpSession session) {
+		s.setMemberNo(((Member)session.getAttribute("loginUser")).getMemberNo());
+		//System.out.println("s에 멤버넘버가 들어있을까 : " + s);
+		int result = scService.deleteSchedule(s);
+		return result > 0 ? "success" : "fail";
+	}
 	
 	// 키워드 검색
 	@GetMapping("searchKeyword.sc")

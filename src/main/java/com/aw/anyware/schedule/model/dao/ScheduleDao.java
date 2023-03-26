@@ -65,6 +65,15 @@ public class ScheduleDao {
 		return sqlSession.delete("scheduleMapper.deleteCalendar", c);
 	}
 	
+	/** 캘린더 삭제시 해당 일정 삭제
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
+	public int deleteCalendarSchedule(SqlSessionTemplate sqlSession, Schedule s) {
+		return sqlSession.delete("scheduleMapper.deleteCalendarSchedule", s);
+	}
+	
 	/** 스케줄 목록 조회 
 	 * @param sqlSession
 	 * @param memberNo
@@ -83,16 +92,6 @@ public class ScheduleDao {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.detailScheduleList", s);
 	}
 	
-	/** 캘린더 삭제시 일정 삭제
-	 * @param sqlSession
-	 * @param s
-	 * @return
-	 */
-	public int aaa(SqlSessionTemplate sqlSession, Schedule s) {
-		System.out.println("cccccccc dao ::" + s);
-		return sqlSession.delete("scheduleMapper.aaa", s);
-	}
-	
 	/** 스케줄 상세 조회 수정
 	 * @param sqlSession
 	 * @param s
@@ -103,11 +102,14 @@ public class ScheduleDao {
 	}
 	
 	
-	
-	
-	
-	
-	
+	/** 스케줄 삭제
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
+	public int deleteSchedule(SqlSessionTemplate sqlSession, Schedule s) {
+		return sqlSession.delete("scheduleMapper.deleteSchedule", s);
+	}
 	
 	/** 키워드 검색
 	 * @param sqlSession

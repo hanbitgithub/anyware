@@ -25,21 +25,20 @@ public interface ScheduleService {
 	// 내 캘린더 삭제
 	int deleteCalendar(Calendar c);
 	
+	// 캘린더 삭제시 해당 일정 삭제
+	int deleteCalendarSchedule(Schedule s);
+	
 	// 스케줄 목록 조회
 	ArrayList<Schedule> scheduleList(int memberNo);
 	
 	// 스케줄 상세 조회
 	ArrayList<Schedule> detailScheduleList(Schedule s);
 	
-	// 캘린더 삭제시 일정 삭제
-	int aaa(Schedule s);
-	
 	// 스케줄 상세 조회 수정
 	int updateScheduleModal(Schedule s);
 	
-	
-	
-	
+	// 스케줄 삭제
+	int deleteSchedule(Schedule s);
 	
 	// 키워드 검색
 	ArrayList<Schedule> searchKeyword(Schedule s);
