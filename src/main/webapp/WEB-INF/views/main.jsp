@@ -303,11 +303,15 @@ button:hover{
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
-				<th>중간기안자</th>
-				<th>최종기안자</th>
+				<th>기안자</th>
+				<th>중간결재자</th>
+				<th>최종결재자</th>
 		    </tr>
 			</thead>
 			<tbody style="border: white">
+				 <tr>
+                     <td colspan="5"> 조회된 결재가 없습니다.</td>
+                 </tr>
 			</tbody>
 		  </table>
 			</div>
@@ -331,17 +335,19 @@ button:hover{
 					
 					let m= "";
 					
-					for (let i=0; i< approList.length; i++){
-						m += "<tr>"
-								+ "<td>" + approList[i].approNo + "</td>"
-								+ "<td>" + approList[i].approTitle + "</td>"
-								+ "<td>" + approList[i].interName + "</td>"
-								+ "<td>" + approList[i].finalName + "</td>"
-								+"</tr>"
+					if(approList.length != 0){
+						for (let i=0; i< approList.length; i++){
+							m += "<tr>"
+									+ "<td>" + approList[i].approNo + "</td>"
+									+ "<td>" + approList[i].approTitle + "</td>"
+									+ "<td>" + approList[i].writerName + "</td>"
+									+ "<td>" + approList[i].interName + "</td>"
+									+ "<td>" + approList[i].finalName + "</td>"
+									+"</tr>"
+						}
+						
+						$("#approList tbody").html(m);
 					}
-					
-					$("#approList tbody").html(m);
-				  	
 					
 				},error:function(){
 					
