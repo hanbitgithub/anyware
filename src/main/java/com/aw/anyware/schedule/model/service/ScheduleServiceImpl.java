@@ -118,10 +118,12 @@ public class ScheduleServiceImpl implements ScheduleService {
 	/**
 	 * 키워드 검색 페이징
 	 */
-	@Override
-	public int selectListCount() {
-		return 0;
-	}
+//	@Override
+//	public int selectListCount() {
+//		return scDao.selectListCount(sqlSession);
+//	}
+
+
 
 	
 

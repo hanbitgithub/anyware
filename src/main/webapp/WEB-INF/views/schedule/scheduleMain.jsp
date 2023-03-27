@@ -2144,13 +2144,13 @@
         
 
         // 체크되어있는 캘린더 번호
-        check=[];
-        $(".cName").each(function(){
-            if($(this).is(":checked") == true){
-                check.push($(this).next().val());
-            }
-        })
-        console.log(check);
+        // check=[];
+        // $(".cName").each(function(){
+        //     if($(this).is(":checked") == true){
+        //         check.push($(this).next().val());
+        //     }
+        // })
+        // console.log(check);
 
 
         // 체크 이벤트 발생시 캘린더 번호 arr로
