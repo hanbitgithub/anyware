@@ -76,7 +76,7 @@ public class MemberDao {
 
 	public int insertCommute(SqlSessionTemplate sqlSession, Commute c) {
 		
-		return sqlSession.insert("memberMapper.insertCommute", c);
+		return sqlSession.update("memberMapper.insertCommute", c);
 		
 	}
 
@@ -167,14 +167,19 @@ public class MemberDao {
 		return sqlSession.update("memberMapper.cancelOff", lo);
 	}
 
-	public int deleteCommute(SqlSessionTemplate sqlSession) {
+	public int newCommute(SqlSessionTemplate sqlSession, Member nn) {
 		
-		return sqlSession.delete("memberMapper.deleteCommute");
+		return sqlSession.insert("memberMapper.newCommute", nn);
 	}
 
-	public int selectMN(SqlSessionTemplate sqlSession, Member m) {
+	public Member selectMN(SqlSessionTemplate sqlSession, Member m) {
 		
 		return sqlSession.selectOne("memberMapper.selectMN", m);
+	}
+
+	public ArrayList<Member> selectNN(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("memberMapper.selectNN");
 	}
 	
 }

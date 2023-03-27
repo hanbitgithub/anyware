@@ -52,8 +52,6 @@ public class Member {
 	
 	private String commuteIn;
 	private String commuteOut;
-	private String commuteDate;
-	
 	private String commuteStatus;
 	
 	private String commuteTime;

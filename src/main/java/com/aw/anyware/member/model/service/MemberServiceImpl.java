@@ -101,9 +101,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 	
 	@Override
-	public int deleteCommute() {
+	public int newCommute(Member nn) {
 		
-		return mDao.deleteCommute(sqlSession);
+		return mDao.newCommute(sqlSession, nn);
 	}
 
 	@Override
@@ -188,9 +188,15 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int selectMN(Member m) {
+	public Member selectMN(Member m) {
 		
 		return mDao.selectMN(sqlSession, m);
+	}
+
+	@Override
+	public ArrayList<Member> selectNN() {
+		
+		return mDao.selectNN(sqlSession);
 	}
 
 	

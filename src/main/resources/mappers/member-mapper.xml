@@ -108,7 +108,7 @@
   	   where member_no = #{memberNo}
   </select>
   
-  <select id="selectMN" resultType="_int">
+  <select id="selectMN" resultMap="memberResult">
 		select
 				member_no
 			from tb_member
@@ -135,9 +135,8 @@
     		profile_url,
     		COMMUTE_NO,			
 			COMMUTE_IN,
-			COMMUTE_OUT,
-			COMMUTE_DATE,
-			COMMUTE_STATUS
+			COMMUTE_OUT
+			
     		
     		
     	from tb_member m
@@ -194,38 +193,27 @@
   			
   </update>
   
-  <insert id="insertCommute">
-  	insert
-  			into tb_commute
-  			(
-  				COMMUTE_NO,
-				NAME,
-				COMMUTE_IN,
-				COMMUTE_OUT,
-				COMMUTE_DATE,
-				MEMBER_NO,
-				COMMUTE_STATUS
-  			)
-  			values
-  			(
-  				seq_cmn.nextval,
-  				#{name},
-  				to_char(sysdate, 'HH24:MI'),
-  				null,
-  				TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
-  				#{memberNo},
-  				case when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '지각'
-				 when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '정상근무'
+  <update id="insertCommute">
+  	update
+  			tb_commute
+  		set commute_in = to_char(sysdate, 'HH24:MI'),
+  		commute_date = TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
+  		commute_status = case when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '지각'
+				 when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '정시출근)'
 				 end 
-  				
-  			)
-  </insert>
+		where commute_no = (select commute_no
+						        from(select  commute_no
+						                    from tb_commute
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)	
+  </update>
   
   <update id="commuteOut">
   	update
   			tb_commute
   		set commute_out = to_char(sysdate, 'HH24:MI')
-  		, commute_status = case when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '정상근무'
+  		, commute_status = case when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '정상퇴근'
 				 			 when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '조퇴'
 				 			 end 
   		
@@ -264,10 +252,43 @@
 		   
 	</select>
 	
-<delete id="deleteCommute">
-	delete
-		from tb_commute
-</delete>
+<insert id="newCommute">
+	insert
+  			into tb_commute
+  			(
+  				COMMUTE_NO,
+				NAME,
+				COMMUTE_IN,
+				COMMUTE_OUT,
+				COMMUTE_DATE,
+				MEMBER_NO,
+				COMMUTE_STATUS
+  			)
+  			values
+  			(
+  				seq_cmn.nextval,
+  				'#{name}',
+  				'출근',
+  				'퇴근',
+  				TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
+  				#{memberNo},
+  				'결근'
+  				) 
+</insert>
+
+ <select id="selectNN" resultMap="memberResult">
+    select
+    		member_no,
+    		
+    		name
+    		
+    		
+    		
+    	from tb_member
+       where status = 'Y'
+       
+    		
+  </select>
   
  <insert id="insertMember">
  	insert
