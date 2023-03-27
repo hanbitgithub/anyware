@@ -170,12 +170,12 @@ button:hover{
 			
 					<tr>
 						<th width="150" height="30px">출근</th>
-						<td width="200" id="commuteIn">${commute.commuteIn}</td>
+						<td width="200" id="commuteIn">${loginUser.commuteIn}</td>
 					
 					</tr>
 					<tr>
 						<th width="150">퇴근</th>
-						<td width="200" id="commuteOut">${commute.commuteOut}</td>
+						<td width="200" id="commuteOut">${loginUser.commuteOut}</td>
 					</tr>
 				
 				</table>
