@@ -52,7 +52,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 		if(result > 0) {
 			
 			Thumbnail chat= cService.selectChatContent(result);
-			System.out.println(chat);
+			
 			String sendmsg = chat.getContent() + "," + chat.getWriterNo() + "," + chat.getWriterName() + "," + chat.getDeptName() 
 							+ "," + chat.getJobName() + "," + chat.getSendDate() + "," + chat.getSendTime();
 					

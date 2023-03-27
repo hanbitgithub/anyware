@@ -149,13 +149,19 @@
     height: 300px;
 	display: inline-block;
 	text-align: center;
-	padding-top: 60px; 
+	padding-top: 30px; 
 	padding-left: 15px;
 }
 #name1{
 	font-size: small;
 	color: #afafaf;
 }
+.profile {
+  width:120px;
+  height: 120px;
+  border-radius: 100%;
+  margin-bottom: 5px;
+  }
 
 </style>    
 </head>
@@ -276,7 +282,8 @@
 				for(let i=0; i<list.length; i++){
 					let m = list[i];
 					value += "<div id='user1'>"	
-							+ m.profileUrl + "<br><br><br>"
+							+ '<img class="profile" src="resources/images/profile2.jpg">'
+							+ "<br><br><br>"
 							+ "<b>" + m.name + "</b>" + "&nbsp;" + m.jobName + "<br>"
 							+ "<p id='name1'>" + m.deptName + "&nbsp;" + m.position + "</p>"
 							+ "</div>"

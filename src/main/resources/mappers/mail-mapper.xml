@@ -518,6 +518,7 @@ select
 	      ,name || ' ' || member_id ||'@anyware.com' as email
 	      ,member_no
 	from tb_member
+	where status = 'Y'
 	order by 1,2
  
 </select>
