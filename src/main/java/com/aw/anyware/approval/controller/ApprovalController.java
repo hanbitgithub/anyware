@@ -297,4 +297,63 @@ public class ApprovalController {
 		
 		return new Gson().toJson(list);
 	}
+	
+	@RequestMapping("enroll.tpl")
+	public String tplEnrollAppro() {
+		return "approval/tplEnrollForm";
+	}
+	
+	@RequestMapping("insert.tpl")
+	public String insertTpl(ApproTpl tpl, HttpSession session, Model model) {
+		
+		int result = aService.insertTpl(tpl);
+	
+		if(result > 0) { // 성공 ==> session에 loginUser지움, alert문구 담기 -> 메인 url 재요청
+			session.setAttribute("alertMsg", "등록 성공");
+			return "redirect:corr.tpl";
+		} else {
+			model.addAttribute("errorMsg", "등록 실패");
+			return "common/errorPage";
+		}
+		
+	}
+	
+	@RequestMapping("corr.tpl")
+	public String tplCorrAppro(Model model) {
+		
+		ArrayList<ApproTpl> tplList = aService.listTpl();
+		
+		model.addAttribute("tplList", tplList);
+		
+		return "approval/tplUpdateForm";
+	}
+	
+	@RequestMapping("update.tpl")
+	public String updateTpl(ApproTpl tpl, HttpSession session, Model model) {
+		
+		int result = aService.updateTpl(tpl);
+	
+		if(result > 0) { // 성공 ==> session에 loginUser지움, alert문구 담기 -> 메인 url 재요청
+			session.setAttribute("alertMsg", "수정 성공");
+			return "redirect:corr.tpl";
+		} else {
+			model.addAttribute("errorMsg", "수정 실패");
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("delete.tpl")
+	public String deleteTpl(ApproTpl tpl, HttpSession session, Model model) {
+		
+		int result = aService.deleteTpl(tpl);
+		
+		if(result > 0) { // 성공 ==> session에 loginUser지움, alert문구 담기 -> 메인 url 재요청
+			session.setAttribute("alertMsg", "삭제 성공");
+			return "redirect:corr.tpl";
+		} else {
+			model.addAttribute("errorMsg", "삭제 실패");
+			return "common/errorPage";
+		}
+	}
+	
 }

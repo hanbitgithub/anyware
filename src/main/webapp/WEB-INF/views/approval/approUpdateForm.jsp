@@ -291,8 +291,11 @@
 						
 						$('input[name=interNo]').val(memberList[chkArray[0]].memberNo);
 						$('input[name=finalNo]').val(memberList[chkArray[1]].memberNo);
+
+						$(".modal").modal("hide");
 						
 						alert("등록되었습니다");
+						
 						
 					})
 					
@@ -303,7 +306,7 @@
 	      
 		  <!-- Modal footer -->
 	      <div class="modal-footer btn-center">
-			 <button class="btn btn-primary" id='approReg'>등록</button>
+			 <button class="btn btn-primary" id='approReg' data-dismiss="modal">등록</button>
 	      </div>
 	      
 	    </div>
@@ -439,7 +442,7 @@
 	      
 		  <!-- Modal footer -->
 	      <div class="modal-footer btn-center">
-			 <button class="btn btn-primary" id='refReg'>등록</button>
+			 <button class="btn btn-primary" id='refReg' data-dismiss="modal">등록</button>
 	      </div>
 	      
 	    </div>
@@ -574,7 +577,7 @@
 	      
 		  <!-- Modal footer -->
 	      <div class="modal-footer btn-center">
-			 <button class="btn btn-primary" id='openReg'>등록</button>
+			 <button class="btn btn-primary" id='openReg' data-dismiss="modal">등록</button>
 	      </div>
 	      
 	    </div>

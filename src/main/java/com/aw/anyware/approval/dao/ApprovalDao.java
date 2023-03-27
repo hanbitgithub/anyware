@@ -154,5 +154,16 @@ public class ApprovalDao {
 		return result;
 	}
 	
+	public int insertTpl(SqlSession sqlSession, ApproTpl tpl) {
+		return sqlSession.insert("approvalMapper.insertTpl", tpl);
+	}
+	
+	public int updateTpl(SqlSession sqlSession, ApproTpl tpl) {
+		return sqlSession.update("approvalMapper.updateTpl", tpl);
+	}
+	
+	public int deleteTpl(SqlSession sqlSession, ApproTpl tpl) {
+		return sqlSession.update("approvalMapper.deleteTpl", tpl);
+	}
 	
 }

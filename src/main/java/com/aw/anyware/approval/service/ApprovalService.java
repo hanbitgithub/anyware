@@ -52,5 +52,8 @@ public interface ApprovalService {
 	
 	public int insertAppro(Approval appro, String[] refNo, String[] openNo);
 	
-
+	public int insertTpl(ApproTpl tpl);
+	
+	public int updateTpl(ApproTpl tpl);
+	public int deleteTpl(ApproTpl tpl);
 }
