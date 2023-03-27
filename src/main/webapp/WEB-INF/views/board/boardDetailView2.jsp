@@ -15,7 +15,6 @@
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.3/dist/jquery.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 #img {
     width: 30px;
@@ -218,7 +217,25 @@ textarea {
 		</table>
 			
 	</div>
-
+	     <script>
+            	// 수정area 보이기
+            	$(function(){
+            		$(document).on("click", ".reply-btn-area .modify-btn", function(){
+            			const area = $(this).parents("tr").next().next();	// 수정 tr(.reply-modify-area)
+            			if (area.css("display") == "none") {
+            				$(this).parents("tr").next().children("td").css("display", "none");
+            				$(this).parents("tr").next().css("border-bottom", "none")
+                            $(this).text("취소");
+                            area.slideDown();
+                        } else {
+                        	$(this).parents("tr").next().children("td").css("display", "block");
+            				$(this).parents("tr").next().css("border-bottom", "1px solid rgb(220,220,220)")
+                            $(this).text("수정");
+                            area.css("display", "none");
+                        }
+            		})
+            	})
+            </script>
 	 <script>
 		// 댓글리스트조회
     	function selectReplyList(){
@@ -237,17 +254,11 @@ textarea {
 								+ "&nbsp;"
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
-								+ "<div id='replyarea'>"
-								+ "<input type='hidden' name='replyNo' value='"+ list[i].replyNo +"'>"
-								+ "<p readonly>" + list[i].replyContent + "</p>" + "<br>"
-								+ "<a onclick='dis()' style='color:gray;'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
-								+ "</div>"
-								// 수정창
-								+ "<div id='replyarea1' style='display:none'>"
-								+ "<input type='text' name='replyNo' value='"+ list[i].replyNo +"'>"
-								+ "<textarea rows='4' cols='95' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
-								+ "<button id='btn'>등록</button>"
-								+ "</div>"
+								+ "<p>" + list[i].replyContent + "</p>" + "<br>"
+								+ "<a style='color:gray;' class='updateReply'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
+								
+								+ "</td>"
+								+ "</tr>";
 						}else{
 										value += "<tr>"
 										+ "<td>"
@@ -270,48 +281,31 @@ textarea {
     		})
     	}
 		
-    	 function dis(){
-             if($('#replyarea').css('display') == 'none'){
-             $('#replyarea').show();
-             $('#replyarea1').hide();
-         }else{
-             $('#replyarea').hide();
-             $('#replyarea1').show();
-         }
-         }
-            
-		
     	$(function(){
-    		$(document).on("click", "#replyarea1 #btn", function(){
+    		$(document).on("click", ".reply-modify-area button", function(){
     			updateReply($(this).prev().prev().val(), $(this).prev().val());
     		})
     	})
-    	// 댓글수정
     	function updateReply(no, content){
-    	  $.ajax({
-    	      url:"update.re",
-    	      data:{replyContent:content ,
-    	    	  replyNo:no
-    	      },
-    				type:"post",
-    	        success:function(result){
-    	        	if(result>0){	
-    	        		
-    	        		selectReplyList();
-    	        		alert("성공적으로 수정되었습니다.");
-    	        		
-    	        			}else{			
-    	        				
-    	        			alert("댓글 등록 실패");
-    	        			}
-    	        	
-    	        		}, error:function(){
-    	        		 console.log("댓글수정용 ajax 통신실패")
-    	        			}
-    	        		})
-    	        	}
-    	
-		
+    		$.ajax({
+    			url:"update.re",
+    			data:{
+    				replyContent: content,
+    				replyNo: no
+    			},
+    			type:"post",
+    			success:function(result){
+    				if(result>0){	// 댓글수정성공
+    					selectReplyList();
+    					alert("성공적으로 수정되었습니다.");
+    				}else{			// 실패
+    					alert("댓글 등록 실패");
+    				}
+    			}, error:function(){
+    				console.log("댓글수정용 ajax 통신실패")
+    			}
+    		})
+    	}
 		
 		// 댓글작성
     	$(function(){
@@ -348,7 +342,7 @@ textarea {
     </script>
 
     <script>
-
+	
    
 	$(function(){
 		selectReplyList();

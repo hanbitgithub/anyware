@@ -241,15 +241,16 @@ public class BoardController {
 	 * @return
 	 */
 	@RequestMapping("update.re")
-	public String updateReply(int no, String content, Board b, HttpSession session, Model model) {
+	public String updateReply(int no, String content, HttpSession session, Model model) {
 		
 		
 		Reply r = new Reply();
 		r.setReplyNo(no);
 		r.setReplyContent(content);
+		System.out.println(no);
 		
 		int result = bService.updateReply(r);
-		int result1 = bService.updateBoard(b);
+		
 		
 		/*
 		if(result > 0) {
