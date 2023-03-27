@@ -294,7 +294,7 @@ button:hover{
         <div class="right">
         <br>
         
-        &nbsp;&nbsp;&nbsp;<img src="resources/images/appro.png" width="18px;" height="18px;" style="margin-bottom: 5px;">&nbsp;
+        &nbsp;&nbsp;&nbsp;<img src="resources/images/checklist.gif" width="23px;" height="23px;" style="margin-bottom: 5px;">&nbsp;
         <span><b>전자결재</b></span>
         
 	  	<div id="approContent" style="margin:10px;">
@@ -556,7 +556,7 @@ button:hover{
         <div class="right">
         <br>
 		&nbsp;&nbsp;&nbsp;
-		<img src="resources/images/board.png" width="20px;" height="25px;" style="margin-bottom: 5px;">&nbsp;
+		<img src="resources/images/notebook.gif" width="25px;" height="25px;" style="margin-bottom: 5px;">&nbsp;
           <span><b>자유게시판</b></span> 
           <a href="list.bo" id="board-btn">+더보기</a>
 		  <div id="boardList">
