@@ -463,8 +463,8 @@ a {
             $("#message").val("");
         }
 
-        function onMessage(){ // 나에게 온 메세지가 있을 경우 실행되는 함수
-            
+        function onMessage(event){ // 나에게 온 메세지가 있을 경우 실행되는 함수
+            console.log(event);
         }
 
         function onClose(){ // 웹소켓과 연결이 끊겼을 때 실행되는 함수
@@ -479,25 +479,21 @@ a {
                 type:"POST",
                 data:{memberNo:${loginUser.memberNo}},
                 success:function(rList){
-                    // console.log(rList);
+                    console.log(rList);
                     let value = "";
                     for(let i = 0; i<rList.length; i++){
                         value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", this);'>"
                                     + "<img src='" + rList[i].profileUrl + "' class='chatImg'>"
                                     + "<div class='chat-content'>"
                                         + "<div class='chat-info'>"
-                                            + "<input type='hidden' class='roomNo' value='" + rList[i].roomNo + "'>";
-                                if(rList[i].deptName == '미정'){
-                                    value += "<h2 class='chat-name'><img src='resources/images/chat/red.png' class='loginCheck'>" + rList[i].writerName + "(" + rList[i].jobName + ")</h2>";
-                                } else {
-                                    value += "<h2 class='chat-name'><img src='resources/images/chat/red.png' class='loginCheck'>" + rList[i].writerName + "(" + rList[i].deptName + "/" + rList[i].jobName + ")</h2>";
-                                }
-                                    value += "<p class='chat-time'>" + rList[i].sendDate + "</p>"
+                                            + "<input type='hidden' class='roomNo' value='" + rList[i].roomNo + "'>"
+                                            + "<h2 class='chat-name'><img src='resources/images/chat/red.png' class='loginCheck'>" + rList[i].title + ")</h2>"
+                                            + "<p class='chat-time'>" + rList[i].sendDate + "</p>"
                                         + "</div>"
                                         + "<div class='preview-div'>"
                                             + "<p class='chat-preview'>" + rList[i].content + "</p>";
                                 if(rList[i].notRead != 0){
-                                    vlaue += "<p class='notread'>" + rList[i].notRead + "</p>";
+                                    value += "<p class='notread'>" + rList[i].notRead + "</p>";
                                 }
                                 value += "</div>"
                                     + "</div>"

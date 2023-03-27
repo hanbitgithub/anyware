@@ -55,8 +55,8 @@ a{
             <div id="mail-area">
                 
             <ul>
-                <li><a href="regist.me">신규사원등록</a></li>
-                <li><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
+                <li class="hrOnly"><a href="regist.me?deptName=${loginUser.deptName}&?memberNo=${loginUser.memberNo}">신규사원등록</a></li>
+                <li class="hrOnly"><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
                 <li><a href="mailTest.me?email=${loginUser.email}">메일테스트</a></li>
                 <li><a href="attendence.me"}">근태조회</a></li>
 
@@ -67,7 +67,8 @@ a{
             
  
     </div>
-
+    
+    
 
 </body>
 </html>
