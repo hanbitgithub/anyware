@@ -496,10 +496,19 @@ public class MemberController {
 	
 	@RequestMapping("leaveOff.me")
 	public ModelAndView leaveOff(Member m, ModelAndView mv) {
+		int memberNo = m.getMemberNo();
 		
 		if(m.getLeaveOff() > 0) {
-			mv.setViewName("member/leaveOff");
-			return mv;
+			ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
+			System.out.println("list : " + list);
+			if(list == null) {
+				mv.setViewName("member/leaveOff");
+				return mv;
+			}else {
+				mv.addObject("list", list).setViewName("member/leaveOff");
+				return mv;
+			}
+			
 			
 		}else {
 			mv.addObject("alertMsg", "사용 가능한 잔여 연차가 없습니다");
@@ -511,23 +520,47 @@ public class MemberController {
 	
 	@RequestMapping("insertOff.me")
 	private ModelAndView insertOff(LeaveOff lo, HttpSession session, ModelAndView mv) {
-		System.out.println("이름 : " + lo);
+		int memberNo = lo.getApNo();
 		int leaveOff = ((Member)session.getAttribute("loginUser")).getLeaveOff();	
 		LeaveOff lof = mService.selectLastOff(lo);
 		if((lof == null) || (leaveOff > 0)) {
 			int result = mService.insertOff(lo);
+			ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
 			if(result > 0) {
-				mv.addObject("alertMsg", "연차를 신청하였습니다");
-				mv.setViewName("main");
+				
+				mv.addObject("alertMsg", "연차를 신청하였습니다").addObject("list", list).setViewName("member/leaveOff");
+				
 				return mv;
 			}else {
-				mv.addObject("alertMsg", "연차 신청에 실패했습니다. 다시 시도해주세요");
-				mv.setViewName("main");
+				mv.addObject("alertMsg", "연차 신청에 실패했습니다. 다시 시도해주세요").addObject("list", list).setViewName("member/leaveOff");
+				
 				return mv;
 			}
 		}else {
 			mv.addObject("alertMsg", "연차를 신청할 수 없습니다");
 			mv.setViewName("main");
+			return mv;
+		}
+	}
+	
+	@RequestMapping("cancelOff.me")
+	public ModelAndView cancelOff(LeaveOff lo, ModelAndView mv) {
+		int memberNo = lo.getApNo();
+		int result = mService.cancelOff(lo);
+		ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
+		System.out.println("list : " + list);
+		if(result > 0) {
+			
+			
+			if(list == null) {
+				mv.addObject("alertMsg", "연차를 취소했습니다").setViewName("member/leaveOff");
+				return mv;
+			}else {
+				mv.addObject("alertMsg", "연차를 취소했습니다").addObject("list", list).setViewName("member/leaveOff");
+				return mv;
+			}
+		}else {
+			mv.addObject("alertMsg", "연차 취소에 실패했습니다").addObject("list", list).setViewName("member/leaveOff");
 			return mv;
 		}
 	}

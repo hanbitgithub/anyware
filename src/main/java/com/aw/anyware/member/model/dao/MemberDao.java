@@ -152,9 +152,19 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.selectToday");
 	}
 
-	public int insertOff(SqlSessionTemplate sqlSession) {
+	public int insertOff(SqlSessionTemplate sqlSession, LeaveOff lo) {
 		
-		return sqlSession.insert("memberMapper.insertOff");
+		return sqlSession.insert("memberMapper.insertOff", lo);
+	}
+
+	public ArrayList<LeaveOff> selectMyOff(SqlSessionTemplate sqlSession, int memberNo) {
+		
+		return (ArrayList)sqlSession.selectList("memberMapper.selectMyOff", memberNo);
+	}
+
+	public int cancelOff(SqlSessionTemplate sqlSession, LeaveOff lo) {
+		
+		return sqlSession.update("memberMapper.cancelOff", lo);
 	}
 	
 }

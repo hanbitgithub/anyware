@@ -338,7 +338,7 @@
   			DAYOFF_NO,
   			APPLY_DATE,
   			CANCEL_DATE,
-  			OFFDATE
+  			OFF_DATE
   		from tb_dayoff
   	   where dayoff_no = (select dayoff_no
 						        from(select  dayoff_no
@@ -359,7 +359,7 @@
 			CANCEL_DATE,
 			STATUS,
 			APPLICANT_NO,
-			OFFDATE
+			OFF_DATE
   		)
   		values
   		(
@@ -373,6 +373,30 @@
   			
   		)
   </insert>
+  
+   <select id="selectMyOff" resultMap="leaveOffResult">
+   		select
+   				DAYOFF_NO,
+				NAME,
+				APPLY_DATE,
+				CANCEL_DATE,
+				STATUS,
+				APPLICANT_NO,
+				OFF_DATE
+			from tb_dayoff
+		   where status = 'Y'
+		   and applicant_no = #{memberNo}
+		   order by dayoff_no desc
+   </select>
+   
+   <update id="cancelOff">
+ 	update
+ 			tb_dayoff
+ 		set status = 'N',
+ 			cancel_date = to_char(SYSDATE,'YYYY-MM-DD')
+ 	   where applicant_no = #{apNo}
+ 	   	and	 dayoff_no = #{dayoffNo}
+ </update>
   
     <!-- 근태현황조회 -->
   <select id="selectMemberAttendenceList" resultMap="commuteResult">

@@ -68,6 +68,10 @@ public interface MemberService {
 	
 	int insertOff(LeaveOff lo);
 	
+	ArrayList<LeaveOff> selectMyOff(int memberNo);
+	
+	int cancelOff(LeaveOff lo);
+	
 	//Member selectDayOff(Member m);
 	
 	//근태현황 조회
