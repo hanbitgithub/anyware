@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.aw.anyware.chat.model.service.ChatService;
 import com.aw.anyware.chat.model.vo.ChatContent;
 import com.aw.anyware.chat.model.vo.Thumbnail;
+import com.aw.anyware.member.model.vo.Member;
+import com.aw.anyware.project.model.service.ProjectService;
 import com.google.gson.Gson;
 
 @Controller
@@ -18,6 +20,9 @@ public class ChatController {
 	
 	@Autowired
 	private ChatService cService;
+	
+	@Autowired
+	private ProjectService pService;
 	
 	@ResponseBody
 	@RequestMapping(value="chattingList.ajax", produces="application/json; charset=UTF-8")
@@ -42,5 +47,19 @@ public class ChatController {
 		
 		return new Gson().toJson(chList);
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="chatAddress.ajax", produces="application/json; charset=UTF-8")
+	public String selectChatAddress() {
+		ArrayList<Member> dList = pService.selectDeptList();
+		ArrayList<Member> mList = pService.selectMemberList();
+		
+		HashMap<String, ArrayList<Member>> map = new HashMap<>();
+		map.put("dList", dList);
+		map.put("mList", mList);
+		
+		return new Gson().toJson(map);
+	}
+	
 
 }

@@ -27,6 +27,7 @@
         /* GOOGLE FONTS */
         @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic:400');
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+        
 
 /* VARIABLES CSS */
 :root {
@@ -398,9 +399,21 @@ a {
 
                 <div id="chat-address" class="tab-content" style="display: none;">
                     <!-- 주소록 -->
-                    <h3 class="title">주소록</h3><br>
-                    <div>
-
+                    <h3 class="title">주소록</h3>
+                    <div class="address-div">
+                        <ul>
+                            <li class="dept-list"><div class="dept">대표이사</div></li>
+                            <li class="dept-list"><div class="dept">부사장</div></li>
+                            <li class="dept-list">
+                                <div class="dept">개발부</div>
+                                <ul class="accordion">
+                                    <li>사원1</li>
+                                    <li>사원2</li>
+                                    <li>사원3</li>
+                                    <li>사원4</li>
+                                </ul>
+                            </li>
+                        </ul>
                     </div>
                 </div>
 
@@ -467,11 +480,11 @@ a {
             // 전달된 메세지 형식 = 메세지내용(0),발신자번호(1),발신자이름(2),발신자부서(3),발신자직급(4),보낸날짜(5),보낸시간(6)
             const arr = event.data.split(",");
             const date = document.querySelectorAll(".date-div")
+
             let chatset = "";
             if(date[date.length-1].innerHTML != arr[5]){
                 chatset += "<div class='date-div'>" + arr[5] + "</div>";
             }
-
             if(arr[1] == ${loginUser.memberNo}){ // 내가 쓴 메세지
                 chatset += "<table class='chat-message mine'>"
                             + "<tr>"
@@ -516,7 +529,7 @@ a {
                 type:"POST",
                 data:{memberNo:${loginUser.memberNo}},
                 success:function(rList){
-                    console.log(rList);
+                    
                     let value = "";
                     for(let i = 0; i<rList.length; i++){
                         value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", this);'>"
@@ -591,17 +604,56 @@ a {
 			document.getElementById(tabName).classList.add('active');
 
             // 주소록 클릭
-            // if(contentName == 'chat-address'){
-            //     $.ajax({
-            //         url:"chatAddress.ajax",
-            //         success:function(map){
-            //             console.log(map);
-            //         },
-            //         error:function(){
+            if(contentName == 'chat-address'){
+                $.ajax({
+                    url:"chatAddress.ajax",
+                    success:function(map){
+                        let dList = map.dList;
+                        let mList = map.mList;
 
-            //         }
-            //     })
-            // }
+                        let value = "<ul>";
+                        
+                        for(let m=0; m<mList.length; m++){
+                            if(mList[m].jobName == '대표이사'){
+                                value += "<li class='member'><div class='dept'><ion-icon name='person-outline'></ion-icon> 대표이사 " + mList[m].name  + "</div></li>";
+                            } else if(mList[m].jobName == '부사장'){
+                                value += "<li class='member'><div class='dept'><ion-icon name='person-outline'></ion-icon> 부사장 " + mList[m].name  + "</div></li>";
+                            }
+                        }
+
+                        value += "<li class='dept-list'>";
+
+                        for(let d=0; d<dList.length; d++){
+                            value += "<div class='dept'><ion-icon name='document-text-outline'></ion-icon> " + dList[d].deptName + "</div>"
+                                    + "<ul class='accordion'>";
+                            for(let mm=0; mm<mList.length; mm++){
+                                if(dList[d].deptName == mList[mm].deptName){
+                                    value += "<li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[mm].name + "(" + mList[mm].deptName + "/" + mList[mm].jobName + ")" + "</li>";
+                                }
+                            }
+                            value += "</ul>";
+                        }
+                        value += "<div class='dept'><ion-icon name='document-text-outline'></ion-icon> 기타</div>"
+                                    + "<ul class='accordion'>";
+
+                        for(let i=0; i<mList.length; i++){
+                            if(mList[i].jobName != '대표이사' && mList[i].jobName != '부사장' && mList[i].deptName == '미정'){
+                                value += "<li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[i].name + "(" + mList[i].jobName + ")" + "</li>";
+                            }
+                        }
+                            value += "</ul>"
+                                + "</li>"
+                            + "</ul>";
+
+                        $(".address-div").html(value);
+
+                    },
+                    error:function(){
+                        console.log("채팅 주소록 조회용 ajax 통신 실패")
+                    }
+                })
+                
+            }
             
             // 채팅방 입장
             if(contentName == 'chatroom'){
@@ -656,6 +708,10 @@ a {
                 })
             }
         }
+
+        $(document).on("click", ".dept", function(){
+            $(this).next(".accordion").slideToggle(100);
+        });
         
     </script>
 

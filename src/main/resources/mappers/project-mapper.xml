@@ -352,6 +352,7 @@
 		     , decode(job_name, '대표이사', 1, '부사장', 2, '부장', 3, '과장', 4, '대리', 5, '사원', 6) job_code
 		     , job_name
 		  from tb_member
+		 where status = 'Y'
 		 order
 		    by dept_name, job_code
 	</select>
@@ -366,6 +367,7 @@
 		  from tb_member m
 		  join tb_projectMember pm on (m.member_no = pm.member_no)
 		 where project_no = #{projectNo}
+		   and m.status = 'Y'
 	</select>
 	
 	<insert id="addParticipant">

@@ -110,7 +110,27 @@
 }
 
 /* 주소록 css */
-
+.address-div{
+    margin-left: 10px;
+    overflow: auto;
+    width: 450px;
+    height: 600px;
+    font-size: 20px;
+}
+.address-div li, .dept{
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.address-div *:hover{
+    cursor: pointer;
+}
+.member:hover{
+    color:#7291f6;
+}
+.accordion{
+    margin-left: 20px; 
+    display:none;
+}
 
 /* 채팅창 css */
 .chat-area{
