@@ -187,6 +187,12 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectMonthCommute(sqlSession, memNo);
 	}
 
+	@Override
+	public int selectMN(Member m) {
+		
+		return mDao.selectMN(sqlSession, m);
+	}
+
 	
 
 	

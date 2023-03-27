@@ -18,6 +18,12 @@
 	<result column="enroll_date" property="enrollDate"/>
 	<result column="leave_off" property="leaveOff"/>
 	<result column="profile_url" property="profileUrl"/>
+	<result column="commute_no" property="commuteNo"/>
+
+	<result column="commute_in" property="commuteIn"/>
+	<result column="commute_out" property="commuteOut"/>
+	<result column="Commute_date" property="commuteDate"/>
+	<result column="commute_status" property="commuteStatus"/>
 	
 	
 </resultMap>
@@ -102,6 +108,14 @@
   	   where member_no = #{memberNo}
   </select>
   
+  <select id="selectMN" resultType="_int">
+		select
+				member_no
+			from tb_member
+		   where status = 'Y'
+		   and member_id = #{memberId}
+	</select>
+  
   <select id="loginMember" resultMap="memberResult">
     select
     		member_no,
@@ -118,12 +132,24 @@
     		address,
     		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
-    		profile_url
+    		profile_url,
+    		COMMUTE_NO,			
+			COMMUTE_IN,
+			COMMUTE_OUT,
+			COMMUTE_DATE,
+			COMMUTE_STATUS
+    		
     		
     	from tb_member m
-    	   		    	    	
-       where status = 'Y'
+    	join tb_commute c using(member_no)  		    	    	
+       where m.status = 'Y'
        and member_id = #{memberId}
+       and commute_no = (select commute_no
+						        from(select  commute_no
+						                    from tb_commute
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)	
       
     		
   </select>

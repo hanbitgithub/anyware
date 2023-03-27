@@ -23,6 +23,8 @@ public interface MemberService {
 	//로그인
 	Member loginMember(Member m);
 	
+	int selectMN(Member m);
+	
 	//비밀번호 변경
 	Member selectPwd(Member m);
 	

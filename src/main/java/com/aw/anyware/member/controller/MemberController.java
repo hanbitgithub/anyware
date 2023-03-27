@@ -73,7 +73,8 @@ public class MemberController {
 	
 	@RequestMapping("login.me")
 	public ModelAndView loginMember(Member m, ModelAndView mv, HttpSession session) {
-		
+		int memberNo = mService.selectMN(m);
+		m.setMemberNo(memberNo);
 		Member loginUser = mService.loginMember(m);
 		
 		if(loginUser == null) {
@@ -244,7 +245,8 @@ public class MemberController {
 		if(checkTime == null) {
 			int result = mService.insertCommute(c);
 			if(result > 0) {
-				Commute cTime = mService.selectCommute(c);				
+				Commute cTime = mService.selectCommute(c);	
+				
 				mv.addObject("commute", cTime);
 				mv.addObject("alertMsg", "출근하였습니다");
 				mv.setViewName("main");
@@ -264,7 +266,8 @@ public class MemberController {
 		}else {
 			int result = mService.insertCommute(c);
 			if(result > 0) {
-				Commute cTime = mService.selectCommute(c);				
+				Commute cTime = mService.selectCommute(c);	
+				
 				mv.addObject("commute", cTime);
 				mv.addObject("alertMsg", "출근하였습니다");
 				mv.setViewName("main");

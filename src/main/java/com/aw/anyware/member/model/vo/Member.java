@@ -48,8 +48,15 @@ public class Member {
 	
 	private String offDate; // 연차 날짜
 	
+	private int commuteNo;
+	
 	private String commuteIn;
 	private String commuteOut;
+	private String commuteDate;
+	
+	private String commuteStatus;
+	
+	private String commuteTime;
 
 }
 

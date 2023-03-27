@@ -171,5 +171,10 @@ public class MemberDao {
 		
 		return sqlSession.delete("memberMapper.deleteCommute");
 	}
+
+	public int selectMN(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.selectOne("memberMapper.selectMN", m);
+	}
 	
 }
