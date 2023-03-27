@@ -33,6 +33,11 @@
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Calendar" alias="Calendar" />
 		<typeAlias type="com.aw.anyware.schedule.model.vo.Schedule" alias="Schedule" />
 		<typeAlias type="com.aw.anyware.project.model.vo.PjMem" alias="PjMem" />
+		<typeAlias type="com.aw.anyware.chat.model.vo.ChatRoom" alias="ChatRoom" />
+		<typeAlias type="com.aw.anyware.chat.model.vo.ChatMember" alias="ChatMember" />
+		<typeAlias type="com.aw.anyware.chat.model.vo.ChatContent" alias="ChatContent" />
+		<typeAlias type="com.aw.anyware.chat.model.vo.Thumbnail" alias="Thumbnail" />
+		
 
 	</typeAliases>
 	
