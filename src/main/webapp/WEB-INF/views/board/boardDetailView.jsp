@@ -244,8 +244,8 @@ textarea {
 								+ "</div>"
 								// 수정창
 								+ "<div id='replyarea1' style='display:none'>"
-								+ "<input type='text' name='replyNo' value='"+ list[i].replyNo +"'>"
-								+ "<textarea rows='4' cols='95' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
+								+ "<input type='hidden' name='replyNo' value='"+ list[i].replyNo +"'>"
+								+ "<textarea rows='4' cols='95' style='resize:none;' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
 								+ "<button id='btn'>등록</button>"
 								+ "</div>"
 						}else{
