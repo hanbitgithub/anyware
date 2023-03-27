@@ -533,7 +533,7 @@ public class MemberController {
 	}
 	
 	
-	/*
+	
 	@RequestMapping("attendence.me")
 	public String attendenceMember(HttpSession session, Model model) {
 		
@@ -559,8 +559,8 @@ public class MemberController {
 		
 		return "member/attendenceMember";
 	}
-	*/
-	/*
+	
+
 	@ResponseBody
 	@RequestMapping(value="attendenceList.me",produces = "application/json; charset=utf-8")
 	public String memberAttendenceList(int memberNo) {
@@ -569,9 +569,7 @@ public class MemberController {
 		//System.out.println(list);
 		return new Gson().toJson(list);
 	}
-	*/
 	
-	/*
 	@ResponseBody
 	@RequestMapping(value="commute.me",produces = "application/json; charset=utf-8")
 	public String selectCommteToday(HttpSession session) {
@@ -581,6 +579,6 @@ public class MemberController {
 		return new Gson().toJson(c);
 		
 	}
-	*/
+	
 
 }
