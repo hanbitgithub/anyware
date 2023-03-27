@@ -214,7 +214,7 @@ public class MailController {
 	//개인주소록 검색
 	@RequestMapping("searchPer.ad")
 	public String searchPersonalAddressBook(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, AddressBook ad,Model model) {
-		System.out.println(ad);
+		//System.out.println(ad);
 		//페이징처리
 		
 		if(ad.getGroupNo() == "") {
@@ -601,9 +601,12 @@ public class MailController {
 
 		if (result1 > 0) {
 			int result2 = mService.deleteTemporaryStatus(m.getEmNo());
-			int result4 = mService.deleteAttachment(m.getEmNo());
+			
+			
+			System.out.println("result2 " +result2);
+			
 
-			if (result2 * result4 > 0) {
+			if (result2> 0) {
 				// 메일 상태 insert
 				// emtype = 0/1/2 (보낸메일/받은메일/참조메일)
 				// ----------- 보낸 메일 ------------
@@ -661,9 +664,11 @@ public class MailController {
 		}
 
 		result3 = mService.saveTemporaryMailStatus(list);
+		
 
 		// -----------------첨부파일 insert--------------
-
+		int result4 = mService.deleteAttachment(m.getEmNo());
+		
 		for (MultipartFile file : upfile) {
 
 			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
@@ -690,7 +695,10 @@ public class MailController {
 			}
 
 		
-
+			System.out.println("result1" +result1);
+		
+			System.out.println("result3" +result3);
+			System.out.println("result5" + result5);
 		return result1 * result3 * result5 > 0 ? "success" : "fail";
 	}
 
@@ -1649,7 +1657,7 @@ public class MailController {
 
 			// -----------------첨부파일 insert--------------
 		
-		System.out.println("이전파일" + m.getEmfNo());
+		//System.out.println("이전파일" + m.getEmfNo());
 			if (m.getEmfNo() != null) {
 				// 이전첨부파일을 현재 메일번호에도 복제..?? 
 				String[] emfArr = m.getEmfNo().split(",");
@@ -1660,7 +1668,7 @@ public class MailController {
 				prevAtList.add(prevAt);
 			}
 			
-			 System.out.println("이전파일" + prevAtList);
+			// System.out.println("이전파일" + prevAtList);
 			for (MailFile prevAt : prevAtList) {
 		        // 파일 복제를 위한 경로 설정
 		        String prevFilePath = session.getServletContext().getRealPath(prevAt.getChangeName());
