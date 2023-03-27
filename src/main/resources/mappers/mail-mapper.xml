@@ -393,8 +393,11 @@ select
 	from tb_addressbook b
 	join tb_addressgroup g on (b.group_no = g.group_no)
 	where b.status = 'Y' 
-	  and mem_no = #{memNo}
+	  and  mem_no = #{memNo}
       and  dept_name || job_name || name || email || phone || biz_name || group_name like '%' || #{keyword} || '%'
+	  <if test="groupNo != null">
+	  and  b.group_no = #{groupNo}
+	  </if>
 	 order by add_no desc
 
 
@@ -418,6 +421,9 @@ select
 	where b.status = 'Y' 
 	  and mem_no =  #{memNo}
       and  dept_name || job_name || name || email || phone || biz_name || group_name like '%' || #{keyword} || '%'
+      <if test="groupNo != null">
+      and  b.group_no = #{groupNo}
+      </if>
 	 order by add_no desc
 
 

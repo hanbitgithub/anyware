@@ -304,8 +304,10 @@ input[type=checkbox] {
 					$(".mstatus"+emNo ).css("font-weight","300");
 					$tr.find("img.envelope").attr("src", "resources/images/envelope.png");
 					
+					if(emNo != null){
+				
 					$("#mailDetail").attr("action", 'mail.em').submit();
-
+				}
 				})
 			})	
 			

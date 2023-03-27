@@ -149,6 +149,7 @@ public class MailController {
 		ArrayList<AddressBook> list = mService.selectGroupAddList(pi, ag);
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
+		model.addAttribute("no",groupNo);
 
 		return "mail/personalAddressbook";
 	}
@@ -213,16 +214,19 @@ public class MailController {
 	//개인주소록 검색
 	@RequestMapping("searchPer.ad")
 	public String searchPersonalAddressBook(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, AddressBook ad,Model model) {
-		
+		System.out.println(ad);
 		//페이징처리
+		
+		if(ad.getGroupNo() == "") {
+			ad.setGroupNo(null);
+		}
 		// 게시글 갯수 조회
 		int searchCount = mService.selectPerSearchCount(ad);
 		PageInfo pi = Pagination.getPageInfo(searchCount, currentPage, 5, 10);
 		
 		ArrayList<Member> list = mService.selectPerSearchList(ad,pi);
 		
-		
-		
+	
 		model.addAttribute("list", list);
 		model.addAttribute("pi", pi);
 		model.addAttribute("keyword", ad.getKeyword());
@@ -990,6 +994,8 @@ public class MailController {
 	@RequestMapping("mail.em")
 	public String selectMailDetail(MailStatus ms, HttpSession session, Model model) {
 		// 상세페이지로 들어가는 순간 읽음으로표시
+		
+		//System.out.println(ms);
 		if (ms.getEmType().equals("0")) { // 보낸메일일 경우 받는이 null
 			ms.setReceiver(null);
 		}
