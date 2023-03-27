@@ -120,6 +120,10 @@ public class ScheduleDao {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.searchKeyword", s);
 	}
 	
+//	public int selectListCount(SqlSessionTemplate sqlSession) {
+//		
+//	}
+	
 	
 
 	

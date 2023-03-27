@@ -32,8 +32,9 @@ public class ScheduleController {
 	
 	// 키워드 검색 페이지
 	@RequestMapping("scheduleSearchList.sc")
-	public String scheduleSearchList(HttpSession session) {
+	public String scheduleSearchList(@RequestParam(value = "cpage", defaultValue = "1") int currentPage, HttpSession session) {
 		int memNo = ((Member)session.getAttribute("loginUser")).getMemberNo();
+//		int listCount = scService.selectListCount(); // 페이징
 		return "schedule/scheduleSearchList"; 
 	}
 	
