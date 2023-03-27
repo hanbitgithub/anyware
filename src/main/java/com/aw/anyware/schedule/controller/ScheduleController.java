@@ -114,7 +114,6 @@ public class ScheduleController {
 		m.addAttribute("list", list);
 		return list;
 		
-		
 	}
 	
 	// 스케줄 상세 조회
@@ -160,6 +159,8 @@ public class ScheduleController {
 		return "schedule/scheduleSearchList";
 
 	}
+	
+	// 키워드 검색 페이징
 	
 	
 

@@ -43,6 +43,9 @@ public interface ScheduleService {
 	// 키워드 검색
 	ArrayList<Schedule> searchKeyword(Schedule s);
 	
+	// 키워드 검색 페이징
+	int selectListCount();
+	
 	
 	
 	

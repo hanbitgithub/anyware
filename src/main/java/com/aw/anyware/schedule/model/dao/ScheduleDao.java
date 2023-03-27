@@ -119,6 +119,8 @@ public class ScheduleDao {
 	public ArrayList<Schedule> searchKeyword(SqlSessionTemplate sqlSession, Schedule s) {
 		return (ArrayList)sqlSession.selectList("scheduleMapper.searchKeyword", s);
 	}
+	
+	
 
 	
 	

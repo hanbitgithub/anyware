@@ -222,6 +222,7 @@
 		  join tb_category c using(calendar_no)
 		 where s.status = 'Y'
 		   and sc_title like '%' || #{keyword} || '%'
+		    or sc_content like '%' || #{keyword} || '%'
 	</select>
 	
 	

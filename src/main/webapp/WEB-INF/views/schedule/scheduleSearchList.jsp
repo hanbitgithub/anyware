@@ -230,6 +230,11 @@
     /* .nav-a {position:absolute; left:5px;} */
     .nav-b {position:absolute; left:300px;}
     .nav-c {position:absolute; left:620px;}
+
+    .table tr:hover{
+	    background-color: rgb(250, 249, 249);
+        cursor: pointer;
+    }
         
 
     </style>

@@ -452,11 +452,6 @@
                                 
                             },
 
-                            
-
-
-
-
                         });
             
                     calendar.render();
@@ -1386,8 +1381,6 @@
     
         let selectCalendarNoModal = ''; // 내 캘린더 수정
 
-        
-    
         // 새 일정 추가 스크립트 
         function AddScheduleModal() {
 	        let calendarNo = document.querySelector("#calendarNo").value

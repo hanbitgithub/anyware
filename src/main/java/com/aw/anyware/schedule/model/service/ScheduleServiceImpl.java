@@ -115,6 +115,14 @@ public class ScheduleServiceImpl implements ScheduleService {
 		return scDao.searchKeyword(sqlSession, s);
 	}
 
+	/**
+	 * 키워드 검색 페이징
+	 */
+	@Override
+	public int selectListCount() {
+		return 0;
+	}
+
 	
 
 	
