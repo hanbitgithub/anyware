@@ -294,7 +294,7 @@ button:hover{
         <div class="right">
         <br>
         
-        &nbsp;&nbsp;&nbsp;<img src="resources/images/appro.png" width="18px;" height="18px;" style="margin-bottom: 5px;">&nbsp;
+        &nbsp;&nbsp;&nbsp;<img src="resources/images/checklist.gif" width="23px;" height="23px;" style="margin-bottom: 5px;">&nbsp;
         <span><b>전자결재</b></span>
         
 	  	<div id="approContent" style="margin:10px;">
@@ -303,11 +303,15 @@ button:hover{
 			<tr>
 				<th>번호</th>
 				<th>제목</th>
-				<th>중간기안자</th>
-				<th>최종기안자</th>
+				<th>기안자</th>
+				<th>중간결재자</th>
+				<th>최종결재자</th>
 		    </tr>
 			</thead>
 			<tbody style="border: white">
+				 <tr>
+                     <td colspan="5"> 조회된 결재가 없습니다.</td>
+                 </tr>
 			</tbody>
 		  </table>
 			</div>
@@ -331,17 +335,19 @@ button:hover{
 					
 					let m= "";
 					
-					for (let i=0; i< approList.length; i++){
-						m += "<tr>"
-								+ "<td>" + approList[i].approNo + "</td>"
-								+ "<td>" + approList[i].approTitle + "</td>"
-								+ "<td>" + approList[i].interName + "</td>"
-								+ "<td>" + approList[i].finalName + "</td>"
-								+"</tr>"
+					if(approList.length != 0){
+						for (let i=0; i< approList.length; i++){
+							m += "<tr>"
+									+ "<td>" + approList[i].approNo + "</td>"
+									+ "<td>" + approList[i].approTitle + "</td>"
+									+ "<td>" + approList[i].writerName + "</td>"
+									+ "<td>" + approList[i].interName + "</td>"
+									+ "<td>" + approList[i].finalName + "</td>"
+									+"</tr>"
+						}
+						
+						$("#approList tbody").html(m);
 					}
-					
-					$("#approList tbody").html(m);
-				  	
 					
 				},error:function(){
 					
@@ -556,7 +562,7 @@ button:hover{
         <div class="right">
         <br>
 		&nbsp;&nbsp;&nbsp;
-		<img src="resources/images/board.png" width="20px;" height="25px;" style="margin-bottom: 5px;">&nbsp;
+		<img src="resources/images/notebook.gif" width="25px;" height="25px;" style="margin-bottom: 5px;">&nbsp;
           <span><b>자유게시판</b></span> 
           <a href="list.bo" id="board-btn">+더보기</a>
 		  <div id="boardList">

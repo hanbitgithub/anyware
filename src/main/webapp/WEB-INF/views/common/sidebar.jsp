@@ -464,7 +464,44 @@ a {
         }
 
         function onMessage(event){ // 나에게 온 메세지가 있을 경우 실행되는 함수
-            console.log(event);
+            // 전달된 메세지 형식 = 메세지내용(0),발신자번호(1),발신자이름(2),발신자부서(3),발신자직급(4),보낸날짜(5),보낸시간(6)
+            const arr = event.data.split(",");
+            const date = document.querySelectorAll(".date-div")
+            let chatset = "";
+            if(date[date.length-1].innerHTML != arr[5]){
+                chatset += "<div class='date-div'>" + arr[5] + "</div>";
+            }
+
+            if(arr[1] == ${loginUser.memberNo}){ // 내가 쓴 메세지
+                chatset += "<table class='chat-message mine'>"
+                            + "<tr>"
+                                + "<td class='time-td'>"
+                                    + "<span class='sendtime'>" + arr[6] + "</span>"
+                                + "</td>"
+                                + "<td>"
+                                    + "<div class='send-message'>" + arr[0] + "</div>"
+                                + "</td>"
+                            + "</tr>"
+                        + "</table>";
+            } else {
+
+                if(arr[3] == '미정'){
+                    chatset += "<div class='send-user'>" + arr[2] + "(" + arr[4] + ")</div>";
+                } else {
+                    chatset += "<div class='send-user'>" + arr[2] + "(" + arr[3] + "/" + arr[4] + ")</div>";
+                }
+                chatset += "<table class='chat-message other'>"
+                            + "<tr>"
+                                + "<td>"
+                                    + "<div class='send-message'>" + arr[0] + "</div><div class='time-div'><span class='sendtime'>" + arr[6] + "</span></div>"
+                                + "</td>"
+                            + "</tr>"
+                        + "</table>";
+            }
+
+            $(".chat-area").append(chatset);
+            $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+            
         }
 
         function onClose(){ // 웹소켓과 연결이 끊겼을 때 실행되는 함수
@@ -501,7 +538,6 @@ a {
                     }
 
                     $(".list-area").html(value);
-
                 },
                 error:function(){
                     console.log("채팅리스트 조회용 ajax 통신 실패");
@@ -611,6 +647,7 @@ a {
                         }
 
                         $(".chat-area").html(value);
+                        $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
                         
                     },
                     error:function(){

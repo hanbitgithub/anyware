@@ -1083,7 +1083,7 @@ public class MailController {
 	@ResponseBody
 	@RequestMapping(value = "reList.em", produces = "application/json; charset=utf-8")
 	public String ajaxReceiverMemberList(String memId) {
-		ArrayList<Mail> reList = mService.receiverMemberList(memId);
+		//ArrayList<Mail> reList = mService.receiverMemberList(memId);
 		List<Map<String, Object>> memberList = mService.addressbookMemberList();
 		return new Gson().toJson(memberList);
 	}

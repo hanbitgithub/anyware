@@ -527,7 +527,7 @@
                     var sizeStr="";
                     var sizeKB = fileSize/1024;
                     if(parseInt(sizeKB) > 1024){
-                        var sizeMB = fileSizeKB/1024;
+                        var sizeMB = sizeKB/1024;
                         sizeStr = sizeMB.toFixed(2)+" MB";
                     }else{
                         sizeStr = sizeKB.toFixed(2)+" KB";

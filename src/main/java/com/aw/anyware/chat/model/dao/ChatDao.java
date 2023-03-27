@@ -27,7 +27,7 @@ public class ChatDao {
 	public int insertChat(SqlSessionTemplate sqlSession, Thumbnail t) {
 		sqlSession.insert("chatMapper.insertChat", t);
 		int contentNo = t.getContentNo();
-		System.out.println(contentNo);
+		
 		return contentNo;
 	}
 

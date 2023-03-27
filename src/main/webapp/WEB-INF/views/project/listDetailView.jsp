@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-    .chat-area{
+    .listchat-area{
         border: 2px solid rgb(211, 210, 210);
         border-radius: 0.3em;
         width: 1400px;
@@ -97,7 +97,7 @@
         <b style="font-size: 40px">${ l.listTitle }</b>
         <br><br>
 
-        <div class="chat-area">
+        <div class="listchat-area">
             <!-- 채팅 영역 -->
         </div>
 
@@ -195,8 +195,8 @@
                         }
                     }
 
-                    $(".chat-area").html(value);
-                    $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+                    $(".listchat-area").html(value);
+                    $('.listchat-area').scrollTop($('.listchat-area')[0].scrollHeight);
                 },
                 error:function(){
                     console.log("리스트채팅 조회용 ajax 통신 실패");
