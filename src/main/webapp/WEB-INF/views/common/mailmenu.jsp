@@ -318,7 +318,7 @@ a{
                		      for (let i = 0; i < list.length; i++) {
                		        li += "<li class='glist' id='addTitle"
                		           + list[i].groupNo +"'>" 
-               		           +"<a class='addTitle' href='group.ad?groupNo=" + list[i].groupNo + "'>" + list[i].groupName + "</a>" 
+               		           +"<a class='addTitle' href='searchPer.ad?keyword=&memNo="+ ${loginUser.memberNo} + "&groupNo=" + list[i].groupNo + "'>" + list[i].groupName + "</a>" 
                		           +"</li>";
                		      }
                		     
@@ -368,13 +368,13 @@ a{
                </script>
         
                 <script>
-        
-                    
-                 // 해당 주소록 그룹으로 이동 처리하는 함수	
+                
+
+                /*  // 해당 주소록 그룹으로 이동 처리하는 함수	
     				function postSubmit(url, groupNo) {
     					$("#post").children("#groupNo").val(groupNo); // hidden값에 반복되는 addNo요소 중 클릭된 요소만 value값에 넣기
     					$("#post").attr("action", url).submit();
-    				}
+    				} */
 
     				// 개인 주소록 수정 클릭시 실행하는 함수
     				function updateAddBook(groupNo,groupName) {

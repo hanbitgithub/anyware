@@ -517,11 +517,19 @@
                     <form class="d-flex" role="search" action="searchPer.ad">
                       <input class="form-control form-control-sm me-2" id="search" type="search"name="keyword" value="${keyword}" placeholder="검색어를 입력하세요" aria-label="Search">
                       <input type="hidden" name="memNo" value="${loginUser.memberNo }">
+                      <input type="hidden" name="groupNo" id="no">
                       <button class="btn" type="submit" style="font-size: 13px; color: #ffffff; background-color: rgb(192, 192, 192);"><b>Search</b></button>
                     </form>
                   </div>
                 </div>
               </nav>
+              <script>
+              
+               const urlParams = new URL(location.href).searchParams;
+               const groupNo = urlParams.get('groupNo');
+               //console.log(groupNo);
+               $("#no").val(groupNo);
+              </script>
 
             <table class="table" style="text-align: center;">
                 <thead>
@@ -631,21 +639,22 @@
 				<c:otherwise>
 					<c:choose>
 						<c:when test="${empty keyword }">
-						
 							<button onclick="location.href='personal.ad?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
+					
 						<c:otherwise>
-							<button
-								onclick="location.href='searchPer.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
+							<button onclick="location.href='searchPer.ad?cpage=${pi.currentPage-1}&keyword=${keyword}'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
 			</c:choose>
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
+					
 					<c:when test="${empty keyword }">
 						<button onclick="location.href='personal.ad?cpage=${p}'">${p}</button>
 					</c:when>
+					
 					<c:otherwise>
 						<button
 							onclick="location.href='searchPer.ad?cpage=${p}&keyword=${keyword}'">${p}</button>
@@ -659,10 +668,12 @@
 				</c:when>
 				<c:otherwise>
 					<c:choose>
+						
 						<c:when test="${empty keyword }">
 							<button
 								onclick="location.href='personal.ad?cpage=${pi.currentPage + 1}'">다음</button>
 						</c:when>
+						
 						<c:otherwise>
 							<button
 								onclick="location.href='searchPer.ad?cpage=${pi.currentPage+1}&keyword=${keyword}'">다음</button>
