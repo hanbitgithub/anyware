@@ -512,7 +512,7 @@ public class MailController {
 		// -----------------첨부파일 insert--------------
 
 		for (MultipartFile file : upfile) {
-
+			//System.out.println(file);
 			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
 
 				// 저장 파일 경로!
@@ -528,7 +528,9 @@ public class MailController {
 				// at를 attachmentList에 담기
 				atList.add(at);
 			}
-
+			
+		}
+			System.out.println("controller" + atList);
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result3 = mService.insertMailAttachment(atList);
@@ -541,7 +543,7 @@ public class MailController {
 				session.setAttribute("alertMsg", "메일 저장을 실패했습니다.");
 			}
 
-		}
+		
 
 		return new Gson().toJson(result1);
 	}
@@ -676,13 +678,14 @@ public class MailController {
 				// at를 attachmentList에 담기
 				atList.add(at);
 			}
+		}
 
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result5 = mService.insertTempMailAttachment(atList);
 			}
 
-		}
+		
 
 		return result1 * result3 * result5 > 0 ? "success" : "fail";
 	}
@@ -693,7 +696,9 @@ public class MailController {
 	public String ajaxTemporaryMailUpdate(Mail m, MultipartFile[] upfile, HttpSession session) {
 		String cc = m.getRefEmail();
 		String receivers = m.getReceivers();
-
+		
+		
+		//System.out.println(m);
 		if (m.getReceivers() != null) {
 			receivers = receivers.replaceAll("\"value\":\"", "");
 			receivers = receivers.replaceAll("\\[|\\]|\"|\\{|\\}", "");
@@ -726,7 +731,7 @@ public class MailController {
 
 		if (result1 > 0) {
 			int result2 = mService.deleteTemporaryStatus(m.getEmNo());
-			int result4 = mService.deleteAttachment(m.getEmNo());
+			
 
 			if (result2 > 0) {
 				// 메일 상태 insert
@@ -791,10 +796,12 @@ public class MailController {
 
 		// -----------------첨부파일 insert--------------
 
+		
+		
 		for (MultipartFile file : upfile) {
-
+			//System.out.println(file);
 			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
-
+				int result4 = mService.deleteAttachment(m.getEmNo());
 				// 저장 파일 경로!
 				String saveFilePath = FileUpload.saveFile(file, session, "resources/uploadFiles/mailFiles/");
 
@@ -809,13 +816,15 @@ public class MailController {
 				// at를 attachmentList에 담기
 				atList.add(at);
 			}
+			
+		}
 
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result5 = mService.insertTempMailAttachment(atList);
 			}
 
-		}
+		
 
 		return result1 * result3 * result5 > 0 ? "success" : "fail";
 	}
@@ -875,6 +884,7 @@ public class MailController {
 				atList.add(at);
 			}
 
+		}
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result3 = mService.insertMailAttachment(atList);
@@ -887,7 +897,7 @@ public class MailController {
 				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
 			}
 
-		}
+		
 
 		return new Gson().toJson(result1);
 
@@ -937,12 +947,13 @@ public class MailController {
 					atList.add(at);
 				}
 
+			}
 				// 첨부파일 보내기
 				if (atList.size() > 0) { // 첨부파일이 추가된 경우
 					result3 = mService.insertTempMailAttachment(atList);
 				}
 
-			}
+			
 		}
 
 		return result3 > 0 ? "success" : "fail";
@@ -1268,6 +1279,9 @@ public class MailController {
 				// at를 attachmentList에 담기
 				atList.add(at);
 			}
+			
+		}
+
 
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
@@ -1282,7 +1296,7 @@ public class MailController {
 				session.setAttribute("alertMsg", "메일 전송을 실패했습니다.");
 			}
 
-		}
+		
 
 		return "mail/successSendmail";
 	}
@@ -1684,14 +1698,15 @@ public class MailController {
 					// at를 attachmentList에 담기
 					atList.add(at);
 				}
+				
+			}
 
 				// 첨부파일 보내기
 				if (atList.size() > 0) { // 첨부파일이 추가된 경우
 					result3 = mService.insertMailAttachment(atList);
 				}
 				
-			}
-
+			
 
 			if (result1 > 0 && result2 > 0 && result3 > 0) {
 				session.setAttribute("alert", "메일 전송 완료");
@@ -1904,13 +1919,14 @@ public class MailController {
 				// at를 attachmentList에 담기
 				atList.add(at);
 			}
+		}
 
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result5 = mService.insertTempMailAttachment(atList);
 			}
 
-		}
+		
 
 		// System.out.println("result1:"+ result1);
 		// System.out.println("result3:"+result3);

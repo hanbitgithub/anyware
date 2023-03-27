@@ -353,6 +353,8 @@ public class MailDao {
 	 * @return 메일쓰기 (첨부파일 upload)
 	 */
 	public int insertMailAttachment(SqlSessionTemplate sqlSession, ArrayList<MailFile> atList) {
+		
+		System.out.println("dao"+atList);
 		int result = 0;
 		for(MailFile at : atList) {
 			result += sqlSession.insert("mailMapper.insertMailAttachment", at);
