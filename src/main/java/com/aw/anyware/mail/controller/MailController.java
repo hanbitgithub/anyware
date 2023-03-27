@@ -530,7 +530,7 @@ public class MailController {
 			}
 			
 		}
-			System.out.println("controller" + atList);
+			//System.out.println("controller" + atList);
 			// 첨부파일 보내기
 			if (atList.size() > 0) { // 첨부파일이 추가된 경우
 				result3 = mService.insertMailAttachment(atList);
@@ -1643,7 +1643,7 @@ public class MailController {
 
 			// -----------------첨부파일 insert--------------
 		
-
+		System.out.println("이전파일" + m.getEmfNo());
 			if (m.getEmfNo() != null) {
 				// 이전첨부파일을 현재 메일번호에도 복제..?? 
 				String[] emfArr = m.getEmfNo().split(",");
@@ -1654,7 +1654,7 @@ public class MailController {
 				prevAtList.add(prevAt);
 			}
 			
-			//System.out.println("이전파일" + prevAtList);
+			 System.out.println("이전파일" + prevAtList);
 			for (MailFile prevAt : prevAtList) {
 		        // 파일 복제를 위한 경로 설정
 		        String prevFilePath = session.getServletContext().getRealPath(prevAt.getChangeName());
@@ -1898,7 +1898,7 @@ public class MailController {
 		// -----------------첨부파일 insert--------------
 
 		for (MultipartFile file : upfile) {
-			System.out.println(file);
+			//System.out.println(file);
 			if (!file.getOriginalFilename().equals("")) { // 첨부파일이 있는 경우
 
 				if (m.getEmfNo() != null) {

@@ -948,7 +948,7 @@ select
      , change_name
      , file_size
  from tb_mail_file
- where em_no = #{emNo}      
+ where emf_no = #{emfNo}      
   
 </select>
 
