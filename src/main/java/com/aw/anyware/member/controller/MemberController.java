@@ -339,9 +339,14 @@ public class MemberController {
 	}
 	
 	@RequestMapping("regist.me")
-	public ModelAndView regist(ModelAndView mv) {
+	public ModelAndView regist(ModelAndView mv, Member m) {
+		if(m.getDeptName().equals("인사부") || ((m.getMemberNo() == 33) || m.getMemberNo() == 34)) {
 		mv.setViewName("member/registNewMember");
 		return mv;
+		}else {
+			mv.addObject("errorMsg", "접근 권한이 없습니다");
+			return mv;
+		}
 	}
 	
 	@RequestMapping("insert.me")

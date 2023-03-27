@@ -44,6 +44,8 @@ public interface MemberService {
 	
 	String selectToday();
 	
+	int deleteCommute();
+	
 	//신규 사원 등록
 	
 	int insertMember(Member m);

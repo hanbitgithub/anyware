@@ -166,5 +166,10 @@ public class MemberDao {
 		
 		return sqlSession.update("memberMapper.cancelOff", lo);
 	}
+
+	public int deleteCommute(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.delete("memberMapper.deleteCommute");
+	}
 	
 }
