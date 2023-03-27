@@ -349,7 +349,7 @@
 				if(dragfiles !=null){
 					files = dragfiles;
 				}else{
-					files = $('#upfile')[0].files;
+					files = $('#upfile2')[0].files;
 				}
 				
 				

@@ -70,7 +70,8 @@
 	             <br><br>
 	             <ul>
 	                <span style="font-weight: 600;">서식 관리</span><br><br>
-	                <li id=endListAll onclick='location.href="endListAll.appro?cat=endListAll"'>&nbsp;&nbsp;서식 등록</li>
+	                <li onclick='location.href="enroll.tpl"'>&nbsp;&nbsp;서식 등록</li>
+	                <li onclick='location.href="corr.tpl"'>&nbsp;&nbsp;서식 수정/삭제</li>
 	            </ul>
             </c:if>
 

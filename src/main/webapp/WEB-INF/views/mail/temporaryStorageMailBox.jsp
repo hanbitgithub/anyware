@@ -604,11 +604,11 @@ input[type=checkbox] {
 					<c:choose>
 						<c:when test="${empty keyword and empty filter}">
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage - 1}'">이전</button>
+								onclick="location.href='storage.em?cpage=${pi.currentPage - 1}'">이전</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage-1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">이전</button>
+								onclick="location.href='searchT.em?cpage=${pi.currentPage-1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">이전</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -616,11 +616,11 @@ input[type=checkbox] {
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
 					<c:when test="${empty keyword and empty filter}">
-						<button onclick="location.href='sendbox.em?cpage=${p}'">${p}</button>
+						<button onclick="location.href='storage.em?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button
-							onclick="location.href='sendbox.em?cpage=${p}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">${p}</button>
+							onclick="location.href='searchT.em?cpage=${p}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">${p}</button>
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
@@ -633,11 +633,11 @@ input[type=checkbox] {
 					<c:choose>
 						<c:when test="${empty keyword and empty filter}">
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage + 1}'">다음</button>
+								onclick="location.href='storage.em?cpage=${pi.currentPage + 1}'">다음</button>
 						</c:when>
 						<c:otherwise>
 							<button
-								onclick="location.href='sendbox.em?cpage=${pi.currentPage+1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">다음</button>
+								onclick="location.href='searchT.em?cpage=${pi.currentPage+1}&keyword=${keyword}&sender=${loginUser.memberId }&receiver=${loginUser.memberId }&filter=${filter }'">다음</button>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>

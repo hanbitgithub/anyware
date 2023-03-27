@@ -287,6 +287,9 @@ public class MailServiceImle implements MailService {
 		return mDao.insertMailStatus(sqlSession, list);
 	}
 	
+	/**
+	 * 메일 쓰기 ( mailFile 테이블 insert)
+	 */
 	@Override
 	public int insertMailAttachment(ArrayList<MailFile> atList) {
 		return mDao.insertMailAttachment(sqlSession, atList);

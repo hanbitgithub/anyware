@@ -192,6 +192,21 @@ public class ApprovalServiceImpl implements ApprovalService {
 		return result;
 	}
 
+	@Override
+	public int insertTpl(ApproTpl tpl) {
+		return aDao.insertTpl(sqlSession, tpl);
+	}
+
+	@Override
+	public int updateTpl(ApproTpl tpl) {
+		return aDao.updateTpl(sqlSession, tpl);
+	}
+
+	@Override
+	public int deleteTpl(ApproTpl tpl) {
+		return aDao.deleteTpl(sqlSession, tpl);
+	}
+
 
 
 }
