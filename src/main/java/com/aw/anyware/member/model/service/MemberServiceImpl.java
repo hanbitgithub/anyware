@@ -135,7 +135,7 @@ public class MemberServiceImpl implements MemberService {
 		
 		return mDao.makeNewPwd(sqlSession, m);
 	}
-
+	
 	@Override
 	public ArrayList<Commute> selectMemberAttendenceList(int memberNo) {
 		return mDao.selectMemberAttendenceList(sqlSession,memberNo);
@@ -144,15 +144,21 @@ public class MemberServiceImpl implements MemberService {
 	public Commute selectTodayCommute(int memNo) {
 		return mDao.selectTodayCommute(sqlSession, memNo);
 	}
-
+	
 	
 	
    @Override
-	public LeaveOff selectLastOff(Member m) {
+	public LeaveOff selectLastOff(LeaveOff lo) {
 		
-		return mDao.selectLastOff(sqlSession, m);
+		return mDao.selectLastOff(sqlSession, lo);
 	}
-
+   
+   @Override
+	public int insertOff(LeaveOff lo) {
+		
+		return mDao.insertOff(sqlSession);
+	}
+   
 	@Override
 	public double selectWeeklyCommute(int memNo) {
 		return mDao.selectWeeklyCommute(sqlSession, memNo);
@@ -163,6 +169,7 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectMonthCommute(sqlSession, memNo);
 	}
 
+	
 	
 
 

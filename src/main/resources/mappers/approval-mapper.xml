@@ -382,7 +382,8 @@
 	<select id="listTpl" resultMap="tplResult">
 		select tpl_No
 			 , tpl_Title
-		  from tb_app_tpl 	 
+		  from tb_app_tpl 	
+		 where status = 'Y'  
 	</select>
 	
 	<select id="selectTpl" resultMap="tplResult">
@@ -481,6 +482,35 @@
 	  			)
    	
    	</insert>
-   
+   	
+   	<insert id="insertTpl">
+   		insert 
+		  into tb_app_tpl
+		  		(
+		  		TPL_NO,
+				TPL_TITLE, 
+				TPL_CONTENT	
+		  		)   	
+	  	values
+	  			(
+  				seq_tplno.nextval
+  			  , #{tplTitle}
+  			  , #{tplContent}
+	  			)
+   	</insert>
+   	
+   	<update id="updateTpl">
+   		update tb_app_tpl
+   		   set tpl_title = #{tplTitle},
+   		       tpl_content = #{tplContent}
+   		 where tpl_no = #{tplNo}
+   	</update>
+   	
+   	<update id="deleteTpl">
+   		update tb_app_tpl
+   		   set status = 'N'
+   		 where tpl_no = #{tplNo}
+   	</update>
+   		
    
 </mapper>

@@ -27,6 +27,8 @@
     margin-top: 5px;
    
 }
+
+
 #mail-area li a:hover{
     color: gray;
     cursor: pointer;
@@ -163,6 +165,8 @@ a{
 <body>
 	 <div class="menu">
             <span style="font-weight: 600; font-size: 19px;">메일</span><br><br>
+            
+            
             <a class="btn btn-primary" href="sendForm.em"style="font-size: 13px; font-weight:600; width: 120px;">메일쓰기</a>
             <br><br>
             <div id="mail-area">
@@ -186,9 +190,28 @@ a{
                         <img src="resources/images/bin.png"  width="14px"alt="">
                     </a>
                 </li>
-               
-            </ul>
-            
+               <!--  
+                 <div class="chat position-relative" style="display: inline-block">
+		      		 <button class="dropdown drop-btn" type="button" data-bs-toggle="dropdown"  aria-expanded="false">
+		                <img id="profileImg" src="resources/images/bell.png" width="38px" height="38px"  >
+		                <span class="position-absolute top-15 start-100 translate-middle badge rounded-pill bg-danger">1</span>
+		            </button>
+		            <div class="dropdown-menu dropdown-menu-sm" style="font-size: 13px;">
+		             <h4 class="dropdown-header" style="font-size:14px;">
+		                      알람내역
+		                  </h4>
+		                  <div id="alert-area">
+		                  알람 뿌려지는 영역
+		               
+		               	
+		                  </div>
+		            </div>
+		  
+		        </div>
+		         -->
+	
+			 </ul>
+			            
             
             <script>
             	$(function(){
@@ -507,6 +530,69 @@ a{
         	})
 
          </script>
+         
+         
+         
+         <!-- 알람 -->
+         	<!-- sockJS -->
+			 <script src="https://cdn.jsdelivr.net/sockjs/1/sockjs.min.js"></script>
+			<script>
+			// 전역변수 설정
+			var socket  = null;
+			$(document).ready(function(){
+			    // 웹소켓 연결
+			    var sock = new SockJS("${pageContext.request.contextPath}/alarm");
+			    socket = sock;
+			
+			    // 데이터를 전달 받았을때 
+			    sock.onmessage = onMessage; // toast 생성
+			    sock.onclose = onClose;
+			
+			});
+			 
+		   	
+		   	 
+			// toast생성 및 추가
+			function onMessage(evt){
+			    var data = evt.data;
+			    // toast
+			    let toast = "<div class='toast' role='alert' aria-live='assertive' aria-atomic='true'>";
+			    toast += "<div class='toast-header'><i class='fas fa-bell mr-2'></i><strong class='mr-auto'>알림</strong>";
+			    toast += "<small class='text-muted'>just now</small><button type='button' class='ml-2 mb-1 close' data-dismiss='toast' aria-label='Close'>";
+			    toast += "<span aria-hidden='true'>&times;</span></button>";
+			    toast += "</div> <div class='toast-body'>" + data + "</div></div>";
+			    $("#msgStack").append(toast);   // msgStack div에 생성한 toast 추가
+			    $(".toast").toast({"animation": true, "autohide": false});
+			    $('.toast').toast('show');
+			};	
+			
+			
+			function onClose(){ // 퇴장하기 클릭시 실행되는 함수 
+		   		   location.href="${pageContext.request.contextPath}"; // contextpath ("/spring")
+		   		   // * 웹소켓과의 통신도 끊기게됨 => ChatEchoHandler클래스의 afterConnectionClosed메소드 실행됨 
+		   	   }
+		   	
+			
+			
+			
+			</script>
+			
+			
+			
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
+         
 
 
 		</div>

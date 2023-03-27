@@ -39,7 +39,7 @@
     	function apply(){
     		var offDate = $('#offCal').val();
     		
-    		location.href = 'applyOff.me?memberNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}'+'&offDate='+offDate;
+    		location.href = 'insertOff.me?apNo='+${loginUser.memberNo}+'&name='+'${loginUser.name}'+'&offDate='+offDate;
     	}
     </script>
     

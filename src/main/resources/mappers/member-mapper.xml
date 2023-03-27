@@ -337,30 +337,42 @@
   	select
   			DAYOFF_NO,
   			APPLY_DATE,
-  			CANCEL_DATE
+  			CANCEL_DATE,
+  			OFFDATE
   		from tb_dayoff
   	   where dayoff_no = (select dayoff_no
 						        from(select  dayoff_no
 						                    from tb_dayoff
-						                   where applicant_no = #{memberNo}
+						                   where applicant_no = #{apNo}
 						                   order by dayoff_no desc)
 						    where rownum = 1)
   		
   </select>
   
-  <select id="applyOff" resultMap="leaveOffResult">
-  	select
+  <insert id="insertOff">
+  	insert
+  		into tb_dayoff
+  		(
   			DAYOFF_NO,
-			NAME,
+			name,
 			APPLY_DATE,
 			CANCEL_DATE,
 			STATUS,
 			APPLICANT_NO,
-			OFF_DATE
-		from tb_dayoff
-	   where memberNo = #{memberNo}
-  		
-  </select>
+			OFFDATE
+  		)
+  		values
+  		(
+  			seq_don.nextval,
+  			#{name},
+  			to_char(sysdate,'YYYY-MM-DD'),
+  			null,
+  			'Y',
+  			#{apNo},
+  			#{offDate}
+  			
+  		)
+  </insert>
   
     <!-- 근태현황조회 -->
   <select id="selectMemberAttendenceList" resultMap="commuteResult">
