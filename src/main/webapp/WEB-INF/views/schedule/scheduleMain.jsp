@@ -452,6 +452,10 @@
                                 
                             },
 
+                            
+
+
+
 
                         });
             
@@ -2138,8 +2142,88 @@
 
         }
         
+        // 체크된 일정만 가져오기
 
-        // 키워드 검색
+        // 체크된 캘린더 조회하기 위한
+
+        //selectScheduleList();
+
+        
+
+        // 체크되어있는 캘린더 번호
+        check=[];
+        $(".cName").each(function(){
+            if($(this).is(":checked") == true){
+                check.push($(this).next().val());
+            }
+        })
+        console.log(check);
+
+
+        // 체크 이벤트 발생시 캘린더 번호 arr로
+        // $(document).on("click", ".checkSchGroup", function(){
+        //     check=[];
+        //     $(".checkSchGroup").each(function(){
+        //         if($(this).is(":checked") == true){
+        //             check.push($(this).next().val());
+        //         }
+        //     })
+        //     console.log(check);
+
+        //     let eventArr = [];
+
+        //     for(let i=0; i<check.length; i++){
+        //         for(let j=0; j<schedules.length; j++){
+        //             if(check[i] == schedules[j].groupNo){
+        //                 let eventObj = {
+        //                     groupId: schedules[j].schNo,
+        //                     title: schedules[j].schTitle,
+        //                     start: schedules[j].schBegin,
+        //                     end: schedules[j].schEnd,
+        //                     color: schedules[j].groupColor
+        //                 }
+        //                 eventArr.push(eventObj);
+        //             }
+        //         }
+        //     }
+        //     calendarRendering(eventArr);
+        // })
+
+        // let schedules;
+        // function selectScheduleList(){
+        //     $.ajax({
+        //         url:"selectSchedule.emp",
+        //         dataType:"JSON",
+        //         type:"post",
+        //         success:function(sList){
+
+        //             console.log(sList);
+
+        //             schedules = sList;
+        //             let eventArr = [];
+        //             for(let c=0; c<check.length; c++){
+        //                 // check[c] = > groupNo
+        //                 for(let i=0; i<sList.length; i++){
+        //                     //sList[i].groupNo => groupNo  // groupNo 조회해오기!!!!!
+        //                     if(check[i] == sList[i].groupNo){
+        //                         let eventObj = {
+        //                             groupId: sList[i].schNo,
+        //                             title: sList[i].schTitle,
+        //                             start: sList[i].schBegin,
+        //                             end: sList[i].schEnd,
+        //                             color: sList[i].groupColor
+        //                         }
+        //                         eventArr.push(eventObj);
+        //                     }   
+        //                 }
+        //             }
+
+        //             calendarRendering(eventArr);   
+        //         }, error: function(){
+        //             console.log("일정조회 ajax 통신실패")
+        //         }   
+        //     })
+        // }
         
 
 
