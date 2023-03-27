@@ -59,8 +59,6 @@
 			<result column="profile_url" property="profileUrl" />
 		</collection>
 	</resultMap>
-	
-
 
 	<select id="selectListCount" resultType="_int">
 		select

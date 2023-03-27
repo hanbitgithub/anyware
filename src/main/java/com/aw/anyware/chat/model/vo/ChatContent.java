@@ -1,5 +1,7 @@
 package com.aw.anyware.chat.model.vo;
 
+import java.util.ArrayList;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,15 +13,10 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChatRoom {
+public class ChatContent {
 	
-	private int chatroomNo;
-	private String chatTitle;
-	private int chatType;
-	private String createDate;
-	
-	private int notRead;
-	private String chatContent;
 	private String sendDate;
+
+	private ArrayList<Thumbnail> chatInfo;
 
 }
