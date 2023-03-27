@@ -156,7 +156,19 @@ public class MemberServiceImpl implements MemberService {
    @Override
 	public int insertOff(LeaveOff lo) {
 		
-		return mDao.insertOff(sqlSession);
+		return mDao.insertOff(sqlSession, lo);
+	}
+   
+   @Override
+	public ArrayList<LeaveOff> selectMyOff(int memberNo) {
+		
+		return mDao.selectMyOff(sqlSession, memberNo);
+	}
+   
+   @Override
+	public int cancelOff(LeaveOff lo) {
+		
+		return mDao.cancelOff(sqlSession, lo);
 	}
    
 	@Override
@@ -168,6 +180,10 @@ public class MemberServiceImpl implements MemberService {
 	public double selectMonthCommute(int memNo) {
 		return mDao.selectMonthCommute(sqlSession, memNo);
 	}
+
+	
+
+	
 
 	
 	
