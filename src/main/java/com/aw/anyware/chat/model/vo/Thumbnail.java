@@ -30,5 +30,6 @@ public class Thumbnail {
 	
 	private String otherNo;
 	private String otherName;
+	private String title;
 
 }

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.CloseStatus;
+import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import com.aw.anyware.chat.model.service.ChatService;
-import com.aw.anyware.chat.model.vo.ChatContent;
 import com.aw.anyware.chat.model.vo.Thumbnail;
 
 
@@ -53,10 +53,13 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 			
 			Thumbnail chat= cService.selectChatContent(result);
 			System.out.println(chat);
-//			for(WebSocketSession sss : sessionList) {
-//				// 전달하고자 하는 메세지의 형식 => 메세지내용,발신자번호,발신자이름,발신자부서,발신자직급,보낸날짜,보낸시간
-//				
-//			}
+			String sendmsg = chat.getContent() + "," + chat.getWriterNo() + "," + chat.getWriterName() + "," + chat.getDeptName() 
+							+ "," + chat.getJobName() + "," + chat.getSendDate() + "," + chat.getSendTime();
+					
+			for(WebSocketSession sss : sessionList) {
+				// 전달하고자 하는 메세지의 형식 => 메세지내용,발신자번호,발신자이름,발신자부서,발신자직급,보낸날짜,보낸시간
+				sss.sendMessage(new TextMessage(sendmsg));
+			}
 		}
 		
 	}

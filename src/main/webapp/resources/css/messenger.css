@@ -53,6 +53,7 @@
 /* 채팅리스트 css */
 .list-area{
     height: 640px;
+    overflow: auto;
 }
 .list-set {
     display: flex;
@@ -117,7 +118,9 @@
     border: 1px solid lightgray;
     border-radius:10px;
     margin-bottom: 10px;
+    width: 456px;
     height: 480px;
+    overflow: auto;
 }
 .chat-message.other, .send-user{
     display: flex;
