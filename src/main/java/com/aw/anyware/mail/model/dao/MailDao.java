@@ -803,7 +803,7 @@ public class MailDao {
 		int limit = pi.getBoardLimit();
 		RowBounds rowBounds = new RowBounds(offset,limit);
 		
-		return (ArrayList)sqlSession.selectList("mailMapper.searchSendToMeMailList",ms,rowBounds);
+		return (ArrayList)sqlSession.selectList("mailMapper.searchImportantMailList",ms,rowBounds);
 	}
 	
 	/**

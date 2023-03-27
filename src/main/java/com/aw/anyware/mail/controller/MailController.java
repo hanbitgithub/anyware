@@ -2071,9 +2071,13 @@ public class MailController {
 
 		int listCount = mService.searchImportantMailCount(ms);
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 10);
+		//System.out.println(listCount);
+		
 		
 		//검색 후 리스트 
 		ArrayList<Mail> ilist = mService.searchImportantMailList(pi, ms);
+		//System.out.println(ilist);
+		
 		model.addAttribute("ilist",ilist);
 		model.addAttribute("pi",pi);
 		model.addAttribute("keyword",ms.getKeyword());
