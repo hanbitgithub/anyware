@@ -548,7 +548,7 @@ a {
 
 		})
 		
-		function showContent(contentName, tabName, e) {
+		function showContent(contentName, tabName, roomNo) {
 			// 모든 내용을 숨깁니다.
 			var contents = document.getElementsByClassName("tab-content");
 			for (var i = 0; i < contents.length; i++) {
@@ -626,9 +626,6 @@ a {
             
             // 채팅방 입장
             if(contentName == 'chatroom'){
-                // console.log($(e).children("div").children().eq(0).children("input[type=hidden]").val());
-                let roomNo = $(e).children("div").children().eq(0).children("input[type=hidden]").val();
-
                 $.ajax({
                     url:"chattingRoom.ajax",
                     data:{roomNo:roomNo
@@ -692,7 +689,7 @@ a {
                     
                     let value = "";
                     for(let i = 0; i<rList.length; i++){
-                        value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", this);'>"
+                        value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", " + rList[i].roomNo + ");'>"
                                     + "<img src='" + rList[i].profileUrl + "' class='chatImg'>"
                                     + "<div class='chat-content'>"
                                         + "<div class='chat-info'>"
@@ -739,15 +736,52 @@ a {
                     data:{writerNo:myNo
                         , otherNo:otherNo},
                     success:function(map){
-                        let value = "";
-                        if(chList.length == 0){
-                            value += "";
+                        // map : roomNo, chList
+                        let chList = map.chList;
+                        let value = "<input type='hidden' class='roomNo' value='" + map.roomNo + "'>";
+                        if(chList != "" || chList.length != 0){ // 빈 채팅창
+                            for(let i=0; i<chList.length; i++){
+                                value += "<div class='date-div'>" + chList[i].sendDate + "</div>";
+                                for(let j=0; j<chList[i].chatInfo.length; j++){
+                                    if(chList[i].chatInfo[j].writerNo == ${loginUser.memberNo}){ // 내가 쓴 메세지
+                                        value += "<table class='chat-message mine'>"
+                                                + "<tr>"
+                                                    + "<td class='time-td'>"
+                                                        + "<span class='sendtime'>" + chList[i].chatInfo[j].sendTime + "</span>"
+                                                    + "</td>"
+                                                    + "<td>"
+                                                        + "<div class='send-message'>" + chList[i].chatInfo[j].content + "</div>"
+                                                    + "</td>"
+                                                + "</tr>"
+                                            + "</table>";
+                                    } else {
+                                if(chList[i].chatInfo[j].deptName == '미정'){
+                                    value += "<div class='send-user'>" + chList[i].chatInfo[j].writerName + "(" + chList[i].chatInfo[j].jobName + ")</div>";
+                                } else {
+                                    value += "<div class='send-user'>" + chList[i].chatInfo[j].writerName + "(" + chList[i].chatInfo[j].deptName + "/" + chList[i].chatInfo[j].jobName + ")</div>";
+                                }
+                                        value += "<table class='chat-message other'>"
+                                                    + "<tr>"
+                                                        + "<td>"
+                                                            + "<div class='send-message'>" + chList[i].chatInfo[j].content + "</div><div class='time-div'><span class='sendtime'>" + chList[i].chatInfo[j].sendTime + "</span></div>"
+                                                        + "</td>"
+                                                    + "</tr>"
+                                                + "</table>";
+                                    }
+                                }
+                            }
                         }
+
+                        $(".chat-area").html(value);
+                        $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+                        showContent("chatroom", "chat", map.roomNo);
                     },
                     error:function(){
                         console.log("채팅방 생성용 ajax 통신 실패");
                     }
                 })
+            } else {
+                alert("1인 채팅창은 만들 수 없습니다.");
             }
         })
         

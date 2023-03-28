@@ -62,18 +62,35 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public String selectRoom(Thumbnail th) {
-		return cDao.selectRoom(sqlSession, th);
-	}
-
-	@Override
-	public HashMap<String, Object> insertRoom(Thumbnail th) {
+	public HashMap<String, Object> insertRoom(int writerNo, int otherNo) {
 		HashMap<String, Object> map = new HashMap<>();
-		int result = cDao.insertRoom(sqlSession, th);
+		map.put("writerNo", writerNo);
+		map.put("otherNo", otherNo);
+
+		// 기존 방이 있는지 확인
+		String roomNo = cDao.selectRoomNo(sqlSession, map);
+		
+		if(roomNo != null) { // 기존 방 있을 경우 => 채팅내용 조회
+			ArrayList<ChatContent> chList = cDao.selectChatContentList(sqlSession, Integer.parseInt(roomNo));
+			map.put("roomNo", roomNo);
+			map.put("chList", chList);
+		} else { // 채팅방 & 멤버 insert
+			int result = cDao.insertRoom(sqlSession, map); // roomNo
+			
+			if(result > 0) {
+				map.put("roomNo", result);
+				
+				// member insert
+				map.put("condition", "my");
+				int result2 = cDao.insertChatMember(sqlSession, map);
+				map.put("condition", "other");
+				int result3 = cDao.insertChatMember(sqlSession, map);
+				
+				map.put("chList", "");
+			}
+		}
 		
 		return map;
 	}
-
-	
 
 }

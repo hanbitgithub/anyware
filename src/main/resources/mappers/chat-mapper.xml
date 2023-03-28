@@ -215,7 +215,7 @@
 		 WHERE CHATROOM_NO = #{roomNo}
 	</select>
 	
-	<select id="selectRoom" resultType="string">
+	<select id="selectRoomNo" resultType="String">
 		select
 		       m.chatroom_no
 		  from tb_chatmember m
@@ -226,18 +226,43 @@
 	
 	<insert id="insertRoom">
 		<selectKey keyProperty="roomNo"  resultType="_int" order="AFTER">
-			SELECT SEQ_CHRNO.CURRVAL "CHATROOM_NO" FROM DUAL
+			SELECT SEQ_CHRNO.CURRVAL "CONTENT_NO" FROM DUAL
 		</selectKey>
 		insert
 		  into tb_chatroom
 		  (
 		  	chatroom_no
 		  , chat_type
-		  )
+		  )	
 		  values
 		  (
 		  	seq_chrno.nextval
 		  , 1
+		  )
+	</insert>
+	
+	<insert id="insertChatMember">
+		insert
+		  into tb_chatmember
+		  (
+		  	chatroom_no
+		  , member_no
+		  , enroll_date
+		  , not_read
+		  )
+		  values
+		  (
+		  	#{roomNo}
+	  <choose>
+	  	<when test="condition == 'my'">
+	  		, #{writerNo}
+	  	</when>
+	  	<otherwise>
+	  		, #{otherNo}
+	  	</otherwise>
+	  </choose>
+		  , sysdate
+		  , 0
 		  )
 	</insert>
   
