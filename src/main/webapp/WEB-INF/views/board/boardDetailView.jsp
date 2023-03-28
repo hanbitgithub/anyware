@@ -244,8 +244,8 @@ textarea {
 								+ "</div>"
 								// 수정창
 								+ "<div id='replyarea1' style='display:none'>"
-								+ "<input type='hidden' name='reply-no' value='"+ list[i].replyNo +"'>"
-								+ "<textarea rows='4' cols='95' style='resize:none;' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
+								+ "<input type='hidden' name='replyNo' id='replyNo' value='"+ list[i].replyNo +"'>"
+								+ "<textarea rows='4' cols='95' style='resize:none;' id='replyContent' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
 								+ "<button id='btn'>등록</button>"
 								+ "</div>"
 						}else{
@@ -290,8 +290,8 @@ textarea {
     	function updateReply(no, content){
     	  $.ajax({
     	      url:"update.re",
-    	      data:{ replyNo:no,
-    	    	  replyContent:content
+    	      data:{replyContent: $("#replyContent").val() ,
+    	    	  replyNo: $("#replyNo").val()
     	      },
     				type:"post",
     	        success:function(result){

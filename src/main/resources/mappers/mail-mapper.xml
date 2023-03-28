@@ -1025,7 +1025,8 @@ select
 	 and trash = 'Y'
 	 and spam = 'N'
    order by m.em_no desc
-
+	from tb_mail_status s
+	
 
 </select>
 
