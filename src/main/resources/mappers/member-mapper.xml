@@ -209,7 +209,7 @@
   		set commute_in = to_char(sysdate, 'HH24:MI'),
   		commute_date = TO_CHAR(SYSDATE, 'YYYY-MM-DD'),
   		commute_status = case when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '지각'
-				 when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '정시출근)'
+				 when round((TO_DATE('09:01', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '정상근무)'
 				 end 
 		where commute_no = (select commute_no
 						        from(select  commute_no
@@ -223,7 +223,7 @@
   	update
   			tb_commute
   		set commute_out = to_char(sysdate, 'HH24:MI')
-  		, commute_status = case when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '정상퇴근'
+  		, commute_status = case when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[<=]]> 0 then '정상근무'
 				 			 when round((TO_DATE('18:00', 'HH24:MI') - TO_DATE(to_char(sysdate, 'HH24:MM'), 'HH24:MI')) * 24, 2) <![CDATA[>]]> 0 then '조퇴'
 				 			 end 
   		

@@ -361,7 +361,8 @@ public class MemberController {
 		int result = mService.insertMember(m);
 		if(result > 0) {
 			mv.addObject("alertMsg", "신규 사원을 추가하였습니다");
-			mv.setViewName("member/selectAllMember");
+			mv.setViewName("member/memberPersonalInfo");
+			
 			return mv;
 		}else {
 			mv.addObject("errorMsg", "다시 시도해주십시오");

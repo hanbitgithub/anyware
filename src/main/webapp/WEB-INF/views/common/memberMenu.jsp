@@ -57,7 +57,7 @@ a{
             <ul>
                 <li class="hrOnly" style="display: none;"><a href="regist.me?deptName=${loginUser.deptName}&?deptName=${loginUser.deptName}">신규사원등록</a></li>
                 <li class="hrOnly" style="display: none;"><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
-                <li><a href="mailTest.me?email=${loginUser.email}">메일테스트</a></li>
+                
                 <li><a href="attendence.me"}">근태조회</a></li>
 
             </ul>
@@ -68,11 +68,12 @@ a{
  
     </div>
     <script>
-    	function(){
-    		if(${loginUser.deptName} == '인사부'){
-    			$('.hrOnly').css('display', 'block')
+    	$(document).ready(function(){
+    		
+    		if('${loginUser.deptName}' == '인사부'){
+    			$('.hrOnly').show();
     		}
-    	}
+    	});
     </script>
     
 
