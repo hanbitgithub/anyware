@@ -47,28 +47,78 @@
         <input type="hidden" name="boardWriter" value="${loginUser.memberNo }">      
 		<c:choose>
 			<c:when test="${loginUser.deptName eq '인사부' }">
-				  <select id="category" name="category">
+				  <select id="category" name="category" value="${ b.category }">
+					   <option value="${ b.category }">
+						<c:choose>
+							<c:when test="${ b.category eq 6}">
+							공지사항
+							</c:when>
+							<c:when test="${ b.category eq 5}">
+							자유게시판
+							</c:when>
+							<c:when test="${ b.category eq 1}">
+							인사팀
+							</c:when>
+						</c:choose>
+
+					   </option>
 			           <option value="5">자유게시판</option>
 			           <option value="6">공지사항</option>
 			           <option value="1">인사팀</option>
 			       </select>
 			</c:when>
 			<c:when test="${loginUser.deptName eq '총무부' }">
-			       <select id="category" name="category">
+			       <select id="category" name="category" value="${ b.category }">
+					<option value="${ b.category }">
+						<c:choose>
+							<c:when test="${ b.category eq 6}">
+							공지사항
+							</c:when>
+							<c:when test="${ b.category eq 5}">
+							자유게시판
+							</c:when>
+							<c:when test="${ b.category eq 2}">
+							총무팀
+							</c:when>
+						</c:choose>
 			           <option value="5">자유게시판</option>
 			           <option value="6">공지사항</option>
 			           <option value="2">총무팀</option>
 			       </select>
 			</c:when>
 			<c:when test="${loginUser.deptName eq '디자인부' }">
-			       <select id="category" name="category">
+			       <select id="category" name="category" value="${ b.category }">
+					<option value="${ b.category }">
+						<c:choose>
+							<c:when test="${ b.category eq 6}">
+							공지사항
+							</c:when>
+							<c:when test="${ b.category eq 5}">
+							자유게시판
+							</c:when>
+							<c:when test="${ b.category eq 4}">
+							디자인팀
+							</c:when>
+						</c:choose>
 			           <option value="5">자유게시판</option>
 			           <option value="6">공지사항</option>
 			           <option value="4">디자인팀</option>
 		        	</select>
 			</c:when>
 			<c:when test="${loginUser.deptName eq '개발부' }">
-			        <select id="category" name="category">
+			        <select id="category" name="category" value="${ b.category }">
+						<option value="${ b.category }">
+							<c:choose>
+								<c:when test="${ b.category eq 6}">
+								공지사항
+								</c:when>
+								<c:when test="${ b.category eq 5}">
+								자유게시판
+								</c:when>
+								<c:when test="${ b.category eq 3}">
+								개발팀
+								</c:when>
+							</c:choose>
 			            <option value="5">자유게시판</option>
 			            <option value="6">공지사항</option>
 			            <option value="3">개발팀</option>

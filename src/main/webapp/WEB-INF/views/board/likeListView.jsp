@@ -70,6 +70,9 @@ table tbody tr {
 	color:#fff;
 	border:1px solid #42454c;
 }
+#title{
+  text-align: left;
+}
 </style>    
 </head>
 <body>
@@ -98,7 +101,7 @@ table tbody tr {
                 <c:if test="${ loginUser.memberNo eq b.memberNo}">
                 <tr>
                   <td class="bno" >${ b.boardNo }</td>
-                  <td>
+                  <td id="title">
                   	<c:if test="${ not empty b.originName }">
 	                  📁
 	                </c:if>

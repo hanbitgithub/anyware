@@ -17,7 +17,7 @@
 .notice{
     background-color: rgb(247, 247, 247);
 	border-radius: 5px;
-    width: 45%;
+    width: 48%;
     height: 600px;
     flex:1;
     padding: 30px;
@@ -26,7 +26,7 @@
 .board{
     background-color: rgb(247, 247, 247);
 	border-radius: 5px;
-    width: 45%;;
+    width: 48%;;
     height: 600px;
     flex:1;
     padding: 30px;    
@@ -45,6 +45,10 @@ h5 > a {
 }
 table{
 	background-color: white;
+	font-size:small;
+}
+#tablecontent{
+	font-size: 13px;
 }
     </style>
 </head>
@@ -59,7 +63,7 @@ table{
 	<div class="content">
 	    <div class="notice" style="display: inline-block"> 
     		<br>
-				<table id="noticeList" class="table table-hover" style="font-size: small; text-align: center; margin-top: 30px;">
+				<table id="noticeList" class="table table-hover" style="text-align: center; margin-top: 30px;">
 					<h5 align="center"><a href="nlist.bo">공지사항</a></h5>
 					<thead>
 						<tr>
@@ -67,10 +71,9 @@ table{
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
-							<th>조회수</th>
 						  </tr>
 					</thead>
-					<tbody>
+					<tbody id="tablecontent">
 					</tbody>
 				</table>
 	    </div>
@@ -79,7 +82,7 @@ table{
 
 	    <div class="board" style="display: inline-block">
 	        <br>
-				<table id="boardList" class="table table-hover" style="font-size: small; text-align: center; margin-top: 30px;">
+				<table id="boardList" class="table table-hover" style="text-align: center; margin-top: 30px;">
 					<h5 align="center"><a href="list.bo">자유게시판</a></h5>
 					<thead>
 						<tr>
@@ -87,10 +90,9 @@ table{
 							<th>제목</th>
 							<th>작성자</th>
 							<th>작성일</th>
-							<th>조회수</th>
 						  </tr>
 					</thead>
-					<tbody>
+					<tbody id="tablecontent">
 					</tbody>
 				</table>
 			</div>
@@ -124,7 +126,6 @@ table{
             							value += n.boardTitle + "</td>" 
             							+ "<td>" + n.name + n.jobName + "</td>" 
             							+ "<td>" + n.createDate + "</td>"
-            							+ "<td>" + n.count + "</td>"
             							+ "</tr>";
             						
             					
@@ -168,7 +169,6 @@ table{
             							value += b.boardTitle + "</td>" 
             							+ "<td>" + b.name + b.jobName + "</td>" 
             							+ "<td>" + b.createDate + "</td>"
-            							+ "<td>" + b.count + "</td>"
             							+ "</tr>";
             						
             					

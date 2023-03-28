@@ -70,6 +70,9 @@ table tbody tr {
 	color:#fff;
 	border:1px solid #42454c;
 }
+#title{
+  text-align: left;
+}
 </style>    
 </head>
 <body>
@@ -92,7 +95,7 @@ table tbody tr {
               <thead>
               <tr>
                   <th>번호</th>
-                  <th width="50%;">제목</th>
+                  <th width="40%;">제목</th>
                   <th>작성자</th>
                   <th>작성일</th>
                   <th>조회수</th>
@@ -102,7 +105,7 @@ table tbody tr {
                 <c:forEach var="b" items="${ list }">
                 <tr>
                   <td class="bno" >${ b.boardNo }</td>
-                  <td>
+                  <td id="title">
                   	<c:if test="${ not empty b.originName }">
 	                  📁
 	                </c:if>

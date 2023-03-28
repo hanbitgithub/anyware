@@ -131,7 +131,7 @@ textarea {
                  </c:choose> 
 		        </div>
 		        
-		        <c:if test="${ loginUser.memberNo eq b.boardWriter && loginUser.deptName eq '인사부'}">
+		        <c:if test="${ loginUser.memberNo eq b.boardWriter || loginUser.deptName eq '인사부'}">
 		        <div id="span2">
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(1);">수정하기</button>  
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(2);">삭제하기</button>  

@@ -71,6 +71,9 @@ table tbody tr {
 	color:#fff;
 	border:1px solid #42454c;
 }
+#title{
+  text-align: left;
+}
 </style>    
 </head>
 <body>
@@ -103,7 +106,7 @@ table tbody tr {
                 <c:forEach var="b" items="${ list }">
                 <tr>
                   <td class="bno">${ b.boardNo }</td>
-                  <td>${ b.boardTitle }</td>
+                  <td id="title">${ b.boardTitle }</td>
                   <td>${ b.name } ${ b.jobName }</td>
                   <td>${ b.createDate }</td>
                   <td>${ b.count }</td>
