@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.aw.anyware.chat.model.dao.ChatDao;
 import com.aw.anyware.chat.model.vo.ChatContent;
+import com.aw.anyware.chat.model.vo.ChatMember;
 import com.aw.anyware.chat.model.vo.Thumbnail;
 
 @Service
@@ -43,6 +44,16 @@ public class ChatServiceImpl implements ChatService {
 	@Override
 	public Thumbnail selectChatContent(int contentNo) {
 		return cDao.selectChatContent(sqlSession, contentNo);
+	}
+
+	@Override
+	public ArrayList<ChatMember> selectRoomNum(int memberNo) {
+		return cDao.selectRoomNum(sqlSession, memberNo);
+	}
+
+	@Override
+	public int increaseNotRead(String roomNo) {
+		return cDao.increaseNotRead(sqlSession, roomNo);
 	}
 
 	

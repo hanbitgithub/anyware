@@ -13,7 +13,7 @@ import lombok.ToString;
 @ToString
 public class ChatMember {
 	
-	private int chatroomNo;
+	private int roomNo;
 	private int memberNo;
 	private String enrollDate;
 	private int notRead;

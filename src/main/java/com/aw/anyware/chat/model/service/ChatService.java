@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.aw.anyware.chat.model.vo.ChatContent;
+import com.aw.anyware.chat.model.vo.ChatMember;
 import com.aw.anyware.chat.model.vo.Thumbnail;
 
 public interface ChatService {
@@ -22,5 +23,11 @@ public interface ChatService {
 	
 	// 채팅 내용 조회 서비스(select)
 	Thumbnail selectChatContent(int contentNo);
+	
+	// 채팅방번호 조회 서비스(select)
+	ArrayList<ChatMember> selectRoomNum(int memberNo);
+	
+	// 안읽은 채팅 수 증가 서비스(update)
+	int increaseNotRead(String roomNo);
 
 }
