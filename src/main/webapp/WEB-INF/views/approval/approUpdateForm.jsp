@@ -156,19 +156,20 @@
 				</tr>
 			</table>
 			<br>
-			<form action="insert.appro" method="post">
+			<form action="updateConfirm.appro" method="post">
 				<div class="bText">&nbsp;본문</div>
 				<input style="width: 600px;" type="text" name="approTitle" value="${appro.approTitle}">
 				<br><br>
 				<textarea id="summernote" class="editor" name="approContent"></textarea>
 				<br>
 				
+				<input type="hidden" name="approNo" value="${appro.approNo}">
 				<input type="hidden" name="writerNo" value="${loginUser.memberNo}">
 				<input type="hidden" name="interNo" value="${appro.interNo }">
 				<input type="hidden" name="finalNo" value="${appro.finalNo }">
 				<input type="hidden" name="tplNo" value="${appro.tplNo }">
-				<input type="hidden" name="refNo" value="${ref }">
-				<input type="hidden" name="openNo" value="${open }">
+				<input type="hidden" name="refNo" value="0">
+				<input type="hidden" name="openNo" value="0">
 				
 				<div class="btn-center">
 					<button type="submit" class="btn btn-primary">등록</button>
@@ -600,7 +601,11 @@
 						success:function(approTpl){
 							
 							$('#summernote').summernote('reset');
-							$('#summernote').summernote('pasteHTML', approTpl.tplContent);
+							
+							let tplContent = '${approTpl.tplContent}';
+							
+						    $('#summernote').summernote('pasteHTML', tplContent);
+							
 							
 							$('input[name=tplNo]').val(approTpl.tplNo);
 							
@@ -633,7 +638,8 @@
 				
 			});
 			
-			$('#summernote').summernote('pasteHTML', "${appro.approContent}");
+			$('#summernote').summernote('reset');
+			$('#summernote').summernote('pasteHTML', '${appro.approContent}');
 			
 			if('${appro.interAppro}' == '반려'){
 				$('#sign img').eq(1).attr("src","resources/images/appro/deny.png");

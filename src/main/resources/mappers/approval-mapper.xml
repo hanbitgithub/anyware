@@ -8,6 +8,7 @@
 		<result column="writer_job" property="writerJob"/>
 		<result column="writer_dept" property="writerDept"/>
 		
+		<result column="tpl_no" property="tplNo"/>
 		<result column="tpl_title" property="tplTitle"/>
 		<result column="appro_title" property="approTitle"/>
 		<result column="appro_content" property="approContent"/>
@@ -339,6 +340,7 @@
                  , f.dept_name as final_dept
                  , f.job_name as final_job
                  , a.final_appro
+                 , t.tpl_no
 	             , t.tpl_title 
 	             , appro_title
 	             , appro_content

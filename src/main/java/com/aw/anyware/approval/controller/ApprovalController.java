@@ -356,4 +356,26 @@ public class ApprovalController {
 		}
 	}
 	
+	@RequestMapping("updateConfirm.appro")
+	public void updateConfirmAppro(Approval appro, String[] refNo, String[] openNo, HttpSession session, Model model) {
+		
+		System.out.println(appro);
+		System.out.println(refNo[0]);
+		System.out.println(openNo[0]);
+		
+		/*
+		int result = aService.insertAppro(appro, refNo, openNo);
+	
+		if(result > 0) { // 성공 ==> session에 loginUser지움, alert문구 담기 -> 메인 url 재요청
+			session.setAttribute("alertMsg", "등록 성공");
+			return "redirect:ingListContinue.appro?cat=ingListContinue";
+		} else {
+			model.addAttribute("errorMsg", "등록 실패");
+			return "common/errorPage";
+		}
+		*/
+		
+	}
+	
+	
 }

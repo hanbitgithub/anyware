@@ -218,9 +218,9 @@
 				
 			});
 			  
-		    $('#summernote').summernote('pasteHTML', "${appro.approContent}");
-			  
-		    $('#summernote').summernote('disable');
+			let approContent = '${appro.approContent}';
+			
+		    $('#summernote').summernote('pasteHTML', approContent);
 
 		});
 	</script>

@@ -180,10 +180,11 @@
 				fontNames: ['Courier New','맑은 고딕','궁서','굴림']
 				
 			});
+
+			let approContent = '${appro.approContent}';
+			
+		    $('#summernote').summernote('pasteHTML', approContent);
 			  
-		    $('#summernote').summernote('pasteHTML', "${appro.approContent}");
-			  
-		    $('#summernote').summernote('disable');
 
 		});
 	</script>

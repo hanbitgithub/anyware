@@ -32,6 +32,7 @@
     	background:rgb(221, 242, 255);
     	cursor:pointer;
     }
+    
 	
 </style>
 
