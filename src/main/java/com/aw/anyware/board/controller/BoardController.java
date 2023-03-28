@@ -243,8 +243,9 @@ public class BoardController {
 	 * @param model
 	 * @return
 	 */
+	@ResponseBody
 	@RequestMapping("update.re")
-	public String updateReply(int replyNo, String replyContent, HttpSession session, Model model) {
+	public String updateReply(int replyNo, String replyContent) {
 		
 		
 		Reply r = new Reply();

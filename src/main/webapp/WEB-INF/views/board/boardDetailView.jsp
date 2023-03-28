@@ -103,42 +103,7 @@ textarea {
 					</c:if>
 		       
 		    </li>
-	<script>
-	
-	function like(e){
-		event.stopImmediatePropagation();
 
-		if(e.innerHTML == "🤍"){
-			$.ajax({
-				url:"like.bo",
-				type:"post",
-				data:{boardNo:${b.boardNo}},
-				success:function(result){
-					if(result == "success"){
-						$(e).text("❤️");
-					}
-				},
-				error:function(){
-					console.log("즐겨찾기 추가 ajax 통신 실패");
-				}
-			})
-		} else {
-			$.ajax({
-				url:"unlike.bo",
-				type:"post",
-				data:{boardNo:${b.boardNo}},
-				success:function(result){
-					if(result == "success"){
-						$(e).text("🤍");
-					}
-				},
-				error:function(){
-					console.log("즐겨찾기 해제 ajax 통신 실패");
-				}
-			})
-		}
-	}
-	</script>
 		    <li>
 		        
 		        <span>
@@ -148,11 +113,12 @@ textarea {
 		        <span style="color: rgb(170, 170, 170);">${b.createDate }</span>
 		    </li>
 		
-		    <li style="height: 200px;">
-		        ${b.boardContent }
+		    <li style="padding-left: 20px;">
+		    	<p>${b.boardContent }</p>
+		        
  
 		    </li>
-		
+			<br>
 		    <li>
 		        <div id="span1">
                  <c:choose>
@@ -165,7 +131,7 @@ textarea {
                  </c:choose> 
 		        </div>
 		        
-		        <c:if test="${ loginUser.memberNo eq b.boardWriter }">
+		        <c:if test="${ loginUser.memberNo eq b.boardWriter && loginUser.deptName eq '인사부'}">
 		        <div id="span2">
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(1);">수정하기</button>  
 		        <button id="btn" class="btn-sm" onclick="postFormSubmit(2);">삭제하기</button>  
@@ -293,7 +259,6 @@ textarea {
     	      data:{replyContent: $("#replyContent").val() ,
     	    	  replyNo: $("#replyNo").val()
     	      },
-    				type:"post",
     	        success:function(result){
     	        	if(result>0){	
     	        		
@@ -375,6 +340,42 @@ textarea {
 	}
 
     </script>
+		<script>
+	
+			function like(e){
+				event.stopImmediatePropagation();
+		
+				if(e.innerHTML == "🤍"){
+					$.ajax({
+						url:"like.bo",
+						type:"post",
+						data:{boardNo:${b.boardNo}},
+						success:function(result){
+							if(result == "success"){
+								$(e).text("❤️");
+							}
+						},
+						error:function(){
+							console.log("즐겨찾기 추가 ajax 통신 실패");
+						}
+					})
+				} else {
+					$.ajax({
+						url:"unlike.bo",
+						type:"post",
+						data:{boardNo:${b.boardNo}},
+						success:function(result){
+							if(result == "success"){
+								$(e).text("🤍");
+							}
+						},
+						error:function(){
+							console.log("즐겨찾기 해제 ajax 통신 실패");
+						}
+					})
+				}
+			}
+			</script>
     
            <!-- 신고 모달 -->
         <div class="modal" id="myModal" style="color:rgb(50, 50, 50);">
