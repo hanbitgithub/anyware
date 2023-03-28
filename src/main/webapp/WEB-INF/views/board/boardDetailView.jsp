@@ -238,13 +238,13 @@ textarea {
 								+ "<span>" + list[i].createDate + "</span>"
 								+ "<br><br>"
 								+ "<div id='replyarea'>"
-								+ "<input type='hidden' name='replyNo' value='"+ list[i].replyNo +"'>"
+								+ "<input type='hidden' name='reply-no' value='"+ list[i].replyNo +"'>"
 								+ "<p readonly>" + list[i].replyContent + "</p>" + "<br>"
 								+ "<a onclick='dis()' style='color:gray;'>수정</a>" + '&nbsp;' + "<a style='color:gray;' onclick='deleteReply(" + list[i].replyNo + ");'>삭제</a>"
 								+ "</div>"
 								// 수정창
 								+ "<div id='replyarea1' style='display:none'>"
-								+ "<input type='hidden' name='replyNo' value='"+ list[i].replyNo +"'>"
+								+ "<input type='hidden' name='reply-no' value='"+ list[i].replyNo +"'>"
 								+ "<textarea rows='4' cols='95' style='resize:none;' name='replyContent'>" + list[i].replyContent + "</textarea>" + "<br>"
 								+ "<button id='btn'>등록</button>"
 								+ "</div>"
@@ -290,8 +290,8 @@ textarea {
     	function updateReply(no, content){
     	  $.ajax({
     	      url:"update.re",
-    	      data:{replyContent:content ,
-    	    	  replyNo:no
+    	      data:{ replyNo:no,
+    	    	  replyContent:content
     	      },
     				type:"post",
     	        success:function(result){

@@ -247,7 +247,6 @@ public class BoardController {
 		Reply r = new Reply();
 		r.setReplyNo(no);
 		r.setReplyContent(content);
-		System.out.println(no);
 		
 		int result = bService.updateReply(r);
 		
