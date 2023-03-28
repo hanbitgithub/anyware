@@ -637,7 +637,7 @@ input[type=checkbox] {
 			<c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage}">
 				<c:choose>
 					<c:when test="${empty keyword and empty filter }">
-						<button onclick="location.href='receivebox.em.em?cpage=${p}'">${p}</button>
+						<button onclick="location.href='receivebox.em?cpage=${p}'">${p}</button>
 					</c:when>
 					<c:otherwise>
 						<button

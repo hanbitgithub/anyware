@@ -134,10 +134,13 @@ public class BoardController {
 		if(result > 0) {
 			Board b = bService.selectBoard(no);
 			mv.addObject("b", b).setViewName("board/boardDetailView");
+
 			
 		}else {
 			mv.addObject("errorMsg", "상세조회 실패").setViewName("common/errorPage");
 		}
+		
+		
 		
 		return mv;
 	}
@@ -241,13 +244,13 @@ public class BoardController {
 	 * @return
 	 */
 	@RequestMapping("update.re")
-	public String updateReply(int no, String content, HttpSession session, Model model) {
+	public String updateReply(int replyNo, String replyContent, HttpSession session, Model model) {
 		
 		
 		Reply r = new Reply();
-		r.setReplyNo(no);
-		r.setReplyContent(content);
-		System.out.println(no);
+		r.setReplyNo(replyNo);
+		r.setReplyContent(replyContent);
+		//System.out.println(no);
 		
 		int result = bService.updateReply(r);
 		
