@@ -1574,7 +1574,7 @@ public class MailController {
 	@RequestMapping("sendForward.em")
 	public String sendForwardMail(Mail m, MultipartFile[] upfile, Model model,HttpSession session) {
 
-		System.out.println(m);
+		//System.out.println(m);
 		// 첨부파일 (한개 또는 여러개 보낼 수 있음)
 		ArrayList<MailFile> atList = new ArrayList<>();
 
