@@ -435,7 +435,6 @@ select
 	select count(m.em_no) "count"
 	 from tb_mail m
 	 join  tb_mail_status  s on (m.em_no = s.em_no)
-	
 	 where em_type in (1,2)
 	 and s.receiver = #{memId}
 	 and trash = 'N'

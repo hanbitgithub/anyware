@@ -414,7 +414,7 @@ button:hover{
         				  value += "<tr style='font-weight: 500' class='mstatus" + r.emNo +"'>"
         				        + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
         				        + "<td width='10'>" + r.memName +"</td>"
-        				        + "<td width='120'>" + (r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle)  
+        				        + "<td width='130'>" + (r.emTitle.length > 15 ? r.emTitle.substring(0, 15) + '..' : r.emTitle)  
         				        + "</td>"
         				        + "<td width='20'>" + r.sendDate +"</td>"
         				        + "</tr>"
@@ -422,7 +422,7 @@ button:hover{
         					  value += "<tr style='font-weight: bold' class='mstatus" + r.emNo +"'>"
         					    + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
           				        + "<td width='10'>" + r.memName +"</td>"
-          				        + "<td width='120'>" +(r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle)
+          				        + "<td width='130'>" +(r.emTitle.length > 15 ? r.emTitle.substring(0, 15) + '..' : r.emTitle)
           				        + "</td>"
           				        + "<td width='20'>" + r.sendDate +"</td>"
           				        + "</tr>"
@@ -528,7 +528,7 @@ button:hover{
         				  value += "<tr style='font-weight: 500'  class='mstatus" + r.emNo +"'>"
         					   + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
         				        + "<td width='10'>" + r.receivers.substring(0,3) +"</td>"
-        				        + "<td width='120'>" + (r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle) 
+        				        + "<td width='130'>" + (r.emTitle.length > 15 ? r.emTitle.substring(0, 15) + '..' : r.emTitle) 
         				        + "</td>"
         				        + "<td width='20'>" + r.sendDate +"</td>"
         				        + "</tr>"
@@ -536,7 +536,7 @@ button:hover{
         					  value += "<tr style='font-weight: bold' class='mstatus" + r.emNo +"'>"
         						 + "<input type='hidden' name='mailNo' value=' " + r.emNo + "'>"
           				        + "<td width='10'>" + r.receivers.substring(0,3) +"</td>"
-          				        + "<td width='120'>" +(r.emTitle.length > 20 ? r.emTitle.substring(0, 20) + '..' : r.emTitle) 
+          				        + "<td width='130'>" +(r.emTitle.length > 15 ? r.emTitle.substring(0, 15) + '..' : r.emTitle) 
           				        + "</td>"
           				        + "<td width='20'>" + r.sendDate +"</td>"
           				        + "</tr>"
