@@ -117,8 +117,8 @@
 		                        <td width="150">${m.email }</td>
 		                        <td width="100">${m.phone }</td>
 		                        <td width="120"></td>  
-		                        <td width="50">${m.deptName }</td>
-		                        <td width="100">${m.jobName }</td>
+		                        <td width="50">${m.jobName }</td>
+		                        <td width="100">${m.deptName }</td>
 		                    </tr>
 	                    </c:forEach>
                     </c:when>

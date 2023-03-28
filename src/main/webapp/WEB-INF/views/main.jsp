@@ -22,14 +22,14 @@
     position:relative;
    /* width: 1300px;/* wrap에 속한 div의 넓이+margin값을 더한 넓이와 높이값
     height:700px; */
-    left:30%;
+    left:25%;
     transform: translate(-35%,1%); /* 중앙정렬 */
     margin:auto;
  
 }
 #wrap > .left {
-    width:38%;
-    height:350px;
+    width:40%;
+    height:330px;
     border: 1px solid rgb(230, 230, 230);
     border-radius: 5px;
     /*background-color: rgb(247, 247, 247);*/
@@ -38,8 +38,8 @@
     box-sizing:border-box; /* border 또한 위치값을 갖기에 div크기가 더 커짐을 방지하기 위한 */
 }
 #wrap > .right {
-    width:60%;
-    height:350px;
+    width:58%;
+    height:330px;
     border: 1px solid rgb(230, 230, 230);
     border-radius: 5px;
     /*background-color: rgb(247, 247, 247);*/
@@ -108,7 +108,9 @@ button:hover{
   margin-left: 10px;
   }
 
-
+#commuteIn, #commuteOut {
+	font-size: 13px;
+}
 /*메일*/
 .nav-tabs{
   font-size: 13px;
@@ -126,6 +128,7 @@ button:hover{
 	opacity: 70%;
 	cursor:pointer;
 }
+
 #boardList{
 	padding-top: 10px;
 	padding-left: 10px;
@@ -365,11 +368,11 @@ button:hover{
 		</script>
 		  
 		
-        <div class="left">
+        <div class="left" id="mailContent">
         <br>
        <!-- <i class="fa-regular fa-envelope"></i> &nbsp; -->
           <span onclick="location.href='receivebox.em'" id="mailC"><b>&nbsp;&nbsp;&nbsp;<img src="resources/images/maile.gif" width="30px;">  메일함</b> </span> &nbsp;<span class="count badge text-bg-primary"></span>
-          <div class="container">
+          <div class="container" >
                <br>
                <!-- Nav tabs -->
                <ul class="nav nav-tabs flex-column flex-sm-row nav-justified" role="tablist">
@@ -385,14 +388,14 @@ button:hover{
              
                <!-- Tab panes -->
                <div class="mail-content tab-content" style="padding:0px;">
-                 <div id="receiveM" class="container tab-pane active">
-                  <table class="table table-hover rlist"  style="font-size:13px">
+                 <div id="receiveM" class="container tab-pane active" >
+                  <table class="table table-hover rlist"  style="font-size:12px">
                  
                   </table>
                   
                  </div>
                  <div id="sendM" class="container tab-pane fade">       
-                   <table class="table table-hover slist" style="font-size:13px">
+                   <table class="table table-hover slist" style="font-size:12px">
 	      
                   </table>
                  </div>

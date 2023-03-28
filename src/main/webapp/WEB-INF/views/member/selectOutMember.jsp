@@ -14,8 +14,9 @@
 .tbody-td{border: 1px solid gray;}
 .thead-th,.tbody-td{text-align: center;}
 #search-area{margin-left: 75%;}
-#paging-area{width: 50%; align: center;}
-#paging-area2{align: center;}
+#paging-area{width: 50%; align: center;  margin:auto;}
+#paging-area2{align: center; margin-left:150px;}
+
  </style>
 </head>
 <body id="body-pd">
@@ -63,7 +64,7 @@
                 </table>
             </div>
 
-            
+            <br><br>
 
             <div id="paging-area">
                 <div id="paging-area2" align="center">
