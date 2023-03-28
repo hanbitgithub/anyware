@@ -7,28 +7,69 @@
 <meta charset="UTF-8">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <title>Insert title here</title>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+   
+}
+body{
+    font-size: 14px;
+    font-family: 'Roboto', sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+button[type="submit"]{
+    color: #fff;
+    font-size: 16px;
+    background-color: #7291f6;
+    margin-top: 10px;
+	border:none;
+	padding: 5px 10px;
+	border-radius: 10px;
+	
+}
+
+input[type="text"]{
+    width: 100%;
+    height: 48px;
+    padding: 0 10px;
+    box-sizing: border-box;
+ 
+    border-radius: 6px;
+    background-color: #F8F8F8;
+	border:none;
+}
+
+
+</style>
 </head>
 <body>
+
+	<div class="login-wrapper" align="center">
 	<div align="center">
-		
+			<img src="resources/images/로고2.png" alt="" width="300px">
 			<div><input type="text" name="memberNo" id="memberNo" placeholder="사원번호를 입력해주세요"></div>
-			<br>
+			
 			<div><button type="submit" onclick="submit1();">아이디 찾기</button></div>
 	</div>
 	
 	<div align="center" id="message" style="display: none;"><b>이메일로 인증코드를 전송했습니다</b></div>
-	
+	<br><br>
 	<div align="center">
 		
 			<div><input type="text" name="code" id="code" placeholder="전송 받은 코드를 입력해주세요"></div>
-			<br>
+			
 			<div><button type="submit" id="submit2">인증코드 전송</button></div>
 			
 		
 	</div>
 	<div align="center" id="checkCodeAsk" style="display: none;"><b>인증번호를 입력해주세요</b></div>
 	<div align="center" id="requestId-div" style="display: none;"><b id="requestId"></b></div>
-	
+	</div>
 	<script>
 		
 		function submit1(){
