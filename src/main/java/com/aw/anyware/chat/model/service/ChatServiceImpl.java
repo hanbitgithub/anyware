@@ -52,8 +52,8 @@ public class ChatServiceImpl implements ChatService {
 	}
 
 	@Override
-	public int increaseNotRead(String roomNo) {
-		return cDao.increaseNotRead(sqlSession, roomNo);
+	public int increaseNotRead(Thumbnail t) {
+		return cDao.increaseNotRead(sqlSession, t);
 	}
 
 	

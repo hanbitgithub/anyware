@@ -204,7 +204,8 @@
 		update
 			   tb_chatmember
 		   set not_read = not_read + 1
-		 where chatroom_no =#{roomNo} 
+		 where chatroom_no =#{roomNo}
+		   and member_no != #{writerNo}
 	</update>
   
 </mapper>

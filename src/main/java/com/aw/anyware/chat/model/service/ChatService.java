@@ -28,6 +28,6 @@ public interface ChatService {
 	ArrayList<ChatMember> selectRoomNum(int memberNo);
 	
 	// 안읽은 채팅 수 증가 서비스(update)
-	int increaseNotRead(String roomNo);
+	int increaseNotRead(Thumbnail t);
 
 }

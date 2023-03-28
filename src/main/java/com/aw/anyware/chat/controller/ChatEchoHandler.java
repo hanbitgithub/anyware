@@ -63,7 +63,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 		t.setContent(msg);
 		
 		int result1 = cService.insertChat(t); // result => insert된 채팅의 contentNo
-		int result2 = cService.increaseNotRead(roomNo); // insert 후 안읽은 채팅 수 +1
+		int result2 = cService.increaseNotRead(t); // insert 후 안읽은 채팅 수 +1
 		
 		if(result1 > 0 && result2 > 0) {
 			Thumbnail chat= cService.selectChatContent(result1);
@@ -78,11 +78,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 		        	entry.getValue().sendMessage(new TextMessage(sendmsg));
 		        }
 		    }
-			
-//			for(WebSocketSession r : roomList) {
-//				// 전달하고자 하는 메세지의 형식 => 메세지내용,발신자번호,발신자이름,발신자부서,발신자직급,보낸날짜,보낸시간
-//				sss.sendMessage(new TextMessage(sendmsg));
-//			}
+		    
 		}
 		
 	}

@@ -402,15 +402,15 @@ a {
                     <h3 class="title">주소록</h3>
                     <div class="address-div">
                         <ul>
-                            <li class="dept-list"><div class="dept">대표이사</div></li>
-                            <li class="dept-list"><div class="dept">부사장</div></li>
+                            <li class="dept-list"><div class="member">대표이사</div></li>
+                            <li class="dept-list"><div class="member">부사장</div></li>
                             <li class="dept-list">
                                 <div class="dept">개발부</div>
                                 <ul class="accordion">
-                                    <li>사원1</li>
-                                    <li>사원2</li>
-                                    <li>사원3</li>
-                                    <li>사원4</li>
+                                    <li class="member">사원1</li>
+                                    <li class="member">사원2</li>
+                                    <li class="member">사원3</li>
+                                    <li class="member">사원4</li>
                                 </ul>
                             </li>
                         </ul>
@@ -499,7 +499,6 @@ a {
                             + "</tr>"
                         + "</table>";
             } else {
-
                 if(arr[3] == '미정'){
                     chatset += "<div class='send-user'>" + arr[2] + "(" + arr[4] + ")</div>";
                 } else {
@@ -586,9 +585,9 @@ a {
                         
                         for(let m=0; m<mList.length; m++){
                             if(mList[m].jobName == '대표이사'){
-                                value += "<li class='member'><div class='dept'><ion-icon name='person-outline'></ion-icon> 대표이사 " + mList[m].name  + "</div></li>";
+                                value += "<li class='dept'><input type='hidden' value='" + mList[m].memberNo + "'><div class='member'><ion-icon name='person-outline'></ion-icon> 대표이사 " + mList[m].name  + "</div></li>";
                             } else if(mList[m].jobName == '부사장'){
-                                value += "<li class='member'><div class='dept'><ion-icon name='person-outline'></ion-icon> 부사장 " + mList[m].name  + "</div></li>";
+                                value += "<li class='dept'><input type='hidden' value='" + mList[m].memberNo + "'><div class='member'><ion-icon name='person-outline'></ion-icon> 부사장 " + mList[m].name  + "</div></li>";
                             }
                         }
 
@@ -599,7 +598,7 @@ a {
                                     + "<ul class='accordion'>";
                             for(let mm=0; mm<mList.length; mm++){
                                 if(dList[d].deptName == mList[mm].deptName){
-                                    value += "<li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[mm].name + "(" + mList[mm].deptName + "/" + mList[mm].jobName + ")" + "</li>";
+                                    value += "<input type='hidden' value='" + mList[mm].memberNo + "'><li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[mm].name + "(" + mList[mm].deptName + "/" + mList[mm].jobName + ")" + "</li>";
                                 }
                             }
                             value += "</ul>";
@@ -609,7 +608,7 @@ a {
 
                         for(let i=0; i<mList.length; i++){
                             if(mList[i].jobName != '대표이사' && mList[i].jobName != '부사장' && mList[i].deptName == '미정'){
-                                value += "<li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[i].name + "(" + mList[i].jobName + ")" + "</li>";
+                                value += "<input type='hidden' value='" + mList[i].memberNo + "'><li class='member'>ㄴ<ion-icon name='person-outline'></ion-icon> " + mList[i].name + "(" + mList[i].jobName + ")" + "</li>";
                             }
                         }
                             value += "</ul>"
@@ -730,6 +729,10 @@ a {
                 }
             })
         }
+
+        $(document).on("click", ".member", function(){
+            console.log($(this).prev().val());
+        })
         
     </script>
 
