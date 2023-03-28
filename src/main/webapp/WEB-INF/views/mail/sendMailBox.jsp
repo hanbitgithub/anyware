@@ -202,7 +202,7 @@ input[type=checkbox] {
 			                			
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
-			                			<td width="150">
+			                			<td width="170">
 			                			<c:set var="receivers" value="${s.receivers}"/>
 									    <c:choose>
 									      <c:when test="${not empty receivers}">
@@ -219,7 +219,7 @@ input[type=checkbox] {
 									        </c:when>
 									    </c:choose>    
 			                			</td>
-			                			<td width="700"class="mail-title">${s.emTitle }
+			                			<td width="600"class="mail-title">${s.emTitle }
 			                			<input type="hidden" name="mailNo" value="${s.emNo }">
 			                			</td>
 			                			<td width="50">
@@ -227,8 +227,8 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2" data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
+			                			<td width="200">${s.sendDate }</td>	
+			                			<td  width="100"><button class="btn2" data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -245,7 +245,7 @@ input[type=checkbox] {
 			                			</c:choose>
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${s.emNo }"></td>
-			                			<td width="150">
+			                			<td width="170">
 			                			<c:set var="receivers" value="${s.receivers}"/>
 									    <c:choose>
 									      <c:when test="${not empty receivers}">
@@ -261,7 +261,7 @@ input[type=checkbox] {
 											    </c:forEach>
 									        </c:when>
 									    </c:choose>    
-			                			<td width="700" class="mail-title">${s.emTitle }
+			                			<td width="600" class="mail-title">${s.emTitle }
 			                			<input type="hidden" name="mailNo" value="${s.emNo }">
 			                			</td>
 			                			<td width="50">
@@ -270,8 +270,8 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.sendDate }</td>	
-			                			<td><button class="btn2"  data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
+			                			<td width="200">${s.sendDate }</td>	
+			                			<td width="100"><button class="btn2"  data-bs-toggle="modal" data-bs-target="#receipt" data-emNo="${s.emNo }">수신확인</button></td>
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>

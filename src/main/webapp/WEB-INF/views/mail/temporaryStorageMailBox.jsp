@@ -183,7 +183,7 @@ input[type=checkbox] {
 									        </c:when>
 									    </c:choose>    
 			                			</td>
-			                			<td width="700" class="mail-title">
+			                			<td width="600" class="mail-title">
 			                			${s.emTitle }<input type="hidden" name="mailNo" value="${s.emNo }"><input type="hidden" name="emType" value="${s.mailStatus.emType }"></td>
 			                			<td width="50">
 			                				
@@ -191,7 +191,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.tempDate }</td>	
+			                			<td width="200">${s.tempDate }</td>	
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -225,7 +225,7 @@ input[type=checkbox] {
 											    </c:forEach>
 									        </c:when>
 									    </c:choose>    
-			                			<td width="700" class="mail-title">
+			                			<td width="600" class="mail-title">
 			                			<input type="hidden" name="mailNo" value="${s.emNo }"><input type="hidden" name="emType" value="${s.mailStatus.emType }">
 			                			${s.emTitle }</a></td>
 			                			<td width="50">
@@ -234,7 +234,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${s.tempDate}</td>	
+			                			<td width="200">${s.tempDate}</td>	
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>

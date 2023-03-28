@@ -212,7 +212,7 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
-			                			<td width="700" class="mail-title">
+			                			<td width="600" class="mail-title">
 			                			${r.emTitle }
 			                			<input type="hidden" name="mailNo" value="${r.emNo }">
 			                			<input type="hidden" name="emType" value="${r.mailStatus.emType }">
@@ -222,7 +222,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${r.sendDate }</td>	
+			                			<td width="200">${r.sendDate }</td>	
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -242,7 +242,7 @@ input[type=checkbox] {
 			                			</td>
 			                			<td width="25"><img src="resources/images/envelope2.png" width="17" class="envelope" data-emNo="${r.emNo }"></td>
 			                			<td width="150">${r.memName }</td>
-			                			<td width="700" class="mail-title">${r.emTitle }
+			                			<td width="600" class="mail-title">${r.emTitle }
 			                			<input type="hidden" name="mailNo" value="${r.emNo }">
 			                			<input type="hidden" name="emType" value="${r.mailStatus.emType }">
 			                			</td>
@@ -252,7 +252,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${r.sendDate }</td>	
+			                			<td width="200">${r.sendDate }</td>	
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>

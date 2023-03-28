@@ -223,7 +223,7 @@ input[type=checkbox] {
 			                			</c:choose>
 			                			
 			                			</td>
-			                			<td width="700" class="mail-title">
+			                			<td width="600" class="mail-title">
 											<c:choose>
 				                				<c:when test="${i.mailStatus.emType eq '0'}">
 				                					<c:choose>
@@ -251,7 +251,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${i.sendDate }</td>	
+			                			<td width="200">${i.sendDate }</td>	
 			                		</tr>
 	                			</c:when>
 	                			<c:otherwise>
@@ -294,7 +294,7 @@ input[type=checkbox] {
 			                				</c:otherwise>	
 			                			
 			                			</c:choose>
-			                			<td width="700" class="mail-title">
+			                			<td width="600" class="mail-title">
 			                			<c:choose>
 			                				<c:when test="${i.mailStatus.emType eq '0'}">
 			                					<c:choose>
@@ -324,7 +324,7 @@ input[type=checkbox] {
 			                					<img src="resources/images/paper-clip.png" width="16">
 			                				</c:if>
 			                			</td>	
-			                			<td>${i.sendDate }</td>	
+			                			<td width="200">${i.sendDate }</td>	
 			                		</tr>
 	                			</c:otherwise>
 	                		</c:choose>
