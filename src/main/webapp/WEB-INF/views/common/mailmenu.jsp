@@ -11,6 +11,7 @@
 <script src="https://kit.fontawesome.com/6f4b87b4ed.js" crossorigin="anonymous"></script>
 <style>
 /*서브메뉴*/
+
 .menu{
     position: fixed;
     height: 100vh;
@@ -157,7 +158,12 @@ a{
 .fa-check{color:green;}
 .fa-times{color:red;}
 
-
+.menu *{
+font-size : small
+}
+.content *{
+font-size : small
+}
 
 
 </style>
@@ -172,7 +178,7 @@ a{
             <div id="mail-area">
               <!--  <a href="test.do">테스트</a> -->
             <ul>
-                <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary"></span></li>
+                <li><a href="receivebox.em">받은메일함 &nbsp;&nbsp;&nbsp;</a><span class="count badge text-bg-primary" style="font-size:12px;"></span></li>
                 <li><a href="sendbox.em">보낸메일함</a> <!-- <button class="btn2">수신확인</button> --> </li> 
                 <li><a href="important.em">중요메일함</a></li>         
                 <li><a href="sendToMebox.em">내게쓴메일함</a></li>

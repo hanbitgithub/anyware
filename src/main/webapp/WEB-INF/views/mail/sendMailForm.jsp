@@ -639,7 +639,7 @@
 							</optgroup>
 						</c:forEach>
 					</select>
-					
+					<br>
 					<div><b>참조자</b></div>
                  	<select id='pre-selected-options-cc' multiple='multiple'>
 
@@ -671,6 +671,7 @@
 						</c:forEach>
 
 					</select>
+					<br>
 					<div><b>참조자</b></div>
 					 <select id='pre-selected-options2-cc' multiple='multiple'>
 						<c:forEach items="${groupList}" var="group">
