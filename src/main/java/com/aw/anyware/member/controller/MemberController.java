@@ -190,7 +190,7 @@ public class MemberController {
 	public ModelAndView detailAllMember(int memberNo, ModelAndView mv, HttpSession session) {
 		
 		Member m = mService.detailAllMember(memberNo);
-		
+		System.out.println(m);
 		
 		
 		if(m != null) {												
@@ -532,6 +532,7 @@ public class MemberController {
 		LeaveOff lof = mService.selectLastOff(lo);
 		if((lof == null) || (leaveOff > 0)) {
 			int result = mService.insertOff(lo);
+			int result2 = mService.minusOff(lo);
 			ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
 			if(result > 0) {
 				
@@ -554,6 +555,7 @@ public class MemberController {
 	public ModelAndView cancelOff(LeaveOff lo, ModelAndView mv) {
 		int memberNo = lo.getApNo();
 		int result = mService.cancelOff(lo);
+		int result2 = mService.recoverOff(lo);
 		ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
 		
 		if(result > 0) {

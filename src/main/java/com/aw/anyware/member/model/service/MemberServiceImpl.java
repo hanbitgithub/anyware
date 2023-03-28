@@ -199,6 +199,18 @@ public class MemberServiceImpl implements MemberService {
 		return mDao.selectNN(sqlSession);
 	}
 
+	@Override
+	public int minusOff(LeaveOff lo) {
+		
+		return mDao.minusOff(sqlSession, lo);
+	}
+
+	@Override
+	public int recoverOff(LeaveOff lo) {
+		
+		return mDao.recoverOff(sqlSession, lo);
+	}
+
 	
 
 	
