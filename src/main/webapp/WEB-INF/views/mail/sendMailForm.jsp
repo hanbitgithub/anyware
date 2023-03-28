@@ -30,13 +30,13 @@
 	border-radius: 5px;
 	border: 1px solid rgb(218, 216, 216);
 	width: 100%;
-	height: 35px;
+	
 }
 .email{
     border-radius: 5px;
 	border: 1px solid rgb(190, 190, 190);
 	width: 97%;
-	height: 35px;
+	
 
 }
 
