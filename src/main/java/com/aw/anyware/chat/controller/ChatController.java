@@ -61,5 +61,13 @@ public class ChatController {
 		return new Gson().toJson(map);
 	}
 	
+	@ResponseBody
+	@RequestMapping(value="createRoom.ajax", produces="application/json; charset=UTF-8")
+	public String createRoom(Thumbnail th) {
+		HashMap<String, Object> map = new HashMap<>();
+		map = cService.insertRoom(th);
+		
+		return "";
+	}
 
 }

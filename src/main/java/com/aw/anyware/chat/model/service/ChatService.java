@@ -29,5 +29,14 @@ public interface ChatService {
 	
 	// 안읽은 채팅 수 증가 서비스(update)
 	int increaseNotRead(Thumbnail t);
+	
+	// insert 전 마지막 날짜 조회(select)
+	String selectPrevDate(String roomNo);
+	
+	// 채팅방 생성(insert)
+	HashMap<String, Object> insertRoom(Thumbnail th);
+	
+	// 기존의 채팅방 조회용 서비스(select)
+	String selectRoom(Thumbnail th);
 
 }

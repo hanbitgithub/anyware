@@ -62,6 +62,8 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 		t.setWriterNo(Integer.parseInt(writerNo));
 		t.setContent(msg);
 		
+		String prevDate = cService.selectPrevDate(roomNo);
+		
 		int result1 = cService.insertChat(t); // result => insert된 채팅의 contentNo
 		int result2 = cService.increaseNotRead(t); // insert 후 안읽은 채팅 수 +1
 		
@@ -69,7 +71,7 @@ public class ChatEchoHandler extends TextWebSocketHandler {
 			Thumbnail chat= cService.selectChatContent(result1);
 			
 			String sendmsg = chat.getContent() + "," + chat.getWriterNo() + "," + chat.getWriterName() + "," + chat.getDeptName() 
-							+ "," + chat.getJobName() + "," + chat.getSendDate() + "," + chat.getSendTime();
+							+ "," + chat.getJobName() + "," + chat.getSendDate() + "," + chat.getSendTime() + "," + prevDate;
 			
 			Iterator it = roomList.entrySet().iterator();
 		    while(it.hasNext()) {

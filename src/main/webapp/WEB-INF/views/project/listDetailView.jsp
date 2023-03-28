@@ -56,6 +56,7 @@
         height: 50px;
         box-sizing: border-box;
         margin-right: 5px;
+        border-radius: 100%;
     }
     .content-other{
         background-color: lightgray;

@@ -56,6 +56,24 @@ public class ChatServiceImpl implements ChatService {
 		return cDao.increaseNotRead(sqlSession, t);
 	}
 
+	@Override
+	public String selectPrevDate(String roomNo) {
+		return cDao.selectPrevDate(sqlSession, roomNo);
+	}
+
+	@Override
+	public String selectRoom(Thumbnail th) {
+		return cDao.selectRoom(sqlSession, th);
+	}
+
+	@Override
+	public HashMap<String, Object> insertRoom(Thumbnail th) {
+		HashMap<String, Object> map = new HashMap<>();
+		int result = cDao.insertRoom(sqlSession, th);
+		
+		return map;
+	}
+
 	
 
 }

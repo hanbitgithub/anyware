@@ -207,5 +207,38 @@
 		 where chatroom_no =#{roomNo}
 		   and member_no != #{writerNo}
 	</update>
+	
+	<select id="selectPrevDate" resultType="string">
+		SELECT
+		       MAX(TO_CHAR(SEND_DATE, 'YYYY"년" MM"월" DD"일"')) "SEND_DATE"
+		  FROM TB_CHATCONTENT
+		 WHERE CHATROOM_NO = #{roomNo}
+	</select>
+	
+	<select id="selectRoom" resultType="string">
+		select
+		       m.chatroom_no
+		  from tb_chatmember m
+		  join tb_chatmember mm on (m.chatroom_no = mm.chatroom_no)
+		 where m.member_no = #{writerNo}
+		   and mm.member_no = #{otherNo}
+	</select>
+	
+	<insert id="insertRoom">
+		<selectKey keyProperty="roomNo"  resultType="_int" order="AFTER">
+			SELECT SEQ_CHRNO.CURRVAL "CHATROOM_NO" FROM DUAL
+		</selectKey>
+		insert
+		  into tb_chatroom
+		  (
+		  	chatroom_no
+		  , chat_type
+		  )
+		  values
+		  (
+		  	seq_chrno.nextval
+		  , 1
+		  )
+	</insert>
   
 </mapper>

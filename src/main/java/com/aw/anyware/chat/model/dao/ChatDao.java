@@ -44,5 +44,20 @@ public class ChatDao {
 		return sqlSession.update("chatMapper.increaseNotRead", t);
 	}
 
+	public String selectPrevDate(SqlSessionTemplate sqlSession, String roomNo) {
+		return sqlSession.selectOne("chatMapper.selectPrevDate", roomNo);
+	}
+
+	public String selectRoom(SqlSessionTemplate sqlSession, Thumbnail th) {
+		return sqlSession.selectOne("chatMapper.selectRoom", th);
+	}
+
+	public int insertRoom(SqlSessionTemplate sqlSession, Thumbnail th) {
+		sqlSession.insert("chatMapper.insertRoom", th);
+		int roomNo = th.getRoomNo();
+		
+		return roomNo;
+	}
+
 
 }

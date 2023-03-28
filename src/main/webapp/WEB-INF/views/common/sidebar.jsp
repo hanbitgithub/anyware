@@ -370,7 +370,7 @@ a {
         </div>
       
         <div class="messenger-wrapper">
-            <button onclick="toggleDropdown()" class="messengerbtn">
+            <button class="messengerbtn">
                 <img id="messengerImg" src="resources/images/chat/MessengerIcon.png" width="50">
             </button>
             <div id="messenger-area" class="messenger-area">
@@ -479,12 +479,11 @@ a {
         }
 
         function onMessage(event){ // 나에게 온 메세지가 있을 경우 실행되는 함수
-            // 전달된 메세지 형식 = 메세지내용(0),발신자번호(1),발신자이름(2),발신자부서(3),발신자직급(4),보낸날짜(5),보낸시간(6)
+            // 전달된 메세지 형식 = 메세지내용(0),발신자번호(1),발신자이름(2),발신자부서(3),발신자직급(4),보낸날짜(5),보낸시간(6),이전날짜(7)
             const arr = event.data.split(",");
-            const date = document.querySelectorAll(".date-div")
             
             let chatset = "";
-            if(date[date.length-1].innerHTML != arr[5]){
+            if(arr[5] != arr[7]){
                 chatset += "<div class='date-div'>" + arr[5] + "</div>";
             }
             if(arr[1] == ${loginUser.memberNo}){ // 내가 쓴 메세지
@@ -524,7 +523,7 @@ a {
             
         }
 
-        function toggleDropdown() {
+        $(document).on("click", ".messengerbtn", function(){
             // css 관련 코드들
 			var dropdownContent = document.getElementById("messenger-area");
 			if (dropdownContent.style.display === "block") {
@@ -547,7 +546,7 @@ a {
             document.getElementById("chat-address").style.display = "none";
             document.getElementById("chatroom").style.display = "none";
 
-		}
+		})
 		
 		function showContent(contentName, tabName, e) {
 			// 모든 내용을 숨깁니다.
@@ -731,7 +730,25 @@ a {
         }
 
         $(document).on("click", ".member", function(){
-            console.log($(this).prev().val());
+            let otherNo = $(this).prev().val();
+            let myNo = "${loginUser.memberNo}";
+
+            if(otherNo != myNo){
+                $.ajax({
+                    url:"createRoom.ajax",
+                    data:{writerNo:myNo
+                        , otherNo:otherNo},
+                    success:function(map){
+                        let value = "";
+                        if(chList.length == 0){
+                            value += "";
+                        }
+                    },
+                    error:function(){
+                        console.log("채팅방 생성용 ajax 통신 실패");
+                    }
+                })
+            }
         })
         
     </script>
