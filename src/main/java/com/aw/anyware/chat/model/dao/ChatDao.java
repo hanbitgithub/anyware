@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.aw.anyware.chat.model.vo.ChatContent;
+import com.aw.anyware.chat.model.vo.ChatMember;
 import com.aw.anyware.chat.model.vo.Thumbnail;
 
 @Repository
@@ -33,6 +34,14 @@ public class ChatDao {
 
 	public Thumbnail selectChatContent(SqlSessionTemplate sqlSession, int contentNo) {
 		return sqlSession.selectOne("chatMapper.selectChatContent", contentNo);
+	}
+
+	public ArrayList<ChatMember> selectRoomNum(SqlSessionTemplate sqlSession, int memberNo) {
+		return (ArrayList)sqlSession.selectList("chatMapper.selectRoomNum", memberNo);
+	}
+
+	public int increaseNotRead(SqlSessionTemplate sqlSession, String roomNo) {
+		return sqlSession.update("chatMapper.increaseNotRead", roomNo);
 	}
 
 

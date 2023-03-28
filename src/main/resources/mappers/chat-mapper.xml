@@ -27,6 +27,9 @@
 		<result column="writer_No" property="writerNo" />
 		<result column="writer_Name" property="writerName" />
 		<result column="chat_title" property="title" />
+		<result column="lcheck" property="lcheck" />
+		<result column="other_name" property="otherName" />
+		<result column="other_no" property="otherNo" />
 	</resultMap>
 	
 	<resultMap type="ChatContent" id="contentResult">
@@ -48,6 +51,13 @@
 		</collection>
 	</resultMap>
 	
+	<resultMap type="ChatMember" id="chmemberResult">
+		<result column="chatroom_no" property="roomNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="enroll_date" property="enrollDate" />
+		<result column="not_read" property="notRead" />
+	</resultMap>
+	
 	<select id="selectChatRoomList" resultMap="thumbnailResult">
 		SELECT DISTINCT
 		       C.CHATROOM_NO
@@ -55,7 +65,30 @@
 		     , CHAT_CONTENT
 		     , TO_CHAR(SEND_DATE, 'YYYY"년" MM"월" DD"일"') "SEND_DATE"
 		     , TO_CHAR(SEND_DATE, 'HH24:MM') "SEND_TIME"
-		     , CHAT_TITLE
+		     , (SELECT
+		               NAME
+		          FROM TB_CHATMEMBER
+		          JOIN TB_MEMBER USING (MEMBER_NO)
+		         WHERE MEMBER_NO != #{memberNo}
+		           AND CHATROOM_NO = C.CHATROOM_NO) "OTHER_NAME"
+		     , (SELECT
+		               MEMBER_NO
+		          FROM TB_CHATMEMBER
+		          JOIN TB_MEMBER USING (MEMBER_NO)
+		         WHERE MEMBER_NO != #{memberNo}
+		           AND CHATROOM_NO = C.CHATROOM_NO) "OTHER_NO"
+		     , (SELECT
+		               DEPT_NAME
+		          FROM TB_CHATMEMBER
+		          JOIN TB_MEMBER USING (MEMBER_NO)
+		         WHERE MEMBER_NO != #{memberNo}
+		           AND CHATROOM_NO = C.CHATROOM_NO) "DEPT_NAME"
+		     , (SELECT
+		               JOB_NAME
+		          FROM TB_CHATMEMBER
+		          JOIN TB_MEMBER USING (MEMBER_NO)
+		         WHERE MEMBER_NO != #{memberNo}
+		           AND CHATROOM_NO = C.CHATROOM_NO) "JOB_NAME"
 		     , (SELECT
 		               PROFILE_URL
 		          FROM TB_CHATMEMBER
@@ -67,6 +100,16 @@
 		          FROM TB_CHATMEMBER
 		         WHERE MEMBER_NO = #{memberNo}
 		           AND CHATROOM_NO = C.CHATROOM_NO) "NOT_READ"
+		     , (SELECT
+		               COUNT(*)
+		          FROM TB_COMMUTE
+		         WHERE MEMBER_NO = (SELECT
+		                                   MEMBER_NO
+		                              FROM TB_CHATMEMBER
+		                             WHERE MEMBER_NO != #{memberNo}
+		                               AND CHATROOM_NO = C.CHATROOM_NO)
+		           AND COMMUTE_IN != '출근 확인을 해주세요'
+		           AND COMMUTE_DATE = TO_CHAR(SYSDATE, 'YYYY-MM-DD')) "LCHECK"
 		  FROM TB_CHATCONTENT C
 		  JOIN TB_MEMBER ON (WRITER_NO = MEMBER_NO)
 		  JOIN TB_CHATMEMBER CHM ON (C.CHATROOM_NO = CHM.CHATROOM_NO)
@@ -148,5 +191,20 @@
 		  join tb_member on (writer_no = member_no)
 		 where chatcontent_no = #{contentNo}
 	</select>
+	
+	<select id="selectRoomNum" resultMap="chmemberResult">
+		select
+		       chatroom_no
+		     , member_no
+		  from tb_chatmember
+		 where member_no = #{memberNo}
+	</select>
+	
+	<update id="increaseNotRead">
+		update
+			   tb_chatmember
+		   set not_read = not_read + 1
+		 where chatroom_no =#{roomNo} 
+	</update>
   
 </mapper>

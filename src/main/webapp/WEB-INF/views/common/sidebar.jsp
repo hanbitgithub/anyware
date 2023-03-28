@@ -419,6 +419,7 @@ a {
 
                 <div class="tab-content" id="chatroom" style="display: none;">
                     <div class="chat-area">
+                        <input type="hidden" class="roomNo" value="">
                         <table class='chat-message mine'>
                             <tr>
                                 <td class='time-td'>
@@ -453,8 +454,7 @@ a {
                             <textarea class="form-control" rows="3" id="message" style="resize:none"></textarea>
                         </div>
                         
-                        <button type="button" class="btn btn-sm btn-secondary btn-block" onclick="sendMessage();">전송하기</button>
-                        <button type="button" class="btn btn-sm btn-danger btn-block">퇴장하기</button>
+                        <button type="button" class="btn btn-sm btn-secondary btn-block" onclick="sendMessage(this);">전송하기</button>
                     </div>
                 </div>
             </div>
@@ -469,8 +469,10 @@ a {
         sock.onmessage = onMessage; // 웹소켓에서 해당 클라이언트 측으로 메세지를 보내면 자동으로 실행할 함수 정의
         sock.onclose = onClose;
 
-        function sendMessage(){ // 전송하기 버튼 클릭 시 실행되는 함수
-            const msg = $(".roomNo").val() + "," + ${ loginUser.memberNo } + "," + $("#message").val();
+        function sendMessage(e){ // 전송하기 버튼 클릭 시 실행되는 함수
+            // console.log($(e).parent().prev().children(".roomNo").val());
+            const roomNo = $(e).parent().prev().children(".roomNo").val();
+            const msg = roomNo + "," + ${ loginUser.memberNo } + "," + $("#message").val();
 
             sock.send(msg); // 웹소켓으로 메세지 전달 => ChatEchoHandler 클래스의 handleMessage 메소드 실행
             $("#message").val("");
@@ -480,7 +482,7 @@ a {
             // 전달된 메세지 형식 = 메세지내용(0),발신자번호(1),발신자이름(2),발신자부서(3),발신자직급(4),보낸날짜(5),보낸시간(6)
             const arr = event.data.split(",");
             const date = document.querySelectorAll(".date-div")
-
+            
             let chatset = "";
             if(date[date.length-1].innerHTML != arr[5]){
                 chatset += "<div class='date-div'>" + arr[5] + "</div>";
@@ -514,48 +516,13 @@ a {
 
             $(".chat-area").append(chatset);
             $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
+            getChattingList();
             
         }
 
         function onClose(){ // 웹소켓과 연결이 끊겼을 때 실행되는 함수
             // 웹소켓과의 연결 끊김 =>  ChatEchoHandler 클래스의 afterConnectionClosed 메소드 실행
             
-        }
-
-        function getChattingList(){
-            // 채팅리스트 불러오기
-            $.ajax({
-                url:"chattingList.ajax",
-                type:"POST",
-                data:{memberNo:${loginUser.memberNo}},
-                success:function(rList){
-                    
-                    let value = "";
-                    for(let i = 0; i<rList.length; i++){
-                        value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", this);'>"
-                                    + "<img src='" + rList[i].profileUrl + "' class='chatImg'>"
-                                    + "<div class='chat-content'>"
-                                        + "<div class='chat-info'>"
-                                            + "<input type='hidden' class='roomNo' value='" + rList[i].roomNo + "'>"
-                                            + "<h2 class='chat-name'><img src='resources/images/chat/red.png' class='loginCheck'>" + rList[i].title + ")</h2>"
-                                            + "<p class='chat-time'>" + rList[i].sendDate + "</p>"
-                                        + "</div>"
-                                        + "<div class='preview-div'>"
-                                            + "<p class='chat-preview'>" + rList[i].content + "</p>";
-                                if(rList[i].notRead != 0){
-                                    value += "<p class='notread'>" + rList[i].notRead + "</p>";
-                                }
-                                value += "</div>"
-                                    + "</div>"
-                                + "</div>";
-                    }
-
-                    $(".list-area").html(value);
-                },
-                error:function(){
-                    console.log("채팅리스트 조회용 ajax 통신 실패");
-                }
-            })
         }
 
         function toggleDropdown() {
@@ -565,6 +532,7 @@ a {
 				dropdownContent.style.display = "none";
 			} else {
 				dropdownContent.style.display = "block";
+                getChattingList();
 
                 var tabs = document.getElementsByClassName("tab");
                 for (var i = 0; i < tabs.length; i++) {
@@ -573,8 +541,6 @@ a {
                 
                 // 선택한 탭에 active 클래스를 추가합니다.
                 document.getElementById("chatList").classList.add('active');
-
-                getChattingList();
             }
 
             // 드롭다운을 열 때 항상 채팅리스트 화면이 되도록 설정
@@ -602,6 +568,11 @@ a {
 			
 			// 선택한 탭에 active 클래스를 추가합니다.
 			document.getElementById(tabName).classList.add('active');
+
+            // 채팅 리스트 클릭
+            if(contentName == 'chat-list'){
+                getChattingList();
+            }
 
             // 주소록 클릭
             if(contentName == 'chat-address'){
@@ -712,6 +683,53 @@ a {
         $(document).on("click", ".dept", function(){
             $(this).next(".accordion").slideToggle(100);
         });
+
+        function getChattingList(){
+            // 채팅리스트 불러오기
+            $.ajax({
+                url:"chattingList.ajax",
+                type:"POST",
+                data:{memberNo:${loginUser.memberNo}},
+                success:function(rList){
+                    
+                    let value = "";
+                    for(let i = 0; i<rList.length; i++){
+                        value += "<div class='list-set' onclick='showContent("+ '"chatroom"' + ", " + '"chat"' + ", this);'>"
+                                    + "<img src='" + rList[i].profileUrl + "' class='chatImg'>"
+                                    + "<div class='chat-content'>"
+                                        + "<div class='chat-info'>"
+                                            + "<input type='hidden' class='roomNo' value='" + rList[i].roomNo + "'>";
+                                if(rList[i].lcheck == 0){
+                                    value += "<h2 class='chat-name'><img src='resources/images/chat/red.png' class='loginCheck'>";
+                                } else {
+                                    value += "<h2 class='chat-name'><img src='resources/images/chat/green.png' class='loginCheck'>";
+                                }
+
+                                if(rList[i].deptName == '미정'){
+                                    value += rList[i].otherName + "(" + rList[i].jobName + ")</h2>";
+                                } else {
+                                    value += rList[i].otherName + "(" + rList[i].deptName + "/" + rList[i].jobName + ")</h2>";
+                                }
+                                
+                                    value += "<p class='chat-time'>" + rList[i].sendDate + "</p>"
+                                        + "</div>"
+                                        + "<div class='preview-div'>"
+                                            + "<p class='chat-preview'>" + rList[i].content + "</p>";
+                                if(rList[i].notRead != 0){
+                                    value += "<p class='notread'>" + rList[i].notRead + "</p>";
+                                }
+                                value += "</div>"
+                                    + "</div>"
+                                + "</div>";
+                    }
+
+                    $(".list-area").html(value);
+                },
+                error:function(){
+                    console.log("채팅리스트 조회용 ajax 통신 실패");
+                }
+            })
+        }
         
     </script>
 
