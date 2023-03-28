@@ -78,6 +78,10 @@ public interface MemberService {
 	
 	int cancelOff(LeaveOff lo);
 	
+	int minusOff(LeaveOff lo);
+	
+	int recoverOff(LeaveOff lo);
+	
 	//Member selectDayOff(Member m);
 	
 	//근태현황 조회

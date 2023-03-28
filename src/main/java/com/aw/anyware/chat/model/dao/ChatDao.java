@@ -40,8 +40,8 @@ public class ChatDao {
 		return (ArrayList)sqlSession.selectList("chatMapper.selectRoomNum", memberNo);
 	}
 
-	public int increaseNotRead(SqlSessionTemplate sqlSession, String roomNo) {
-		return sqlSession.update("chatMapper.increaseNotRead", roomNo);
+	public int increaseNotRead(SqlSessionTemplate sqlSession, Thumbnail t) {
+		return sqlSession.update("chatMapper.increaseNotRead", t);
 	}
 
 

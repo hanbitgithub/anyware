@@ -45,8 +45,9 @@ public class CrunchifyJavaMailExample {
         generateMailMessage.addRecipient(Message.RecipientType.CC, new InternetAddress("test2@crunchify.com"));
         generateMailMessage.setSubject("테스트 메일입니다");
         String emailBody = "아이디 찾기입니다. \n다음 코드를 입력해주세요. \n 코드 : " + code + " qq회사 인사부";
-        generateMailMessage.setContent(emailBody, "text/html");
+        generateMailMessage.setContent(emailBody, "text/html; charset=utf-8");
         System.out.println("Mail Session has been created successfully..");
+        
         // Step3
         System.out.println("\n\n 3rd ===> Get Session and Send mail");
         Transport transport = getMailSession.getTransport("smtp");

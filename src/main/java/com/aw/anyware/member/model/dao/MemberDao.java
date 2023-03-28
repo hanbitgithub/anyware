@@ -181,5 +181,15 @@ public class MemberDao {
 		
 		return (ArrayList)sqlSession.selectList("memberMapper.selectNN");
 	}
+
+	public int minusOff(SqlSessionTemplate sqlSession, LeaveOff lo) {
+		
+		return sqlSession.update("memberMapper.minusOff", lo);
+	}
+
+	public int recoverOff(SqlSessionTemplate sqlSession, LeaveOff lo) {
+		
+		return sqlSession.update("memberMapper.recoverOff", lo);
+	}
 	
 }

@@ -85,7 +85,7 @@
     		job_name,
     		position,
     		duty,
-    		name,
+    		m.name,
     		member_id,
     		member_pwd,
     		TO_CHAR(to_date(substr(rrn,1,6),'RRMMDD'), 'YY"년" MM"월" DD"일"') as "rrn",
@@ -94,10 +94,20 @@
     		address,
     		to_char(enroll_date,'YYYY-MM-DD') as "enroll_date",
     		leave_off,
-    		profile_url
-    	from tb_member
+    		profile_url,
+    		COMMUTE_NO,
+    		COMMUTE_IN,
+			COMMUTE_OUT
+    	from tb_member m
+    	join tb_commute c using(member_no) 
        where status = 'Y'
        and member_no = #{memberNo}
+       and commute_no = (select commute_no
+						        from(select  commute_no
+						                    from tb_commute
+						                   where member_no = #{memberNo}
+						                   order by commute_no desc)
+						    where rownum = 1)
     		
   </select>
   
@@ -453,6 +463,24 @@
  			cancel_date = to_char(SYSDATE,'YYYY-MM-DD')
  	   where applicant_no = #{apNo}
  	   	and	 dayoff_no = #{dayoffNo}
+ </update>
+ 
+ <update id="minusOff">
+ 	update
+ 			tb_member
+ 		set leave_off = leave_off - 1
+ 			
+ 	   where member_no = #{apNo}
+ 	   	
+ </update>
+ 
+ <update id="recoverOff">
+ 	update
+ 			tb_member
+ 		set leave_off = leave_off + 1
+ 			
+ 	   where member_no = #{apNo}
+ 	   	
  </update>
   
     <!-- 근태현황조회 -->
