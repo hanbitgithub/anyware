@@ -55,8 +55,8 @@ a{
             <div id="mail-area">
                 
             <ul>
-                <li class="hrOnly"><a href="regist.me?deptName=${loginUser.deptName}&?deptName=${loginUser.deptName}">신규사원등록</a></li>
-                <li class="hrOnly"><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
+                <li class="hrOnly" style="display: none;"><a href="regist.me?deptName=${loginUser.deptName}&?deptName=${loginUser.deptName}">신규사원등록</a></li>
+                <li class="hrOnly" style="display: none;"><a href="selectOut.me?deptName=${loginUser.deptName}">퇴사자조회</a></li>
                 <li><a href="mailTest.me?email=${loginUser.email}">메일테스트</a></li>
                 <li><a href="attendence.me"}">근태조회</a></li>
 
@@ -67,7 +67,13 @@ a{
             
  
     </div>
-    
+    <script>
+    	function(){
+    		if(${loginUser.deptName} == '인사부'){
+    			$('.hrOnly').css('display', 'block')
+    		}
+    	}
+    </script>
     
 
 </body>

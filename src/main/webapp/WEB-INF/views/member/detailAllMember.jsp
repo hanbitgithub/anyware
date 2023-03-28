@@ -87,25 +87,26 @@ select{border: 1px solid rgb(213, 212, 212);border-radius: 5px;height: 29px; wid
 				<input type="hidden" name="memberId" value="${ m.memberId }">
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>출근시간</b></div>
-                    <div class="profileContent2">출근시간입력</div>
+                    <div class="profileContent2">${m.commuteIn}</div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>퇴근시간</b></div>
-                    <div class="profileContent2">퇴근시간입력</div>
+                    <div class="profileContent2">${m.commuteOut}</div>
                 </div>
-                <div id="employProfile-div3">
-                    <div class="profileContent1"><b>이번달 근무시간</b></div>
-                    <div class="profileContent2">이번달 근무시간 입력</div>
-                </div>
+                
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>남은 연차 개수</b></div>
-                    <div class="profileContent2">남은 연차 개수 입력</div>
+                    <div class="profileContent2" id="leaveOff">${m.leaveOff}개</div>
                 </div>
                 <div id="employProfile-div3">
                     <div class="profileContent1"><b>사용한 연차개수</b></div>
-                    <div class="profileContent2">사용한 연차 개수 입력</div>
+                    <div class="profileContent2" id="usedOff">${12 - m.leaveOff}개</div>
                 </div>
-        </div>       
+        </div>  
+        
+        
+        
+             
                 <br><br>
                      <hr>
                     <br>
