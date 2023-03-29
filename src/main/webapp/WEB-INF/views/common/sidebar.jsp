@@ -381,7 +381,7 @@ a {
                     <!-- 채팅 리스트 -->
                     <h3 class="title">메신저 목록</h2>
                     <div class="list-area">
-                        <div class="list-set" onclick="showContent('chatroom', 'chat', this);">
+                        <div class="list-set" onclick="showContent('chat-area', 'chat', this);">
                             <img src="${loginUser.profileUrl}" class="chatImg">
                             <div class="chat-content">
                                 <div class="chat-info">
@@ -774,7 +774,7 @@ a {
 
                         $(".chat-area").html(value);
                         $('.chat-area').scrollTop($('.chat-area')[0].scrollHeight);
-                        showContent("chatroom", "chat", map.roomNo);
+                        showContent("chat-area", "chat", map.roomNo);
                     },
                     error:function(){
                         console.log("채팅방 생성용 ajax 통신 실패");
