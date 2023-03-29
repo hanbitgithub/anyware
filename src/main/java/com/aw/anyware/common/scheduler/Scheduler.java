@@ -21,9 +21,9 @@ public class Scheduler {
 		ArrayList<Member> list = mService.selectNN();
 		System.out.println(list);
 		for(Member nn : list) {
-			System.out.print(nn);
+			
 			int result = mService.newCommute(nn);
-			System.out.print(result);
+			
 		}
 		
 		
