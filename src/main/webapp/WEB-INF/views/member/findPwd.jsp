@@ -73,7 +73,7 @@ input[type="text"]{
 			<div><button type="submit" id="submit2">인증코드 전송</button></div>
 			
 	</div> 	
-	</div>
+	<br><br>
 	<div align="center" id="checkCodeAsk" style="display: none;"><b>인증번호를 입력해주세요</b></div>
 	<div align="center" id="newPwd-div" style="display: none;">
 		<div><input type="password" name="newPwd" id="newPwd" placeholder="새 비밀번호를 입력해주세요"></div>
@@ -82,7 +82,7 @@ input[type="text"]{
 		<div><button type="submit" id="submit3">비밀번호 변경하기</button></div>
 	</div>
 	
-	
+	</div>
 	<div align="center" id="alert" style="display: none;"><b>비밀번호가 변경되었습니다</b></div>
 	<script>
 		
