@@ -23,7 +23,7 @@
 ***
 
 # :star: 개요
-- 프로젝트명 : Anyware 그룹웨 <br>
+- 프로젝트명 : Anyware 그룹웨어 <br>
 
 - 보고서 : 
 
@@ -43,6 +43,7 @@
 
 - DB 설계(ERD Cloud) <br>
 - ![erd](https://user-images.githubusercontent.com/115604577/228803574-44790d6b-6858-4bb2-86f8-04ee791b01b8.png)
+
 ***
 
 
