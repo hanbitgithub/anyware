@@ -76,17 +76,17 @@ public class MemberController {
 		Member mn = mService.selectMN(m);
 		int memberNo = mn.getMemberNo();
 		m.setMemberNo(memberNo);
-		System.out.println("m : " + m);
+		
 		Member loginUser = mService.loginMember(m);
-		System.out.println("loginUser  : " + loginUser);
+		
 		if(loginUser == null) {
-			System.out.println("loginUser == null : " + loginUser);
+			
 			mv.addObject("errorMsg", "로그인에 실패하였습니다");
 			mv.setViewName("common/errorPage");
 			
 		}else {
 			if(bcryptPasswordEncoder.matches(m.getMemberPwd(), loginUser.getMemberPwd())) {
-				System.out.println("성공시 : " + loginUser);
+				
 			session.setAttribute("loginUser", loginUser);
 			
 			
@@ -245,7 +245,7 @@ public class MemberController {
 	public ModelAndView enrollMember(Commute c, ModelAndView mv, HttpSession session) {
 		Member loginUser = ((Member)session.getAttribute("loginUser"));
 		Commute checkTime = mService.selectCommute(c);	
-		System.out.println(checkTime);
+		
 		String checkToday = mService.selectToday();
 		
 		if(checkTime.getCommuteIn().equals("출근 확인을 해주세요")) {
@@ -313,7 +313,7 @@ public class MemberController {
 	public ModelAndView commuteOut(Commute c, ModelAndView mv, HttpSession session) {
 		Member loginUser = ((Member)session.getAttribute("loginUser"));
 		Commute checkTime = mService.selectCommute(c);
-		System.out.println(checkTime);
+		
 		if(checkTime.getCommuteOut().equals("퇴근 확인을 해주세요")) {
 			int result = mService.commuteOut(c);
 			if(result > 0) {
@@ -455,7 +455,7 @@ public class MemberController {
 			
 			e.printStackTrace();
 		}
-		System.out.println("code1-2 : " + code1);
+		
 		return code1;
 		
 	}
@@ -465,7 +465,7 @@ public class MemberController {
 	public String selectFindId(int memberNo) {
 		Member m = mService.detailAllMember(memberNo);
 		String requestId = m.getMemberId();
-		System.out.println("requestId : " + requestId);
+		
 		return requestId;
 		
 	}
@@ -491,12 +491,11 @@ public class MemberController {
 	@ResponseBody
 	@RequestMapping(value="makeNewPwd.me")
 	public int makeNewPwd(Member m) {
-		System.out.println(m);
-		System.out.println(m.getNewPwd());
+		
 		String encPwd = bcryptPasswordEncoder.encode(m.getNewPwd());
-		System.out.println("encPwd1 : " + encPwd);
+		
 		m.setEncPwd(encPwd);
-		System.out.println("encPwd2 : " + encPwd);
+		
 		int result = mService.makeNewPwd(m);
 		return result;
 			
@@ -508,7 +507,7 @@ public class MemberController {
 		
 		if(m.getLeaveOff() > 0) {
 			ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
-			System.out.println("list : " + list);
+			
 			if(list == null) {
 				mv.setViewName("member/leaveOff");
 				return mv;
@@ -556,7 +555,7 @@ public class MemberController {
 		int memberNo = lo.getApNo();
 		int result = mService.cancelOff(lo);
 		ArrayList<LeaveOff> list = mService.selectMyOff(memberNo);
-		System.out.println("list : " + list);
+		
 		if(result > 0) {
 			
 			
