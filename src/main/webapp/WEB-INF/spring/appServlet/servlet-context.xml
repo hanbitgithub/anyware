@@ -84,10 +84,10 @@
 		<websocket:sockjs />
 	</websocket:handlers>
 	
-	 <!-- 스케줄링 관련 구문 추가 
+	 <!--  스케줄링 관련 구문 추가 -->
 	 <task:scheduler id="myScheduler" pool-size="10"/>
 	 <task:annotation-driven scheduler="myScheduler"/>
-	-->
+	
 </beans:beans>
 
 
