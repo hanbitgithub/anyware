@@ -248,7 +248,7 @@ public class MemberController {
 		System.out.println(checkTime);
 		String checkToday = mService.selectToday();
 		
-		if(checkTime.getCommuteIn().equals("출근")) {
+		if(checkTime.getCommuteIn().equals("출근 확인을 해주세요")) {
 			int result = mService.insertCommute(c);
 			if(result > 0) {
 				Commute cTime = mService.selectCommute(c);	
@@ -314,7 +314,7 @@ public class MemberController {
 		Member loginUser = ((Member)session.getAttribute("loginUser"));
 		Commute checkTime = mService.selectCommute(c);
 		System.out.println(checkTime);
-		if(checkTime.getCommuteOut().equals("퇴근")) {
+		if(checkTime.getCommuteOut().equals("퇴근 확인을 해주세요")) {
 			int result = mService.commuteOut(c);
 			if(result > 0) {
 				Commute cTime = mService.selectCommute(c);

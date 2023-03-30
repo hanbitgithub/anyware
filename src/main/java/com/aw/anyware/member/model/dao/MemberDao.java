@@ -179,7 +179,7 @@ public class MemberDao {
 
 	public ArrayList<Member> selectNN(SqlSessionTemplate sqlSession) {
 		
-		return sqlSession.selectOne("memberMapper.selectNN");
+		return (ArrayList)sqlSession.selectList("memberMapper.selectNN");
 	}
 	
 }
