@@ -42,7 +42,7 @@
 ![usecase2](https://user-images.githubusercontent.com/115604577/228800593-23af742b-bf67-4cba-833a-e90a3bddf060.png)<br>
 
 - DB 설계(ERD Cloud) <br>
-- ![erd](https://user-images.githubusercontent.com/115604577/228803574-44790d6b-6858-4bb2-86f8-04ee791b01b8.png)
+![erd](https://user-images.githubusercontent.com/115604577/228806723-a62a6193-4ab8-46cb-b84e-70568c284147.png)
 
 ***
 
