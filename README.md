@@ -11,6 +11,7 @@
     - [메일쓰기](#pushpin-메일쓰기)
     - [나에게 메일쓰기](#pushpin-나에게쓰기)
     - [메일 임시저장](#pushpin-메일임시저장)
+    - [수신확인](#pushpin-수신확인)
     - [메일보관함](#pushpin-메일보관함)   
     - [메일 답장/전달](#pushpin-메일답장전달)   
     - [메일 삭제](#pushpin-메일삭제) 
@@ -56,7 +57,14 @@
  
  
 # :star: 구현 기능
-## [사용자]
 ### :pushpin: 메인페이지
 ### :pushpin: 개인주소록
-### :pushpin: 사내주소록
+### :pushpin: 메일쓰기
+### :pushpin: 나에게쓰기
+### :pushpin: 메일임시저장
+### :pushpin: 수신확인
+### :pushpin: 메일보관함
+### :pushpin: 메일답장전달
+### :pushpin: 메일상세조회
+### :pushpin: 메일검색
+
